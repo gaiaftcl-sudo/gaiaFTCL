@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["schema_version", "agent_id", "tier", "proven_capabilities", "declared_capabilities_summary", "hashes", "evidence_call_ids", "issued_at", "certificate_hash"],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "agent_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "agent_name": {
+      "type": "string"
+    },
+    "tier": {
+      "type": "string",
+      "enum": ["GREEN", "YELLOW", "RED", "BLACKHOLE"]
+    },
+    "proven_capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "declared_capabilities_summary": {
+      "type": "object",
+      "properties": {
+        "total_declared": {
+          "type": "integer"
+        },
+        "proven": {
+          "type": "integer"
+        },
+        "failed": {
+          "type": "integer"
+        },
+        "unproven": {
+          "type": "integer"
+        }
+      }
+    },
+    "hashes": {
+      "type": "object",
+      "required": ["canonicals_hash", "templates_hash", "reason_codes_hash"],
+      "properties": {
+        "canonicals_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "templates_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "reason_codes_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "topology_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "surface_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "evidence_call_ids": {
+      "type": "object",
+      "properties": {
+        "register_call_id": {
+          "type": "string"
+        },
+        "label_call_id": {
+          "type": "string"
+        },
+        "topology_call_id": {
+          "type": "string"
+        },
+        "report_call_id": {
+          "type": "string"
+        }
+      }
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "certificate_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash of certificate JSON without this field"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>GaiaOS 8D ATC Physics Engine</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
+		rel="stylesheet">
+	<style>
+		:root {
+			--bg-dark: #0a0a12;
+			--bg-panel: rgba(12, 12, 20, 0.95);
+			--text-primary: #e8e8f0;
+			--text-secondary: #8888a0;
+			--accent-cyan: #00ffcc;
+			--accent-purple: #a855f7;
+			--accent-blue: #4da6ff;
+			--border-color: rgba(100, 100, 140, 0.2);
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+			background: var(--bg-dark);
+			color: var(--text-primary);
+			font-family: 'Inter', sans-serif;
+			overflow: hidden;
+		}
+
+		#container {
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+
+		#physics-canvas {
+			display: block;
+			width: 100%;
+			height: 100%;
+			cursor: grab;
+		}
+
+		#physics-canvas:active {
+			cursor: grabbing;
+		}
+
+		/* Status Panel */
+		.status-panel {
+			position: absolute;
+			top: 16px;
+			left: 16px;
+			padding: 16px 20px;
+			background: var(--bg-panel);
+			border-radius: 8px;
+			border: 1px solid var(--border-color);
+			backdrop-filter: blur(12px);
+			min-width: 260px;
+		}
+
+		.status-panel h2 {
+			font-size: 14px;
+			font-weight: 600;
+			color: var(--accent-cyan);
+			margin-bottom: 12px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.status-row {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 4px 0;
+			font-family: 'JetBrains Mono', monospace;
+			font-size: 11px;
+		}
+
+		.status-row .label {
+			color: var(--text-secondary);
+		}
+
+		.status-row .value {
+			font-weight: 600;
+		}
+
+		.status-row .value.cyan {
+			color: var(--accent-cyan);
+		}
+
+		.status-row .value.purple {
+			color: var(--accent-purple);
+		}
+
+		.status-row .value.blue {
+			color: var(--accent-blue);
+		}
+
+		.status-row .value.green {
+			color: #00cc66;
+		}
+
+		.status-row .value.red {
+			color: #ff3355;
+		}
+
+		.status-divider {
+			height: 1px;
+			background: var(--border-color);
+			margin: 10px 0;
+		}
+
+		/* 8D Vector Display */
+		.vec8d-panel {
+			position: absolute;
+			bottom: 16px;
+			left: 16px;
+			padding: 12px 16px;
+			background: var(--bg-panel);
+			border-radius: 8px;
+			border: 1px solid var(--border-color);
+			backdrop-filter: blur(12px);
+		}
+
+		.vec8d-panel h4 {
+			font-size: 10px;
+			font-weight: 600;
+			color: var(--accent-purple);
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			margin-bottom: 8px;
+		}
+
+		.vec8d-bar {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			margin: 4px 0;
+			font-family: 'JetBrains Mono', monospace;
+			font-size: 9px;
+		}
+
+		.vec8d-bar .dim {
+			width: 20px;
+			color: var(--text-secondary);
+		}
+
+		.vec8d-bar .bar-bg {
+			width: 80px;
+			height: 4px;
+			background: rgba(100, 100, 140, 0.3);
+			border-radius: 2px;
+			overflow: hidden;
+		}
+
+		.vec8d-bar .bar-fill {
+			height: 100%;
+			border-radius: 2px;
+			transition: width 0.1s ease;
+		}
+
+		.vec8d-bar .val {
+			width: 50px;
+			text-align: right;
+			color: var(--text-primary);
+		}
+
+		/* Legend */
+		.legend-panel {
+			position: absolute;
+			top: 16px;
+			right: 16px;
+			padding: 12px 16px;
+			background: var(--bg-panel);
+			border-radius: 8px;
+			border: 1px solid var(--border-color);
+			backdrop-filter: blur(12px);
+		}
+
+		.legend-panel h4 {
+			font-size: 10px;
+			font-weight: 600;
+			color: var(--text-secondary);
+			text-transform: uppercase;
+			margin-bottom: 8px;
+		}
+
+		.legend-item {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			padding: 3px 0;
+			font-size: 11px;
+			color: var(--text-secondary);
+		}
+
+		.legend-color {
+			width: 12px;
+			height: 12px;
+			border-radius: 3px;
+		}
+
+		/* Loading overlay */
+		#loading {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: var(--bg-dark);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			z-index: 1000;
+		}
+
+		#loading.hidden {
+			display: none;
+		}
+
+		.loading-spinner {
+			width: 48px;
+			height: 48px;
+			border: 3px solid var(--border-color);
+			border-top-color: var(--accent-cyan);
+			border-radius: 50%;
+			animation: spin 1s linear infinite;
+		}
+
+		@keyframes spin {
+			to {
+				transform: rotate(360deg);
+			}
+		}
+
+		@keyframes pulse {
+
+			0%,
+			100% {
+				opacity: 1;
+			}
+
+			50% {
+				opacity: 0.5;
+			}
+		}
+
+		.loading-text {
+			margin-top: 16px;
+			font-family: 'JetBrains Mono', monospace;
+			font-size: 12px;
+			color: var(--text-secondary);
+		}
+
+		/* Controls */
+		.controls-panel {
+			position: absolute;
+			bottom: 16px;
+			right: 16px;
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
+
+		.control-btn {
+			width: 40px;
+			height: 40px;
+			background: var(--bg-panel);
+			border: 1px solid var(--border-color);
+			border-radius: 8px;
+			color: var(--text-primary);
+			font-size: 18px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: all 0.2s ease;
+		}
+
+		.control-btn:hover {
+			background: rgba(30, 30, 50, 0.95);
+			border-color: var(--accent-cyan);
+		}
+	</style>
+</head>
+
+<body>
+	<div id="container">
+		<canvas id="physics-canvas"></canvas>
+
+		<div class="status-panel">
+			<h2>⚡ 8D Physics Engine @ 120fps</h2>
+			<div class="status-row">
+				<span class="label">AIRCRAFT</span>
+				<span class="value cyan" id="aircraft-count">0</span>
+			</div>
+			<div class="status-row">
+				<span class="label">🚨 CONFLICTS</span>
+				<span class="value red" id="conflict-count">0</span>
+			</div>
+			<div class="status-row">
+				<span class="label">📍 ANCHORS</span>
+				<span class="value" style="color:#ffcc66" id="anchor-count">0</span>
+			</div>
+			<div class="status-row">
+				<span class="label">PHYSICS TICK</span>
+				<span class="value purple" id="tick-count">0</span>
+			</div>
+			<div class="status-row">
+				<span class="label">RENDER FPS</span>
+				<span class="value blue" id="fps">0</span>
+			</div>
+			<div class="status-divider"></div>
+			<div class="status-row">
+				<span class="label">VIEWPORT</span>
+				<span class="value" id="viewport-info">-</span>
+			</div>
+			<div class="status-row">
+				<span class="label">vCHIP SCALE</span>
+				<span class="value purple" id="vchip-scale">1.000</span>
+			</div>
+			<div class="status-row">
+				<span class="label">ZOOM</span>
+				<span class="value" id="zoom-level">4.0</span>
+			</div>
+			<div class="status-divider"></div>
+			<div class="status-row">
+				<span class="label">STREAM</span>
+				<span class="value green" id="stream-status">CONNECTING</span>
+			</div>
+			<div class="status-row">
+				<span class="label">SOURCE</span>
+				<span class="value" id="data-source">airplanes.live</span>
+			</div>
+		</div>
+
+		<div class="vec8d-panel">
+			<h4>8D → 4D Digital Twin Mapping</h4>
+			<div class="vec8d-bar">
+				<span class="dim">D0</span>
+				<div class="bar-bg">
+					<div class="bar-fill" id="d0-bar" style="width:50%;background:var(--accent-cyan)"></div>
+				</div>
+				<span class="val" id="d0-val">LON (X)</span>
+			</div>
+			<div class="vec8d-bar">
+				<span class="dim">D1</span>
+				<div class="bar-bg">
+					<div class="bar-fill" id="d1-bar" style="width:50%;background:var(--accent-cyan)"></div>
+				</div>
+				<span class="val" id="d1-val">LAT (Y)</span>
+			</div>
+			<div class="vec8d-bar">
+				<span class="dim">D2</span>
+				<div class="bar-bg">
+					<div class="bar-fill" id="d2-bar" style="width:50%;background:var(--accent-blue)"></div>
+				</div>
+				<span class="val" id="d2-val">ALT (Z)</span>
+			</div>
+			<div class="vec8d-bar">
+				<span class="dim">D3</span>
+				<div class="bar-bg">
+					<div class="bar-fill" id="d3-bar" style="width:50%;background:#ffcc00"></div>
+				</div>
+				<span class="val" id="d3-val">TIME (T)</span>
+			</div>
+			<div class="vec8d-bar">
+				<span class="dim">D4</span>
+				<div class="bar-bg">
+					<div class="bar-fill" id="d4-bar" style="width:50%;background:var(--accent-purple)"></div>
+				</div>
+				<span class="val" id="d4-val">INTENT</span>
+			</div>
+			<div class="vec8d-bar">
+				<span class="dim">D5</span>
+				<div class="bar-bg">
+					<div class="bar-fill" id="d5-bar" style="width:50%;background:#ff3355"></div>
+				</div>
+				<span class="val" id="d5-val">RISK</span>
+			</div>
+			<div class="vec8d-bar">
+				<span class="dim">D6</span>
+				<div class="bar-bg">
+					<div class="bar-fill" id="d6-bar" style="width:50%;background:#00cc66"></div>
+				</div>
+				<span class="val" id="d6-val">COMPLY</span>
+			</div>
+			<div class="vec8d-bar">
+				<span class="dim">D7</span>
+				<div class="bar-bg">
+					<div class="bar-fill" id="d7-bar" style="width:50%;background:#888"></div>
+				</div>
+				<span class="val" id="d7-val">UNCERT</span>
+			</div>
+		</div>
+
+		<div class="legend-panel">
+			<h4>Altitude (D2)</h4>
+			<div class="legend-item">
+				<div class="legend-color" style="background:#00ffcc"></div>
+				<span>FL410+ High Cruise</span>
+			</div>
+			<div class="legend-item">
+				<div class="legend-color" style="background:#00ccff"></div>
+				<span>FL290-410 Mid Cruise</span>
+			</div>
+			<div class="legend-item">
+				<div class="legend-color" style="background:#4488ff"></div>
+				<span>FL180-290 Lower Cruise</span>
+			</div>
+			<div class="legend-item">
+				<div class="legend-color" style="background:#88ccff"></div>
+				<span>10k-FL180 Transition</span>
+			</div>
+			<div class="legend-item">
+				<div class="legend-color" style="background:#ffcc00"></div>
+				<span>5k-10k Low Altitude</span>
+			</div>
+			<div class="legend-item">
+				<div class="legend-color" style="background:#ff8800"></div>
+				<span>100-5000ft Departure</span>
+			</div>
+			<div class="legend-item">
+				<div class="legend-color" style="background:#ff4400"></div>
+				<span>0-100ft Ground</span>
+			</div>
+			<h4 style="margin-top:12px">8D Conflicts</h4>
+			<div class="legend-item">
+				<div class="legend-color" style="background:#ff0000;animation:pulse 0.5s infinite"></div>
+				<span>CRITICAL &lt;60s CPA</span>
+			</div>
+			<div class="legend-item">
+				<div class="legend-color" style="background:#ff3355"></div>
+				<span>HIGH &lt;2min CPA</span>
+			</div>
+			<div class="legend-item">
+				<div class="legend-color" style="background:#ff6600"></div>
+				<span>MEDIUM &lt;5min CPA</span>
+			</div>
+			<div class="legend-item">
+				<div class="legend-color" style="background:#ffcc00"></div>
+				<span>LOW converging</span>
+			</div>
+			<p style="font-size:9px;color:#666;margin-top:8px;line-height:1.3">
+				8D Risk = H+V separation<br>+ time to CPA + intent
+			</p>
+		</div>
+
+		<div class="controls-panel">
+			<button class="control-btn" id="zoom-in">+</button>
+			<button class="control-btn" id="zoom-out">−</button>
+			<button class="control-btn" id="reset-view">⌂</button>
+		</div>
+
+		<div id="loading">
+			<div class="loading-spinner"></div>
+			<div class="loading-text">Loading 8D Physics Engine...</div>
+		</div>
+	</div>
+
+	<script type="module">
+		// ═══════════════════════════════════════════════════════════════════════════
+		// GAIAOS 8D PHYSICS ENGINE - 120fps REAL-TIME SIMULATION
+		// ═══════════════════════════════════════════════════════════════════════════
+
+		const CRYSTAL_URL = `http://${window.location.hostname}:8765/crystal/snapshot`;
+		const TWIN_URL = `http://${window.location.hostname}:8770`;
+		const PHYSICS_HZ = 120;  // 120 physics ticks per second
+		const DATA_REFRESH_MS = 3000;  // Refresh data every 3 seconds
+
+		// State
+		let engine = null;
+		let canvas = null;
+		let ctx = null;
+		let cameraLon = -98;  // Center of US
+		let cameraLat = 39;
+		let zoom = 4;
+		let isDragging = false;
+		let lastMouseX = 0;
+		let lastMouseY = 0;
+		let frameCount = 0;
+		let lastFpsTime = performance.now();
+		let currentFps = 0;
+		let lastPhysicsTime = performance.now();
+
+		// DOM elements
+		const aircraftCountEl = document.getElementById('aircraft-count');
+		const conflictCountEl = document.getElementById('conflict-count');
+		const anchorCountEl = document.getElementById('anchor-count');
+		const tickCountEl = document.getElementById('tick-count');
+		const fpsEl = document.getElementById('fps');
+		const vchipScaleEl = document.getElementById('vchip-scale');
+		const zoomLevelEl = document.getElementById('zoom-level');
+		const viewportInfoEl = document.getElementById('viewport-info');
+		const streamStatusEl = document.getElementById('stream-status');
+		const loadingEl = document.getElementById('loading');
+
+		// ═══════════════════════════════════════════════════════════════════════════
+		// 8D PHYSICS ENGINE CLASS
+		// ═══════════════════════════════════════════════════════════════════════════
+
+		class PhysicsEngine8D {
+			constructor(width, height) {
+				this.tick = 0;
+				this.worldTime = Date.now() / 1000;
+				this.deltaT = 1 / PHYSICS_HZ;
+				this.aircraft = new Map();
+				this.anchors = new Map();  // Real-world anchors (airports, waypoints)
+				this.conflicts = [];
+				this.cameraLon = -98;
+				this.cameraLat = 39;
+				this.cameraZoom = 4;
+				this.vchipScale = 1;
+				this.canvasWidth = width;
+				this.canvasHeight = height;
+
+				console.log('⚡ GaiaOS 8D Physics Engine initialized @ 120Hz');
+			}
+
+			setCamera(lon, lat, zoom) {
+				this.cameraLon = lon;
+				this.cameraLat = lat;
+				this.cameraZoom = zoom;
+				this.vchipScale = Math.pow(2, zoom - 4);
+			}
+
+			// Get viewport bounds in lat/lon
+			getViewportBounds() {
+				const scale = 256 * Math.pow(2, this.cameraZoom);
+				const lonPerPixel = 360 / scale;
+				const latPerPixel = 180 / scale;  // Approximation
+
+				const halfWidth = this.canvasWidth / 2;
+				const halfHeight = this.canvasHeight / 2;
+
+				return {
+					minLon: this.cameraLon - halfWidth * lonPerPixel,
+					maxLon: this.cameraLon + halfWidth * lonPerPixel,
+					minLat: this.cameraLat - halfHeight * latPerPixel,
+					maxLat: this.cameraLat + halfHeight * latPerPixel,
+					centerLon: this.cameraLon,
+					centerLat: this.cameraLat,
+					radiusKm: Math.max(halfWidth, halfHeight) * lonPerPixel * 111
+				};
+			}
+
+			// Physics tick - runs at 120Hz
+			physicsTick(deltaMs) {
+				this.tick++;
+				const dt = deltaMs / 1000;  // Convert to seconds
+				this.worldTime += dt;
+
+				for (const ac of this.aircraft.values()) {
+					// Update position based on velocity (D0, D1, D2 = spatial)
+					const lat = ac.state[1] * 90;
+					const metersPerDegreeLon = 111320 * Math.cos(lat * Math.PI / 180);
+					const metersPerDegreeLat = 111320;
+
+					// Move aircraft based on velocity
+					ac.state[0] += (ac.velocity.x / metersPerDegreeLon) * dt / 180;
+					ac.state[1] += (ac.velocity.y / metersPerDegreeLat) * dt / 90;
+
+					// Altitude change (D2)
+					const altChangeFt = ac.velocity.z * 3.28084 * dt;
+					ac.state[2] = Math.max(0, Math.min(1, ac.state[2] + altChangeFt / 45000));
+
+					// Time dimension (D3) - normalized time of day
+					const timeOfDay = (this.worldTime % 86400) / 86400;
+					ac.state[3] = timeOfDay;
+
+					// Heading interpolation for smooth rotation
+					if (ac.targetHeading !== undefined) {
+						let diff = ac.targetHeading - ac.headingDeg;
+						if (diff > 180) diff -= 360;
+						if (diff < -180) diff += 360;
+						ac.headingDeg += diff * dt * 2;  // Smooth turn
+					}
+
+					// vChip coherence decay (D7 = uncertainty)
+					const ticksSinceUpdate = this.tick - ac.lastVchipTick;
+					if (ticksSinceUpdate > 120) {  // 1 second at 120Hz
+						ac.vchipCoherence *= 0.995;
+					}
+					ac.state[7] = 1 - ac.vchipCoherence;
+				}
+			}
+
+			// Ingest aircraft data from Crystal Snapshot
+			ingestAircraft(data) {
+				const seenIcaos = new Set();
+				let count = 0;
+
+				for (const ac of data) {
+					const icao = ac.icao24 || ac._key || (ac.atc?.icao24);
+					if (!icao) continue;
+					seenIcaos.add(icao);
+
+					let aircraft = this.aircraft.get(icao);
+					const isNew = !aircraft;
+
+					if (isNew) {
+						aircraft = {
+							icao24: icao,
+							callsign: '',
+							state: [0, 0, 0, 0, 0.5, 0, 0.8, 0.1],
+							velocity: { x: 0, y: 0, z: 0 },
+							headingDeg: 0,
+							targetHeading: 0,
+							vchipCoherence: 1,
+							lastVchipTick: this.tick,
+							aircraftType: null
+						};
+						this.aircraft.set(icao, aircraft);
+					}
+
+					// Extract position from various formats
+					let lon = ac.center_lon;
+					let lat = ac.center_lat;
+					let altFt = ac.altitude_ft || (ac.center_alt_m ? ac.center_alt_m * 3.28084 : null);
+					let velKts = ac.velocity_kts;
+					let hdg = ac.heading_deg;
+					let vRate = ac.vertical_rate_fpm;
+					let callsign = ac.callsign;
+
+					// Check nested atc object
+					if (ac.atc) {
+						if (ac.atc.callsign) callsign = ac.atc.callsign;
+						if (ac.atc.altitude_ft != null) altFt = ac.atc.altitude_ft;
+						if (ac.atc.velocity_kts != null) velKts = ac.atc.velocity_kts;
+						if (ac.atc.heading_deg != null) hdg = ac.atc.heading_deg;
+						if (ac.atc.vertical_rate_fpm != null) vRate = ac.atc.vertical_rate_fpm;
+					}
+
+					// Update state
+					if (lon != null) aircraft.state[0] = lon / 180;
+					if (lat != null) aircraft.state[1] = lat / 90;
+					if (altFt != null) aircraft.state[2] = Math.max(0, Math.min(1, altFt / 45000));
+					if (callsign) aircraft.callsign = callsign.trim();
+
+					// Calculate velocity vector from speed and heading
+					if (velKts != null && hdg != null) {
+						const hdgRad = hdg * Math.PI / 180;
+						const velMs = velKts * 0.514444;  // knots to m/s
+						aircraft.velocity.x = velMs * Math.sin(hdgRad);
+						aircraft.velocity.y = velMs * Math.cos(hdgRad);
+						aircraft.targetHeading = hdg;
+						if (isNew) aircraft.headingDeg = hdg;
+					}
+
+					if (vRate != null) {
+						aircraft.velocity.z = vRate / 196.85;  // fpm to m/s
+					}
+
+					// Use 8D vector if provided
+					if (ac.d_vec && ac.d_vec.length === 8) {
+						// Keep spatial from d_vec but preserve our velocity-based movement
+						aircraft.state[4] = ac.d_vec[4];  // Intent
+						aircraft.state[5] = ac.d_vec[5];  // Risk
+						aircraft.state[6] = ac.d_vec[6];  // Compliance
+					}
+
+					aircraft.lastVchipTick = this.tick;
+					aircraft.vchipCoherence = 1;
+					count++;
+				}
+
+				// Remove stale aircraft (not seen in last update)
+				for (const [icao, ac] of this.aircraft) {
+					if (!seenIcaos.has(icao) && (this.tick - ac.lastVchipTick) > 600) {
+						this.aircraft.delete(icao);
+					}
+				}
+
+				return count;
+			}
+
+			ingestConflicts(data) {
+				this.conflicts = data || [];
+				return this.conflicts.length;
+			}
+
+			ingestAnchors(data) {
+				for (const anchor of data) {
+					this.anchors.set(anchor.id, {
+						id: anchor.id,
+						name: anchor.name,
+						type: anchor.anchor_type,
+						lat: anchor.lat,
+						lon: anchor.lon,
+						alt_ft: anchor.alt_ft,
+						uum_8d: anchor.uum_8d
+					});
+				}
+				return this.anchors.size;
+			}
+
+			aircraftCount() {
+				return this.aircraft.size;
+			}
+
+			anchorCount() {
+				return this.anchors.size;
+			}
+
+			conflictCount() {
+				return this.conflicts.length;
+			}
+
+			currentTick() {
+				return this.tick;
+			}
+
+			getVchipScale() {
+				return this.vchipScale;
+			}
+
+			// Convert world coordinates to screen coordinates
+			worldToScreen(lon, lat) {
+				const scale = 256 * Math.pow(2, this.cameraZoom);
+				const x = (lon + 180) / 360 * scale;
+				const latRad = lat * Math.PI / 180;
+				const y = (1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * scale;
+
+				const camX = (this.cameraLon + 180) / 360 * scale;
+				const camLatRad = this.cameraLat * Math.PI / 180;
+				const camY = (1 - Math.log(Math.tan(camLatRad) + 1 / Math.cos(camLatRad)) / Math.PI) / 2 * scale;
+
+				return {
+					x: (x - camX) + this.canvasWidth / 2,
+					y: (y - camY) + this.canvasHeight / 2
+				};
+			}
+
+			// Main render function
+			render(ctx) {
+				// Clear with dark background
+				ctx.fillStyle = '#0a0a12';
+				ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+
+				// Draw grid
+				this.drawGrid(ctx);
+
+				// Draw anchors (airports, waypoints) - behind everything
+				for (const anchor of this.anchors.values()) {
+					this.drawAnchor(ctx, anchor);
+				}
+
+				// Draw conflicts (behind aircraft)
+				for (const conflict of this.conflicts) {
+					this.drawConflict(ctx, conflict);
+				}
+
+				// Draw all aircraft
+				for (const ac of this.aircraft.values()) {
+					this.drawAircraft(ctx, ac);
+				}
+			}
+
+			drawAnchor(ctx, anchor) {
+				const pos = this.worldToScreen(anchor.lon, anchor.lat);
+
+				// Cull if off screen
+				if (pos.x < -50 || pos.x > this.canvasWidth + 50 ||
+					pos.y < -50 || pos.y > this.canvasHeight + 50) return;
+
+				const size = 6 * Math.sqrt(this.cameraZoom / 4);
+
+				// Draw anchor marker (diamond shape for airports)
+				ctx.save();
+				ctx.translate(pos.x, pos.y);
+
+				// Outer glow
+				ctx.fillStyle = 'rgba(255, 200, 100, 0.15)';
+				ctx.beginPath();
+				ctx.arc(0, 0, size * 3, 0, Math.PI * 2);
+				ctx.fill();
+
+				// Diamond shape
+				ctx.fillStyle = '#ffcc66';
+				ctx.strokeStyle = '#ff9900';
+				ctx.lineWidth = 1;
+				ctx.beginPath();
+				ctx.moveTo(0, -size);
+				ctx.lineTo(size, 0);
+				ctx.lineTo(0, size);
+				ctx.lineTo(-size, 0);
+				ctx.closePath();
+				ctx.fill();
+				ctx.stroke();
+
+				// Label at higher zoom
+				if (this.cameraZoom >= 5) {
+					ctx.font = 'bold 10px JetBrains Mono, monospace';
+					ctx.fillStyle = '#ffcc66';
+					ctx.textAlign = 'center';
+					ctx.fillText(anchor.id, 0, -size - 6);
+
+					if (this.cameraZoom >= 7) {
+						ctx.font = '8px Inter, sans-serif';
+						ctx.fillStyle = '#888';
+						ctx.fillText(anchor.name, 0, size + 12);
+					}
+				}
+
+				ctx.restore();
+			}
+
+			drawGrid(ctx) {
+				ctx.strokeStyle = 'rgba(100, 100, 140, 0.12)';
+				ctx.lineWidth = 1;
+
+				const gridSpacing = 60 * this.vchipScale;
+				for (let x = 0; x < this.canvasWidth; x += gridSpacing) {
+					ctx.beginPath();
+					ctx.moveTo(x, 0);
+					ctx.lineTo(x, this.canvasHeight);
+					ctx.stroke();
+				}
+				for (let y = 0; y < this.canvasHeight; y += gridSpacing) {
+					ctx.beginPath();
+					ctx.moveTo(0, y);
+					ctx.lineTo(this.canvasWidth, y);
+					ctx.stroke();
+				}
+			}
+
+			drawAircraft(ctx, ac) {
+				const lon = ac.state[0] * 180;
+				const lat = ac.state[1] * 90;
+				const pos = this.worldToScreen(lon, lat);
+
+				// Cull if off screen
+				if (pos.x < -50 || pos.x > this.canvasWidth + 50 ||
+					pos.y < -50 || pos.y > this.canvasHeight + 50) return;
+
+				// Color based on altitude (D2) - 7 bands for true ATC visualization
+				// altNorm is altitude_ft / 45000, so:
+				// FL410 (41000ft) = 0.91, FL290 (29000ft) = 0.64, FL180 (18000ft) = 0.40
+				// 10000ft = 0.22, 5000ft = 0.11, 100ft = 0.002
+				const altNorm = ac.state[2];
+				let color;
+				if (altNorm > 0.91) color = '#00ffcc';       // FL410+ High Cruise
+				else if (altNorm > 0.64) color = '#00ccff';  // FL290-410 Mid Cruise
+				else if (altNorm > 0.40) color = '#4488ff';  // FL180-290 Lower Cruise
+				else if (altNorm > 0.22) color = '#88ccff';  // 10k-FL180 Transition
+				else if (altNorm > 0.11) color = '#ffcc00';  // 5k-10k Low Altitude
+				else if (altNorm > 0.002) color = '#ff8800'; // 100-5000ft Departure/Approach
+				else color = '#ff4400';                       // 0-100ft Ground
+
+				// Size based on altitude and zoom
+				const baseSize = 8;
+				const altScale = 0.7 + altNorm * 0.3;
+				const zoomScale = Math.sqrt(this.cameraZoom / 4);
+				const size = baseSize * altScale * zoomScale;
+
+				ctx.save();
+				ctx.translate(pos.x, pos.y);
+				ctx.rotate((ac.headingDeg - 90) * Math.PI / 180);
+
+				// Aircraft shape (triangle pointing in direction of travel)
+				ctx.fillStyle = color;
+				ctx.globalAlpha = ac.vchipCoherence;
+				ctx.beginPath();
+				ctx.moveTo(size * 1.2, 0);
+				ctx.lineTo(-size * 0.6, -size * 0.6);
+				ctx.lineTo(-size * 0.3, 0);
+				ctx.lineTo(-size * 0.6, size * 0.6);
+				ctx.closePath();
+				ctx.fill();
+
+				// Tail
+				ctx.beginPath();
+				ctx.moveTo(-size * 0.3, 0);
+				ctx.lineTo(-size * 0.8, -size * 0.2);
+				ctx.lineTo(-size * 0.8, size * 0.2);
+				ctx.closePath();
+				ctx.fill();
+
+				ctx.restore();
+
+				// Velocity vector (shows direction of travel)
+				const velScale = 0.03 * this.vchipScale;
+				const velLen = Math.sqrt(ac.velocity.x ** 2 + ac.velocity.y ** 2);
+				if (velLen > 10) {
+					ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+					ctx.lineWidth = 1;
+					ctx.beginPath();
+					ctx.moveTo(pos.x, pos.y);
+					ctx.lineTo(pos.x + ac.velocity.x * velScale, pos.y - ac.velocity.y * velScale);
+					ctx.stroke();
+				}
+
+				// Callsign label at higher zoom
+				if (this.cameraZoom >= 6 && ac.callsign) {
+					ctx.font = '9px JetBrains Mono, monospace';
+					ctx.fillStyle = color;
+					ctx.globalAlpha = 0.9;
+					ctx.fillText(ac.callsign, pos.x + size + 4, pos.y + 3);
+				}
+
+				// Risk halo (D5)
+				const risk = ac.state[5];
+				if (risk > 0.3) {
+					ctx.fillStyle = `rgba(255, 51, 85, ${risk * 0.25})`;
+					ctx.beginPath();
+					ctx.arc(pos.x, pos.y, size * 2.5, 0, Math.PI * 2);
+					ctx.fill();
+				}
+
+				ctx.globalAlpha = 1;
+			}
+
+			drawConflict(ctx, conflict) {
+				const lat = conflict.center_lat;
+				const lon = conflict.center_lon;
+				if (lat == null || lon == null) return;
+
+				const pos = this.worldToScreen(lon, lat);
+				if (pos.x < -100 || pos.x > this.canvasWidth + 100 ||
+					pos.y < -100 || pos.y > this.canvasHeight + 100) return;
+
+				const d5 = conflict.d_vec ? conflict.d_vec[5] : 0.5;
+				const severity = conflict.conflict?.severity || 'MEDIUM';
+
+				let color, glowColor;
+				if (severity === 'CRITICAL' || d5 > 0.9) {
+					color = '#ff0000';
+					glowColor = 'rgba(255, 0, 0, 0.7)';
+				} else if (severity === 'HIGH' || d5 > 0.7) {
+					color = '#ff3355';
+					glowColor = 'rgba(255, 51, 85, 0.5)';
+				} else if (severity === 'MEDIUM' || d5 > 0.5) {
+					color = '#ff6600';
+					glowColor = 'rgba(255, 102, 0, 0.4)';
+				} else {
+					color = '#ffcc00';
+					glowColor = 'rgba(255, 204, 0, 0.3)';
+				}
+
+				const baseRadius = 25 * Math.sqrt(this.cameraZoom / 4);
+				const pulsePhase = (this.tick * 0.05) % (Math.PI * 2);
+				const pulseRadius = baseRadius * (1 + 0.15 * Math.sin(pulsePhase));
+
+				// Outer glow
+				const gradient = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, pulseRadius * 2);
+				gradient.addColorStop(0, glowColor);
+				gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+				ctx.fillStyle = gradient;
+				ctx.beginPath();
+				ctx.arc(pos.x, pos.y, pulseRadius * 2, 0, Math.PI * 2);
+				ctx.fill();
+
+				// Inner circle
+				ctx.strokeStyle = color;
+				ctx.lineWidth = 2;
+				ctx.beginPath();
+				ctx.arc(pos.x, pos.y, pulseRadius, 0, Math.PI * 2);
+				ctx.stroke();
+
+				// X mark
+				ctx.strokeStyle = color;
+				ctx.lineWidth = 2;
+				const xSize = pulseRadius * 0.35;
+				ctx.beginPath();
+				ctx.moveTo(pos.x - xSize, pos.y - xSize);
+				ctx.lineTo(pos.x + xSize, pos.y + xSize);
+				ctx.moveTo(pos.x + xSize, pos.y - xSize);
+				ctx.lineTo(pos.x - xSize, pos.y + xSize);
+				ctx.stroke();
+
+				// Labels at higher zoom
+				if (this.cameraZoom >= 5 && conflict.conflict) {
+					ctx.font = 'bold 9px JetBrains Mono, monospace';
+					ctx.fillStyle = color;
+					ctx.textAlign = 'center';
+
+					if (conflict.conflict.aircraft) {
+						const ac1 = conflict.conflict.aircraft[0];
+						const ac2 = conflict.conflict.aircraft[1];
+						const l1 = ac1?.callsign || ac1?.icao24 || '?';
+						const l2 = ac2?.callsign || ac2?.icao24 || '?';
+						ctx.fillText(`${l1} ↔ ${l2}`, pos.x, pos.y - pulseRadius - 6);
+					}
+
+					if (conflict.conflict.horizontal_nm != null) {
+						ctx.font = '8px JetBrains Mono, monospace';
+						ctx.fillText(
+							`${conflict.conflict.horizontal_nm.toFixed(1)}nm / ${Math.round(conflict.conflict.vertical_ft)}ft`,
+							pos.x, pos.y + pulseRadius + 10
+						);
+					}
+					ctx.textAlign = 'left';
+				}
+			}
+		}
+
+		// ═══════════════════════════════════════════════════════════════════════════
+		// INITIALIZATION
+		// ═══════════════════════════════════════════════════════════════════════════
+
+		async function init() {
+			canvas = document.getElementById('physics-canvas');
+			ctx = canvas.getContext('2d');
+
+			function resize() {
+				canvas.width = window.innerWidth;
+				canvas.height = window.innerHeight;
+				if (engine) {
+					engine.canvasWidth = canvas.width;
+					engine.canvasHeight = canvas.height;
+				}
+			}
+			resize();
+			window.addEventListener('resize', resize);
+
+			engine = new PhysicsEngine8D(canvas.width, canvas.height);
+			engine.setCamera(cameraLon, cameraLat, zoom);
+
+			setupInput();
+			loadingEl.classList.add('hidden');
+
+			// Start the game loop
+			startGameLoop();
+			startDataLoop();
+		}
+
+		function setupInput() {
+			// Mouse drag for panning
+			canvas.addEventListener('mousedown', (e) => {
+				isDragging = true;
+				lastMouseX = e.clientX;
+				lastMouseY = e.clientY;
+			});
+
+			canvas.addEventListener('mousemove', (e) => {
+				if (!isDragging) return;
+				const dx = e.clientX - lastMouseX;
+				const dy = e.clientY - lastMouseY;
+
+				const scale = 256 * Math.pow(2, zoom);
+				cameraLon -= dx / scale * 360;
+				cameraLat += dy / scale * 180;
+				cameraLat = Math.max(-85, Math.min(85, cameraLat));
+
+				engine.setCamera(cameraLon, cameraLat, zoom);
+				lastMouseX = e.clientX;
+				lastMouseY = e.clientY;
+			});
+
+			canvas.addEventListener('mouseup', () => isDragging = false);
+			canvas.addEventListener('mouseleave', () => isDragging = false);
+
+			// Wheel zoom
+			canvas.addEventListener('wheel', (e) => {
+				e.preventDefault();
+				const delta = e.deltaY > 0 ? -0.5 : 0.5;
+				zoom = Math.max(2, Math.min(18, zoom + delta));
+				engine.setCamera(cameraLon, cameraLat, zoom);
+				zoomLevelEl.textContent = zoom.toFixed(1);
+			});
+
+			// Touch support
+			let lastTouchDist = 0;
+			canvas.addEventListener('touchstart', (e) => {
+				if (e.touches.length === 1) {
+					isDragging = true;
+					lastMouseX = e.touches[0].clientX;
+					lastMouseY = e.touches[0].clientY;
+				} else if (e.touches.length === 2) {
+					lastTouchDist = Math.hypot(
+						e.touches[1].clientX - e.touches[0].clientX,
+						e.touches[1].clientY - e.touches[0].clientY
+					);
+				}
+			});
+
+			canvas.addEventListener('touchmove', (e) => {
+				e.preventDefault();
+				if (e.touches.length === 1 && isDragging) {
+					const dx = e.touches[0].clientX - lastMouseX;
+					const dy = e.touches[0].clientY - lastMouseY;
+					const scale = 256 * Math.pow(2, zoom);
+					cameraLon -= dx / scale * 360;
+					cameraLat += dy / scale * 180;
+					cameraLat = Math.max(-85, Math.min(85, cameraLat));
+					engine.setCamera(cameraLon, cameraLat, zoom);
+					lastMouseX = e.touches[0].clientX;
+					lastMouseY = e.touches[0].clientY;
+				} else if (e.touches.length === 2) {
+					const dist = Math.hypot(
+						e.touches[1].clientX - e.touches[0].clientX,
+						e.touches[1].clientY - e.touches[0].clientY
+					);
+					const delta = (dist - lastTouchDist) * 0.01;
+					zoom = Math.max(2, Math.min(18, zoom + delta));
+					engine.setCamera(cameraLon, cameraLat, zoom);
+					lastTouchDist = dist;
+				}
+			});
+
+			canvas.addEventListener('touchend', () => isDragging = false);
+
+			// Control buttons
+			document.getElementById('zoom-in').addEventListener('click', () => {
+				zoom = Math.min(18, zoom + 1);
+				engine.setCamera(cameraLon, cameraLat, zoom);
+				zoomLevelEl.textContent = zoom.toFixed(1);
+			});
+
+			document.getElementById('zoom-out').addEventListener('click', () => {
+				zoom = Math.max(2, zoom - 1);
+				engine.setCamera(cameraLon, cameraLat, zoom);
+				zoomLevelEl.textContent = zoom.toFixed(1);
+			});
+
+			document.getElementById('reset-view').addEventListener('click', () => {
+				cameraLon = -98;
+				cameraLat = 39;
+				zoom = 4;
+				engine.setCamera(cameraLon, cameraLat, zoom);
+				zoomLevelEl.textContent = zoom.toFixed(1);
+			});
+		}
+
+		// ═══════════════════════════════════════════════════════════════════════════
+		// GAME LOOP - 120fps Physics + Render
+		// ═══════════════════════════════════════════════════════════════════════════
+
+		function startGameLoop() {
+			let lastTime = performance.now();
+			let physicsAccumulator = 0;
+			const physicsStep = 1000 / PHYSICS_HZ;  // ~8.33ms per tick
+
+			function gameLoop(currentTime) {
+				const deltaTime = currentTime - lastTime;
+				lastTime = currentTime;
+
+				// Accumulate time for fixed physics steps
+				physicsAccumulator += deltaTime;
+
+				// Run physics at fixed 120Hz
+				while (physicsAccumulator >= physicsStep) {
+					engine.physicsTick(physicsStep);
+					physicsAccumulator -= physicsStep;
+				}
+
+				// Render
+				engine.render(ctx);
+
+				// Update UI
+				tickCountEl.textContent = engine.currentTick().toLocaleString();
+				vchipScaleEl.textContent = engine.getVchipScale().toFixed(3);
+
+				// FPS counter
+				frameCount++;
+				if (currentTime - lastFpsTime >= 1000) {
+					currentFps = frameCount;
+					frameCount = 0;
+					lastFpsTime = currentTime;
+					fpsEl.textContent = currentFps;
+				}
+
+				// Update viewport info
+				const bounds = engine.getViewportBounds();
+				viewportInfoEl.textContent = `${bounds.radiusKm.toFixed(0)}km`;
+
+				requestAnimationFrame(gameLoop);
+			}
+
+			requestAnimationFrame(gameLoop);
+		}
+
+		// ═══════════════════════════════════════════════════════════════════════════
+		// DATA LOOP - Fetch from Crystal Snapshot
+		// ═══════════════════════════════════════════════════════════════════════════
+
+		async function startDataLoop() {
+			// Load anchors once at startup
+			async function loadAnchors() {
+				try {
+					const resp = await fetch(`${TWIN_URL}/anchors`);
+					if (resp.ok) {
+						const anchors = await resp.json();
+						engine.ingestAnchors(anchors);
+						console.log(`📍 Loaded ${engine.anchorCount()} anchors`);
+					}
+				} catch (err) {
+					console.warn('Could not load anchors:', err);
+				}
+			}
+
+			async function fetchData() {
+				try {
+					const bounds = engine.getViewportBounds();
+
+					const resp = await fetch(CRYSTAL_URL, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							lat: bounds.centerLat,
+							lon: bounds.centerLon,
+							radius_km: Math.min(bounds.radiusKm * 1.5, 2000),  // Fetch slightly more than viewport
+							seconds_back: 300,
+							seconds_forward: 60
+						})
+					});
+
+					if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+
+					const data = await resp.json();
+					const atc = data.atc || [];
+					const conflicts = data.conflicts || [];
+
+					engine.ingestAircraft(atc);
+					engine.ingestConflicts(conflicts);
+
+					aircraftCountEl.textContent = engine.aircraftCount().toLocaleString();
+					conflictCountEl.textContent = engine.conflictCount().toLocaleString();
+
+					streamStatusEl.textContent = 'LIVE';
+					streamStatusEl.style.color = '#00cc66';
+
+				} catch (err) {
+					console.error('Data fetch failed:', err);
+					streamStatusEl.textContent = 'ERROR';
+					streamStatusEl.style.color = '#ff3355';
+				}
+			}
+
+			// Load anchors first
+			await loadAnchors();
+			anchorCountEl.textContent = engine.anchorCount().toString();
+
+			// Initial fetch
+			await fetchData();
+
+			// Periodic refresh
+			setInterval(fetchData, DATA_REFRESH_MS);
+		}
+
+		// Start
+		init();
+	</script>
+</body>
+
+</html>

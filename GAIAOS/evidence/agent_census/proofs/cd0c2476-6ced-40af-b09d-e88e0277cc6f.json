@@ -1,0 +1,19 @@
+{
+  "agent_id": "cdfb7a67-27a8-472c-a06e-fae2b49a8555",
+  "capability_id": "CODE_RUN",
+  "challenge_id": "fba1a352-c070-44e1-b477-a5e3085bab7f",
+  "proof_id": "cd0c2476-6ced-40af-b09d-e88e0277cc6f",
+  "proof_payload": {
+    "stdout": "78d88bb8288b8f0526a9e42bad3e0716",
+    "stdout_hash": "64960acff43412e68e91dc9c188e2adc525cfb3d3b717f95a45f9c3e60ec4274"
+  },
+  "reason_code": "HASH_MISMATCH",
+  "submitted_at": "2026-02-01T11:36:49.134628+00:00",
+  "verdict": "FAILED",
+  "verification_details": {
+    "expected_hash": "88fac0e655bbe3340762b81377ea7a47b10a39d355fdc7d62ca99c525ddc70e8",
+    "match": false,
+    "provided_hash": "64960acff43412e68e91dc9c188e2adc525cfb3d3b717f95a45f9c3e60ec4274"
+  },
+  "verified_at": "2026-02-01T11:36:49.134690+00:00"
+}

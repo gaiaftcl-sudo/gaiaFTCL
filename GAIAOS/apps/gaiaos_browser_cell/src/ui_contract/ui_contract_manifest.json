@@ -1,0 +1,216 @@
+{
+  "version": "1.0.0",
+  "generated_from": "evidence/ui_expected/*.json",
+  "generated_at": "2026-01-31T13:00:00Z",
+  "domains": [
+    {
+      "domain_id": "FTCL",
+      "name": "Field Truth Closure Layer",
+      "expected_games": [
+        "G_FTCL_INVEST_001",
+        "G_FTCL_PROFIT_DIST"
+      ]
+    },
+    {
+      "domain_id": "INFRASTRUCTURE",
+      "name": "Infrastructure Management",
+      "expected_games": [
+        "G_FTCL_UPDATE_FLEET_V1",
+        "G_FTCL_ROLLBACK_V1"
+      ]
+    }
+  ],
+  "games": [
+    {
+      "game_id": "G_FTCL_UPDATE_FLEET_V1",
+      "name": "Fleet Update",
+      "domain": "INFRASTRUCTURE",
+      "expected_envelopes": [
+        "FLEET_UPDATE_REQUEST",
+        "FLEET_UPDATE_COMMITMENT",
+        "FLEET_UPDATE_TRANSACTION",
+        "FLEET_UPDATE_REPORT"
+      ],
+      "required_uum8d_dims": [
+        "d0",
+        "d4",
+        "d5",
+        "d6",
+        "d7"
+      ]
+    },
+    {
+      "game_id": "G_FTCL_ROLLBACK_V1",
+      "name": "Fleet Rollback",
+      "domain": "INFRASTRUCTURE",
+      "expected_envelopes": [
+        "ROLLBACK_REQUEST",
+        "ROLLBACK_COMMITMENT",
+        "ROLLBACK_TRANSACTION"
+      ],
+      "required_uum8d_dims": [
+        "d0",
+        "d4",
+        "d5",
+        "d6",
+        "d7"
+      ]
+    },
+    {
+      "game_id": "G_FTCL_INVEST_001",
+      "name": "Investment Acquisition",
+      "domain": "FTCL",
+      "expected_envelopes": [
+        "INVESTMENT_CLAIM",
+        "INVESTMENT_COMMITMENT"
+      ],
+      "required_uum8d_dims": [
+        "d0",
+        "d4",
+        "d5",
+        "d6",
+        "d7"
+      ]
+    },
+    {
+      "game_id": "G_FTCL_PROFIT_DIST",
+      "name": "Profit Distribution",
+      "domain": "FTCL",
+      "expected_envelopes": [
+        "PROFIT_DISTRIBUTION_REQUEST",
+        "PROFIT_DISTRIBUTION_TRANSACTION"
+      ],
+      "required_uum8d_dims": [
+        "d0",
+        "d4",
+        "d5",
+        "d6",
+        "d7"
+      ]
+    }
+  ],
+  "envelopes": [
+    {
+      "subject": "FLEET_UPDATE_REQUEST",
+      "envelope_type": "REQUEST",
+      "producer_game_id": "G_FTCL_UPDATE_FLEET_V1"
+    },
+    {
+      "subject": "FLEET_UPDATE_COMMITMENT",
+      "envelope_type": "COMMITMENT",
+      "producer_game_id": "G_FTCL_UPDATE_FLEET_V1"
+    },
+    {
+      "subject": "FLEET_UPDATE_TRANSACTION",
+      "envelope_type": "TRANSACTION",
+      "producer_game_id": "G_FTCL_UPDATE_FLEET_V1"
+    },
+    {
+      "subject": "FLEET_UPDATE_REPORT",
+      "envelope_type": "REPORT",
+      "producer_game_id": "G_FTCL_UPDATE_FLEET_V1"
+    },
+    {
+      "subject": "ROLLBACK_REQUEST",
+      "envelope_type": "REQUEST",
+      "producer_game_id": "G_FTCL_ROLLBACK_V1"
+    },
+    {
+      "subject": "ROLLBACK_COMMITMENT",
+      "envelope_type": "COMMITMENT",
+      "producer_game_id": "G_FTCL_ROLLBACK_V1"
+    },
+    {
+      "subject": "ROLLBACK_TRANSACTION",
+      "envelope_type": "TRANSACTION",
+      "producer_game_id": "G_FTCL_ROLLBACK_V1"
+    },
+    {
+      "subject": "INVESTMENT_CLAIM",
+      "envelope_type": "CLAIM",
+      "producer_game_id": "G_FTCL_INVEST_001"
+    },
+    {
+      "subject": "INVESTMENT_COMMITMENT",
+      "envelope_type": "COMMITMENT",
+      "producer_game_id": "G_FTCL_INVEST_001"
+    },
+    {
+      "subject": "PROFIT_DISTRIBUTION_REQUEST",
+      "envelope_type": "REQUEST",
+      "producer_game_id": "G_FTCL_PROFIT_DIST"
+    },
+    {
+      "subject": "PROFIT_DISTRIBUTION_TRANSACTION",
+      "envelope_type": "TRANSACTION",
+      "producer_game_id": "G_FTCL_PROFIT_DIST"
+    },
+    {
+      "subject": "GENERIC_MAIL",
+      "envelope_type": "MAIL",
+      "producer_game_id": null
+    },
+    {
+      "subject": "GENERIC_IDENTITY",
+      "envelope_type": "IDENTITY",
+      "producer_game_id": null
+    },
+    {
+      "subject": "GENERIC_OBLIGATION",
+      "envelope_type": "OBLIGATION",
+      "producer_game_id": null
+    },
+    {
+      "subject": "GENERIC_MOVE",
+      "envelope_type": "MOVE",
+      "producer_game_id": null
+    },
+    {
+      "subject": "GENERIC_PROOF",
+      "envelope_type": "PROOF",
+      "producer_game_id": null
+    }
+  ],
+  "uum8d_dims": [
+    {
+      "dim_key": "d0",
+      "dim_name": "Temporal",
+      "symbol": "t"
+    },
+    {
+      "dim_key": "d1",
+      "dim_name": "Spatial X",
+      "symbol": "x"
+    },
+    {
+      "dim_key": "d2",
+      "dim_name": "Spatial Y",
+      "symbol": "y"
+    },
+    {
+      "dim_key": "d3",
+      "dim_name": "Spatial Z",
+      "symbol": "z"
+    },
+    {
+      "dim_key": "d4",
+      "dim_name": "Prudence",
+      "symbol": "n"
+    },
+    {
+      "dim_key": "d5",
+      "dim_name": "Justice",
+      "symbol": "l"
+    },
+    {
+      "dim_key": "d6",
+      "dim_name": "Temperance",
+      "symbol": "m_v"
+    },
+    {
+      "dim_key": "d7",
+      "dim_name": "Fortitude",
+      "symbol": "m_f"
+    }
+  ]
+}

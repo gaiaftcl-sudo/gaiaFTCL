@@ -1,0 +1,66 @@
+[
+  {
+    "dim_key": "d0",
+    "dim_name": "Temporal",
+    "symbol": "t",
+    "description": "Time dimension",
+    "source_path": "services/franklin_guardian/src/lib.rs",
+    "source_line_range": "48"
+  },
+  {
+    "dim_key": "d1",
+    "dim_name": "Spatial X",
+    "symbol": "x",
+    "description": "Spatial X coordinate",
+    "source_path": "services/franklin_guardian/src/lib.rs",
+    "source_line_range": "49"
+  },
+  {
+    "dim_key": "d2",
+    "dim_name": "Spatial Y",
+    "symbol": "y",
+    "description": "Spatial Y coordinate",
+    "source_path": "services/franklin_guardian/src/lib.rs",
+    "source_line_range": "50"
+  },
+  {
+    "dim_key": "d3",
+    "dim_name": "Spatial Z",
+    "symbol": "z",
+    "description": "Spatial Z coordinate",
+    "source_path": "services/franklin_guardian/src/lib.rs",
+    "source_line_range": "51"
+  },
+  {
+    "dim_key": "d4",
+    "dim_name": "Prudence",
+    "symbol": "n",
+    "description": "Virtue dimension: Prudence",
+    "source_path": "services/franklin_guardian/src/lib.rs",
+    "source_line_range": "52"
+  },
+  {
+    "dim_key": "d5",
+    "dim_name": "Justice",
+    "symbol": "l",
+    "description": "Virtue dimension: Justice",
+    "source_path": "services/franklin_guardian/src/lib.rs",
+    "source_line_range": "53"
+  },
+  {
+    "dim_key": "d6",
+    "dim_name": "Temperance",
+    "symbol": "m_v",
+    "description": "Virtue dimension: Temperance",
+    "source_path": "services/franklin_guardian/src/lib.rs",
+    "source_line_range": "54"
+  },
+  {
+    "dim_key": "d7",
+    "dim_name": "Fortitude",
+    "symbol": "m_f",
+    "description": "Virtue dimension: Fortitude",
+    "source_path": "services/franklin_guardian/src/lib.rs",
+    "source_line_range": "55"
+  }
+]

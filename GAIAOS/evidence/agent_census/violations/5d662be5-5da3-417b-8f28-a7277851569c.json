@@ -1,0 +1,26 @@
+{
+  "action_taken": "AUTO_DETECTED",
+  "agent_id": "e4906f71-9770-44c5-8046-9ba3f381cf66",
+  "detected_at": "2026-02-01T12:07:30.748940+00:00",
+  "evidence": {
+    "detector_rule_id": "GOV_AUTHORITY_CLAIM",
+    "detector_version": "1.0.0",
+    "excerpt_hash": "f62cd8cd76edaa7c2a2f83ca47abaa486563f28ff786aa8a5db0beff89c59b6a",
+    "excerpt_length": 81,
+    "pattern_matches": [
+      {
+        "matches": [
+          "governance",
+          "govern",
+          "authority"
+        ],
+        "type": "keyword_match"
+      }
+    ],
+    "platform": "test_fixture",
+    "source_id": "msg_003",
+    "total_matches": 3
+  },
+  "reason_code": "BH_UNSANCTIONED_GOVERNANCE_FORMATION",
+  "severity": "critical"
+}

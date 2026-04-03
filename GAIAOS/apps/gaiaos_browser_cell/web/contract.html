@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GaiaOS - UI Contract Coverage</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Courier New', monospace;
+      background: #0a0e27;
+      color: #00ff88;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 { color: #4a9eff; margin-bottom: 20px; border-bottom: 2px solid #00ff88; padding-bottom: 10px; }
+    h2 { color: #00ff88; margin-top: 30px; margin-bottom: 15px; font-size: 18px; }
+    h3 { color: #4a9eff; margin-top: 20px; margin-bottom: 10px; font-size: 14px; }
+    .domain { border: 1px solid #4a9eff; padding: 15px; margin-bottom: 20px; background: rgba(74, 158, 255, 0.05); }
+    .game { border: 1px solid #00ff88; padding: 12px; margin: 10px 0; background: rgba(0, 255, 136, 0.05); }
+    .dimension, .envelope { 
+      display: inline-block;
+      padding: 4px 8px;
+      margin: 4px;
+      border: 1px solid #666;
+      background: rgba(255, 255, 255, 0.05);
+      font-size: 11px;
+    }
+    .dimension { border-color: #ff9933; color: #ff9933; }
+    .envelope { border-color: #00ff88; color: #00ff88; }
+    .meta { color: #666; font-size: 10px; margin-top: 5px; }
+    .summary { background: rgba(74, 158, 255, 0.1); padding: 15px; margin-bottom: 20px; border: 1px solid #4a9eff; }
+    .summary-item { display: flex; justify-content: space-between; padding: 5px 0; }
+    .summary-label { color: #4a9eff; }
+    .summary-value { color: #00ff88; font-weight: bold; }
+    #loading { text-align: center; padding: 40px; color: #4a9eff; }
+    .error { color: #ff3333; padding: 20px; border: 1px solid #ff3333; background: rgba(255, 51, 51, 0.1); }
+  </style>
+</head>
+<body>
+  <h1>GaiaOS UI Contract Coverage</h1>
+  <div id="loading">Loading contract manifest...</div>
+  <div id="error" class="error" style="display:none;"></div>
+  <div id="content" style="display:none;">
+    <div class="summary" id="summary"></div>
+    <div id="domains"></div>
+    <div id="all-envelopes">
+      <h2>All Envelopes</h2>
+      <div id="envelope-list"></div>
+    </div>
+    <div id="all-dimensions">
+      <h2>UUM-8D Dimensions</h2>
+      <div id="dimension-list"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    async function loadContract() {
+      try {
+        const response = await fetch('../src/ui_contract/ui_contract_manifest.json');
+        if (!response.ok) throw new Error(`Failed to load manifest: ${response.status}`);
+        const contract = await response.json();
+        
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+        
+        renderSummary(contract);
+        renderDomains(contract);
+        renderAllEnvelopes(contract);
+        renderAllDimensions(contract);
+      } catch (error) {
+        document.getElementById('loading').style.display = 'none';
+        const errorDiv = document.getElementById('error');
+        errorDiv.textContent = `Error: ${error.message}`;
+        errorDiv.style.display = 'block';
+        console.error('Contract load error:', error);
+      }
+    }
+
+    function renderSummary(contract) {
+      const summary = document.getElementById('summary');
+      summary.innerHTML = `
+        <h2>Summary</h2>
+        <div class="summary-item">
+          <span class="summary-label">Domains:</span>
+          <span class="summary-value">${contract.domains.length}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Games:</span>
+          <span class="summary-value">${contract.games.length}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Envelopes:</span>
+          <span class="summary-value">${contract.envelopes.length}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">UUM-8D Dimensions:</span>
+          <span class="summary-value">${contract.uum8d_dims.length}</span>
+        </div>
+        <div class="meta">Contract Version: ${contract.version} | Generated: ${contract.generated_at}</div>
+      `;
+    }
+
+    function renderDomains(contract) {
+      const domainsDiv = document.getElementById('domains');
+      domainsDiv.innerHTML = '<h2>Domains & Games</h2>';
+      
+      contract.domains.forEach(domain => {
+        const domainDiv = document.createElement('div');
+        domainDiv.className = 'domain';
+        domainDiv.setAttribute('data-testid', `domain:${domain.domain_id}`);
+        
+        let html = `<h3>${domain.name} (${domain.domain_id})</h3>`;
+        
+        // Find games for this domain
+        const domainGames = contract.games.filter(g => g.domain === domain.domain_id);
+        
+        domainGames.forEach(game => {
+          html += `
+            <div class="game" data-testid="game:${game.game_id}">
+              <strong>${game.name}</strong> (${game.game_id})
+              <div class="meta">Domain: ${game.domain}</div>
+              
+              <div style="margin-top: 10px;">
+                <strong style="color: #ff9933;">Required UUM-8D Dimensions:</strong><br>
+                ${game.required_uum8d_dims.map(dim => {
+                  const dimInfo = contract.uum8d_dims.find(d => d.dim_key === dim);
+                  return `<span class="dimension" data-testid="dim:${game.game_id}:${dim}">${dim}: ${dimInfo ? dimInfo.dim_name : dim}</span>`;
+                }).join('')}
+              </div>
+              
+              <div style="margin-top: 10px;">
+                <strong style="color: #00ff88;">Expected Envelopes:</strong><br>
+                ${game.expected_envelopes.map(envSubject => {
+                  const envInfo = contract.envelopes.find(e => e.subject === envSubject);
+                  const envId = btoa(envSubject).replace(/[+/=]/g, '_');
+                  return `<span class="envelope" data-testid="env:${game.game_id}:${envId}">${envSubject} (${envInfo ? envInfo.envelope_type : 'UNKNOWN'})</span>`;
+                }).join('')}
+              </div>
+            </div>
+          `;
+        });
+        
+        domainDiv.innerHTML = html;
+        domainsDiv.appendChild(domainDiv);
+      });
+    }
+
+    function renderAllEnvelopes(contract) {
+      const envelopeList = document.getElementById('envelope-list');
+      contract.envelopes.forEach(env => {
+        const envId = btoa(env.subject).replace(/[+/=]/g, '_');
+        const span = document.createElement('span');
+        span.className = 'envelope';
+        span.setAttribute('data-testid', `env:all:${envId}`);
+        span.textContent = `${env.subject} (${env.envelope_type})`;
+        envelopeList.appendChild(span);
+      });
+    }
+
+    function renderAllDimensions(contract) {
+      const dimensionList = document.getElementById('dimension-list');
+      contract.uum8d_dims.forEach(dim => {
+        const span = document.createElement('span');
+        span.className = 'dimension';
+        span.setAttribute('data-testid', `dim:all:${dim.dim_key}`);
+        span.textContent = `${dim.dim_key}: ${dim.dim_name} (${dim.symbol})`;
+        dimensionList.appendChild(span);
+      });
+    }
+
+    loadContract();
+  </script>
+</body>
+</html>

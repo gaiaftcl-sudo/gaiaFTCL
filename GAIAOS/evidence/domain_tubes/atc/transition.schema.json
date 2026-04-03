@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["transition_type", "aircraft_id", "delta_t_seconds"],
+  "properties": {
+    "transition_type": {
+      "type": "string",
+      "enum": ["MAINTAIN", "CLIMB", "DESCEND", "TURN", "SPEED_CHANGE"]
+    },
+    "aircraft_id": {
+      "type": "string"
+    },
+    "delta_t_seconds": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 300,
+      "description": "Time step (max 5 minutes)"
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Transition-specific parameters"
+    }
+  },
+  "additionalProperties": false
+}

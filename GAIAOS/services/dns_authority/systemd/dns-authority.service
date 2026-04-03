@@ -1,0 +1,31 @@
+[Unit]
+Description=DNS Authority - GoDaddy DNS Management for gaiaftcl.com
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/gaiaftcl/secrets.env
+Environment=DNS_DOMAIN=gaiaftcl.com
+Environment=DNS_TTL=600
+Environment=DNS_AUTHORITY_PORT=8804
+Environment=DNS_RECONCILE_INTERVAL_SECONDS=300
+Environment=RUST_LOG=info
+
+ExecStart=/usr/local/bin/dns-authority
+WorkingDirectory=/opt/gaia
+
+# Restart policy
+Restart=always
+RestartSec=5
+StartLimitIntervalSec=0
+
+# Resource limits
+LimitNOFILE=65536
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=dns-authority
+
+[Install]
+WantedBy=multi-user.target

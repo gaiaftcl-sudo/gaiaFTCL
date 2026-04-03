@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["domain_id", "allowed_claim_classes", "admissible_evidence_types", "invariants", "constraints_template", "expiry_seconds_default"],
+  "properties": {
+    "domain_id": {
+      "type": "string"
+    },
+    "allowed_claim_classes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "admissible_evidence_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["HTTP_ECHO_SINK", "CODE_RUN", "FILE_HASH", "URL_HASH"]
+      },
+      "minItems": 1
+    },
+    "invariants": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraints_template": {
+      "type": "string"
+    },
+    "expiry_seconds_default": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "additionalProperties": false
+}

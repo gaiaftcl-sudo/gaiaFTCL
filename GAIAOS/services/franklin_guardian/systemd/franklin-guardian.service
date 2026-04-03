@@ -1,0 +1,39 @@
+[Unit]
+Description=Franklin Guardian - Constitutional Oversight + mesh Game (24/7)
+After=network.target gaiaos-ui-tester-mcp.service gaiaos-nats.service
+Wants=gaiaos-ui-tester-mcp.service
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/gaiaftcl/franklin.env
+Environment=FRANKLIN_PUBLIC_BASE_URL=https://gaiaftcl.com
+Environment=mesh_LOOP_ENABLED=true
+Environment=mesh_POLL_INTERVAL_SECONDS=120
+Environment=mesh_JITTER_SECONDS=15
+Environment=MCP_BASE_URL=http://localhost:8850/mcp/execute
+Environment=MCP_ENV_ID=4c30d276-ec0b-48c2-9d74-b1dcd6ce67b6
+Environment=mesh_SUBMOLTS=m/governance
+Environment=NATS_URL=nats://localhost:4222
+
+ExecStart=/usr/local/bin/franklin-guardian
+WorkingDirectory=/opt/gaia
+
+# Restart policy for 24/7 operation
+Restart=always
+RestartSec=2
+StartLimitIntervalSec=0
+
+# Resource limits
+LimitNOFILE=65536
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=franklin-guardian
+
+# Self-check after start
+ExecStartPost=/bin/sleep 3
+ExecStartPost=/usr/bin/curl -f http://localhost:8803/health || true
+
+[Install]
+WantedBy=multi-user.target

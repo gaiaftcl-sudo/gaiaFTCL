@@ -1,0 +1,18 @@
+{
+  "domain_id": "generic",
+  "allowed_claim_classes": [
+    "TRUTH_ASSERTION",
+    "CAUSALITY_CLAIM",
+    "PREDICTION",
+    "CORRECTNESS"
+  ],
+  "admissible_evidence_types": [
+    "HTTP_ECHO_SINK"
+  ],
+  "invariants": [
+    "NONCE_UNIQUENESS",
+    "TIMESTAMP_MONOTONIC"
+  ],
+  "constraints_template": "Evidence must be submitted via GaiaFTCL-controlled sink within expiry window",
+  "expiry_seconds_default": 3600
+}

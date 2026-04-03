@@ -1,0 +1,66 @@
+{
+  "version": "1.0.0",
+  "reason_codes": {
+    "registration": [
+      {
+        "code": "DOMAIN_NOT_FOUND",
+        "severity": "error",
+        "description": "Requested domain does not exist"
+      },
+      {
+        "code": "CANONICALS_INVALID",
+        "severity": "error",
+        "description": "Domain canonicals failed validation"
+      }
+    ],
+    "step_execution": [
+      {
+        "code": "SCHEMA_VALIDATION_FAILED",
+        "severity": "error",
+        "description": "State or transition failed schema validation"
+      },
+      {
+        "code": "STEP_ORDER_VIOLATION",
+        "severity": "error",
+        "description": "Steps executed out of order"
+      },
+      {
+        "code": "SEPARATION_VIOLATION",
+        "severity": "critical",
+        "description": "Aircraft separation minimum violated"
+      },
+      {
+        "code": "AIRSPACE_VIOLATION",
+        "severity": "critical",
+        "description": "Aircraft exited defined airspace bounds"
+      },
+      {
+        "code": "ALTITUDE_VIOLATION",
+        "severity": "critical",
+        "description": "Aircraft altitude outside valid range"
+      },
+      {
+        "code": "VELOCITY_VIOLATION",
+        "severity": "critical",
+        "description": "Aircraft velocity outside physically possible range"
+      },
+      {
+        "code": "TRANSITION_NOT_ALLOWED",
+        "severity": "error",
+        "description": "Attempted transition not in allowed list for step"
+      }
+    ],
+    "finalization": [
+      {
+        "code": "INCOMPLETE_TUBE",
+        "severity": "error",
+        "description": "Not all required steps completed"
+      },
+      {
+        "code": "INVARIANT_FAILURE",
+        "severity": "critical",
+        "description": "One or more invariants failed during tube walk"
+      }
+    ]
+  }
+}

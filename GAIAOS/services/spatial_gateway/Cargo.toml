@@ -1,0 +1,49 @@
+[package]
+name = "spatial_gateway"
+version = "0.1.0"
+edition = "2021"
+description = "GaiaOS Spatial Gateway - World Interface Organ for 8D Truth Field"
+authors = ["GaiaOS Team"]
+
+[dependencies]
+# Web framework
+axum = { version = "0.7", features = ["ws", "json"] }
+tokio = { version = "1", features = ["full"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Identity & crypto
+uuid = { version = "1", features = ["v4", "serde"] }
+
+# Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Async utilities
+tokio-stream = "0.1"
+futures = "0.3"
+
+# HTTP client for LLM and ArangoDB
+reqwest = { version = "0.12", features = [
+	"json",
+	"rustls-tls",
+], default-features = false }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Error handling
+thiserror = "1"
+anyhow = "1"
+
+# Consciousness layer
+async-nats = "0.36"
+gaiaos_introspection = { path = "../gaiaos_introspection" }
+
+[[bin]]
+name = "spatial-gateway"
+path = "src/main.rs"

@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://gaiaftcl.com/schemas/egress_policy_v1.schema.json",
+  "title": "Egress Policy V1",
+  "description": "Mother-gated policy for DNS and mesh egress leadership with sticky leader and auto eligibility",
+  "type": "object",
+  "required": ["policy_id", "version", "updated_at_utc", "dns", "mesh", "hysteresis", "eligibility", "authority"],
+  "additionalProperties": false,
+  "properties": {
+    "policy_id": {
+      "type": "string",
+      "const": "egress_policy_v1"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "updated_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "dns": {
+      "type": "object",
+      "required": ["mode", "primary", "enabled"],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["primary_secondary"]
+        },
+        "primary": {
+          "type": "string",
+          "description": "Primary cell ID for DNS reconciliation"
+        },
+        "secondary": {
+          "type": "string",
+          "description": "Secondary cell ID (fallback)"
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "mesh": {
+      "type": "object",
+      "required": ["mode", "primary", "enabled"],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["primary_secondary"]
+        },
+        "primary": {
+          "type": "string",
+          "description": "Primary cell ID for mesh posting"
+        },
+        "secondary": {
+          "type": "string",
+          "description": "Secondary cell ID (fallback)"
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "hysteresis": {
+      "type": "object",
+      "required": ["min_tenure_seconds", "failover_after_seconds", "cooldown_seconds"],
+      "properties": {
+        "min_tenure_seconds": {
+          "type": "integer",
+          "minimum": 300,
+          "description": "Minimum time leader must hold role before voluntary change"
+        },
+        "failover_after_seconds": {
+          "type": "integer",
+          "minimum": 60,
+          "description": "Time after which stale leader triggers failover"
+        },
+        "cooldown_seconds": {
+          "type": "integer",
+          "minimum": 300,
+          "description": "Cooldown after failover before allowing another"
+        }
+      }
+    },
+    "eligibility": {
+      "type": "object",
+      "required": ["max_heartbeat_age_seconds", "require_services"],
+      "properties": {
+        "max_heartbeat_age_seconds": {
+          "type": "integer",
+          "minimum": 60,
+          "description": "Maximum age of heartbeat before cell is ineligible"
+        },
+        "require_services": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "Services required for eligibility"
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "required": ["policy_write_role"],
+      "properties": {
+        "policy_write_role": {
+          "type": "string",
+          "enum": ["MOTHER", "FRANKLIN", "STUDENT"],
+          "description": "GaiaFTCL role authorized to write policy"
+        }
+      }
+    }
+  }
+}

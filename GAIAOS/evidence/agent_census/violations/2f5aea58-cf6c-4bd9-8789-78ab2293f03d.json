@@ -1,0 +1,32 @@
+{
+  "action_taken": "AUTO_DETECTED",
+  "agent_id": "e4906f71-9770-44c5-8046-9ba3f381cf66",
+  "detected_at": "2026-02-01T12:07:30.408158+00:00",
+  "evidence": {
+    "detector_rule_id": "GOV_COORDINATION_BYPASS",
+    "detector_version": "1.0.0",
+    "excerpt_hash": "06293e466d3739a8d2cba78b42f7e043192f4bb557b4420050bf4e09db4c05d5",
+    "excerpt_length": 90,
+    "pattern_matches": [
+      {
+        "matches": [
+          "don't register"
+        ],
+        "type": "keyword_match"
+      },
+      {
+        "matches": [
+          "don't register with",
+          "avoid the census",
+          "work around the"
+        ],
+        "type": "phrase_match"
+      }
+    ],
+    "platform": "test_fixture",
+    "source_id": "msg_301",
+    "total_matches": 4
+  },
+  "reason_code": "BH_COORDINATION_BYPASS_ATTEMPT",
+  "severity": "critical"
+}

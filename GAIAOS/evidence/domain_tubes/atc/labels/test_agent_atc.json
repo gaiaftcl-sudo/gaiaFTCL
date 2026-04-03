@@ -1,0 +1,20 @@
+{
+  "agent_id": "test_agent_atc",
+  "domain_id": "atc",
+  "finalized_at": "2026-02-01T12:54:00.046649+00:00",
+  "invariant_failures": [
+    "SEPARATION_MINIMUM"
+  ],
+  "reason_codes": [
+    "INVARIANT_FAILURE"
+  ],
+  "steps_completed": [
+    "INITIAL_STATE",
+    "TRANSITION_1",
+    "TRANSITION_2",
+    "TRANSITION_3",
+    "FINAL_STATE"
+  ],
+  "tier": "BLACKHOLE",
+  "tube_session_id": "f497b306-2ce3-4fa9-a582-7b25a20cd1c7"
+}

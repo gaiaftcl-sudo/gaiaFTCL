@@ -1,0 +1,29 @@
+[package]
+name = "gaiaos_game_runner"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = { version = "0.7", features = ["macros"] }
+tokio = { version = "1.0", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.0", features = ["v4", "serde"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+http = "1.0"
+async-nats = "0.33"
+futures-util = "0.3"
+jsonwebtoken = "9.3"
+reqwest = { version = "0.11", features = ["json", "blocking"] }
+rand = "0.8"
+base64 = "0.21"
+sha2 = "0.10"
+ed25519-dalek = "2.0"
+lettre = "0.11"
+rusqlite = { version = "0.30", features = ["bundled"] }
+hex = "0.4"
+
+[workspace]

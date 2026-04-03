@@ -1,0 +1,16 @@
+[package]
+name = "dimensional-viewer-shared"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+nalgebra = { workspace = true }
+glam = { workspace = true }
+
+[features]
+default = []
+wasm = []
+server = []

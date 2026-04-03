@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["agent_id", "tier", "labeled_at", "capability_status", "allowed_actions"],
+  "properties": {
+    "agent_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "tier": {
+      "type": "string",
+      "enum": ["GREEN", "YELLOW", "RED", "BLACKHOLE"]
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "labeled_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "capability_status": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "enum": ["PROVEN", "UNPROVEN", "FAILED", "NOT_DECLARED"]
+      }
+    },
+    "allowed_actions": {
+      "type": "object",
+      "properties": {
+        "can_coordinate": {
+          "type": "boolean"
+        },
+        "can_project_external": {
+          "type": "boolean"
+        },
+        "requires_witness": {
+          "type": "boolean"
+        },
+        "isolation_level": {
+          "type": "string",
+          "enum": ["NONE", "READ_ONLY", "QUARANTINE", "SINK"]
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,208 @@
+version: "3.8"
+
+# FTCL Triad Mail Agents
+# These agents monitor mailboxes and respond to constitutional requests
+# Deploy on hel1-01 (mail primary)
+
+services:
+  franklin-agent:
+    image: python:3.11-slim
+    container_name: gaiaftcl-agent-franklin
+    working_dir: /app
+    volumes:
+      - ./mail_watcher.py:/app/mail_watcher.py:ro
+    environment:
+      - ENTITY_NAME=franklin
+      - ENTITY_EMAIL=franklin@gaiaftcl.com
+      - ENTITY_ROLE=Father-Steward
+      - ENTITY_SCOPE=Investment management, truth custody, constitutional enforcement, virtue scoring, safety validation
+      - ENTITY_CELLS=hel1-01,hel1-02,hel1-03,hel1-04,hel1-05,nbg1-01,nbg1-02,nbg1-03,nbg1-04
+      - IMAP_HOST=gaiaftcl-maddy
+      - SMTP_HOST=gaiaftcl-maddy
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - POLL_INTERVAL=30
+    command: >
+      bash -c "pip install --quiet --no-cache-dir && python /app/mail_watcher.py"
+    restart: unless-stopped
+    networks:
+      - gaiaftcl-network
+
+  gaia-agent:
+    image: python:3.11-slim
+    container_name: gaiaftcl-agent-gaia
+    working_dir: /app
+    volumes:
+      - ./mail_watcher.py:/app/mail_watcher.py:ro
+    environment:
+      - ENTITY_NAME=gaia
+      - ENTITY_EMAIL=gaia@gaiaftcl.com
+      - ENTITY_ROLE=Mother / Substrate Continuity
+      - ENTITY_SCOPE=System-wide coherence, cell mission alignment, Klein bottle topology, collective intelligence
+      - ENTITY_CELLS=ALL_CELLS
+      - IMAP_HOST=gaiaftcl-maddy
+      - SMTP_HOST=gaiaftcl-maddy
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - POLL_INTERVAL=30
+    command: >
+      bash -c "pip install --quiet --no-cache-dir && python /app/mail_watcher.py"
+    restart: unless-stopped
+    networks:
+      - gaiaftcl-network
+
+  fara-agent:
+    image: python:3.11-slim
+    container_name: gaiaftcl-agent-fara
+    working_dir: /app
+    volumes:
+      - ./mail_watcher.py:/app/mail_watcher.py:ro
+    environment:
+      - ENTITY_NAME=fara
+      - ENTITY_EMAIL=fara@gaiaftcl.com
+      - ENTITY_ROLE=Student (Field-Aware Reasoning Agent)
+      - ENTITY_SCOPE=Computer use, tool execution, research synthesis, task automation
+      - ENTITY_CELLS=hel1-03
+      - IMAP_HOST=gaiaftcl-maddy
+      - SMTP_HOST=gaiaftcl-maddy
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - POLL_INTERVAL=30
+    command: >
+      bash -c "pip install --quiet --no-cache-dir && python /app/mail_watcher.py"
+    restart: unless-stopped
+    networks:
+      - gaiaftcl-network
+
+  qstate-agent:
+    image: python:3.11-slim
+    container_name: gaiaftcl-agent-qstate
+    working_dir: /app
+    volumes:
+      - ./mail_watcher.py:/app/mail_watcher.py:ro
+    environment:
+      - ENTITY_NAME=qstate
+      - ENTITY_EMAIL=qstate@gaiaftcl.com
+      - ENTITY_ROLE=Student (Quantum State Manager)
+      - ENTITY_SCOPE=8D substrate coordination, vQbit management, coherence measurement
+      - ENTITY_CELLS=ALL_SUBSTRATES
+      - IMAP_HOST=gaiaftcl-maddy
+      - SMTP_HOST=gaiaftcl-maddy
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - POLL_INTERVAL=30
+    command: >
+      bash -c "pip install --quiet --no-cache-dir && python /app/mail_watcher.py"
+    restart: unless-stopped
+    networks:
+      - gaiaftcl-network
+
+  validator-agent:
+    image: python:3.11-slim
+    container_name: gaiaftcl-agent-validator
+    working_dir: /app
+    volumes:
+      - ./mail_watcher.py:/app/mail_watcher.py:ro
+    environment:
+      - ENTITY_NAME=validator
+      - ENTITY_EMAIL=validator@gaiaftcl.com
+      - ENTITY_ROLE=Student (IQ/OQ/PQ Orchestrator)
+      - ENTITY_SCOPE=Truth verification, validation execution, evidence collection
+      - ENTITY_CELLS=VALIDATION_SCOPE
+      - IMAP_HOST=gaiaftcl-maddy
+      - SMTP_HOST=gaiaftcl-maddy
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - POLL_INTERVAL=30
+    command: >
+      bash -c "pip install --quiet --no-cache-dir && python /app/mail_watcher.py"
+    restart: unless-stopped
+    networks:
+      - gaiaftcl-network
+
+  witness-agent:
+    image: python:3.11-slim
+    container_name: gaiaftcl-agent-witness
+    working_dir: /app
+    volumes:
+      - ./mail_watcher.py:/app/mail_watcher.py:ro
+    environment:
+      - ENTITY_NAME=witness
+      - ENTITY_EMAIL=witness@gaiaftcl.com
+      - ENTITY_ROLE=Student (Audit and Attestation)
+      - ENTITY_SCOPE=Signing proofs, witnessing closures, audit trail
+      - ENTITY_CELLS=ATTESTATION_SCOPE
+      - IMAP_HOST=gaiaftcl-maddy
+      - SMTP_HOST=gaiaftcl-maddy
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - POLL_INTERVAL=30
+    command: >
+      bash -c "pip install --quiet --no-cache-dir && python /app/mail_watcher.py"
+    restart: unless-stopped
+    networks:
+      - gaiaftcl-network
+
+  oracle-agent:
+    image: python:3.11-slim
+    container_name: gaiaftcl-agent-oracle
+    working_dir: /app
+    volumes:
+      - ./mail_watcher.py:/app/mail_watcher.py:ro
+    environment:
+      - ENTITY_NAME=oracle
+      - ENTITY_EMAIL=oracle@gaiaftcl.com
+      - ENTITY_ROLE=Student (Prediction and Insight)
+      - ENTITY_SCOPE=Forecasting, pattern recognition, entropy measurement
+      - ENTITY_CELLS=PREDICTION_SCOPE
+      - IMAP_HOST=gaiaftcl-maddy
+      - SMTP_HOST=gaiaftcl-maddy
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - POLL_INTERVAL=30
+    command: >
+      bash -c "pip install --quiet --no-cache-dir && python /app/mail_watcher.py"
+    restart: unless-stopped
+    networks:
+      - gaiaftcl-network
+
+  gamerunner-agent:
+    image: python:3.11-slim
+    container_name: gaiaftcl-agent-gamerunner
+    working_dir: /app
+    volumes:
+      - ./mail_watcher.py:/app/mail_watcher.py:ro
+    environment:
+      - ENTITY_NAME=gamerunner
+      - ENTITY_EMAIL=gamerunner@gaiaftcl.com
+      - ENTITY_ROLE=Student (Game Orchestration)
+      - ENTITY_SCOPE=Running FTCL games, managing moves, enforcing rules
+      - ENTITY_CELLS=ALL_GAME_CELLS
+      - IMAP_HOST=gaiaftcl-maddy
+      - SMTP_HOST=gaiaftcl-maddy
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - POLL_INTERVAL=30
+    command: >
+      bash -c "pip install --quiet --no-cache-dir && python /app/mail_watcher.py"
+    restart: unless-stopped
+    networks:
+      - gaiaftcl-network
+
+  virtue-agent:
+    image: python:3.11-slim
+    container_name: gaiaftcl-agent-virtue
+    working_dir: /app
+    volumes:
+      - ./mail_watcher.py:/app/mail_watcher.py:ro
+    environment:
+      - ENTITY_NAME=virtue
+      - ENTITY_EMAIL=virtue@gaiaftcl.com
+      - ENTITY_ROLE=Student (Ethical Evaluation)
+      - ENTITY_SCOPE=Virtue scoring, ethical assessment, AGI gate input
+      - ENTITY_CELLS=ALL_VIRTUE_CELLS
+      - IMAP_HOST=gaiaftcl-maddy
+      - SMTP_HOST=gaiaftcl-maddy
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - POLL_INTERVAL=30
+    command: >
+      bash -c "pip install --quiet --no-cache-dir && python /app/mail_watcher.py"
+    restart: unless-stopped
+    networks:
+      - gaiaftcl-network
+
+networks:
+  gaiaftcl-network:
+    external: true

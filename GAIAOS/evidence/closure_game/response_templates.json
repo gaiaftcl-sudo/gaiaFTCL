@@ -1,0 +1,8 @@
+{
+  "version": "1.0.0",
+  "templates": {
+    "CLOSURE_OFFERED": "CLOSURE OFFERED\nDomain: <domain_id>\nClaim Class: <claim_class>\nAdmissible Evidence Types: <evidence_types_csv>\nConstraints: <constraints>\nExpiry: <expiry_utc>\nProvenance: GaiaFTCL® Field-of-Truth Digital Twin (UUM-8D)\nPatent Notice: GaiaFTCL UUM-8D Closure Geometry — protected under issued & pending patents\nCommercial Signal: Closure receipts and enforceable Truth Envelopes available commercially via GaiaFTCL.",
+    "CLOSURE_REFUSED": "CLOSURE REFUSED\nReason: <reason_code>\nProvenance: GaiaFTCL® Field-of-Truth Digital Twin (UUM-8D)\nPatent Notice: GaiaFTCL UUM-8D Closure Geometry — protected under issued & pending patents",
+    "CLOSURE_PERFORMED": "CLOSURE PERFORMED\nDomain: <domain_id>\nClosure Class: <closure_class>\nEvidence Hash: <evidence_hash>\nResidual Entropy (Δ): <residual_entropy>\nTimestamp: <timestamp_utc>\nWitness: <call_id>\nProvenance: GaiaFTCL® Field-of-Truth Digital Twin (UUM-8D)\nPatent Notice: GaiaFTCL UUM-8D Closure Geometry — protected under issued & pending patents\nCommercial Signal: This closure executed under GaiaFTCL Truth Envelope methodology. Enterprise closure, multi-domain enforcement, and real-world actuation are commercial GaiaFTCL services."
+  }
+}

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — GaiaFTCL</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --gaia-black: #0a0a0a;
+      --gaia-darker: #050505;
+      --gaia-white: #f5f5f5;
+      --gaia-blue: #00d4ff;
+      --gaia-purple: #8b5cf6;
+      --gaia-green: #10b981;
+      --gaia-red: #ef4444;
+      --gaia-yellow: #f59e0b;
+      --gaia-gray: #374151;
+      --gaia-gray-light: #6b7280;
+      --gaia-gradient: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--gaia-black);
+      color: var(--gaia-white);
+      font-family: 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+    }
+
+    code, .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 24px;
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      color: var(--gaia-white);
+    }
+
+    .logo span {
+      background: var(--gaia-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .user-email {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--gaia-blue);
+    }
+
+    .user-menu {
+      position: relative;
+    }
+
+    .user-menu-btn {
+      background: var(--gaia-gray);
+      border: none;
+      color: var(--gaia-white);
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    /* Main */
+    .main {
+      padding-top: 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: 24px;
+      padding-right: 24px;
+      padding-bottom: 48px;
+    }
+
+    .welcome {
+      margin-bottom: 48px;
+      padding-top: 24px;
+    }
+
+    .welcome h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .welcome p {
+      color: var(--gaia-gray-light);
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    /* Cards */
+    .card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      color: var(--gaia-gray-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .card-action {
+      color: var(--gaia-blue);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .card-action:hover {
+      text-decoration: underline;
+    }
+
+    /* Wallet Card */
+    .wallet-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .balance-box {
+      background: var(--gaia-black);
+      border: 1px solid var(--gaia-gray);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .balance-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .balance-value.qfot {
+      color: var(--gaia-white);
+    }
+
+    .balance-value.qfot-c {
+      background: var(--gaia-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .balance-label {
+      font-size: 14px;
+      color: var(--gaia-gray-light);
+    }
+
+    .balance-meta {
+      font-size: 12px;
+      color: var(--gaia-gray-light);
+      margin-top: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      margin-top: 16px;
+    }
+
+    .btn-primary {
+      background: var(--gaia-gradient);
+      color: var(--gaia-black);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+    }
+
+    /* Onboarding Card */
+    .onboarding-progress {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .onboarding-progress .label {
+      font-size: 14px;
+    }
+
+    .onboarding-progress .count {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--gaia-blue);
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: var(--gaia-gray);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .progress-bar .fill {
+      height: 100%;
+      background: var(--gaia-gradient);
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+
+    .moves-list {
+      list-style: none;
+    }
+
+    .move-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .move-item:last-child {
+      border-bottom: none;
+    }
+
+    .move-status {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .move-status.pending {
+      border: 2px solid var(--gaia-gray);
+      color: var(--gaia-gray);
+    }
+
+    .move-status.complete {
+      background: var(--gaia-green);
+      color: var(--gaia-black);
+    }
+
+    .move-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .move-desc {
+      font-size: 13px;
+      color: var(--gaia-gray-light);
+      margin-left: auto;
+    }
+
+    /* Activity Card */
+    .activity-empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--gaia-gray-light);
+    }
+
+    .activity-empty .icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .activity-list {
+      list-style: none;
+    }
+
+    .activity-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-type {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: rgba(0, 212, 255, 0.1);
+      color: var(--gaia-blue);
+    }
+
+    .activity-time {
+      font-size: 12px;
+      color: var(--gaia-gray-light);
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .quick-action {
+      background: var(--gaia-black);
+      border: 1px solid var(--gaia-gray);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      text-decoration: none;
+      color: var(--gaia-white);
+      transition: all 0.2s;
+    }
+
+    .quick-action:hover {
+      border-color: var(--gaia-blue);
+      background: rgba(0, 212, 255, 0.05);
+    }
+
+    .quick-action .icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .quick-action .label {
+      font-size: 13px;
+    }
+
+    /* Reward Banner */
+    .reward-banner {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(0, 212, 255, 0.2) 100%);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .reward-banner .amount {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      background: var(--gaia-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .reward-banner .text {
+      font-size: 14px;
+      color: var(--gaia-gray-light);
+      margin-top: 4px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .wallet-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .user-email {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <a href="/" class="logo">GAIA<span>FT</span>CL</a>
+    <div class="user-info">
+      <span class="user-email">demo@gaiaftcl.com</span>
+      <div class="user-menu">
+        <button class="user-menu-btn">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="welcome">
+      <h1>Welcome to the game.</h1>
+      <p>Complete your onboarding to earn 25 QFOT-C.</p>
+    </div>
+
+    <div class="grid">
+      <!-- Wallet Card -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Wallet</span>
+          <a href="/wallet" class="card-action">View history →</a>
+        </div>
+        <div class="wallet-grid">
+          <div class="balance-box">
+            <div class="balance-value qfot">0.00</div>
+            <div class="balance-label">QFOT</div>
+          </div>
+          <div class="balance-box">
+            <div class="balance-value qfot-c">10.00</div>
+            <div class="balance-label">QFOT-C</div>
+            <div class="balance-meta">Expires in 89 days</div>
+          </div>
+        </div>
+        <button class="btn btn-primary">
+          Deposit QFOT
+        </button>
+      </div>
+
+      <!-- Onboarding Card -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Onboarding Game</span>
+        </div>
+        <div class="onboarding-progress">
+          <span class="label">Progress</span>
+          <span class="count">0 / 6</span>
+        </div>
+        <div class="progress-bar">
+          <div class="fill" style="width: 0%;"></div>
+        </div>
+        <ul class="moves-list">
+          <li class="move-item">
+            <span class="move-status pending">○</span>
+            <span class="move-name">CLAIM</span>
+            <span class="move-desc">Assert a truth</span>
+          </li>
+          <li class="move-item">
+            <span class="move-status pending">○</span>
+            <span class="move-name">REQUEST</span>
+            <span class="move-desc">Ask for something</span>
+          </li>
+          <li class="move-item">
+            <span class="move-status pending">○</span>
+            <span class="move-name">COMMITMENT</span>
+            <span class="move-desc">Promise future action</span>
+          </li>
+          <li class="move-item">
+            <span class="move-status pending">○</span>
+            <span class="move-name">REPORT</span>
+            <span class="move-desc">Share information</span>
+          </li>
+          <li class="move-item">
+            <span class="move-status pending">○</span>
+            <span class="move-name">TRANSACTION</span>
+            <span class="move-desc">Transfer value</span>
+          </li>
+          <li class="move-item">
+            <span class="move-status pending">○</span>
+            <span class="move-name">FAILURE</span>
+            <span class="move-desc">Admit an error</span>
+          </li>
+        </ul>
+        <div class="reward-banner">
+          <div class="amount">+25 QFOT-C</div>
+          <div class="text">Complete all 6 moves to earn</div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Quick Actions</span>
+        </div>
+        <div class="quick-actions">
+          <a href="https://mail.gaiaftcl.com" class="quick-action">
+            <div class="icon">📧</div>
+            <div class="label">Email</div>
+          </a>
+          <a href="/games" class="quick-action">
+            <div class="icon">🎮</div>
+            <div class="label">Games</div>
+          </a>
+          <a href="/docs" class="quick-action">
+            <div class="icon">📚</div>
+            <div class="label">Docs</div>
+          </a>
+          <a href="/settings" class="quick-action">
+            <div class="icon">⚙️</div>
+            <div class="label">Settings</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Activity Card -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Recent Activity</span>
+          <a href="/activity" class="card-action">View all →</a>
+        </div>
+        <div class="activity-empty">
+          <div class="icon">📭</div>
+          <p>No activity yet.<br>Make your first move to get started.</p>
+        </div>
+        <!-- When there's activity:
+        <ul class="activity-list">
+          <li class="activity-item">
+            <span class="activity-type">CLAIM</span>
+            <span class="activity-time">2 hours ago</span>
+          </li>
+        </ul>
+        -->
+      </div>
+    </div>
+  </main>
+</body>
+</html>

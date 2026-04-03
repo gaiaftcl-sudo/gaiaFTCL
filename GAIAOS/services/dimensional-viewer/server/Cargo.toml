@@ -1,0 +1,52 @@
+[package]
+name = "dimensional-viewer"
+version = "0.1.0"
+edition = "2021"
+description = "GaiaOS Dimensional Viewer - Quantum 8D→3D projection with virtue gating"
+authors = ["GaiaOS Team"]
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+
+# Web framework
+axum = { version = "0.7", features = ["ws"] }
+axum-extra = { version = "0.9", features = ["typed-header"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["fs", "cors", "trace"] }
+
+# WebSocket
+futures = "0.3"
+futures-util = "0.3"
+
+# Linear algebra for quantum projection
+nalgebra = { version = "0.32", features = ["serde-serialize"] }
+
+# HTTP client for substrate/guardian
+reqwest = { version = "0.11", features = ["json"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Environment and config
+dotenvy = "0.15"
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Utilities
+uuid = { version = "1.6", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+# Metrics
+prometheus = "0.13"
+
+[[bin]]
+name = "dimensional-viewer"
+path = "src/main.rs"

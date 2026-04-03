@@ -1,0 +1,253 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# G_FTCL_ROLLBACK_V1 - Closed Fleet Rollback Game
+# ═══════════════════════════════════════════════════════════════════════════════
+# 
+# CANONICAL game for rolling back GaiaFTCL fleet to a prior digest set.
+# Same closure requirements as update game.
+# ═══════════════════════════════════════════════════════════════════════════════
+
+game_id: G_FTCL_ROLLBACK_V1
+version: 1.0.0
+type: FLEET_ROLLBACK
+domain: INFRASTRUCTURE
+closure: STRICT
+canonical: true
+
+metadata:
+  created: 2026-01-19
+  author: governance@gaiaftcl.com
+  constitution_ref: FTCL-UNI-CLOSURE-2.0
+  spec_ref: FTCL-UPDATE-SPEC-1.0
+
+description: |
+  Canonical closed game for rolling back the GaiaFTCL fleet to a 
+  previously-finalized digest set.
+  
+  Key properties:
+  - Target MUST be a previously-finalized digest set (in AKG history)
+  - All images MUST still be available (registry or cache)
+  - Attestations for target MUST still verify
+  - Same fee structure as update (work is performed)
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MOVE ORDER
+# ═══════════════════════════════════════════════════════════════════════════════
+
+move_order:
+  - REQUEST
+  - COMMITMENT
+  - TRANSACTION
+  - REPORT
+
+skip_allowed: false
+parallel_allowed: false
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FEE STRUCTURE
+# ═══════════════════════════════════════════════════════════════════════════════
+
+fee_timing: UPFRONT
+
+fees:
+  rollback_base:
+    amount: 50
+    currency: QFOT
+    recipient: governance@gaiaftcl.com
+    description: "Base fee for rollback coordination"
+    
+  per_cell_restart:
+    amount: 5
+    currency: QFOT
+    recipient: "{cell_id}@gaiaftcl.com"
+    description: "Fee per cell for restart execution"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MOVE DEFINITIONS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+moves:
+  REQUEST:
+    description: "Request rollback to a prior digest set"
+    from: "{proposer}@gaiaftcl.com"
+    to: governance@gaiaftcl.com
+    
+    envelope:
+      X-FTCL-Type: REQUEST
+      X-FTCL-Game: G_FTCL_ROLLBACK_V1
+      X-FTCL-Domain: INFRASTRUCTURE
+    
+    payload_schema:
+      type: object
+      required:
+        - action
+        - target_digest_set_hash
+        - reason
+      properties:
+        action:
+          const: REQUEST_ROLLBACK
+        target_digest_set_hash:
+          type: string
+          pattern: "^sha256:[a-f0-9]{64}$"
+          description: "Hash of a previously-finalized digest set"
+        reason:
+          type: string
+          minLength: 10
+        urgency:
+          type: string
+          enum: [normal, urgent, emergency]
+          default: normal
+    
+    validations:
+      - "Target digest set MUST exist in AKG history as FINALIZED"
+      - "All images in target MUST be available (registry or cache)"
+      - "Attestations for target MUST still verify"
+    
+    response_schema:
+      type: object
+      required:
+        - quote
+        - target_verification
+      properties:
+        quote:
+          type: object
+          properties:
+            quote_id:
+              type: string
+            rollback_fee:
+              type: number
+            per_cell_fee:
+              type: number
+            total_cells:
+              type: integer
+            total_fee:
+              type: number
+            valid_until:
+              type: string
+              format: date-time
+        target_verification:
+          type: object
+          properties:
+            digest_set_found:
+              type: boolean
+            images_available:
+              type: boolean
+            attestations_valid:
+              type: boolean
+            original_finalization_date:
+              type: string
+              format: date-time
+
+  COMMITMENT:
+    description: "Accept rollback quote, authorize execution"
+    from: "{proposer}@gaiaftcl.com"
+    to: governance@gaiaftcl.com
+    
+    envelope:
+      X-FTCL-Type: COMMITMENT
+      X-FTCL-Game: G_FTCL_ROLLBACK_V1
+      X-FTCL-Cost: "{total_fee}"
+    
+    payload_schema:
+      type: object
+      required:
+        - action
+        - quote_hash
+        - target_digest_set_hash
+        - payment_authorization
+      properties:
+        action:
+          const: AUTHORIZE_ROLLBACK
+        quote_hash:
+          type: string
+        target_digest_set_hash:
+          type: string
+        payment_authorization:
+          type: string
+
+  TRANSACTION:
+    description: "Fee cleared, rollback authorized"
+    from: ledger@gaiaftcl.com
+    to: governance@gaiaftcl.com
+    
+    envelope:
+      X-FTCL-Type: TRANSACTION
+      X-FTCL-Game: G_FTCL_ROLLBACK_V1
+    
+    payload_schema:
+      type: object
+      required:
+        - action
+        - commitment_hash
+        - amount
+        - transaction_proof
+      properties:
+        action:
+          const: ROLLBACK_FEE_CLEARED
+        commitment_hash:
+          type: string
+        amount:
+          type: number
+        transaction_proof:
+          type: string
+
+  REPORT:
+    description: "Rollback execution report"
+    from: "{cell_id}@gaiaftcl.com | governance@gaiaftcl.com"
+    to: founder@gaiaftcl.com
+    
+    envelope:
+      X-FTCL-Type: REPORT
+      X-FTCL-Game: G_FTCL_ROLLBACK_V1
+    
+    payload_schema:
+      oneOf:
+        - type: object
+          properties:
+            action:
+              const: CELL_ROLLBACK_COMPLETE
+            cell_id:
+              type: string
+            from_digest_set:
+              type: string
+            to_digest_set:
+              type: string
+            services_reverted:
+              type: array
+            health_gates:
+              type: object
+        - type: object
+          properties:
+            action:
+              const: FLEET_ROLLBACK_FINALIZED
+            transaction_hash:
+              type: string
+            cells_rolled_back:
+              type: array
+            final_digest_set_hash:
+              type: string
+            total_cost:
+              type: number
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ROLLBACK EXECUTION
+# ═══════════════════════════════════════════════════════════════════════════════
+
+execution:
+  # Rollback uses same staged approach but can be expedited for emergencies
+  strategy:
+    normal:
+      stages: [canary, ring1, ring2]
+      gates_required: true
+    urgent:
+      stages: [canary, ring1, ring2]
+      gates_required: true
+      timeout_reduced: 50%
+    emergency:
+      stages: [all]  # All cells simultaneously
+      gates_required: false
+      requires_authorization: franklin@gaiaftcl.com
+
+  image_availability:
+    primary: ghcr.io/gaiaftcl
+    fallback: cell_local_cache
+    failure_action: ABORT_ROLLBACK

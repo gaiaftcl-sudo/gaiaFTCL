@@ -1,0 +1,47 @@
+{
+  "world": "Astro",
+  "provenance": {
+    "source": "ClientUICell",
+    "ui_session": "ui",
+    "operator": "operator",
+    "ts_ms": 1766228848269,
+    "notTruth": true
+  },
+  "ops": [
+    {
+      "op": "UpsertPrim",
+      "op_id": "0fa1ebf8-d9d6-48dd-8079-0a6ac1f09c94",
+      "path": "/GaiaOS/Worlds/Astro/Perception/Marks/6f2b6fba-dcc1-45c5-94d6-74533d83c9a1",
+      "primType": "Xform"
+    },
+    {
+      "op": "SetXform",
+      "op_id": "939e7454-d8b8-48c0-8c37-57c4904028ab",
+      "path": "/GaiaOS/Worlds/Astro/Perception/Marks/6f2b6fba-dcc1-45c5-94d6-74533d83c9a1",
+      "translate": [
+        0,
+        0,
+        0
+      ],
+      "orient": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "op": "SetAttr",
+      "op_id": "4d4bac80-278e-40e8-8c53-03d4e102c06f",
+      "path": "/GaiaOS/Worlds/Astro/Perception/Marks/6f2b6fba-dcc1-45c5-94d6-74533d83c9a1",
+      "name": "gaiaos:operatorNote",
+      "valueType": "string",
+      "value": "PQ mark 4"
+    }
+  ]
+}

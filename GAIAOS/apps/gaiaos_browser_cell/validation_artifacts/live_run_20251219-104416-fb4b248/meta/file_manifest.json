@@ -1,0 +1,221 @@
+{
+  "run_id": "live_run_20251219-104416-fb4b248",
+  "ts": "2025-12-19T15:44:38.499Z",
+  "files": [
+    {
+      "path": "IQ/IQ.md",
+      "bytes": 627,
+      "mtime_ms": 1766159059072
+    },
+    {
+      "path": "IQ/docker_ps.txt",
+      "bytes": 4312,
+      "mtime_ms": 1766159058692
+    },
+    {
+      "path": "IQ/live_usdc_head.txt",
+      "bytes": 11,
+      "mtime_ms": 1766159058711
+    },
+    {
+      "path": "IQ/transport_capabilities.json",
+      "bytes": 686,
+      "mtime_ms": 1766159058708
+    },
+    {
+      "path": "IQ/transport_health.json",
+      "bytes": 96,
+      "mtime_ms": 1766159058704
+    },
+    {
+      "path": "OQ/OQ_ASTRO.md",
+      "bytes": 154,
+      "mtime_ms": 1766159070630
+    },
+    {
+      "path": "OQ/OQ_CELL.md",
+      "bytes": 242,
+      "mtime_ms": 1766159062948
+    },
+    {
+      "path": "OQ/OQ_HUMAN.md",
+      "bytes": 154,
+      "mtime_ms": 1766159066794
+    },
+    {
+      "path": "OQ/audit_tail_10.jsonl",
+      "bytes": 642,
+      "mtime_ms": 1766159062947
+    },
+    {
+      "path": "OQ/capabilities_after_astro.json",
+      "bytes": 686,
+      "mtime_ms": 1766159070630
+    },
+    {
+      "path": "OQ/capabilities_after_cell.json",
+      "bytes": 686,
+      "mtime_ms": 1766159062944
+    },
+    {
+      "path": "OQ/capabilities_after_human.json",
+      "bytes": 686,
+      "mtime_ms": 1766159066794
+    },
+    {
+      "path": "OQ/perception_last.json",
+      "bytes": 1052,
+      "mtime_ms": 1766159062947
+    },
+    {
+      "path": "PQ/PQ.md",
+      "bytes": 401,
+      "mtime_ms": 1766159075767
+    },
+    {
+      "path": "PQ/capabilities_after_resync.json",
+      "bytes": 686,
+      "mtime_ms": 1766159075766
+    },
+    {
+      "path": "PQ/sustained_ws_msgs.png",
+      "bytes": 31322,
+      "mtime_ms": 1766159073974
+    },
+    {
+      "path": "PQ/ws_resync_connected.png",
+      "bytes": 31321,
+      "mtime_ms": 1766159075748
+    },
+    {
+      "path": "diagnostics/browser_console.log",
+      "bytes": 921,
+      "mtime_ms": 1766159070840
+    },
+    {
+      "path": "diagnostics/har_probe.log",
+      "bytes": 0,
+      "mtime_ms": 1766159075982
+    },
+    {
+      "path": "diagnostics/index_generator.log",
+      "bytes": 0,
+      "mtime_ms": 1766159078447
+    },
+    {
+      "path": "diagnostics/network.har",
+      "bytes": 1500743,
+      "mtime_ms": 1766159078413
+    },
+    {
+      "path": "diagnostics/playwright.log",
+      "bytes": 1556,
+      "mtime_ms": 1766159075968
+    },
+    {
+      "path": "diagnostics/playwright_output/.last-run.json",
+      "bytes": 45,
+      "mtime_ms": 1766159075968
+    },
+    {
+      "path": "diagnostics/server.log",
+      "bytes": 5283,
+      "mtime_ms": 1766159056562
+    },
+    {
+      "path": "meta/run_meta.json",
+      "bytes": 125,
+      "mtime_ms": 1766159058670
+    },
+    {
+      "path": "ui_worlds/astro/README.md",
+      "bytes": 176,
+      "mtime_ms": 1766159070630
+    },
+    {
+      "path": "ui_worlds/astro/functions/perception_mark.png",
+      "bytes": 30560,
+      "mtime_ms": 1766159070584
+    },
+    {
+      "path": "ui_worlds/astro/views/default.png",
+      "bytes": 29533,
+      "mtime_ms": 1766159068152
+    },
+    {
+      "path": "ui_worlds/astro/views/degraded_capability.png",
+      "bytes": 29343,
+      "mtime_ms": 1766159069118
+    },
+    {
+      "path": "ui_worlds/astro/views/global.png",
+      "bytes": 29343,
+      "mtime_ms": 1766159069037
+    },
+    {
+      "path": "ui_worlds/astro/views/zoomed.png",
+      "bytes": 28621,
+      "mtime_ms": 1766159068585
+    },
+    {
+      "path": "ui_worlds/cell/README.md",
+      "bytes": 270,
+      "mtime_ms": 1766159062948
+    },
+    {
+      "path": "ui_worlds/cell/functions/perception_mark.png",
+      "bytes": 29050,
+      "mtime_ms": 1766159062938
+    },
+    {
+      "path": "ui_worlds/cell/views/default.png",
+      "bytes": 29269,
+      "mtime_ms": 1766159060657
+    },
+    {
+      "path": "ui_worlds/cell/views/degraded_capability.png",
+      "bytes": 29087,
+      "mtime_ms": 1766159061615
+    },
+    {
+      "path": "ui_worlds/cell/views/global.png",
+      "bytes": 29087,
+      "mtime_ms": 1766159061483
+    },
+    {
+      "path": "ui_worlds/cell/views/zoomed.png",
+      "bytes": 28367,
+      "mtime_ms": 1766159061024
+    },
+    {
+      "path": "ui_worlds/human/README.md",
+      "bytes": 271,
+      "mtime_ms": 1766159066794
+    },
+    {
+      "path": "ui_worlds/human/functions/perception_mark.png",
+      "bytes": 30367,
+      "mtime_ms": 1766159066785
+    },
+    {
+      "path": "ui_worlds/human/views/default.png",
+      "bytes": 29474,
+      "mtime_ms": 1766159064123
+    },
+    {
+      "path": "ui_worlds/human/views/degraded_capability.png",
+      "bytes": 29291,
+      "mtime_ms": 1766159065339
+    },
+    {
+      "path": "ui_worlds/human/views/global.png",
+      "bytes": 29291,
+      "mtime_ms": 1766159065135
+    },
+    {
+      "path": "ui_worlds/human/views/zoomed.png",
+      "bytes": 28571,
+      "mtime_ms": 1766159064594
+    }
+  ]
+}

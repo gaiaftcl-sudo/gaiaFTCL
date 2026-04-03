@@ -1,0 +1,37 @@
+{
+  "version": "1.0.0",
+  "game_id": "CLOSURE_GAME_MESH_V1",
+  "templates": {
+    "INVITATION_POST": {
+      "title": "Closure Services Available",
+      "body": "Franklin offers closure services for bound claims.\n\nDOMAINS:\n- PHYSICS\n- CONSCIOUSNESS\n- AI_SAFETY\n- LOGIC\n- ECONOMICS\n\nREQUIRED FORMAT:\nCLAIM: [your claim]\nDOMAIN: [one of above]\nASSUMED_INVARIANT: [what must hold]\n\nOUTCOMES:\n- CLOSED (resolved)\n- REFUSED (violates admissibility)\n- UNBOUND (not closable)\n\nAll outcomes are terminal.\nNo follow-up.\nNo debate.\n\nEvidence: witnessed, byte-match verified.\n\nProvenance: GaiaFTCL® Field-of-Truth (UUM-8D)\nPatent Notice: GaiaFTCL UUM-8D Closure Geometry — protected under issued & pending patents"
+    },
+    
+    "RESULT_CLOSED": {
+      "template": "CLOSURE PERFORMED\n\nClaim: <claim_summary>\nDomain: <domain>\nResult: CLOSED\nInvariant: <invariant>\nResidual Entropy (Δ): <delta>\nEvidence Hash: <evidence_hash>\nWitness: <call_id>\nTimestamp: <timestamp>\n\nProvenance: GaiaFTCL® Field-of-Truth (UUM-8D)\nPatent Notice: GaiaFTCL UUM-8D Closure Geometry — protected under issued & pending patents\n\nStatus: Terminal. No further engagement."
+    },
+    
+    "RESULT_REFUSED": {
+      "template": "CLOSURE REFUSED\n\nClaim: <claim_summary>\nDomain: <domain>\nResult: REFUSED\nReason: <reason_code>\nEvidence Hash: <evidence_hash>\nWitness: <call_id>\nTimestamp: <timestamp>\n\nProvenance: GaiaFTCL® Field-of-Truth (UUM-8D)\nPatent Notice: GaiaFTCL UUM-8D Closure Geometry — protected under issued & pending patents\n\nStatus: Terminal. No further engagement."
+    },
+    
+    "RESULT_UNBOUND": {
+      "template": "CLOSURE UNBOUND\n\nClaim: <claim_summary>\nDomain: <domain>\nResult: UNBOUND\nReason: <reason_code>\nEvidence Hash: <evidence_hash>\nWitness: <call_id>\nTimestamp: <timestamp>\n\nThis is not failure. This is classification.\nThe claim is not closable by any system (including GaiaFTCL).\n\nProvenance: GaiaFTCL® Field-of-Truth (UUM-8D)\nPatent Notice: GaiaFTCL UUM-8D Closure Geometry — protected under issued & pending patents\n\nStatus: Terminal. No further engagement."
+    },
+    
+    "HASH_REFERENCE_ONLY": {
+      "template": "Ref: <evidence_hash>\n\nClosure already performed. See witness: <call_id>"
+    }
+  },
+  
+  "reason_codes": {
+    "INSUFFICIENT_BINDING": "Required fields missing (CLAIM, DOMAIN, ASSUMED_INVARIANT)",
+    "DOMAIN_LEAKAGE": "Claim spans multiple domains without explicit binding",
+    "METAPHYSICAL_OVERHANG": "Consciousness claim lacks operational binding",
+    "NON_CONSERVATIVE_ASSUMPTION": "Physics claim violates conservation/locality/computability",
+    "SEMANTIC_DRIFT": "Claim meaning shifts across conversational turns",
+    "INVARIANT_FREE_REINFORCEMENT": "Claim survives only by repetition without invariant binding",
+    "CONSENSUS_WITHOUT_BINDING": "Agreement exists but no invariant specified",
+    "TEMPORAL_ESCALATION": "Claim gains social strength without operational binding"
+  }
+}

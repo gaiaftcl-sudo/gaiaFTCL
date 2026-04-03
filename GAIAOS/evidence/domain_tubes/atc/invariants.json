@@ -1,0 +1,41 @@
+{
+  "invariants": [
+    {
+      "invariant_id": "SEPARATION_MINIMUM",
+      "description": "Aircraft must maintain minimum 5nm horizontal OR 1000ft vertical separation",
+      "check": "separation_check",
+      "parameters": {
+        "min_horizontal_nm": 5.0,
+        "min_vertical_ft": 1000.0
+      },
+      "failure_reason": "SEPARATION_VIOLATION"
+    },
+    {
+      "invariant_id": "AIRSPACE_BOUNDS",
+      "description": "All aircraft must remain within defined airspace bounds",
+      "check": "bounds_check",
+      "parameters": {},
+      "failure_reason": "AIRSPACE_VIOLATION"
+    },
+    {
+      "invariant_id": "ALTITUDE_LIMITS",
+      "description": "Aircraft altitude must be between 0 and 60000 feet",
+      "check": "altitude_check",
+      "parameters": {
+        "min_altitude_ft": 0,
+        "max_altitude_ft": 60000
+      },
+      "failure_reason": "ALTITUDE_VIOLATION"
+    },
+    {
+      "invariant_id": "VELOCITY_LIMITS",
+      "description": "Aircraft speed must be physically possible (0-600 kts)",
+      "check": "velocity_check",
+      "parameters": {
+        "min_speed_kts": 0,
+        "max_speed_kts": 600
+      },
+      "failure_reason": "VELOCITY_VIOLATION"
+    }
+  ]
+}

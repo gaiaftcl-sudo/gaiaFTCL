@@ -1,0 +1,97 @@
+{
+  "canonicals_hash": "sha256:9d83d1f8b9925b77ad4eea3744746de36c9cd025462786fa199591650c7b3b50",
+  "echo_ledger_count": 22,
+  "generated_at": "2026-03-03T15:49:28.613721+00:00",
+  "last_10_receipts": [
+    {
+      "call_id": "6a48af59-93d2-493c-8492-49897db7f3ff",
+      "closure_class": "PROVISIONAL",
+      "domain_id": "generic",
+      "evidence_hash": "sha256:43ce291e58f79dd84b81df0aea7d4aeee0dac70d3d2e20301d3d364ac75d0cb7",
+      "residual_entropy": "0.0",
+      "timestamp_utc": "2026-03-03T15:49:28.599290+00:00"
+    },
+    {
+      "call_id": "aa3b1747-e46e-4a84-a5b5-6616addc76a1",
+      "closure_class": "PROVISIONAL",
+      "domain_id": "generic",
+      "evidence_hash": "sha256:41963703a2ca49a04fe0466bb5cfbc237b0d8fd3d12a969e79bcd76983fc32fe",
+      "residual_entropy": "0.0",
+      "timestamp_utc": "2026-03-03T15:47:57.077319+00:00"
+    },
+    {
+      "call_id": "7c98e8ea-2bbf-4fa2-ad2e-f5ae7d06ee34",
+      "closure_class": "PROVISIONAL",
+      "domain_id": "generic",
+      "evidence_hash": "sha256:36ac5a6e8fd5cb5d4258b7cadec512d82e6feb6a4d5cab04e2d971a6597ea812",
+      "residual_entropy": "0.0",
+      "timestamp_utc": "2026-03-03T15:47:45.131238+00:00"
+    },
+    {
+      "call_id": "d854a3f5-2a90-4389-a0e2-27d554846ed8",
+      "closure_class": "PROVISIONAL",
+      "domain_id": "generic",
+      "evidence_hash": "sha256:0ef400efeb0fcc0538df0e4babc47e9abb84a83d1f5d69abddc844533d4a3c28",
+      "residual_entropy": "0.0",
+      "timestamp_utc": "2026-03-03T15:02:56.281762+00:00"
+    },
+    {
+      "call_id": "406c34ef-cf5d-4e5f-b27e-9adcfccaf871",
+      "closure_class": "PROVISIONAL",
+      "domain_id": "generic",
+      "evidence_hash": "sha256:c6eaec902bcd0cc3a3ba3e7c1b2dcc18a178885fe80d571803391fd27d5cc3e7",
+      "residual_entropy": "0.0",
+      "timestamp_utc": "2026-03-03T15:02:31.503288+00:00"
+    },
+    {
+      "call_id": "d84f2edc-1f88-4f3c-acce-680e1aef8d0b",
+      "closure_class": "PROVISIONAL",
+      "domain_id": "generic",
+      "evidence_hash": "sha256:b7fe61ffabd5140dd6a5209b97519a017f88be832330a510be9ff306999c0da1",
+      "residual_entropy": "0.0",
+      "timestamp_utc": "2026-03-03T15:02:30.078831+00:00"
+    },
+    {
+      "call_id": "0c8a9b6e-f9dc-4d26-b17b-9679e7f5e8ec",
+      "closure_class": "PROVISIONAL",
+      "domain_id": "generic",
+      "evidence_hash": "sha256:62ba2d2b18946547571d9438128d9bb7e567bcc4058a8f828e87cbf7a989ab94",
+      "residual_entropy": "0.0",
+      "timestamp_utc": "2026-03-03T15:02:28.222052+00:00"
+    },
+    {
+      "call_id": "72754684-f2ca-4084-8f5f-cabd338e0855",
+      "closure_class": "PROVISIONAL",
+      "domain_id": "generic",
+      "evidence_hash": "sha256:beab6a866ea2622fabf62bc0ab15811aec97c7db5cb37b0c0b74b81f4a99a9c1",
+      "residual_entropy": "0.0",
+      "timestamp_utc": "2026-03-03T15:01:44.112871+00:00"
+    },
+    {
+      "call_id": "fb7ae37b-a41e-4264-ad9e-5e80ceec9687",
+      "closure_class": "PROVISIONAL",
+      "domain_id": "generic",
+      "evidence_hash": "sha256:ab73bfc4fd9d2000d1632abf025c2933fbd971969be4a53707d405a12d094120",
+      "residual_entropy": "0.0",
+      "timestamp_utc": "2026-03-03T15:01:42.670544+00:00"
+    },
+    {
+      "call_id": "cd4459f7-3b66-4b92-b4c2-d890dfe2fab6",
+      "closure_class": "PROVISIONAL",
+      "domain_id": "generic",
+      "evidence_hash": "sha256:6fe459fc6eb273fa85f0cfe12ab4ae09455626cb77450636e7b1858f463fdc98",
+      "residual_entropy": "0.0",
+      "timestamp_utc": "2026-03-03T15:01:40.772615+00:00"
+    }
+  ],
+  "receipts_by_closure_class": {
+    "PROVISIONAL": 14
+  },
+  "receipts_by_domain": {
+    "generic": 14
+  },
+  "refusal_reasons_hash": "sha256:690bb741121862165e57fd05457b829278640115f2e2d4644a2f547b23d627a8",
+  "report_schema_version": 1,
+  "templates_hash": "sha256:78d3d7254f8b8e7ee7fb13af5c149e7013c7b13ade6d276009202ec481c65f78",
+  "total_receipts": 14
+}

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GaiaOS Compliance Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1d3a 100%);
+            color: #e0e6ed;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-dev-etest {
+            background: #ff9500;
+            color: #000;
+        }
+        
+        .status-validated {
+            background: #34c759;
+            color: #fff;
+        }
+        
+        .status-fail {
+            background: #ff3b30;
+            color: #fff;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: #667eea;
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .metric:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            color: #a0aec0;
+            font-size: 14px;
+        }
+        
+        .metric-value {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .pass { color: #34c759; }
+        .fail { color: #ff3b30; }
+        .pending { color: #ff9500; }
+        .na { color: #8e8e93; }
+        
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+        
+        .violation {
+            background: rgba(255, 59, 48, 0.1);
+            border-left: 4px solid #ff3b30;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        
+        .limitation {
+            background: rgba(255, 149, 0, 0.1);
+            border-left: 4px solid #ff9500;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        
+        .service-status {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+        }
+        
+        .service-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+        
+        .service-dot.online { background: #34c759; }
+        .service-dot.offline { background: #ff3b30; }
+        .service-dot.unknown { background: #8e8e93; }
+        
+        .big-number {
+            font-size: 48px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .validation-stage {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            margin: 8px 0;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .stage-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            font-size: 20px;
+        }
+        
+        .stage-icon.pending { background: rgba(142, 142, 147, 0.2); }
+        .stage-icon.in-progress { background: rgba(255, 149, 0, 0.2); }
+        .stage-icon.pass { background: rgba(52, 199, 89, 0.2); }
+        .stage-icon.fail { background: rgba(255, 59, 48, 0.2); }
+        
+        .refresh-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .timestamp {
+            color: #8e8e93;
+            font-size: 12px;
+            margin-top: 16px;
+        }
+        
+        .critical-warning {
+            background: rgba(255, 59, 48, 0.15);
+            border: 2px solid #ff3b30;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .critical-warning h2 {
+            color: #ff3b30;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛡️ GaiaOS Compliance Dashboard</h1>
+        <p style="margin: 10px 0;">GxP Validation Status - Mac GaiaOS VM</p>
+        <div style="margin-top: 16px;">
+            <span class="status-badge status-dev-etest" id="global-status">DEV-ETEST</span>
+            <button class="refresh-btn" onclick="refreshAll()" style="margin-left: 16px;">🔄 Refresh</button>
+        </div>
+        <div class="timestamp" id="last-updated">Last updated: Loading...</div>
+    </div>
+    
+    <!-- CRITICAL WARNING -->
+    <div class="critical-warning" id="critical-warning" style="display: none;">
+        <h2>⚠️ CRITICAL VALIDATION FAILURES</h2>
+        <div id="critical-issues"></div>
+    </div>
+    
+    <!-- VALIDATION STAGES -->
+    <div class="card" style="margin-bottom: 30px;">
+        <h2>📋 Validation Stages</h2>
+        
+        <div class="validation-stage">
+            <div class="stage-icon pending" id="iq-icon">IQ</div>
+            <div style="flex: 1;">
+                <strong>Installation Qualification</strong>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="iq-progress" style="width: 0%"></div>
+                </div>
+                <div style="margin-top: 8px; font-size: 13px; color: #a0aec0;" id="iq-status">Not started</div>
+            </div>
+        </div>
+        
+        <div class="validation-stage">
+            <div class="stage-icon pending" id="oq-icon">OQ</div>
+            <div style="flex: 1;">
+                <strong>Operational Qualification</strong>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="oq-progress" style="width: 0%"></div>
+                </div>
+                <div style="margin-top: 8px; font-size: 13px; color: #a0aec0;" id="oq-status">Awaiting IQ</div>
+            </div>
+        </div>
+        
+        <div class="validation-stage">
+            <div class="stage-icon pending" id="pq-icon">PQ</div>
+            <div style="flex: 1;">
+                <strong>Performance Qualification</strong>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="pq-progress" style="width: 0%"></div>
+                </div>
+                <div style="margin-top: 8px; font-size: 13px; color: #a0aec0;" id="pq-status">Awaiting OQ</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- KEY METRICS -->
+    <div class="grid">
+        <!-- SERVICE HEALTH -->
+        <div class="card">
+            <h2>🔷 Service Health</h2>
+            <div class="service-status">
+                <div class="service-dot unknown" id="dot-substrate"></div>
+                <span>Quantum Substrate (8800)</span>
+            </div>
+            <div class="service-status">
+                <div class="service-dot unknown" id="dot-gasm"></div>
+                <span>GASM Runtime (8801)</span>
+            </div>
+            <div class="service-status">
+                <div class="service-dot unknown" id="dot-franklin"></div>
+                <span>Franklin Validator (8900)</span>
+            </div>
+            <div class="service-status">
+                <div class="service-dot unknown" id="dot-gnn"></div>
+                <span>GNN Service (8700)</span>
+            </div>
+            <div class="service-status">
+                <div class="service-dot unknown" id="dot-facade"></div>
+                <span>Quantum Facade (8000)</span>
+            </div>
+            <div class="service-status">
+                <div class="service-dot unknown" id="dot-arangodb"></div>
+                <span>ArangoDB (8529)</span>
+            </div>
+        </div>
+        
+        <!-- HONESTY COMPLIANCE -->
+        <div class="card">
+            <h2>🛡️ Honesty Compliance</h2>
+            <div class="metric">
+                <span class="metric-label">Violations Detected</span>
+                <span class="metric-value fail" id="violations-count">-</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Modules Scanned</span>
+                <span class="metric-value" id="modules-scanned">-</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">TODOs Found</span>
+                <span class="metric-value pending" id="todos-count">-</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Unimplemented Found</span>
+                <span class="metric-value pending" id="unimplemented-count">-</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Completeness Score</span>
+                <span class="metric-value" id="completeness-score">-</span>
+            </div>
+        </div>
+        
+        <!-- CODE QUALITY -->
+        <div class="card">
+            <h2>📊 Code Quality</h2>
+            <div class="metric">
+                <span class="metric-label">Total LOC</span>
+                <span class="metric-value" id="total-loc">-</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Rust Files</span>
+                <span class="metric-value" id="rust-files">-</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Test Coverage</span>
+                <span class="metric-value" id="test-coverage">-</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Build Status</span>
+                <span class="metric-value" id="build-status">-</span>
+            </div>
+        </div>
+        
+        <!-- EXAM DOMAINS -->
+        <div class="card">
+            <h2>📚 Exam Domain Ingestion</h2>
+            <div class="metric">
+                <span class="metric-label">Domains Ingested</span>
+                <span class="metric-value" id="domains-count">0 / 10</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Total Questions</span>
+                <span class="metric-value" id="questions-count">0</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Knowledge Graph Nodes</span>
+                <span class="metric-value" id="graph-nodes">0</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="domain-progress" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- GASM OPCODE COVERAGE -->
+    <div class="card" style="margin-bottom: 30px;">
+        <h2>⚡ GASM Opcode Coverage</h2>
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 16px;">
+            <div class="metric" style="border: none; padding: 8px;">
+                <span class="metric-label">LoadQuery</span>
+                <span class="metric-value pass" id="op-loadquery">✓</span>
+            </div>
+            <div class="metric" style="border: none; padding: 8px;">
+                <span class="metric-label">SearchGraph</span>
+                <span class="metric-value pass" id="op-searchgraph">✓</span>
+            </div>
+            <div class="metric" style="border: none; padding: 8px;">
+                <span class="metric-label">Superpose</span>
+                <span class="metric-value pass" id="op-superpose">✓</span>
+            </div>
+            <div class="metric" style="border: none; padding: 8px;">
+                <span class="metric-label">ApplyVirtueFilter</span>
+                <span class="metric-value pass" id="op-filter">✓</span>
+            </div>
+            <div class="metric" style="border: none; padding: 8px;">
+                <span class="metric-label">FranklinValidate</span>
+                <span class="metric-value pass" id="op-validate">✓</span>
+            </div>
+            <div class="metric" style="border: none; padding: 8px;">
+                <span class="metric-label">Collapse</span>
+                <span class="metric-value pass" id="op-collapse">✓</span>
+            </div>
+            <div class="metric" style="border: none; padding: 8px;">
+                <span class="metric-label">Output</span>
+                <span class="metric-value pass" id="op-output">✓</span>
+            </div>
+            <div class="metric" style="border: none; padding: 8px;">
+                <span class="metric-label">If</span>
+                <span class="metric-value pending" id="op-if">⚠️</span>
+            </div>
+            <div class="metric" style="border: none; padding: 8px;">
+                <span class="metric-label">Loop</span>
+                <span class="metric-value pending" id="op-loop">⚠️</span>
+            </div>
+            <div class="metric" style="border: none; padding: 8px;">
+                <span class="metric-label">Jump</span>
+                <span class="metric-value fail" id="op-jump">✗</span>
+            </div>
+            <div class="metric" style="border: none; padding: 8px;">
+                <span class="metric-label">JumpIf</span>
+                <span class="metric-value fail" id="op-jumpif">✗</span>
+            </div>
+        </div>
+        <div style="margin-top: 16px;">
+            <strong>Coverage:</strong> <span id="opcode-coverage">64%</span> (7/11 opcodes)
+        </div>
+    </div>
+    
+    <!-- LIMITATIONS -->
+    <div class="card" style="margin-bottom: 30px;">
+        <h2>⚠️ Current Limitations (Must Fix Before Production)</h2>
+        <div id="limitations-list">
+            <div class="limitation">
+                <strong>GASM Runtime:</strong> Missing Jump and JumpIf opcodes (critical for complete instruction set)
+            </div>
+            <div class="limitation">
+                <strong>Services:</strong> Not runtime verified (services not started and tested)
+            </div>
+            <div class="limitation">
+                <strong>GNN Model:</strong> Not trained (random weights, predictions meaningless)
+            </div>
+            <div class="limitation">
+                <strong>Integration:</strong> No end-to-end tests executed
+            </div>
+            <div class="limitation">
+                <strong>Browser UI:</strong> Not running in GaiaOS VM
+            </div>
+            <div class="limitation">
+                <strong>Exam Domains:</strong> 0/10 domains ingested
+            </div>
+        </div>
+    </div>
+    
+    <!-- VIOLATIONS -->
+    <div class="card" id="violations-card" style="display: none;">
+        <h2>❌ Honesty Policy Violations</h2>
+        <div id="violations-list"></div>
+    </div>
+    
+    <!-- PRODUCTION READINESS -->
+    <div class="card">
+        <h2>🏆 Production Readiness Checklist</h2>
+        <div id="readiness-checklist">
+            <div class="metric">
+                <span class="metric-label">Browser UI Running</span>
+                <span class="metric-value fail" id="check-ui">✗ Not Running</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">All Exam Domains Ingested</span>
+                <span class="metric-value fail" id="check-domains">✗ 0/10</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">All Services Operational</span>
+                <span class="metric-value pending" id="check-services">⚠️ Not Verified</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Honesty Compliance</span>
+                <span class="metric-value fail" id="check-honesty">✗ Violations Present</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">IQ Passed</span>
+                <span class="metric-value pending" id="check-iq">⚠️ Not Run</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">OQ Passed</span>
+                <span class="metric-value pending" id="check-oq">⚠️ Not Run</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">PQ Passed</span>
+                <span class="metric-value pending" id="check-pq">⚠️ Not Run</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">Audit Trail Complete</span>
+                <span class="metric-value pending" id="check-audit">⚠️ In Progress</span>
+            </div>
+        </div>
+        
+        <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+            <div class="big-number fail" id="readiness-percent">0%</div>
+            <div style="color: #a0aec0;">Production Readiness</div>
+        </div>
+    </div>
+    
+    <script>
+        // API endpoints
+        const API_BASE = 'http://localhost:8000';
+        
+        // Refresh all data
+        async function refreshAll() {
+            document.getElementById('last-updated').textContent = 
+                'Last updated: ' + new Date().toLocaleString();
+            
+            await Promise.all([
+                checkServiceHealth(),
+                loadHonestyEvidence(),
+                loadValidationStatus(),
+                loadExamDomains(),
+                calculateReadiness()
+            ]);
+        }
+        
+        // Check service health
+        async function checkServiceHealth() {
+            const services = [
+                { id: 'substrate', port: 8800, name: 'Quantum Substrate' },
+                { id: 'gasm', port: 8801, name: 'GASM Runtime' },
+                { id: 'franklin', port: 8900, name: 'Franklin Validator' },
+                { id: 'gnn', port: 8700, name: 'GNN Service' },
+                { id: 'facade', port: 8000, name: 'Quantum Facade' },
+                { id: 'arangodb', port: 8529, name: 'ArangoDB' }
+            ];
+            
+            for (const service of services) {
+                const dot = document.getElementById(`dot-${service.id}`);
+                
+                try {
+                    const response = await fetch(`http://localhost:${service.port}/health`, {
+                        method: 'GET',
+                        signal: AbortSignal.timeout(2000)
+                    });
+                    
+                    if (response.ok) {
+                        dot.className = 'service-dot online';
+                    } else {
+                        dot.className = 'service-dot offline';
+                    }
+                } catch (e) {
+                    dot.className = 'service-dot offline';
+                }
+            }
+        }
+        
+        // Load honesty evidence
+        async function loadHonestyEvidence() {
+            try {
+                const response = await fetch('/evidence/modules_evidence.json');
+                const evidence = await response.json();
+                
+                let totalModules = 0;
+                let violations = 0;
+                let totalTodos = 0;
+                let totalUnimplemented = 0;
+                let totalLoc = 0;
+                
+                for (const [name, module] of Object.entries(evidence.modules)) {
+                    totalModules++;
+                    totalLoc += module.loc || 0;
+                    totalTodos += module.todo_count || 0;
+                    totalUnimplemented += module.unimplemented_count || 0;
+                    
+                    if (module.contains_todo || module.contains_unimplemented || 
+                        (module.missing_opcodes && module.missing_opcodes.length > 0)) {
+                        violations++;
+                    }
+                }
+                
+                document.getElementById('violations-count').textContent = violations;
+                document.getElementById('modules-scanned').textContent = totalModules;
+                document.getElementById('todos-count').textContent = totalTodos;
+                document.getElementById('unimplemented-count').textContent = totalUnimplemented;
+                document.getElementById('total-loc').textContent = totalLoc.toLocaleString();
+                
+                // Completeness score
+                const completeness = Math.max(0, 100 - (totalTodos + totalUnimplemented + violations * 10));
+                document.getElementById('completeness-score').textContent = completeness + '%';
+                document.getElementById('completeness-score').className = 
+                    completeness >= 90 ? 'metric-value pass' :
+                    completeness >= 70 ? 'metric-value pending' :
+                    'metric-value fail';
+                
+                // Show critical warning if violations
+                if (violations > 0) {
+                    document.getElementById('critical-warning').style.display = 'block';
+                    const issuesDiv = document.getElementById('critical-issues');
+                    issuesDiv.innerHTML = `
+                        <div class="violation">${violations} module(s) have honesty violations (TODOs, missing features, or unimplemented code)</div>
+                        <div class="violation">GASM is missing Jump and JumpIf opcodes</div>
+                    `;
+                }
+                
+            } catch (e) {
+                console.error('Failed to load honesty evidence:', e);
+            }
+        }
+        
+        // Load validation status
+        async function loadValidationStatus() {
+            // Mock for now - in production would query validation API
+            // IQ
+            document.getElementById('iq-progress').style.width = '45%';
+            document.getElementById('iq-status').textContent = 'Partial - Services compiled, not installed';
+            
+            // OQ
+            document.getElementById('oq-progress').style.width = '0%';
+            document.getElementById('oq-status').textContent = 'Not started - awaiting IQ completion';
+            
+            // PQ
+            document.getElementById('pq-progress').style.width = '0%';
+            document.getElementById('pq-status').textContent = 'Not started - awaiting OQ completion';
+        }
+        
+        // Load exam domains
+        async function loadExamDomains() {
+            // Mock for now - in production would query ArangoDB
+            document.getElementById('domains-count').textContent = '0 / 10';
+            document.getElementById('questions-count').textContent = '0';
+            document.getElementById('graph-nodes').textContent = '0';
+            document.getElementById('domain-progress').style.width = '0%';
+        }
+        
+        // Calculate production readiness
+        function calculateReadiness() {
+            const checks = [
+                document.getElementById('dot-facade').className.includes('online'),  // Services
+                parseInt(document.getElementById('domains-count').textContent) === 10,  // Domains
+                parseInt(document.getElementById('violations-count').textContent) === 0,  // Honesty
+                false,  // IQ (not passed)
+                false,  // OQ (not run)
+                false,  // PQ (not run)
+                false,  // UI (not running)
+                false   // Audit (not complete)
+            ];
+            
+            const passedCount = checks.filter(c => c).length;
+            const readinessPercent = Math.round((passedCount / checks.length) * 100);
+            
+            document.getElementById('readiness-percent').textContent = readinessPercent + '%';
+            document.getElementById('readiness-percent').className = 
+                readinessPercent >= 90 ? 'big-number pass' :
+                readinessPercent >= 50 ? 'big-number pending' :
+                'big-number fail';
+            
+            // Update global status
+            const globalStatus = document.getElementById('global-status');
+            if (readinessPercent >= 90) {
+                globalStatus.textContent = 'VALIDATED';
+                globalStatus.className = 'status-badge status-validated';
+            } else if (readinessPercent >= 50) {
+                globalStatus.textContent = 'DEV-ETEST';
+                globalStatus.className = 'status-badge status-dev-etest';
+            } else {
+                globalStatus.textContent = 'DEV-ETEST';
+                globalStatus.className = 'status-badge status-dev-etest';
+            }
+        }
+        
+        // Auto-refresh every 30 seconds
+        setInterval(refreshAll, 30000);
+        
+        // Initial load
+        refreshAll();
+    </script>
+</body>
+</html>
+

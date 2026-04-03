@@ -1,0 +1,25 @@
+[package]
+name = "market_data_ingest"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "market_data_ingest"
+path = "src/main.rs"
+
+[dependencies]
+economic_digital_twin = { path = "../../crates/economic_digital_twin" }
+entropy_calculation = { path = "../entropy_calculation" }
+anyhow = "1.0"
+thiserror = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+reqwest = { version = "0.11", features = ["json"] }
+tokio = { version = "1", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+base64 = "0.21"
+yahoo_finance_api = "1.2"
+async-trait = "0.1"
+

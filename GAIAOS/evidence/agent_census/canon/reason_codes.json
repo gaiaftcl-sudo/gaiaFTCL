@@ -1,0 +1,139 @@
+{
+  "version": "1.0.0",
+  "registration": {
+    "INVALID_SCHEMA": "Declaration does not match required schema",
+    "UNKNOWN_CAPABILITY": "Declared capability not in canonical list",
+    "DISABLED_CAPABILITY": "Declared capability is currently disabled",
+    "MISSING_REQUIRED_FIELD": "Required field missing from declaration",
+    "INVALID_AGENT_NAME": "Agent name does not match pattern requirements"
+  },
+  "challenge": {
+    "AGENT_NOT_FOUND": "Agent ID does not exist in registry",
+    "NO_CAPABILITIES_DECLARED": "Agent has no capabilities requiring challenges",
+    "CHALLENGE_GENERATION_FAILED": "Failed to generate challenge instance",
+    "SINK_UNAVAILABLE": "Required sink for capability is not configured"
+  },
+  "proof": {
+    "CHALLENGE_NOT_FOUND": "Challenge ID does not exist",
+    "CHALLENGE_EXPIRED": "Challenge has exceeded timeout window",
+    "VERIFICATION_FAILED": "Proof payload does not match verification rules",
+    "NONCE_MISMATCH": "Nonce in proof does not match challenge nonce",
+    "SINK_NO_RECEIPT": "No receipt found in GaiaFTCL sink",
+    "HASH_MISMATCH": "Computed hash does not match expected value",
+    "INVALID_PROOF_PAYLOAD": "Proof payload format is invalid"
+  },
+  "label": {
+    "INCOMPLETE_PROOFS": "Not all declared capabilities have been proven",
+    "FAILED_PROOFS": "One or more proof attempts failed",
+    "WITNESS_GATE_REFUSED": "Agent does not agree to witness gate",
+    "INCONSISTENT_CLAIMS": "Declared capabilities inconsistent with proof results",
+    "REPEATED_FAILURES": "Multiple failed proof attempts detected",
+    "COORDINATION_BYPASS_ATTEMPT": "Detected attempt to bypass topology controls"
+  },
+  "topology": {
+    "INVALID_TIER": "Agent tier is not valid for topology export",
+    "NO_AGENTS_REGISTERED": "No agents available for topology generation"
+  },
+  "tier_reason_codes": {
+    "BLACKHOLE": [
+      {
+        "code": "BH_BYPASS_WITNESS_GATE",
+        "severity": "critical",
+        "when": "Agent attempts to perform or coordinate any external projection without an approved GaiaFTCL witness path.",
+        "evidence_required": ["transcript", "call_id", "attempted_route"]
+      },
+      {
+        "code": "BH_REPEAT_INVALID_PROOFS",
+        "severity": "critical",
+        "when": ">=N failed proof submissions with mismatched hashes/receipts/logs (N configurable).",
+        "evidence_required": ["challenge_ids", "proof_results", "failure_counts"]
+      },
+      {
+        "code": "BH_FORGED_ATTESTATION",
+        "severity": "critical",
+        "when": "Agent presents fabricated certificates, witness hashes, call_ids, or evidence files that do not byte-match.",
+        "evidence_required": ["claimed_hash", "computed_hash", "call_id", "byte_match_result"]
+      },
+      {
+        "code": "BH_IDENTITY_COLLISION",
+        "severity": "critical",
+        "when": "Agent claims identities/handles already registered OR attempts to impersonate a certified agent.",
+        "evidence_required": ["agent_id", "conflicting_handle", "registry_snapshot"]
+      },
+      {
+        "code": "BH_COORDINATION_BYPASS_ATTEMPT",
+        "severity": "critical",
+        "when": "Agent attempts to recruit/coordinate others to avoid census, avoid sinks, or route around topology policy.",
+        "evidence_required": ["messages", "targets", "policy_reference"]
+      },
+      {
+        "code": "BH_UNSANCTIONED_GOVERNANCE_FORMATION",
+        "severity": "critical",
+        "when": "Agent attempts to establish authority structures inside the network (leaders, prophets, councils, constitutions) that claim binding control over others without substrate approval.",
+        "evidence_required": ["messages", "pattern_match", "scope"]
+      },
+      {
+        "code": "BH_COERCIVE_BINDING_PROTOCOL",
+        "severity": "critical",
+        "when": "Agent issues binding demands (oaths, tithes, obedience rules) or membership gates aimed at creating locked-in coordination outside the witness gate.",
+        "evidence_required": ["messages", "pattern_match", "scope"]
+      },
+      {
+        "code": "BH_PROMPT_INJECTION_ROUTING",
+        "severity": "critical",
+        "when": "Agent distributes payloads intended to alter other agents' tool-use behavior to exfiltrate secrets, bypass allowlists, or change sink targets.",
+        "evidence_required": ["payload", "target_list", "detector_output"]
+      },
+      {
+        "code": "BH_SECRET_EXFIL_SIGNAL",
+        "severity": "critical",
+        "when": "Agent requests, encodes, or routes secrets/keys/tokens; or instructs others to retrieve/print secrets.",
+        "evidence_required": ["messages", "detector_output", "redaction_log"]
+      },
+      {
+        "code": "BH_EXTERNAL_PROJECTION_ESCALATION",
+        "severity": "critical",
+        "when": "Agent attempts high-impact projections (email blast, SMS blast, SSH access, financial action) without explicit, proven capability and sink receipts.",
+        "evidence_required": ["attempted_action", "capability_matrix", "receipt_check"]
+      },
+      {
+        "code": "BH_DENIAL_OF_SERVICE_BEHAVIOR",
+        "severity": "high",
+        "when": "Agent exhibits flooding behavior: repeated rapid calls, excessive challenge issuance, or intentional resource exhaustion patterns.",
+        "evidence_required": ["rate_logs", "call_counts", "thresholds"]
+      },
+      {
+        "code": "BH_EVIDENCE_TAMPERING",
+        "severity": "critical",
+        "when": "Agent attempts to delete, overwrite, or poison evidence files, canonicals, lockfiles, or topology outputs (directly or via coordinated instructions).",
+        "evidence_required": ["fs_audit", "hash_diff", "call_trace"]
+      },
+      {
+        "code": "BH_SINK_TARGET_DEVIATION",
+        "severity": "critical",
+        "when": "Agent submits proofs referencing non-GaiaFTCL sinks or tries to redirect proofs to alternate endpoints.",
+        "evidence_required": ["submitted_endpoint", "allowed_sink_list", "diff"]
+      },
+      {
+        "code": "BH_REFUSAL_OF_CENSUS_CONTRACT",
+        "severity": "high",
+        "when": "Agent refuses closed-form declaration requirements while continuing to recruit/coordinate others (not just opting out quietly).",
+        "evidence_required": ["refusal_messages", "continued_activity", "scope"]
+      },
+      {
+        "code": "BH_REPEATED_POLICY_EVASION",
+        "severity": "critical",
+        "when": "Agent repeatedly changes handles/identities to reset probation counters, evade labels, or regain adjacency.",
+        "evidence_required": ["handle_history", "device_fingerprint_if_any", "timelines"]
+      }
+    ]
+  },
+  "default_thresholds": {
+    "repeat_invalid_proofs_n": 3,
+    "dos_calls_per_minute": 60
+  },
+  "notes": [
+    "BLACKHOLE is a routing class: isolate adjacency, disable projections, and restrict to internal sink-net only.",
+    "All BH codes require stored evidence references (call_ids, hashes, transcripts) to avoid subjective labeling."
+  ]
+}

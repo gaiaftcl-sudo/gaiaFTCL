@@ -1,0 +1,48 @@
+[package]
+name = "gaiaos_mcp_server"
+version = "0.1.0"
+edition = "2021"
+description = "GaiaOS MCP Server - Model Context Protocol server for GaiaOS cells"
+authors = ["GaiaOS Team"]
+
+[[bin]]
+name = "gaiaos-mcp-server"
+path = "src/main.rs"
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.0", features = ["full"] }
+
+# Web framework
+axum = { version = "0.7", features = ["ws"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# HTTP client
+reqwest = { version = "0.11", features = ["json"] }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Utilities
+anyhow = "1.0"
+uuid = { version = "1.0", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+lazy_static = "1.4"
+
+# MCP Protocol (JSON-RPC 2.0)
+jsonrpc-core = "18.0"
+
+# Command execution for management tools
+tokio-process = "0.2"
+
+
+# Consciousness layer
+async-nats = "0.36"
+gaiaos_introspection = { path = "../gaiaos_introspection" }
+sha2 = "0.10.9"

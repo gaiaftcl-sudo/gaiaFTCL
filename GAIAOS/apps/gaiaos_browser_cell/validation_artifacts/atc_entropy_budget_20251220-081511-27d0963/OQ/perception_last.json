@@ -1,0 +1,47 @@
+{
+  "world": "Cell",
+  "provenance": {
+    "source": "ClientUICell",
+    "ui_session": "ui",
+    "operator": "operator",
+    "ts_ms": 1766236039109,
+    "notTruth": true
+  },
+  "ops": [
+    {
+      "op": "UpsertPrim",
+      "op_id": "d13bde4f-2bf8-4541-9b97-83967e63cdd1",
+      "path": "/GaiaOS/Worlds/Cell/Perception/Marks/05b8583d-c0dd-46c0-ac54-d25f7ad21591",
+      "primType": "Xform"
+    },
+    {
+      "op": "SetXform",
+      "op_id": "9ddfbfa9-4754-408a-812c-8ae3dc7795b7",
+      "path": "/GaiaOS/Worlds/Cell/Perception/Marks/05b8583d-c0dd-46c0-ac54-d25f7ad21591",
+      "translate": [
+        0,
+        0,
+        0
+      ],
+      "orient": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "op": "SetAttr",
+      "op_id": "87f8f4bd-d94f-49ba-8d4d-86378fe1cb1c",
+      "path": "/GaiaOS/Worlds/Cell/Perception/Marks/05b8583d-c0dd-46c0-ac54-d25f7ad21591",
+      "name": "gaiaos:operatorNote",
+      "valueType": "string",
+      "value": "PQ mark 4"
+    }
+  ]
+}

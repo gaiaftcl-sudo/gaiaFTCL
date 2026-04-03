@@ -1,0 +1,41 @@
+[
+  {
+    "game_id": "G_FTCL_UPDATE_FLEET_V1",
+    "envelope_subjects": [
+      "FLEET_UPDATE_REQUEST",
+      "FLEET_UPDATE_COMMITMENT",
+      "FLEET_UPDATE_TRANSACTION",
+      "FLEET_UPDATE_REPORT"
+    ],
+    "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml",
+    "source_line_range": "78-220"
+  },
+  {
+    "game_id": "G_FTCL_ROLLBACK_V1",
+    "envelope_subjects": [
+      "ROLLBACK_REQUEST",
+      "ROLLBACK_COMMITMENT",
+      "ROLLBACK_TRANSACTION"
+    ],
+    "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml",
+    "source_line_range": "40-140"
+  },
+  {
+    "game_id": "G_FTCL_INVEST_001",
+    "envelope_subjects": [
+      "INVESTMENT_CLAIM",
+      "INVESTMENT_COMMITMENT"
+    ],
+    "source_path": "ftcl/games/G_FTCL_INVEST_001.yaml",
+    "source_line_range": "40-100"
+  },
+  {
+    "game_id": "G_FTCL_PROFIT_DIST",
+    "envelope_subjects": [
+      "PROFIT_DISTRIBUTION_REQUEST",
+      "PROFIT_DISTRIBUTION_TRANSACTION"
+    ],
+    "source_path": "ftcl/games/G_FTCL_PROFIT_DIST.yaml",
+    "source_line_range": "40-100"
+  }
+]

@@ -1,0 +1,614 @@
+{
+  "episodes": [
+    {
+      "episode_id": "ep_c0e1f5df1a2d",
+      "teacher_model_id": "esm2_650m_teacher",
+      "family": "ESM2 650M (Teacher)",
+      "domain": "protein",
+      "mission_id": "protein_stability",
+      "task_spec": "Analyze the stability factors for a protein with high glycine content (>15%). Consider: flexibility, thermal stability, aggregation propensity.",
+      "status": "Completed",
+      "step_count": 4,
+      "created_at": "2025-12-02T14:17:47.872701Z",
+      "completed_at": "2025-12-02T14:17:47.872847Z"
+    },
+    {
+      "episode_id": "ep_b31a620ff4cf",
+      "teacher_model_id": "esm2_3b_teacher",
+      "family": "ESM2 3B (Teacher)",
+      "domain": "protein",
+      "mission_id": "protein_function",
+      "task_spec": "Given the amino acid sequence MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSH, predict: 1. Protein family, 2. Likely function, 3. Structural features",
+      "status": "Completed",
+      "step_count": 5,
+      "created_at": "2025-12-02T14:17:47.872905Z",
+      "completed_at": "2025-12-02T14:17:47.873076Z"
+    },
+    {
+      "episode_id": "ep_8c419f2e66bd",
+      "teacher_model_id": "esm2_650m_teacher",
+      "family": "ESM2 650M (Teacher)",
+      "domain": "protein",
+      "mission_id": "protein_function",
+      "task_spec": "Given the amino acid sequence MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSH, predict: 1. Protein family, 2. Likely function, 3. Structural features",
+      "status": "Completed",
+      "step_count": 5,
+      "created_at": "2025-12-02T14:17:47.872448Z",
+      "completed_at": "2025-12-02T14:17:47.872656Z"
+    },
+    {
+      "episode_id": "ep_c2520a422b3e",
+      "teacher_model_id": "esm2_3b_teacher",
+      "family": "ESM2 3B (Teacher)",
+      "domain": "protein",
+      "mission_id": "protein_stability",
+      "task_spec": "Analyze the stability factors for a protein with high glycine content (>15%). Consider: flexibility, thermal stability, aggregation propensity.",
+      "status": "Completed",
+      "step_count": 4,
+      "created_at": "2025-12-02T14:17:47.873118Z",
+      "completed_at": "2025-12-02T14:17:47.873261Z"
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_13ca9b36df64",
+      "episode_id": "ep_c2520a422b3e",
+      "index": 1,
+      "raw_input": "Step 1 input for: Analyze the stability factors for a protein with high glycine content (>15%). Consider: flexibility, thermal stability, aggregation propensity.",
+      "raw_output": "Step 1 output: Analyzing task...",
+      "action_type": "click",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_stability",
+        "step_index": 1
+      },
+      "created_at": "2025-12-02T14:17:47.873177Z"
+    },
+    {
+      "step_id": "step_ba7960f901d7",
+      "episode_id": "ep_c0e1f5df1a2d",
+      "index": 2,
+      "raw_input": "Step 2 input for: Analyze the stability factors for a protein with high glycine content (>15%). Consider: flexibility, thermal stability, aggregation propensity.",
+      "raw_output": "Step 2 output: Analyzing task...",
+      "action_type": "type",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_stability",
+        "step_index": 2
+      },
+      "created_at": "2025-12-02T14:17:47.872783Z"
+    },
+    {
+      "step_id": "step_42165faff865",
+      "episode_id": "ep_c2520a422b3e",
+      "index": 0,
+      "raw_input": "Step 0 input for: Analyze the stability factors for a protein with high glycine content (>15%). Consider: flexibility, thermal stability, aggregation propensity.",
+      "raw_output": "Step 0 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_stability",
+        "step_index": 0
+      },
+      "created_at": "2025-12-02T14:17:47.873140Z"
+    },
+    {
+      "step_id": "step_12f953a7aa39",
+      "episode_id": "ep_b31a620ff4cf",
+      "index": 3,
+      "raw_input": "Step 3 input for: Given the amino acid sequence MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSH, predict: 1. Protein family, 2. Likely function, 3. Structural features",
+      "raw_output": "Step 3 output: Analyzing task...",
+      "action_type": "wait",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_function",
+        "step_index": 3
+      },
+      "created_at": "2025-12-02T14:17:47.873016Z"
+    },
+    {
+      "step_id": "step_13ca82f6936f",
+      "episode_id": "ep_8c419f2e66bd",
+      "index": 3,
+      "raw_input": "Step 3 input for: Given the amino acid sequence MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSH, predict: 1. Protein family, 2. Likely function, 3. Structural features",
+      "raw_output": "Step 3 output: Analyzing task...",
+      "action_type": "wait",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_function",
+        "step_index": 3
+      },
+      "created_at": "2025-12-02T14:17:47.872591Z"
+    },
+    {
+      "step_id": "step_f40ed7b5cf78",
+      "episode_id": "ep_c0e1f5df1a2d",
+      "index": 1,
+      "raw_input": "Step 1 input for: Analyze the stability factors for a protein with high glycine content (>15%). Consider: flexibility, thermal stability, aggregation propensity.",
+      "raw_output": "Step 1 output: Analyzing task...",
+      "action_type": "click",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_stability",
+        "step_index": 1
+      },
+      "created_at": "2025-12-02T14:17:47.872756Z"
+    },
+    {
+      "step_id": "step_a1848548b772",
+      "episode_id": "ep_8c419f2e66bd",
+      "index": 1,
+      "raw_input": "Step 1 input for: Given the amino acid sequence MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSH, predict: 1. Protein family, 2. Likely function, 3. Structural features",
+      "raw_output": "Step 1 output: Analyzing task...",
+      "action_type": "click",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_function",
+        "step_index": 1
+      },
+      "created_at": "2025-12-02T14:17:47.872530Z"
+    },
+    {
+      "step_id": "step_bfd45a8a0151",
+      "episode_id": "ep_b31a620ff4cf",
+      "index": 4,
+      "raw_input": "Step 4 input for: Given the amino acid sequence MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSH, predict: 1. Protein family, 2. Likely function, 3. Structural features",
+      "raw_output": "Step 4 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_function",
+        "step_index": 4
+      },
+      "created_at": "2025-12-02T14:17:47.873045Z"
+    },
+    {
+      "step_id": "step_aa587227aee0",
+      "episode_id": "ep_8c419f2e66bd",
+      "index": 2,
+      "raw_input": "Step 2 input for: Given the amino acid sequence MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSH, predict: 1. Protein family, 2. Likely function, 3. Structural features",
+      "raw_output": "Step 2 output: Analyzing task...",
+      "action_type": "type",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_function",
+        "step_index": 2
+      },
+      "created_at": "2025-12-02T14:17:47.872560Z"
+    },
+    {
+      "step_id": "step_5083302da4b4",
+      "episode_id": "ep_8c419f2e66bd",
+      "index": 4,
+      "raw_input": "Step 4 input for: Given the amino acid sequence MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSH, predict: 1. Protein family, 2. Likely function, 3. Structural features",
+      "raw_output": "Step 4 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_function",
+        "step_index": 4
+      },
+      "created_at": "2025-12-02T14:17:47.872629Z"
+    },
+    {
+      "step_id": "step_4c1f7b874c9e",
+      "episode_id": "ep_8c419f2e66bd",
+      "index": 0,
+      "raw_input": "Step 0 input for: Given the amino acid sequence MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSH, predict: 1. Protein family, 2. Likely function, 3. Structural features",
+      "raw_output": "Step 0 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_function",
+        "step_index": 0
+      },
+      "created_at": "2025-12-02T14:17:47.872497Z"
+    },
+    {
+      "step_id": "step_9bdd669c97f4",
+      "episode_id": "ep_b31a620ff4cf",
+      "index": 1,
+      "raw_input": "Step 1 input for: Given the amino acid sequence MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSH, predict: 1. Protein family, 2. Likely function, 3. Structural features",
+      "raw_output": "Step 1 output: Analyzing task...",
+      "action_type": "click",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_function",
+        "step_index": 1
+      },
+      "created_at": "2025-12-02T14:17:47.872957Z"
+    },
+    {
+      "step_id": "step_5c370a0502c4",
+      "episode_id": "ep_b31a620ff4cf",
+      "index": 2,
+      "raw_input": "Step 2 input for: Given the amino acid sequence MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSH, predict: 1. Protein family, 2. Likely function, 3. Structural features",
+      "raw_output": "Step 2 output: Analyzing task...",
+      "action_type": "type",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_function",
+        "step_index": 2
+      },
+      "created_at": "2025-12-02T14:17:47.872987Z"
+    },
+    {
+      "step_id": "step_568c654f4812",
+      "episode_id": "ep_c2520a422b3e",
+      "index": 2,
+      "raw_input": "Step 2 input for: Analyze the stability factors for a protein with high glycine content (>15%). Consider: flexibility, thermal stability, aggregation propensity.",
+      "raw_output": "Step 2 output: Analyzing task...",
+      "action_type": "type",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_stability",
+        "step_index": 2
+      },
+      "created_at": "2025-12-02T14:17:47.873206Z"
+    },
+    {
+      "step_id": "step_9f682c7fa43a",
+      "episode_id": "ep_c2520a422b3e",
+      "index": 3,
+      "raw_input": "Step 3 input for: Analyze the stability factors for a protein with high glycine content (>15%). Consider: flexibility, thermal stability, aggregation propensity.",
+      "raw_output": "Step 3 output: Analyzing task...",
+      "action_type": "wait",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_stability",
+        "step_index": 3
+      },
+      "created_at": "2025-12-02T14:17:47.873236Z"
+    },
+    {
+      "step_id": "step_392a04da4147",
+      "episode_id": "ep_c0e1f5df1a2d",
+      "index": 3,
+      "raw_input": "Step 3 input for: Analyze the stability factors for a protein with high glycine content (>15%). Consider: flexibility, thermal stability, aggregation propensity.",
+      "raw_output": "Step 3 output: Analyzing task...",
+      "action_type": "wait",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_stability",
+        "step_index": 3
+      },
+      "created_at": "2025-12-02T14:17:47.872817Z"
+    },
+    {
+      "step_id": "step_591c19c43a47",
+      "episode_id": "ep_b31a620ff4cf",
+      "index": 0,
+      "raw_input": "Step 0 input for: Given the amino acid sequence MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSH, predict: 1. Protein family, 2. Likely function, 3. Structural features",
+      "raw_output": "Step 0 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_function",
+        "step_index": 0
+      },
+      "created_at": "2025-12-02T14:17:47.872928Z"
+    },
+    {
+      "step_id": "step_012940271803",
+      "episode_id": "ep_c0e1f5df1a2d",
+      "index": 0,
+      "raw_input": "Step 0 input for: Analyze the stability factors for a protein with high glycine content (>15%). Consider: flexibility, thermal stability, aggregation propensity.",
+      "raw_output": "Step 0 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "protein_stability",
+        "step_index": 0
+      },
+      "created_at": "2025-12-02T14:17:47.872724Z"
+    }
+  ],
+  "qstates": [
+    {
+      "qstate_id": "qs_a33b3ec764f4",
+      "step_id": "step_012940271803",
+      "teacher_model_id": "esm2_650m_teacher",
+      "family": "protein",
+      "amp0": 0.41790769,
+      "amp1": 0.3254668,
+      "amp2": 0.35969645,
+      "amp3": 0.34215385,
+      "amp4": 0.2664697,
+      "amp5": 0.41790769,
+      "amp6": 0.34215385,
+      "amp7": 0.33204168,
+      "norm_error": 2.3841858e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.872728Z"
+    },
+    {
+      "qstate_id": "qs_37bfaeab5297",
+      "step_id": "step_5c370a0502c4",
+      "teacher_model_id": "esm2_3b_teacher",
+      "family": "protein",
+      "amp0": 0.43688294,
+      "amp1": 0.34024477,
+      "amp2": 0.37602863,
+      "amp3": 0.35768947,
+      "amp4": 0.27856886,
+      "amp5": 0.3130403,
+      "amp6": 0.35768947,
+      "amp7": 0.34711817,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.872990Z"
+    },
+    {
+      "qstate_id": "qs_a1ce2dda97a1",
+      "step_id": "step_9f682c7fa43a",
+      "teacher_model_id": "esm2_3b_teacher",
+      "family": "protein",
+      "amp0": 0.43860456,
+      "amp1": 0.34158558,
+      "amp2": 0.37751043,
+      "amp3": 0.35909903,
+      "amp4": 0.2796666,
+      "amp5": 0.3014482,
+      "amp6": 0.35909903,
+      "amp7": 0.34848607,
+      "norm_error": 0.0,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.873239Z"
+    },
+    {
+      "qstate_id": "qs_6385fe5f652c",
+      "step_id": "step_aa587227aee0",
+      "teacher_model_id": "esm2_650m_teacher",
+      "family": "protein",
+      "amp0": 0.43688294,
+      "amp1": 0.34024477,
+      "amp2": 0.37602863,
+      "amp3": 0.35768947,
+      "amp4": 0.27856886,
+      "amp5": 0.3130403,
+      "amp6": 0.35768947,
+      "amp7": 0.34711817,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.872564Z"
+    },
+    {
+      "qstate_id": "qs_202656f69ba4",
+      "step_id": "step_13ca82f6936f",
+      "teacher_model_id": "esm2_650m_teacher",
+      "family": "protein",
+      "amp0": 0.43860456,
+      "amp1": 0.34158558,
+      "amp2": 0.37751043,
+      "amp3": 0.35909903,
+      "amp4": 0.2796666,
+      "amp5": 0.3014482,
+      "amp6": 0.35909903,
+      "amp7": 0.34848607,
+      "norm_error": 0.0,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.872596Z"
+    },
+    {
+      "qstate_id": "qs_54d5185b29c0",
+      "step_id": "step_a1848548b772",
+      "teacher_model_id": "esm2_650m_teacher",
+      "family": "protein",
+      "amp0": 0.43305174,
+      "amp1": 0.33726102,
+      "amp2": 0.37273106,
+      "amp3": 0.35455278,
+      "amp4": 0.27612597,
+      "amp5": 0.33726102,
+      "amp6": 0.35455278,
+      "amp7": 0.34407416,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.872534Z"
+    },
+    {
+      "qstate_id": "qs_f501f3c0900c",
+      "step_id": "step_591c19c43a47",
+      "teacher_model_id": "esm2_3b_teacher",
+      "family": "protein",
+      "amp0": 0.41790769,
+      "amp1": 0.3254668,
+      "amp2": 0.35969645,
+      "amp3": 0.34215385,
+      "amp4": 0.2664697,
+      "amp5": 0.41790769,
+      "amp6": 0.34215385,
+      "amp7": 0.33204168,
+      "norm_error": 2.3841858e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.872932Z"
+    },
+    {
+      "qstate_id": "qs_c7c2f3266cf6",
+      "step_id": "step_bfd45a8a0151",
+      "teacher_model_id": "esm2_3b_teacher",
+      "family": "protein",
+      "amp0": 0.43957976,
+      "amp1": 0.34234506,
+      "amp2": 0.3783498,
+      "amp3": 0.35989746,
+      "amp4": 0.28028843,
+      "amp5": 0.2946591,
+      "amp6": 0.35989746,
+      "amp7": 0.34926087,
+      "norm_error": 2.3841858e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.873049Z"
+    },
+    {
+      "qstate_id": "qs_f4da1cfa3d18",
+      "step_id": "step_f40ed7b5cf78",
+      "teacher_model_id": "esm2_650m_teacher",
+      "family": "protein",
+      "amp0": 0.43305174,
+      "amp1": 0.33726102,
+      "amp2": 0.37273106,
+      "amp3": 0.35455278,
+      "amp4": 0.27612597,
+      "amp5": 0.33726102,
+      "amp6": 0.35455278,
+      "amp7": 0.34407416,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.872760Z"
+    },
+    {
+      "qstate_id": "qs_37f555609f0f",
+      "step_id": "step_9bdd669c97f4",
+      "teacher_model_id": "esm2_3b_teacher",
+      "family": "protein",
+      "amp0": 0.43305174,
+      "amp1": 0.33726102,
+      "amp2": 0.37273106,
+      "amp3": 0.35455278,
+      "amp4": 0.27612597,
+      "amp5": 0.33726102,
+      "amp6": 0.35455278,
+      "amp7": 0.34407416,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.872961Z"
+    },
+    {
+      "qstate_id": "qs_4b1158519e1c",
+      "step_id": "step_12f953a7aa39",
+      "teacher_model_id": "esm2_3b_teacher",
+      "family": "protein",
+      "amp0": 0.43860456,
+      "amp1": 0.34158558,
+      "amp2": 0.37751043,
+      "amp3": 0.35909903,
+      "amp4": 0.2796666,
+      "amp5": 0.3014482,
+      "amp6": 0.35909903,
+      "amp7": 0.34848607,
+      "norm_error": 0.0,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.873019Z"
+    },
+    {
+      "qstate_id": "qs_9438c63a4be6",
+      "step_id": "step_392a04da4147",
+      "teacher_model_id": "esm2_650m_teacher",
+      "family": "protein",
+      "amp0": 0.43860456,
+      "amp1": 0.34158558,
+      "amp2": 0.37751043,
+      "amp3": 0.35909903,
+      "amp4": 0.2796666,
+      "amp5": 0.3014482,
+      "amp6": 0.35909903,
+      "amp7": 0.34848607,
+      "norm_error": 0.0,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.872822Z"
+    },
+    {
+      "qstate_id": "qs_1862e2ec86a3",
+      "step_id": "step_42165faff865",
+      "teacher_model_id": "esm2_3b_teacher",
+      "family": "protein",
+      "amp0": 0.41790769,
+      "amp1": 0.3254668,
+      "amp2": 0.35969645,
+      "amp3": 0.34215385,
+      "amp4": 0.2664697,
+      "amp5": 0.41790769,
+      "amp6": 0.34215385,
+      "amp7": 0.33204168,
+      "norm_error": 2.3841858e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.873147Z"
+    },
+    {
+      "qstate_id": "qs_0ec9e07133b5",
+      "step_id": "step_13ca9b36df64",
+      "teacher_model_id": "esm2_3b_teacher",
+      "family": "protein",
+      "amp0": 0.43305174,
+      "amp1": 0.33726102,
+      "amp2": 0.37273106,
+      "amp3": 0.35455278,
+      "amp4": 0.27612597,
+      "amp5": 0.33726102,
+      "amp6": 0.35455278,
+      "amp7": 0.34407416,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.873180Z"
+    },
+    {
+      "qstate_id": "qs_6a0774293a0b",
+      "step_id": "step_5083302da4b4",
+      "teacher_model_id": "esm2_650m_teacher",
+      "family": "protein",
+      "amp0": 0.43957976,
+      "amp1": 0.34234506,
+      "amp2": 0.3783498,
+      "amp3": 0.35989746,
+      "amp4": 0.28028843,
+      "amp5": 0.2946591,
+      "amp6": 0.35989746,
+      "amp7": 0.34926087,
+      "norm_error": 2.3841858e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.872632Z"
+    },
+    {
+      "qstate_id": "qs_f812c3bdc8de",
+      "step_id": "step_568c654f4812",
+      "teacher_model_id": "esm2_3b_teacher",
+      "family": "protein",
+      "amp0": 0.43688294,
+      "amp1": 0.34024477,
+      "amp2": 0.37602863,
+      "amp3": 0.35768947,
+      "amp4": 0.27856886,
+      "amp5": 0.3130403,
+      "amp6": 0.35768947,
+      "amp7": 0.34711817,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.873209Z"
+    },
+    {
+      "qstate_id": "qs_2ec958bdcb7c",
+      "step_id": "step_4c1f7b874c9e",
+      "teacher_model_id": "esm2_650m_teacher",
+      "family": "protein",
+      "amp0": 0.41790769,
+      "amp1": 0.3254668,
+      "amp2": 0.35969645,
+      "amp3": 0.34215385,
+      "amp4": 0.2664697,
+      "amp5": 0.41790769,
+      "amp6": 0.34215385,
+      "amp7": 0.33204168,
+      "norm_error": 2.3841858e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.872503Z"
+    },
+    {
+      "qstate_id": "qs_efb7518b1a68",
+      "step_id": "step_ba7960f901d7",
+      "teacher_model_id": "esm2_650m_teacher",
+      "family": "protein",
+      "amp0": 0.43688294,
+      "amp1": 0.34024477,
+      "amp2": 0.37602863,
+      "amp3": 0.35768947,
+      "amp4": 0.27856886,
+      "amp5": 0.3130403,
+      "amp6": 0.35768947,
+      "amp7": 0.34711817,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T14:17:47.872789Z"
+    }
+  ]
+}

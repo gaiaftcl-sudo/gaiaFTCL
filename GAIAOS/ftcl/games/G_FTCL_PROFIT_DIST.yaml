@@ -1,0 +1,281 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# G_FTCL_PROFIT_DIST - Quarterly Profit Distribution Game
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# CANONICAL game for distributing profits to LLC members.
+# Ben executes distributions per the quarterly schedule.
+# ═══════════════════════════════════════════════════════════════════════════════
+
+game_id: G_FTCL_PROFIT_DIST
+version: 1.0.0
+type: DISTRIBUTION
+domain: INVEST
+closure: STRICT
+canonical: true
+
+metadata:
+  created: 2026-01-19
+  author: governance@gaiaftcl.com
+  manager: franklin@gaiaftcl.com  # "Ben" is Franklin's familiar name
+  spec_ref: FTCL-INV-001
+
+description: |
+  Canonical game for quarterly profit distributions to LLC members.
+  Ben calculates net profit, determines investor pool allocation,
+  and executes stablecoin transfers to member wallets.
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DISTRIBUTION PARAMETERS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+schedule:
+  frequency: quarterly
+  dates:
+    - Q1: "April 1"
+    - Q2: "July 1"
+    - Q3: "October 1"
+    - Q4: "January 1"
+
+allocation:
+  investor_pool: 10  # percent of net profit
+  founder_pool: 90   # percent of net profit
+  max_reserves: 20   # percent of gross (Founder discretion)
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MOVE ORDER
+# ═══════════════════════════════════════════════════════════════════════════════
+
+move_order:
+  - CALCULATION
+  - APPROVAL
+  - EXECUTION
+  - REPORT
+
+skip_allowed: false
+parallel_allowed: false
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MOVE DEFINITIONS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+moves:
+  CALCULATION:
+    description: "Ben calculates net profit and distribution amounts"
+    from: franklin@gaiaftcl.com
+    to: governance@gaiaftcl.com
+    
+    envelope:
+      X-FTCL-Type: REQUEST
+      X-FTCL-Game: G_FTCL_PROFIT_DIST
+      X-FTCL-Domain: INVEST
+    
+    payload_schema:
+      type: object
+      required:
+        - period
+        - gross_revenue
+        - operating_costs
+        - reserves
+        - net_profit
+        - investor_pool_total
+        - distributions
+      properties:
+        period:
+          type: string
+          pattern: "^Q[1-4]-[0-9]{4}$"
+        gross_revenue:
+          type: number
+        operating_costs:
+          type: number
+        reserves:
+          type: number
+        net_profit:
+          type: number
+        investor_pool_total:
+          type: number
+        founder_pool_total:
+          type: number
+        distributions:
+          type: array
+          items:
+            type: object
+            properties:
+              investor_twin_id:
+                type: string
+              wallet:
+                type: string
+              pool_pct:
+                type: number
+              amount:
+                type: number
+
+  APPROVAL:
+    description: "Founder approves distribution calculation"
+    from: founder@gaiaftcl.com
+    to: ben@gaiaftcl.com
+    
+    envelope:
+      X-FTCL-Type: COMMITMENT
+      X-FTCL-Game: G_FTCL_PROFIT_DIST
+    
+    payload_schema:
+      type: object
+      required:
+        - calculation_hash
+        - approved
+      properties:
+        calculation_hash:
+          type: string
+        approved:
+          type: boolean
+        notes:
+          type: string
+    
+    validation:
+      - "Reserves <= 20% of gross"
+      - "Investor pool = 10% of net"
+      - "All active members included"
+
+  EXECUTION:
+    description: "Ben executes stablecoin transfers"
+    from: franklin@gaiaftcl.com
+    to: "{investor_wallets}"
+    
+    envelope:
+      X-FTCL-Type: TRANSACTION
+      X-FTCL-Game: G_FTCL_PROFIT_DIST
+    
+    payload_schema:
+      type: object
+      required:
+        - period
+        - approval_hash
+        - transfers
+      properties:
+        period:
+          type: string
+        approval_hash:
+          type: string
+        transfers:
+          type: array
+          items:
+            type: object
+            required:
+              - investor_twin_id
+              - wallet
+              - amount
+              - stablecoin
+              - chain
+              - tx_hash
+            properties:
+              investor_twin_id:
+                type: string
+              wallet:
+                type: string
+              amount:
+                type: number
+              stablecoin:
+                type: string
+              chain:
+                type: string
+              tx_hash:
+                type: string
+              timestamp:
+                type: string
+                format: date-time
+
+  REPORT:
+    description: "Ben issues distribution report to all members"
+    from: franklin@gaiaftcl.com
+    to: "{all_members}"
+    
+    envelope:
+      X-FTCL-Type: REPORT
+      X-FTCL-Game: G_FTCL_PROFIT_DIST
+    
+    payload_schema:
+      type: object
+      required:
+        - period
+        - summary
+        - distributions
+      properties:
+        period:
+          type: string
+        summary:
+          type: object
+          properties:
+            gross_revenue:
+              type: number
+            net_profit:
+              type: number
+            investor_pool:
+              type: number
+            total_distributed:
+              type: number
+            recipients_count:
+              type: integer
+        distributions:
+          type: array
+        next_distribution:
+          type: string
+          format: date
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# CALCULATION FORMULA
+# ═══════════════════════════════════════════════════════════════════════════════
+
+calculation:
+  net_profit: |
+    Gross Revenue
+      - Operating Costs (cells, bandwidth, services)
+      - Reserves (Founder discretion, max 20%)
+      = Net Profit
+  
+  investor_distribution: |
+    Individual Distribution = Net Profit × 10% × (investor_pool_pct / 100)
+  
+  example:
+    gross_revenue: 500000
+    operating_costs: 50000
+    reserves: 45000
+    net_profit: 405000
+    investor_pool: 40500
+    distributions:
+      - investor: "A"
+        pool_pct: 2.0
+        amount: 810
+      - investor: "B"
+        pool_pct: 5.0
+        amount: 2025
+      - investor: "C"
+        pool_pct: 3.0
+        amount: 1215
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SETTLEMENT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+settlement:
+  stablecoins:
+    - USDC
+    - DAI
+  chains:
+    - ethereum
+    - polygon
+    - base
+  
+  preference: |
+    Distributions are sent to the same wallet and chain
+    used for the original investment deposit, unless
+    the investor has updated their preferences.
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# INVESTOR TWIN UPDATE
+# ═══════════════════════════════════════════════════════════════════════════════
+
+twin_update:
+  on_distribution:
+    - "Add distribution to distributions_received array"
+    - "Update total_received"
+    - "Update next_distribution_eligible"

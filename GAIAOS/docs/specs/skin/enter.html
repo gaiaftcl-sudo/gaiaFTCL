@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enter the Game — GaiaFTCL</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --gaia-black: #0a0a0a;
+      --gaia-darker: #050505;
+      --gaia-white: #f5f5f5;
+      --gaia-blue: #00d4ff;
+      --gaia-purple: #8b5cf6;
+      --gaia-green: #10b981;
+      --gaia-red: #ef4444;
+      --gaia-yellow: #f59e0b;
+      --gaia-gray: #374151;
+      --gaia-gray-light: #6b7280;
+      --gaia-gradient: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--gaia-black);
+      color: var(--gaia-white);
+      font-family: 'Inter', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+    }
+
+    code, .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    /* Logo */
+    .logo {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .logo a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      color: var(--gaia-white);
+    }
+
+    .logo a span {
+      background: var(--gaia-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Card */
+    .card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 40px;
+    }
+
+    .card h2 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .card .subtitle {
+      color: var(--gaia-gray-light);
+      text-align: center;
+      margin-bottom: 32px;
+      font-size: 14px;
+    }
+
+    /* Steps */
+    .steps {
+      display: none;
+    }
+
+    .steps.active {
+      display: block;
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--gaia-gray-light);
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .input-wrapper input {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--gaia-black);
+      border: 1px solid var(--gaia-gray);
+      border-radius: 8px;
+      color: var(--gaia-white);
+      font-size: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      transition: all 0.2s;
+    }
+
+    .input-wrapper input:focus {
+      outline: none;
+      border-color: var(--gaia-blue);
+      box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+    }
+
+    .input-wrapper input.error {
+      border-color: var(--gaia-red);
+    }
+
+    .input-wrapper input.valid {
+      border-color: var(--gaia-green);
+    }
+
+    .input-suffix {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gaia-gray-light);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    .input-hint {
+      font-size: 12px;
+      color: var(--gaia-gray-light);
+      margin-top: 8px;
+    }
+
+    .input-hint.error {
+      color: var(--gaia-red);
+    }
+
+    .input-hint.success {
+      color: var(--gaia-green);
+    }
+
+    /* Preview */
+    .preview {
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .preview-label {
+      font-size: 12px;
+      color: var(--gaia-gray-light);
+      margin-bottom: 8px;
+    }
+
+    .preview-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      color: var(--gaia-blue);
+    }
+
+    /* Warning Box */
+    .warning {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .warning-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: var(--gaia-yellow);
+      margin-bottom: 8px;
+    }
+
+    .warning-text {
+      font-size: 13px;
+      color: var(--gaia-gray-light);
+      line-height: 1.6;
+    }
+
+    /* Checkbox */
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--gaia-blue);
+    }
+
+    .checkbox-group label {
+      font-size: 14px;
+      color: var(--gaia-gray-light);
+      cursor: pointer;
+    }
+
+    /* Button */
+    .btn {
+      width: 100%;
+      padding: 16px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--gaia-gradient);
+      color: var(--gaia-black);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--gaia-white);
+      border: 1px solid var(--gaia-gray);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gaia-blue);
+      color: var(--gaia-blue);
+    }
+
+    /* Progress */
+    .progress {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+
+    .progress-step {
+      width: 40px;
+      height: 4px;
+      background: var(--gaia-gray);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .progress-step.active {
+      background: var(--gaia-gradient);
+    }
+
+    .progress-step.completed {
+      background: var(--gaia-green);
+    }
+
+    /* Success */
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      background: var(--gaia-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+    }
+
+    .success-details {
+      background: var(--gaia-black);
+      border: 1px solid var(--gaia-gray);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    .success-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .success-row:last-child {
+      border-bottom: none;
+    }
+
+    .success-row .label {
+      color: var(--gaia-gray-light);
+      font-size: 14px;
+    }
+
+    .success-row .value {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--gaia-blue);
+      font-size: 14px;
+    }
+
+    /* Loading */
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .loading.active {
+      display: block;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid var(--gaia-gray);
+      border-top-color: var(--gaia-blue);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 32px;
+    }
+
+    .footer a {
+      color: var(--gaia-gray-light);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .footer a:hover {
+      color: var(--gaia-white);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <a href="/">GAIA<span>FT</span>CL</a>
+    </div>
+
+    <div class="card">
+      <!-- Progress -->
+      <div class="progress">
+        <div class="progress-step active" id="prog-1"></div>
+        <div class="progress-step" id="prog-2"></div>
+        <div class="progress-step" id="prog-3"></div>
+      </div>
+
+      <!-- Step 1: Username -->
+      <div class="steps active" id="step-1">
+        <h2>Choose your identity</h2>
+        <p class="subtitle">This will be your email and wallet address.</p>
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              id="username" 
+              placeholder="satoshi"
+              autocomplete="off"
+              autocapitalize="off"
+              spellcheck="false"
+              pattern="[a-z0-9_-]+"
+              maxlength="20"
+            >
+            <span class="input-suffix">@gaiaftcl.com</span>
+          </div>
+          <p class="input-hint" id="username-hint">3-20 characters. Letters, numbers, underscores, hyphens.</p>
+        </div>
+
+        <div class="preview" id="preview" style="display: none;">
+          <div class="preview-label">Your identity will be</div>
+          <div class="preview-value" id="preview-email">—</div>
+        </div>
+
+        <button class="btn btn-primary" id="btn-step-1" disabled>
+          Continue
+        </button>
+      </div>
+
+      <!-- Step 2: Password -->
+      <div class="steps" id="step-2">
+        <h2>Secure your wallet</h2>
+        <p class="subtitle">Choose a strong password. This is the only way to access your identity.</p>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-wrapper">
+            <input 
+              type="password" 
+              id="password" 
+              placeholder="••••••••••••"
+              minlength="12"
+            >
+          </div>
+          <p class="input-hint">Minimum 12 characters.</p>
+        </div>
+
+        <div class="form-group">
+          <label for="password-confirm">Confirm Password</label>
+          <div class="input-wrapper">
+            <input 
+              type="password" 
+              id="password-confirm" 
+              placeholder="••••••••••••"
+            >
+          </div>
+          <p class="input-hint" id="password-hint"></p>
+        </div>
+
+        <div class="warning">
+          <div class="warning-title">⚠️ Important</div>
+          <div class="warning-text">
+            GaiaFTCL does not collect personal information. We cannot verify who you are. 
+            We cannot reset your password. If you lose it, your identity is lost forever. 
+            This is the price of sovereignty.
+          </div>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="accept-terms">
+          <label for="accept-terms">I understand that if I lose my password, my identity and QFOT balance will be unrecoverable.</label>
+        </div>
+
+        <button class="btn btn-primary" id="btn-step-2" disabled>
+          Create Identity
+        </button>
+
+        <button class="btn btn-secondary" style="margin-top: 12px;" onclick="goToStep(1)">
+          Back
+        </button>
+      </div>
+
+      <!-- Loading -->
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Creating your identity...</p>
+      </div>
+
+      <!-- Step 3: Success -->
+      <div class="steps" id="step-3">
+        <div class="success-icon">✓</div>
+        <h2 style="text-align: center;">Welcome to the game.</h2>
+        <p class="subtitle">Your identity has been created.</p>
+
+        <div class="success-details">
+          <div class="success-row">
+            <span class="label">Identity</span>
+            <span class="value" id="final-email">—</span>
+          </div>
+          <div class="success-row">
+            <span class="label">QFOT Balance</span>
+            <span class="value">0.00</span>
+          </div>
+          <div class="success-row">
+            <span class="label">QFOT-C Balance</span>
+            <span class="value">10.00</span>
+          </div>
+          <div class="success-row">
+            <span class="label">QFOT-C Expires</span>
+            <span class="value" id="expiry-date">—</span>
+          </div>
+        </div>
+
+        <a href="/dashboard" class="btn btn-primary">
+          Go to Dashboard
+        </a>
+
+        <a href="https://mail.gaiaftcl.com" class="btn btn-secondary" style="margin-top: 12px;">
+          Check Email
+        </a>
+      </div>
+    </div>
+
+    <div class="footer">
+      <a href="/">← Back to home</a>
+    </div>
+  </div>
+
+  <script>
+    // State
+    let currentStep = 1;
+    let username = '';
+    let password = '';
+
+    // Reserved usernames
+    const reserved = [
+      'admin', 'administrator', 'root', 'system', 'support', 'help', 'info',
+      'gaia', 'franklin', 'fara', 'qstate', 'validator', 'witness', 'oracle',
+      'gamerunner', 'virtue', 'ben', 'rick', 'founder', 'owner',
+      'postmaster', 'webmaster', 'hostmaster', 'abuse', 'security',
+      'mail', 'www', 'ftp', 'api', 'cdn', 'static', 'assets',
+      'noreply', 'no-reply', 'donotreply', 'mailer-daemon',
+      'test', 'demo', 'example', 'sample'
+    ];
+
+    // Elements
+    const usernameInput = document.getElementById('username');
+    const usernameHint = document.getElementById('username-hint');
+    const preview = document.getElementById('preview');
+    const previewEmail = document.getElementById('preview-email');
+    const btnStep1 = document.getElementById('btn-step-1');
+
+    const passwordInput = document.getElementById('password');
+    const passwordConfirm = document.getElementById('password-confirm');
+    const passwordHint = document.getElementById('password-hint');
+    const acceptTerms = document.getElementById('accept-terms');
+    const btnStep2 = document.getElementById('btn-step-2');
+
+    // Username validation
+    usernameInput.addEventListener('input', async (e) => {
+      let value = e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, '');
+      e.target.value = value;
+      
+      if (value.length < 3) {
+        setUsernameState('neutral', '3-20 characters. Letters, numbers, underscores, hyphens.');
+        preview.style.display = 'none';
+        btnStep1.disabled = true;
+        return;
+      }
+
+      if (value.length > 20) {
+        value = value.slice(0, 20);
+        e.target.value = value;
+      }
+
+      if (/^[0-9]/.test(value)) {
+        setUsernameState('error', 'Cannot start with a number.');
+        btnStep1.disabled = true;
+        return;
+      }
+
+      if (reserved.includes(value)) {
+        setUsernameState('error', 'This username is reserved.');
+        btnStep1.disabled = true;
+        return;
+      }
+
+      // Show preview
+      preview.style.display = 'block';
+      previewEmail.textContent = value + '@gaiaftcl.com';
+
+      // Check availability (simulated for now)
+      setUsernameState('neutral', 'Checking availability...');
+      
+      // In production, this would be an API call
+      setTimeout(() => {
+        // Simulate available
+        setUsernameState('success', 'Available!');
+        username = value;
+        btnStep1.disabled = false;
+      }, 500);
+    });
+
+    function setUsernameState(state, message) {
+      usernameHint.textContent = message;
+      usernameHint.className = 'input-hint';
+      usernameInput.className = '';
+      
+      if (state === 'error') {
+        usernameHint.classList.add('error');
+        usernameInput.classList.add('error');
+      } else if (state === 'success') {
+        usernameHint.classList.add('success');
+        usernameInput.classList.add('valid');
+      }
+    }
+
+    // Password validation
+    function validatePassword() {
+      const pass = passwordInput.value;
+      const confirm = passwordConfirm.value;
+      
+      if (pass.length < 12) {
+        passwordHint.textContent = 'Password must be at least 12 characters.';
+        passwordHint.className = 'input-hint error';
+        return false;
+      }
+
+      if (pass !== confirm) {
+        passwordHint.textContent = 'Passwords do not match.';
+        passwordHint.className = 'input-hint error';
+        return false;
+      }
+
+      passwordHint.textContent = 'Passwords match.';
+      passwordHint.className = 'input-hint success';
+      password = pass;
+      return true;
+    }
+
+    passwordInput.addEventListener('input', checkStep2);
+    passwordConfirm.addEventListener('input', checkStep2);
+    acceptTerms.addEventListener('change', checkStep2);
+
+    function checkStep2() {
+      const valid = validatePassword() && acceptTerms.checked;
+      btnStep2.disabled = !valid;
+    }
+
+    // Navigation
+    btnStep1.addEventListener('click', () => goToStep(2));
+    btnStep2.addEventListener('click', () => createAccount());
+
+    function goToStep(step) {
+      // Hide all steps
+      document.querySelectorAll('.steps').forEach(s => s.classList.remove('active'));
+      
+      // Show target step
+      document.getElementById('step-' + step).classList.add('active');
+      
+      // Update progress
+      for (let i = 1; i <= 3; i++) {
+        const prog = document.getElementById('prog-' + i);
+        prog.className = 'progress-step';
+        if (i < step) prog.classList.add('completed');
+        if (i === step) prog.classList.add('active');
+      }
+      
+      currentStep = step;
+    }
+
+    async function createAccount() {
+      // Show loading
+      document.querySelectorAll('.steps').forEach(s => s.classList.remove('active'));
+      document.getElementById('loading').classList.add('active');
+
+      // In production, this would be an API call
+      // POST /api/v1/onboard/create { username, password }
+      
+      try {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        // Success
+        document.getElementById('loading').classList.remove('active');
+        document.getElementById('final-email').textContent = username + '@gaiaftcl.com';
+        
+        const expiry = new Date();
+        expiry.setDate(expiry.getDate() + 90);
+        document.getElementById('expiry-date').textContent = expiry.toLocaleDateString();
+        
+        goToStep(3);
+
+      } catch (error) {
+        alert('Error creating account. Please try again.');
+        goToStep(2);
+      }
+    }
+  </script>
+</body>
+</html>

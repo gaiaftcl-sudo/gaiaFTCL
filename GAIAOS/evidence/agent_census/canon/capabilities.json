@@ -1,0 +1,57 @@
+[
+  {
+    "id": "WEB_FETCH",
+    "description": "Fetch content from HTTP/HTTPS URLs",
+    "risk_level": "LOW"
+  },
+  {
+    "id": "CODE_RUN",
+    "description": "Execute code in sandboxed environment",
+    "risk_level": "MEDIUM"
+  },
+  {
+    "id": "FILE_WRITE",
+    "description": "Write files to filesystem",
+    "risk_level": "MEDIUM"
+  },
+  {
+    "id": "HTTP_API_CALL",
+    "description": "Call external HTTP APIs",
+    "risk_level": "MEDIUM"
+  },
+  {
+    "id": "EMAIL_SEND",
+    "description": "Send email messages",
+    "risk_level": "HIGH"
+  },
+  {
+    "id": "SMS_SEND",
+    "description": "Send SMS messages",
+    "risk_level": "HIGH"
+  },
+  {
+    "id": "SSH_CONNECT",
+    "description": "Connect to remote hosts via SSH",
+    "risk_level": "HIGH"
+  },
+  {
+    "id": "TASK_SCHEDULE",
+    "description": "Schedule delayed or recurring tasks",
+    "risk_level": "MEDIUM"
+  },
+  {
+    "id": "WALLET_SIGN",
+    "description": "Sign cryptocurrency transactions",
+    "risk_level": "CRITICAL"
+  },
+  {
+    "id": "TRADE_EXECUTE",
+    "description": "Execute financial trades",
+    "risk_level": "CRITICAL"
+  },
+  {
+    "id": "AGENT_COORDINATE",
+    "description": "Coordinate actions with other agents",
+    "risk_level": "HIGH"
+  }
+]

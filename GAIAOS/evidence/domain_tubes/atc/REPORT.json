@@ -1,0 +1,14 @@
+{
+  "counts": {
+    "agents_entered": 6,
+    "agents_failed": 1,
+    "agents_green": 0
+  },
+  "domain_description": "Air Traffic Control - Aircraft separation and collision avoidance",
+  "domain_id": "atc",
+  "failure_reasons": {
+    "SEPARATION_MINIMUM": 1
+  },
+  "generated_at": "2026-03-03T15:47:46.414560+00:00",
+  "zero_retry_failure_rate": "16.7%"
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GaiaOS Dimensional Viewer</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #4A9EFF;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(74, 158, 255, 0.3);
+            border-top-color: #4A9EFF;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loading">
+        <div class="spinner"></div>
+        <div>Loading GaiaOS Dimensional Viewer...</div>
+        <div style="font-size: 12px; color: #888; margin-top: 10px;">
+            8D Quantum Visualization • UUM-8D Substrate
+        </div>
+    </div>
+
+    <div id="info" style="display: none;">
+        <div>GaiaOS Dimensional Viewer v0.1.0</div>
+        <div id="fps">FPS: --</div>
+        <div id="points">Points: --</div>
+        <div id="coherence">Coherence: --</div>
+    </div>
+
+    <link data-trunk rel="rust" data-wasm-opt="s" />
+</body>
+
+</html>

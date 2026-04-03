@@ -1,0 +1,51 @@
+{
+  "cell_id": "browser_cell_01",
+  "usd_http_layers": true,
+  "usd_ws_deltas": true,
+  "usd_write_live_usdc": false,
+  "perception_json_ops": true,
+  "perception_usd_overlay": true,
+  "current_rev": {
+    "Cell": 5,
+    "Human": 2,
+    "Astro": 1
+  },
+  "noaa_weather": false,
+  "aviation_weather": false,
+  "atc_adsb": true,
+  "atc_metar": true,
+  "atc_airsigmet": true,
+  "open_satellite": false,
+  "earth_engine": false,
+  "earth_engine_mode": "disabled_prelaunch",
+  "truth_source": "arango_substrate_frames",
+  "atc_region": null,
+  "provider_status": {
+    "noaa_nws": {
+      "enabled": false,
+      "last_ok_ts": null,
+      "last_error": null
+    },
+    "aviation_weather": {
+      "enabled": false,
+      "last_ok_ts": null,
+      "last_error": null
+    },
+    "atc_adsb": {
+      "enabled": true,
+      "last_ok_ts": null,
+      "last_error": null,
+      "source": "airplanes_live"
+    },
+    "atc_metar": {
+      "enabled": true,
+      "last_ok_ts": null,
+      "last_error": null
+    },
+    "atc_airsigmet": {
+      "enabled": true,
+      "last_ok_ts": 1766233547794,
+      "last_error": null
+    }
+  }
+}

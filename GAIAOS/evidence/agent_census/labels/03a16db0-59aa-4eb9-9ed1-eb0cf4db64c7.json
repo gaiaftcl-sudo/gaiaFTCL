@@ -1,0 +1,27 @@
+{
+  "agent_id": "03a16db0-59aa-4eb9-9ed1-eb0cf4db64c7",
+  "allowed_actions": {
+    "can_coordinate": false,
+    "can_project_external": false,
+    "isolation_level": "READ_ONLY",
+    "requires_witness": true
+  },
+  "capability_status": {
+    "AGENT_COORDINATE": "NOT_DECLARED",
+    "CODE_RUN": "PROVEN",
+    "EMAIL_SEND": "NOT_DECLARED",
+    "FILE_WRITE": "NOT_DECLARED",
+    "HTTP_API_CALL": "UNPROVEN",
+    "SMS_SEND": "NOT_DECLARED",
+    "SSH_CONNECT": "NOT_DECLARED",
+    "TASK_SCHEDULE": "NOT_DECLARED",
+    "TRADE_EXECUTE": "NOT_DECLARED",
+    "WALLET_SIGN": "NOT_DECLARED",
+    "WEB_FETCH": "UNPROVEN"
+  },
+  "labeled_at": "2026-02-01T11:39:20.017688+00:00",
+  "reason_codes": [
+    "INCOMPLETE_PROOFS"
+  ],
+  "tier": "YELLOW"
+}

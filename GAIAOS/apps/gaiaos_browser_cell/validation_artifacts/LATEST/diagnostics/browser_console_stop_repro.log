@@ -1,0 +1,12 @@
+=== test: IQ – transport is healthy and truthful ===
+[console.warning] [.WebGL-0x12c001a9c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[console.warning] [.WebGL-0x12c001a9c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[console.warning] [.WebGL-0x12c001a9c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[console.warning] [.WebGL-0x12c001a9c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+=== test: UI should load without external CDN (when GAIAOS_REPRO_STOP=1) ===
+[requestfailed] GET https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js net::ERR_FAILED
+[console.error] Failed to load resource: net::ERR_FAILED
+[requestfailed] GET https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js net::ERR_FAILED
+[console.error] Failed to load resource: net::ERR_FAILED
+[requestfailed] GET https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/renderers/CSS2DRenderer.js net::ERR_FAILED
+[console.error] Failed to load resource: net::ERR_FAILED

@@ -1,0 +1,21 @@
+[package]
+name = "atc-conflict"
+version = "0.1.0"
+edition = "2021"
+description = "GaiaOS ATC Conflict Detector - Loss of Separation Detection"
+
+[dependencies]
+tokio = { version = "1.35", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+log = "0.4"
+env_logger = "0.10"
+uuid = { version = "1.6", features = ["v4"] }
+reqwest = { version = "0.11", features = ["json", "rustls-tls"] }
+anyhow = "1.0"
+gaiaos_substrate = { path = "../../crates/gaiaos_substrate" }
+uum8d = { path = "../../ftclstack/uum8d" }
+franklin_guardian = { path = "../franklin_guardian" }
+axum = "0.7.5"
+

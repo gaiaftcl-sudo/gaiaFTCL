@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  gaiaos-ui-tester-mcp:
+    image: localhost:5000/gaiaos-ui-tester-mcp:latest
+    container_name: gaiaos-ui-tester-mcp
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - RUST_LOG=info
+    volumes:
+      - ../../evidence:/app/evidence:rw
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8850/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

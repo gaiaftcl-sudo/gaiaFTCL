@@ -1,0 +1,6 @@
+// Wallet gate queries LOWER(w.address). Do NOT use a `wallet` field — it will not authorize.
+//
+// INSERT into database `gaiaos`, collection `authorized_wallets`:
+//   { "_key": "founder_wallet", "address": "0x…", "active": true, "role": "founder" }
+//
+// On-cell helper: scripts/seed_founder_wallet_arangosh.sh (reads ARANGO_ROOT_PASSWORD from /etc/gaiaftcl/secrets.env or default).

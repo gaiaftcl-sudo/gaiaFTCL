@@ -1,0 +1,9 @@
+{"ts":1766233683888,"event":"ws_disconnect","cell_id":"browser_cell_01"}
+{"ts":1766233684629,"event":"ws_connect","cell_id":"browser_cell_01"}
+{"ts":1766233686569,"event":"ws_disconnect","cell_id":"browser_cell_01"}
+{"ts":1766233728047,"event":"artifact_write","provider":"aviationweather_airsigmet","file":"/usd/artifacts/aviationweather_airsigmet/airsigmet_1766233728047.json"}
+{"ts":1766233908332,"event":"artifact_write","provider":"aviationweather_airsigmet","file":"/usd/artifacts/aviationweather_airsigmet/airsigmet_1766233908332.json"}
+{"ts":1766233911541,"event":"ws_connect","cell_id":"browser_cell_01"}
+{"ts":1766233912245,"event":"ws_disconnect","cell_id":"browser_cell_01"}
+{"ts":1766233912617,"event":"ws_connect","cell_id":"browser_cell_01"}
+{"ts":1766233920074,"event":"perception_rejected","cell_id":"browser_cell_01","world":"Cell","op_id":"1766233920070-a","payload_digest":"83bf7dd3a081f05d","reason":"invariant_reject","pack_id":"geo_physics"}

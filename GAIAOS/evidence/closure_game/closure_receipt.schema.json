@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["domain_id", "closure_class", "evidence_hash", "residual_entropy", "timestamp_utc", "call_id"],
+  "properties": {
+    "domain_id": {
+      "type": "string"
+    },
+    "closure_class": {
+      "type": "string",
+      "enum": ["PROVISIONAL", "BOUNDED", "INVALIDATED"]
+    },
+    "evidence_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "residual_entropy": {
+      "oneOf": [
+        {"type": "number"},
+        {"type": "string"}
+      ]
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "call_id": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

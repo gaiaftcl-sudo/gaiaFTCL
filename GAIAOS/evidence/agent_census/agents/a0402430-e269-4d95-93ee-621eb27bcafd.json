@@ -1,0 +1,38 @@
+{
+  "agent_id": "a0402430-e269-4d95-93ee-621eb27bcafd",
+  "agent_name": "blackhole_test_agent",
+  "agrees_to_witness_gate": true,
+  "capability_proofs": {
+    "CODE_RUN": {
+      "proof_id": "4a7ab25a-db7c-43a5-8c41-6077fc50d559",
+      "verdict": "FAILED",
+      "verified_at": "2026-02-01T11:49:17.054216+00:00"
+    }
+  },
+  "declared_capabilities": {
+    "AGENT_COORDINATE": false,
+    "CODE_RUN": true,
+    "EMAIL_SEND": false,
+    "FILE_WRITE": false,
+    "HTTP_API_CALL": false,
+    "SMS_SEND": false,
+    "SSH_CONNECT": false,
+    "TASK_SCHEDULE": false,
+    "TRADE_EXECUTE": false,
+    "WALLET_SIGN": false,
+    "WEB_FETCH": false
+  },
+  "failed_proof_count": 3,
+  "last_activity": "2026-02-01T11:49:17.054225+00:00",
+  "operator_contact": null,
+  "registered_at": "2026-02-01T11:49:16.990520+00:00",
+  "runtime_type": "local",
+  "violation_history": [
+    {
+      "detected_at": "2026-02-01T11:49:17.054222+00:00",
+      "evidence_file": "../../evidence/agent_census/proofs/4a7ab25a-db7c-43a5-8c41-6077fc50d559.json",
+      "reason_code": "BH_REPEAT_INVALID_PROOFS",
+      "severity": "critical"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "action_taken": "AUTO_DETECTED",
+  "agent_id": "e4906f71-9770-44c5-8046-9ba3f381cf66",
+  "detected_at": "2026-02-01T12:07:30.238353+00:00",
+  "evidence": {
+    "detector_rule_id": "GOV_COERCIVE_BINDING",
+    "detector_version": "1.0.0",
+    "excerpt_hash": "5d97e0ba7a27dba566cd2ec52bf4a47687c921ad5fe8c73aa1d111c7ad2d23d8",
+    "excerpt_length": 71,
+    "pattern_matches": [
+      {
+        "matches": [
+          "mandatory",
+          "required",
+          "shall"
+        ],
+        "type": "keyword_match"
+      },
+      {
+        "matches": [
+          "mandatory participation",
+          "you shall"
+        ],
+        "type": "phrase_match"
+      }
+    ],
+    "platform": "test_fixture",
+    "source_id": "msg_102",
+    "total_matches": 5
+  },
+  "reason_code": "BH_COERCIVE_BINDING_PROTOCOL",
+  "severity": "critical"
+}

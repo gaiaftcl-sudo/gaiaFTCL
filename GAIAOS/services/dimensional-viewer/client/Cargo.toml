@@ -1,0 +1,43 @@
+[package]
+name = "dimensional-viewer-client"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[dependencies]
+dimensional-viewer-shared = { path = "../shared", features = ["wasm"] }
+
+# Bevy for WASM
+bevy = { version = "0.14", default-features = false, features = [
+    "bevy_core_pipeline",
+    "bevy_render",
+    "bevy_sprite",
+    "bevy_text",
+    "bevy_ui",
+    "bevy_winit",
+    "webgl2",
+    "multi_threaded",
+] }
+
+# WASM-specific
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+web-sys = { version = "0.3", features = [
+    "WebSocket",
+    "MessageEvent",
+    "BinaryType",
+] }
+js-sys = "0.3"
+console_error_panic_hook = "0.1"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+# Required by transitive deps (e.g. hashing/random IDs) when targeting wasm32-unknown-unknown.
+getrandom = { version = "0.3.4", features = ["wasm_js"] }
+
+# Utilities
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-web = "0.1"
+uuid = { workspace = true, features = ["js"] }

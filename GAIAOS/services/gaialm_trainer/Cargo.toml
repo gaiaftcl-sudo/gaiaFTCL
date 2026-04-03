@@ -1,0 +1,115 @@
+[package]
+name = "gaialm_trainer"
+version = "0.1.0"
+edition = "2021"
+description = "GaiaLM distillation trainer - converts teacher harvests into GaiaLM behavior"
+authors = ["GaiaOS Team"]
+
+[dependencies]
+# Core
+uum8d = { path = "../../ftclstack/uum8d" }
+teacher_harvest = { path = "../teacher_harvest" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uuid = { version = "1.10", features = ["serde", "v4"] }
+
+# Async runtime
+tokio = { version = "1.0", features = ["full"] }
+
+# Logging
+log = "0.4"
+env_logger = "0.11"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Random for training
+rand = "0.8"
+
+[dev-dependencies]
+tempfile = "3.2"
+
+[[bin]]
+name = "train_computer_use"
+path = "src/bin/train_computer_use.rs"
+
+[[bin]]
+name = "train_chemistry"
+path = "src/bin/train_chemistry.rs"
+
+[[bin]]
+name = "train_math"
+path = "src/bin/train_math.rs"
+
+[[bin]]
+name = "train_code"
+path = "src/bin/train_code.rs"
+
+[[bin]]
+name = "train_galaxy"
+path = "src/bin/train_galaxy.rs"
+
+[[bin]]
+name = "gaialm_eval_computer_use"
+path = "src/bin/gaialm_eval_computer_use.rs"
+
+[[bin]]
+name = "gaialm_eval_chemistry"
+path = "src/bin/gaialm_eval_chemistry.rs"
+
+[[bin]]
+name = "gaialm_eval_math"
+path = "src/bin/gaialm_eval_math.rs"
+
+[[bin]]
+name = "gaialm_eval_code"
+path = "src/bin/gaialm_eval_code.rs"
+
+[[bin]]
+name = "gaialm_eval_galaxy"
+path = "src/bin/gaialm_eval_galaxy.rs"
+
+[[bin]]
+name = "train_general"
+path = "src/bin/train_general.rs"
+
+[[bin]]
+name = "gaialm_eval_general"
+path = "src/bin/gaialm_eval_general.rs"
+
+[[bin]]
+name = "train_vision"
+path = "src/bin/train_vision.rs"
+
+[[bin]]
+name = "gaialm_eval_vision"
+path = "src/bin/gaialm_eval_vision.rs"
+
+[[bin]]
+name = "train_worldmodels"
+path = "src/bin/train_worldmodels.rs"
+
+[[bin]]
+name = "gaialm_eval_worldmodels"
+path = "src/bin/gaialm_eval_worldmodels.rs"
+
+[[bin]]
+name = "train_medical"
+path = "src/bin/train_medical.rs"
+
+[[bin]]
+name = "gaialm_eval_medical"
+path = "src/bin/gaialm_eval_medical.rs"
+
+[[bin]]
+name = "train_protein"
+path = "src/bin/train_protein.rs"
+
+[[bin]]
+name = "gaialm_eval_protein"
+path = "src/bin/gaialm_eval_protein.rs"
+

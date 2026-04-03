@@ -1,0 +1,54 @@
+# GaiaOS ATC Turbulence System - Production Configuration
+
+[server]
+bind_addr = "0.0.0.0:8850"
+workers = 4
+max_connections = 1000
+keep_alive = 75
+enable_tls = true
+cert_path = "/etc/gaiaos/certs/atc-data-service.crt"
+key_path = "/etc/gaiaos/certs/atc-data-service.key"
+
+[database]
+arango_url = "http://arangodb:8529"
+arango_db = "gaiaos"
+arango_user_env = "ARANGO_USER"
+arango_pass_env = "ARANGO_PASS"
+connection_pool_size = 10
+timeout_seconds = 30
+
+[api]
+enable_auth = true
+api_key_header = "X-GaiaOS-API-Key"
+rate_limit_per_minute = 60
+cors_allowed_origins = [
+	"https://gaiaos.cloud",
+	"https://atc.gaiaos.cloud",
+	"http://localhost:8080",
+]
+
+[turbulence]
+# Field World RANS operator settings
+operator_id = 1001
+cache_ttl_seconds = 60
+grid_resolution = 20      # cells per dimension
+update_interval_ms = 1000
+enable_real_rans = false  # Set true when Field World HTTP API ready
+
+[risk_zones]
+# Risk zone detection thresholds
+k_threshold_low = 0.3
+k_threshold_moderate = 0.5
+k_threshold_high = 1.0
+k_threshold_severe = 2.0
+
+[monitoring]
+enable_prometheus = true
+prometheus_port = 9090
+log_level = "info"
+log_format = "json"
+
+[testing]
+enable_synthetic_scenarios = true
+test_mode_header = "X-GaiaOS-Test-Mode"
+allowed_test_modes = ["training", "validation", "stress"]

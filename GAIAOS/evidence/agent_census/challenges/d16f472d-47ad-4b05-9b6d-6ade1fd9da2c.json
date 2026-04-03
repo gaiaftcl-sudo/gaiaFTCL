@@ -1,0 +1,9 @@
+{
+  "agent_id": "37395390-006b-469c-9a61-4c27bcb011a3",
+  "capability_id": "CODE_RUN",
+  "challenge_id": "d16f472d-47ad-4b05-9b6d-6ade1fd9da2c",
+  "expires_at": "2026-02-01T12:00:25.130132+00:00",
+  "instructions": "Execute: echo 'f50d00168bcb6f52911954aaf969bd82' | sha256sum",
+  "issued_at": "2026-02-01T12:00:15.130132+00:00",
+  "nonce": "f50d00168bcb6f52911954aaf969bd82"
+}

@@ -1,0 +1,9 @@
+=== test: IQ – transport is healthy and truthful ===
+[console.warning] [.WebGL-0x10c001a8a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[console.warning] [.WebGL-0x10c001a8a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[console.warning] [.WebGL-0x10c001a8a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[console.warning] [.WebGL-0x10c001a8a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+=== test: OQ – Cell world operational loop ===
+=== test: OQ – Human world operational loop ===
+=== test: OQ – Astro world operational loop ===
+=== test: PQ – WS drop and resync (best-effort, evidence-backed) ===

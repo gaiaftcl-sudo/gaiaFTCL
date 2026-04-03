@@ -1,0 +1,31 @@
+{
+  "cell_id": "browser_cell_01",
+  "usd_http_layers": true,
+  "usd_ws_deltas": true,
+  "usd_write_live_usdc": false,
+  "perception_json_ops": true,
+  "perception_usd_overlay": true,
+  "current_rev": {
+    "Cell": 0,
+    "Human": 2,
+    "Astro": 7
+  },
+  "noaa_weather": false,
+  "aviation_weather": false,
+  "open_satellite": false,
+  "earth_engine": false,
+  "earth_engine_mode": "disabled_prelaunch",
+  "truth_source": "arango_substrate_frames",
+  "provider_status": {
+    "noaa_nws": {
+      "enabled": false,
+      "last_ok_ts": null,
+      "last_error": null
+    },
+    "aviation_weather": {
+      "enabled": false,
+      "last_ok_ts": null,
+      "last_error": null
+    }
+  }
+}

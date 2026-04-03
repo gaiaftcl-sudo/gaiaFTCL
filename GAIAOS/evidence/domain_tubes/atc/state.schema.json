@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["aircraft", "timestamp", "airspace"],
+  "properties": {
+    "aircraft": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "position", "velocity", "altitude"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "position": {
+            "type": "object",
+            "required": ["lat", "lon"],
+            "properties": {
+              "lat": {
+                "type": "number",
+                "minimum": -90,
+                "maximum": 90
+              },
+              "lon": {
+                "type": "number",
+                "minimum": -180,
+                "maximum": 180
+              }
+            }
+          },
+          "velocity": {
+            "type": "object",
+            "required": ["speed_kts", "heading_deg"],
+            "properties": {
+              "speed_kts": {
+                "type": "number",
+                "minimum": 0
+              },
+              "heading_deg": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 360
+              }
+            }
+          },
+          "altitude": {
+            "type": "number",
+            "description": "Altitude in feet"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "airspace": {
+      "type": "object",
+      "required": ["bounds"],
+      "properties": {
+        "bounds": {
+          "type": "object",
+          "required": ["min_lat", "max_lat", "min_lon", "max_lon"],
+          "properties": {
+            "min_lat": {"type": "number"},
+            "max_lat": {"type": "number"},
+            "min_lon": {"type": "number"},
+            "max_lon": {"type": "number"}
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

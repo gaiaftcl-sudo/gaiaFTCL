@@ -1,0 +1,41 @@
+# ============================================================================
+# GaiaOS Dimensional Viewer - Standalone Docker Compose
+# ============================================================================
+# Requires gaiaos-substrate and gaiaos-franklin-guardian to be running.
+# For full stack deployment, use the main GaiaOS docker-compose.cell.yml.
+#
+# Port: 8750
+# ============================================================================
+
+version: '3.8'
+
+services:
+  dimensional-viewer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: gaiaos/dimensional-viewer:latest
+    container_name: gaiaos-dimensional-viewer
+    restart: unless-stopped
+    environment:
+      - DIMENSIONAL_VIEWER_PORT=8750
+      - SUBSTRATE_URL=http://gaiaos-substrate:8000
+      - FRANKLIN_GUARDIAN_URL=http://gaiaos-franklin-guardian:8803
+      - DEFAULT_VIRTUE_THRESHOLD=0.90
+      - DEFAULT_DIMENSION_MAP=0,2,5
+      - MAX_POINTS_PER_VIEW=10000
+      - RUST_LOG=info
+    ports:
+      - "8750:8750"
+    networks:
+      - gaiaos-net
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8750/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  gaiaos-net:
+    external: true

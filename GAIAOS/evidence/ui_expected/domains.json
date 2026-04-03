@@ -1,0 +1,16 @@
+[
+  {
+    "id": "FTCL",
+    "name": "Field Truth Closure Layer",
+    "description": "Core GaiaFTCL governance and infrastructure domain",
+    "source_path": ".cursorrules",
+    "source_line_range": "1-50"
+  },
+  {
+    "id": "INFRASTRUCTURE",
+    "name": "Infrastructure Management",
+    "description": "Fleet updates, rollbacks, and system operations",
+    "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml",
+    "source_line_range": "14"
+  }
+]

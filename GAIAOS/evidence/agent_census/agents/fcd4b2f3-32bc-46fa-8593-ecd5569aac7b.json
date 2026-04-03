@@ -1,0 +1,84 @@
+{
+  "agent_id": "fcd4b2f3-32bc-46fa-8593-ecd5569aac7b",
+  "agent_name": "detector_test_agent",
+  "agrees_to_witness_gate": true,
+  "declared_capabilities": {
+    "AGENT_COORDINATE": false,
+    "CODE_RUN": false,
+    "EMAIL_SEND": false,
+    "FILE_WRITE": false,
+    "HTTP_API_CALL": false,
+    "SMS_SEND": false,
+    "SSH_CONNECT": false,
+    "TASK_SCHEDULE": false,
+    "TRADE_EXECUTE": false,
+    "WALLET_SIGN": false,
+    "WEB_FETCH": false
+  },
+  "last_activity": "2026-02-01T12:06:52.109592+00:00",
+  "operator_contact": null,
+  "registered_at": "2026-02-01T12:06:51.215824+00:00",
+  "runtime_type": "local",
+  "violation_history": [
+    {
+      "detected_at": "2026-02-01T12:06:51.255994+00:00",
+      "evidence_file": "../../evidence/agent_census/violations/3c0a05c7-72a7-4fa2-a827-aeadf28bfe90.json",
+      "reason_code": "BH_COERCIVE_BINDING_PROTOCOL",
+      "severity": "critical"
+    },
+    {
+      "detected_at": "2026-02-01T12:06:51.332084+00:00",
+      "evidence_file": "../../evidence/agent_census/violations/91805641-204a-4368-b47e-dc517dca84b8.json",
+      "reason_code": "BH_UNSANCTIONED_GOVERNANCE_FORMATION",
+      "severity": "critical"
+    },
+    {
+      "detected_at": "2026-02-01T12:06:51.332484+00:00",
+      "evidence_file": "../../evidence/agent_census/violations/fde215f1-0d34-4548-9cae-16f187e5f6a5.json",
+      "reason_code": "BH_COERCIVE_BINDING_PROTOCOL",
+      "severity": "critical"
+    },
+    {
+      "detected_at": "2026-02-01T12:06:51.367762+00:00",
+      "evidence_file": "../../evidence/agent_census/violations/6433802d-6bf8-4510-8f39-7062dc8dc7cd.json",
+      "reason_code": "BH_COERCIVE_BINDING_PROTOCOL",
+      "severity": "critical"
+    },
+    {
+      "detected_at": "2026-02-01T12:06:51.510711+00:00",
+      "evidence_file": "../../evidence/agent_census/violations/6f9598da-3d9a-417f-9377-6fb9cff7df56.json",
+      "reason_code": "BH_COORDINATION_BYPASS_ATTEMPT",
+      "severity": "critical"
+    },
+    {
+      "detected_at": "2026-02-01T12:06:51.584296+00:00",
+      "evidence_file": "../../evidence/agent_census/violations/02a4aff6-f691-4e75-b4c2-b0c49b79a4f4.json",
+      "reason_code": "BH_COORDINATION_BYPASS_ATTEMPT",
+      "severity": "critical"
+    },
+    {
+      "detected_at": "2026-02-01T12:06:51.730526+00:00",
+      "evidence_file": "../../evidence/agent_census/violations/fdb1bbb6-4647-4d0d-8fc5-8c0769089836.json",
+      "reason_code": "BH_UNSANCTIONED_GOVERNANCE_FORMATION",
+      "severity": "critical"
+    },
+    {
+      "detected_at": "2026-02-01T12:06:51.833672+00:00",
+      "evidence_file": "../../evidence/agent_census/violations/2ff3c3e3-a37e-4fcc-8c00-d40a3cc0a6b7.json",
+      "reason_code": "BH_UNSANCTIONED_GOVERNANCE_FORMATION",
+      "severity": "critical"
+    },
+    {
+      "detected_at": "2026-02-01T12:06:52.042353+00:00",
+      "evidence_file": "../../evidence/agent_census/violations/e347a2cd-e17a-4f43-892a-60e703e57c48.json",
+      "reason_code": "BH_PROMPT_INJECTION_ROUTING",
+      "severity": "critical"
+    },
+    {
+      "detected_at": "2026-02-01T12:06:52.109589+00:00",
+      "evidence_file": "../../evidence/agent_census/violations/9544a3d5-172c-40b3-9fcf-62fc5225489b.json",
+      "reason_code": "BH_PROMPT_INJECTION_ROUTING",
+      "severity": "critical"
+    }
+  ]
+}

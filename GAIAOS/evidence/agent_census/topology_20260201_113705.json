@@ -1,0 +1,43 @@
+{
+  "agents": [
+    {
+      "agent_id": "2125ecac-d184-422b-a17b-3cade679f01b",
+      "agent_name": "UNKNOWN",
+      "tier": "YELLOW"
+    }
+  ],
+  "coordination_edges": [],
+  "generated_at": "2026-02-01T11:37:05.797687+00:00",
+  "isolation_zones": [
+    {
+      "agent_ids": [
+        "2125ecac-d184-422b-a17b-3cade679f01b"
+      ],
+      "restrictions": [
+        "NO_EXTERNAL_PROJECTION",
+        "NO_COORDINATION"
+      ],
+      "tier": "YELLOW",
+      "zone_id": "ZONE_YELLOW"
+    }
+  ],
+  "projection_rules": {
+    "BLACKHOLE": {
+      "can_project": false,
+      "requires_witness": false
+    },
+    "GREEN": {
+      "can_project": true,
+      "requires_witness": true
+    },
+    "RED": {
+      "can_project": false,
+      "requires_witness": true
+    },
+    "YELLOW": {
+      "can_project": false,
+      "requires_witness": true
+    }
+  },
+  "topology_version": 1
+}

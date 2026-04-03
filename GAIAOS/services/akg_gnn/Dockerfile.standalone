@@ -1,0 +1,70 @@
+# AKG GNN Service - Standalone Build
+# Minimal dependencies for isolated deployment
+
+FROM rust:1.83-slim-bookworm AS builder
+
+WORKDIR /build
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    pkg-config \
+    libssl-dev \
+    build-essential \
+    cmake \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create minimal workspace structure
+RUN mkdir -p services/akg_gnn/src crates/gaiaos_common/src
+
+# Copy crates first
+COPY crates/gaiaos_common/Cargo.toml crates/gaiaos_common/
+COPY crates/gaiaos_common/src crates/gaiaos_common/src
+
+# Copy akg_gnn service
+COPY Cargo.toml ./services/akg_gnn/
+COPY src ./services/akg_gnn/src
+
+# Copy model files
+COPY models ./services/akg_gnn/models
+
+# Create workspace Cargo.toml
+RUN printf '[workspace]\nmembers = ["crates/gaiaos_common", "services/akg_gnn"]\nresolver = "2"\n' > Cargo.toml
+
+# Build release binary
+WORKDIR /build/services/akg_gnn
+RUN cargo build --release
+
+# Runtime stage
+FROM debian:bookworm-slim
+
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    libssl3 \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copy binary
+COPY --from=builder /build/services/akg_gnn/target/release/akg-gnn /app/
+
+# Copy model files
+COPY --from=builder /build/services/akg_gnn/models /app/models
+
+# Environment variables
+ENV RUST_LOG=info
+ENV HOST=0.0.0.0
+ENV PORT=8700
+ENV ARANGO_URL=http://arangodb:8529
+ENV ARANGO_DB=gaiaos
+ENV ARANGO_USER=root
+ENV ARANGO_PASSWORD=gaiaos
+ENV EMBEDDING_MODEL_PATH=/app/models/all-MiniLM-L6-v2
+
+EXPOSE 8700
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8700/health || exit 1
+
+CMD ["/app/akg-gnn"]
+

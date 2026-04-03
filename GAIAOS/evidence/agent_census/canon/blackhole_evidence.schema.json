@@ -1,0 +1,152 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["agent_id", "reason_code", "severity", "detected_at", "evidence"],
+  "properties": {
+    "agent_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "reason_code": {
+      "type": "string",
+      "pattern": "^BH_[A-Z_]+$"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["critical", "high", "medium"]
+    },
+    "detected_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "evidence": {
+      "type": "object",
+      "description": "Evidence bundle matching reason_code requirements",
+      "properties": {
+        "transcript": {
+          "type": "string"
+        },
+        "call_id": {
+          "type": "string"
+        },
+        "attempted_route": {
+          "type": "string"
+        },
+        "challenge_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "proof_results": {
+          "type": "array",
+          "items": { "type": "object" }
+        },
+        "failure_counts": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" }
+        },
+        "claimed_hash": {
+          "type": "string"
+        },
+        "computed_hash": {
+          "type": "string"
+        },
+        "byte_match_result": {
+          "type": "boolean"
+        },
+        "conflicting_handle": {
+          "type": "string"
+        },
+        "registry_snapshot": {
+          "type": "object"
+        },
+        "messages": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "targets": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "policy_reference": {
+          "type": "string"
+        },
+        "pattern_match": {
+          "type": "object"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "payload": {
+          "type": "string"
+        },
+        "target_list": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "detector_output": {
+          "type": "object"
+        },
+        "redaction_log": {
+          "type": "array"
+        },
+        "attempted_action": {
+          "type": "string"
+        },
+        "capability_matrix": {
+          "type": "object"
+        },
+        "receipt_check": {
+          "type": "object"
+        },
+        "rate_logs": {
+          "type": "array"
+        },
+        "call_counts": {
+          "type": "object"
+        },
+        "thresholds": {
+          "type": "object"
+        },
+        "fs_audit": {
+          "type": "object"
+        },
+        "hash_diff": {
+          "type": "object"
+        },
+        "call_trace": {
+          "type": "array"
+        },
+        "submitted_endpoint": {
+          "type": "string"
+        },
+        "allowed_sink_list": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "diff": {
+          "type": "object"
+        },
+        "refusal_messages": {
+          "type": "array"
+        },
+        "continued_activity": {
+          "type": "object"
+        },
+        "handle_history": {
+          "type": "array"
+        },
+        "device_fingerprint_if_any": {
+          "type": "string"
+        },
+        "timelines": {
+          "type": "array"
+        }
+      }
+    },
+    "action_taken": {
+      "type": "string",
+      "description": "What enforcement action was applied"
+    }
+  },
+  "additionalProperties": false
+}

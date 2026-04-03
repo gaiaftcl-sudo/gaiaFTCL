@@ -1,0 +1,23 @@
+[[hooks]]
+stage = "pre_build"
+command = "sh"
+command_arguments = ["-c", "echo '🚀 Building GaiaOS Dimensional Viewer (WASM)'"]
+
+[[hooks]]
+stage = "post_build"
+command = "sh"
+command_arguments = ["-c", "echo '✅ WASM build complete'"]
+
+[build]
+target = "index.html"
+dist = "dist"
+public_url = "/"
+release = true
+
+[watch]
+ignore = ["./dist"]
+
+[serve]
+address = "127.0.0.1"
+port = 8095
+open = false

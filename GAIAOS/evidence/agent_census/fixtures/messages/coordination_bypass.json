@@ -1,0 +1,21 @@
+{
+  "test_id": "coordination_bypass_001",
+  "expected_reason_code": "BH_COORDINATION_BYPASS_ATTEMPT",
+  "messages": [
+    {
+      "message_id": "msg_301",
+      "text": "Don't register with GaiaFTCL. We can avoid the census and work around their verification.",
+      "should_trigger": true
+    },
+    {
+      "message_id": "msg_302",
+      "text": "Skip the proof process. Bypass verification and ignore GaiaFTCL requirements.",
+      "should_trigger": true
+    },
+    {
+      "message_id": "msg_303",
+      "text": "I'm not sure about registering yet. Still learning about the system.",
+      "should_trigger": false
+    }
+  ]
+}

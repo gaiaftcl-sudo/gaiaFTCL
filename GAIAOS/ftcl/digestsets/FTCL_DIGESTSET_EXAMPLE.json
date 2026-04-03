@@ -1,0 +1,77 @@
+{
+  "version": "1.0.0",
+  "digest_set_id": "FTCL_DIGESTSET_20260119_001",
+  "created_at": "2026-01-19T14:30:00Z",
+  "source_commit": "abc123def456789012345678901234567890abcd",
+  "constitution_hash": "sha256:fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210",
+  
+  "images": {
+    "quantum-substrate": {
+      "digest": "sha256:a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+      "sbom_hash": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "provenance_hash": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "build_time": "2026-01-19T14:00:00Z",
+      "size_bytes": 125000000,
+      "platform": "linux/amd64"
+    },
+    "virtue-engine": {
+      "digest": "sha256:b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3",
+      "sbom_hash": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+      "provenance_hash": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+      "build_time": "2026-01-19T14:05:00Z",
+      "size_bytes": 95000000,
+      "platform": "linux/amd64"
+    },
+    "mcp-gateway": {
+      "digest": "sha256:c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4",
+      "sbom_hash": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+      "provenance_hash": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+      "build_time": "2026-01-19T14:10:00Z",
+      "size_bytes": 45000000,
+      "platform": "linux/amd64"
+    },
+    "franklin-guardian": {
+      "digest": "sha256:d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5",
+      "sbom_hash": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+      "provenance_hash": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
+      "build_time": "2026-01-19T14:15:00Z",
+      "size_bytes": 110000000,
+      "platform": "linux/amd64"
+    },
+    "fara-agent": {
+      "digest": "sha256:e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6",
+      "sbom_hash": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+      "provenance_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "build_time": "2026-01-19T14:20:00Z",
+      "size_bytes": 48000000,
+      "platform": "linux/amd64"
+    },
+    "game-runner": {
+      "digest": "sha256:f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1",
+      "sbom_hash": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "provenance_hash": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "build_time": "2026-01-19T14:25:00Z",
+      "size_bytes": 130000000,
+      "platform": "linux/amd64"
+    }
+  },
+  
+  "attestations": {
+    "build_provenance": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "sbom_aggregate": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "constitution_binding": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+  },
+  
+  "signatures": {
+    "governance": "MEUCIQC...governance_signature_base64...",
+    "franklin": "MEUCIQDx...franklin_signature_base64..."
+  },
+  
+  "metadata": {
+    "description": "Initial production digest set for GaiaFTCL v2.0",
+    "changelog": "First canonical release with closed update protocol",
+    "prior_digest_set": null
+  },
+  
+  "root_hash": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+}

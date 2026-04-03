@@ -1,0 +1,371 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# G_FTCL_INVEST_001 - Infrastructure Ownership Acquisition Game
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# CANONICAL game for investing in GaiaFTCL infrastructure.
+# Ben manages all investment interactions per this protocol.
+# ═══════════════════════════════════════════════════════════════════════════════
+
+game_id: G_FTCL_INVEST_001
+version: 1.0.0
+type: INVESTMENT
+domain: INVEST
+closure: STRICT
+canonical: true
+
+metadata:
+  created: 2026-01-19
+  author: governance@gaiaftcl.com
+  manager: franklin@gaiaftcl.com  # "Ben" is Franklin's familiar name
+  spec_ref: FTCL-INV-001
+
+description: |
+  Canonical game for acquiring LLC membership interests in SafeAICoin LLC.
+  Investment is conducted entirely within GaiaFTCL using stablecoin settlement.
+  Ben manages the sale. Profit distributions are TRANSACTION moves.
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# NON-NEGOTIABLE CONSTRAINTS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+constraints:
+  valuation_floor:
+    value: 500000000
+    currency: USD
+    negotiable: false
+    
+  investor_pool:
+    value: 10
+    unit: percent_of_net_profit
+    negotiable: false
+    
+  founder_pool:
+    value: 90
+    unit: percent_of_net_profit
+    negotiable: false
+    
+  founder_voting_control:
+    value: 100
+    unit: percent
+    negotiable: false
+    
+  minimum_investment:
+    value: 1000000
+    currency: USD
+    negotiable: false
+    
+  investor_governance_rights:
+    value: none
+    negotiable: false
+    
+  exit_provisions:
+    value: none
+    negotiable: false
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MOVE ORDER
+# ═══════════════════════════════════════════════════════════════════════════════
+
+move_order:
+  - INQUIRY
+  - QUALIFICATION
+  - COMMITMENT
+  - SETTLEMENT
+  - CONFIRMATION
+
+skip_allowed: false
+parallel_allowed: false
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FEE STRUCTURE
+# ═══════════════════════════════════════════════════════════════════════════════
+
+fees:
+  inquiry:
+    amount: 0
+    currency: QFOT
+    description: "Inquiry is free"
+    
+  qualification:
+    amount: 100
+    currency: QFOT
+    description: "Anti-spam, refundable on investment"
+    refundable: true
+    refund_trigger: settlement_complete
+    
+  commitment:
+    amount: 0
+    currency: QFOT
+    description: "Signing is free"
+    
+  settlement:
+    amount: 0
+    currency: QFOT
+    description: "No QFOT fee (stablecoin deposit)"
+    
+  confirmation:
+    amount: 0
+    currency: QFOT
+    description: "Confirmation is free"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MOVE DEFINITIONS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+moves:
+  INQUIRY:
+    description: "Potential investor contacts Ben"
+    from: "{investor}@*"
+    to: franklin@gaiaftcl.com
+    
+    envelope:
+      X-FTCL-Type: REQUEST
+      X-FTCL-Game: G_FTCL_INVEST_001
+      X-FTCL-Domain: INVEST
+      X-FTCL-Cost: 0
+    
+    payload_schema:
+      type: object
+      required:
+        - name
+        - email
+        - intended_amount
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        intended_amount:
+          type: number
+          minimum: 1000000
+        accreditation_type:
+          type: string
+          enum: [income, net_worth, professional, entity]
+    
+    response:
+      inquiry_id: string
+      status: received
+      documents:
+        - term_sheet_url
+        - operating_agreement_url
+      next_step: qualification
+
+  QUALIFICATION:
+    description: "Investor submits accreditation proof"
+    from: "{investor}@*"
+    to: franklin@gaiaftcl.com
+    
+    envelope:
+      X-FTCL-Type: CLAIM
+      X-FTCL-Game: G_FTCL_INVEST_001
+      X-FTCL-Cost: 100
+    
+    payload_schema:
+      type: object
+      required:
+        - inquiry_id
+        - wallet_address
+        - accreditation_proof_hash
+      properties:
+        inquiry_id:
+          type: string
+        wallet_address:
+          type: string
+          pattern: "^0x[a-fA-F0-9]{40}$"
+        accreditation_proof_hash:
+          type: string
+          pattern: "^sha256:[a-f0-9]{64}$"
+        accreditation_type:
+          type: string
+          enum: [income, net_worth, professional, entity]
+    
+    validation:
+      - "Ben verifies accredited investor status"
+      - "Wallet not already bound to existing membership"
+    
+    response:
+      qualification_id: string
+      status: verified | rejected
+      digital_twin_id: string
+      deposit_address: string
+      minimum_deposit: 1000000
+
+  COMMITMENT:
+    description: "Investor signs LLC Operating Agreement"
+    from: "{investor}@*"
+    to: franklin@gaiaftcl.com
+    
+    envelope:
+      X-FTCL-Type: COMMITMENT
+      X-FTCL-Game: G_FTCL_INVEST_001
+      X-FTCL-Cost: 0
+    
+    payload_schema:
+      type: object
+      required:
+        - qualification_id
+        - operating_agreement_signed
+        - agreement_signature_hash
+      properties:
+        qualification_id:
+          type: string
+        operating_agreement_signed:
+          type: boolean
+          const: true
+        agreement_signature_hash:
+          type: string
+          pattern: "^sha256:[a-f0-9]{64}$"
+    
+    postconditions:
+      - "Agreement hash recorded as truth envelope"
+      - "Investor wallet bound to membership interest (pending)"
+
+  SETTLEMENT:
+    description: "Investor deposits stablecoin"
+    from: "{investor_wallet}"
+    to: ftcl_escrow_contract
+    
+    envelope:
+      X-FTCL-Type: TRANSACTION
+      X-FTCL-Game: G_FTCL_INVEST_001
+    
+    payload_schema:
+      type: object
+      required:
+        - amount
+        - stablecoin
+        - chain
+        - tx_hash
+      properties:
+        amount:
+          type: number
+          minimum: 1000000
+        stablecoin:
+          type: string
+          enum: [USDC, DAI]
+        chain:
+          type: string
+          enum: [ethereum, polygon, base]
+        tx_hash:
+          type: string
+    
+    validation:
+      - "Amount >= $1,000,000"
+      - "Wallet bound to verified digital twin"
+      - "Operating agreement hash on record"
+    
+    on_success:
+      - "QFOT minted to investor wallet"
+      - "Membership interest activated"
+      - "Digital twin status: ACTIVE"
+      - "Qualification fee refunded"
+    
+    on_failure:
+      - "Funds returned"
+      - "Error logged"
+
+  CONFIRMATION:
+    description: "Ben issues membership confirmation"
+    from: ben@gaiaftcl.com
+    to: "{investor}@*"
+    
+    envelope:
+      X-FTCL-Type: REPORT
+      X-FTCL-Game: G_FTCL_INVEST_001
+    
+    payload_schema:
+      type: object
+      required:
+        - digital_twin_id
+        - membership_interest_pct
+        - investment_amount
+        - confirmation_hash
+      properties:
+        digital_twin_id:
+          type: string
+        membership_interest_pct:
+          type: number
+        investment_amount:
+          type: number
+        pro_rata_pool_pct:
+          type: number
+        next_distribution_date:
+          type: string
+          format: date
+        confirmation_hash:
+          type: string
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ACCEPTED STABLECOINS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+stablecoins:
+  USDC:
+    ethereum:
+      contract: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+      status: primary
+    polygon:
+      contract: "0x2791bca1f2de4661ed88a30c99a7a9449aa84174"
+      status: accepted
+    base:
+      contract: "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+      status: accepted
+  DAI:
+    ethereum:
+      contract: "0x6b175474e89094c44da98b954eedeac495271d0f"
+      status: accepted
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# OWNERSHIP CALCULATION
+# ═══════════════════════════════════════════════════════════════════════════════
+
+ownership_formula:
+  description: "Ownership % = (Investment / $500M) × 10%"
+  examples:
+    - investment: 1000000
+      pool_pct: 0.20
+      effective_profit_pct: 0.02
+    - investment: 5000000
+      pool_pct: 1.00
+      effective_profit_pct: 0.10
+    - investment: 50000000
+      pool_pct: 10.00
+      effective_profit_pct: 1.00
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# BEN'S AUTHORITY
+# ═══════════════════════════════════════════════════════════════════════════════
+
+manager:
+  entity: franklin@gaiaftcl.com
+  
+  can:
+    - "Answer investor questions"
+    - "Provide documentation"
+    - "Verify accreditation"
+    - "Process deposits"
+    - "Issue confirmations"
+    - "Generate reports"
+    - "Execute distributions (per schedule)"
+  
+  cannot:
+    - "Modify valuation"
+    - "Change profit share terms"
+    - "Grant governance rights"
+    - "Approve non-accredited investors"
+    - "Bypass Founder authority"
+    - "Create exit provisions"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# REGULATORY
+# ═══════════════════════════════════════════════════════════════════════════════
+
+regulatory:
+  exemption: "Regulation D, Rule 506(c)"
+  investor_type: "Accredited only"
+  verification: "Required"
+  filing: "Form D with SEC"
+  governing_law: "Connecticut, USA"
+  arbitration: "Binding, single arbitrator"
+  venue: "Hartford, CT"

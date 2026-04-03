@@ -1,0 +1,47 @@
+[package]
+name = "gaiaos_ui_tester_mcp"
+version = "0.1.0"
+edition = "2021"
+description = "GaiaOS UI Testing Orchestration via MCP"
+
+[[bin]]
+name = "gaiaos_ui_tester_mcp"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { version = "1.35", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+anyhow = "1.0"
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# For HTTP requests
+reqwest = { version = "0.11", features = ["json"] }
+async-nats = "0.36"
+
+# For HTTP server (MCP stdio + optional HTTP)
+axum = "0.7"
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+
+# For file system operations
+walkdir = "2"
+
+# For witness generation
+sha2 = "0.10"
+base64 = "0.22"
+
+# For nonce generation
+rand = "0.8"
+jsonschema = "0.18"
+
+# For headers extraction
+axum-extra = { version = "0.9", features = ["typed-header"] }
+
+# For ArangoDB graph storage
+arangors = "0.6"
+
+[dev-dependencies]

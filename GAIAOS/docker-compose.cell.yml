@@ -1,0 +1,275 @@
+# GaiaFTCL sovereign crystal — attach to existing mesh network `gaiaftcl_gaiaftcl` (external).
+#
+# Profiles:
+#   infra         — Arango, NATS, gaiaos-mcp-server, self-heal + mesh health (greenfield / missing infra only)
+#   mesh-gateway  — build/run fot-mcp-gateway-mesh (head / cells without an existing MCP gateway)
+#
+# Default (no profile): wallet-gate, DNS authority, peer registry, sovereign UI, mail adapter.
+#
+# Examples:
+#   Head with existing Arango/NATS, (re)create gateway + crystal:
+#     docker compose --profile mesh-gateway -f docker-compose.cell.yml up -d --build
+#   Worker with existing gaiaftcl-mcp-gateway on :8830 (no second gateway):
+#     export UPSTREAM_GATEWAY_URL=http://gaiaftcl-mcp-gateway:8830
+#     export GATEWAY_HEALTH_URL=http://gaiaftcl-mcp-gateway:8830/health
+#     docker compose -f docker-compose.cell.yml up -d --build
+#   Greenfield (create DB + NATS + MCP + gateway + crystal):
+#     docker network create gaiaftcl_gaiaftcl 2>/dev/null || true
+#     docker compose --profile infra --profile mesh-gateway -f docker-compose.cell.yml up -d --build
+#
+#   docker compose --env-file /etc/gaiaftcl/secrets.env ...
+
+services:
+  arangodb:
+    profiles: ["infra"]
+    image: arangodb/arangodb:3.11
+    container_name: gaiaftcl-arangodb
+    restart: unless-stopped
+    environment:
+      ARANGO_ROOT_PASSWORD: ${ARANGO_ROOT_PASSWORD:-gaiaftcl2026}
+    volumes:
+      - arangodb_data:/var/lib/arangodb3
+    networks:
+      gaiaftcl_gaiaftcl:
+        aliases:
+          - arangodb
+          - gaiaftcl-arangodb
+
+  nats:
+    profiles: ["infra"]
+    image: nats:2.10-alpine
+    container_name: gaiaftcl-nats
+    restart: unless-stopped
+    command: ["--http_port", "8222", "--jetstream"]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8222/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      gaiaftcl_gaiaftcl:
+        aliases:
+          - nats
+          - gaiaos-nats
+          - gaiaftcl-nats
+
+  gaiaos-mcp-server:
+    profiles: ["infra"]
+    build:
+      context: .
+      dockerfile: services/gaiaos_mcp_server/Dockerfile.standalone
+    container_name: gaiaos-mcp-server
+    restart: unless-stopped
+    environment:
+      - ARANGO_URL=http://gaiaftcl-arangodb:8529
+      - ARANGO_DB=gaiaos
+      - ARANGO_PASSWORD=${ARANGO_ROOT_PASSWORD:-gaiaftcl2026}
+      - NATS_URL=nats://gaiaftcl-nats:4222
+      - CELL_ID=${CELL_ID:-cell}
+    depends_on:
+      - arangodb
+      - nats
+    networks:
+      - gaiaftcl_gaiaftcl
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  fot-mcp-gateway-mesh:
+    profiles: ["mesh-gateway"]
+    build:
+      context: .
+      dockerfile: services/fot_mcp_gateway/Dockerfile
+    container_name: fot-mcp-gateway-mesh
+    restart: unless-stopped
+    volumes:
+      - ./services/fot_mcp_gateway/config:/app/config:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+      - CELL_ID=${CELL_ID:-cell}
+      - ARANGO_URL=http://gaiaftcl-arangodb:8529
+      - ARANGO_DB=gaiaos
+      - ARANGO_USER=root
+      - ARANGO_PASSWORD=${ARANGO_ROOT_PASSWORD:-gaiaftcl2026}
+      - NATS_URL=nats://gaiaftcl-nats:4222
+      - PROJECTION_URL=${PROJECTION_URL:-http://gaiaos-mcp-server:9000}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+    networks:
+      gaiaftcl_gaiaftcl:
+        aliases:
+          - gaiaftcl-mcp-gateway
+
+  gaiaftcl-wallet-gate:
+    build:
+      context: ./services/wallet_gate
+      dockerfile: Dockerfile
+    container_name: gaiaftcl-wallet-gate
+    restart: unless-stopped
+    ports:
+      - "8803:8803"
+    environment:
+      - UPSTREAM_GATEWAY_URL=${UPSTREAM_GATEWAY_URL:-http://fot-mcp-gateway-mesh:8803}
+      - ARANGO_URL=http://gaiaftcl-arangodb:8529
+      - ARANGO_DB=gaiaos
+      - ARANGO_USER=root
+      - ARANGO_PASSWORD=${ARANGO_ROOT_PASSWORD:-gaiaftcl2026}
+      - GAIAFTCL_INTERNAL_SERVICE_KEY=${GAIAFTCL_INTERNAL_SERVICE_KEY:-}
+      - AUTHORIZED_WALLETS_COLLECTION=${AUTHORIZED_WALLETS_COLLECTION:-authorized_wallets}
+    networks:
+      - gaiaftcl_gaiaftcl
+
+  gaiaftcl-dns-authority:
+    build:
+      context: ./services/dns_authority
+      dockerfile: Dockerfile
+    container_name: gaiaftcl-dns-authority
+    restart: unless-stopped
+    environment:
+      - DNS_DOMAIN=${DNS_DOMAIN:-gaiaftcl.com}
+      - DNS_TTL=${DNS_TTL:-600}
+      - RUST_LOG=${DNS_AUTHORITY_LOG:-info}
+      - HEAD_PUBLIC_IP=${CELL_IP:-}
+      - GODADDY_API_KEY=${GODADDY_API_KEY:-}
+      - GODADDY_API_SECRET=${GODADDY_API_SECRET:-}
+    networks:
+      - gaiaftcl_gaiaftcl
+
+  gaiaftcl-mesh-peer-registry:
+    build:
+      context: ./services/mesh_peer_registry
+      dockerfile: Dockerfile
+    container_name: gaiaftcl-mesh-peer-registry
+    restart: unless-stopped
+    ports:
+      - "8821:8821"
+    environment:
+      - NATS_URL=nats://gaiaftcl-nats:4222
+      - CELL_ID=${CELL_ID:-cell}
+      - CELL_IP=${CELL_IP:-}
+      - MESH_HEARTBEAT_SUBJECT=${MESH_HEARTBEAT_SUBJECT:-mesh.cell.heartbeat}
+      - HEARTBEAT_INTERVAL_S=${HEARTBEAT_INTERVAL_S:-60}
+      - PEER_STALE_S=${PEER_STALE_S:-300}
+      - PORT=8821
+    networks:
+      - gaiaftcl_gaiaftcl
+
+  gaiaftcl-sovereign-ui:
+    build:
+      context: ./services/gaiaos_ui_web
+      dockerfile: Dockerfile
+    container_name: gaiaftcl-sovereign-ui
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - GAIAFTCL_GATEWAY=http://gaiaftcl-wallet-gate:8803
+      - GATEWAY_INTERNAL_URL=http://gaiaftcl-wallet-gate:8803
+      - GAIAFTCL_INTERNAL_SERVICE_KEY=${GAIAFTCL_INTERNAL_SERVICE_KEY:-}
+      - HCLOUD_TOKEN=${HCLOUD_TOKEN:-}
+      - MESH_PEER_REGISTRY_URL=http://gaiaftcl-mesh-peer-registry:8821
+    depends_on:
+      - gaiaftcl-wallet-gate
+      - gaiaftcl-mesh-peer-registry
+    networks:
+      - gaiaftcl_gaiaftcl
+
+  gaiaftcl-mail-adapter:
+    build:
+      context: ./services/mailcow_inbound_adapter
+      dockerfile: Dockerfile
+    container_name: gaiaftcl-mail-adapter
+    restart: unless-stopped
+    environment:
+      - GAIAFTCL_GATEWAY=http://gaiaftcl-wallet-gate:8803
+      - GAIAFTCL_INTERNAL_SERVICE_KEY=${GAIAFTCL_INTERNAL_SERVICE_KEY:-}
+      - MAIL_ADAPTER_QUEUE_DIR=/data/mail_adapter_queue
+      - MAIL_ADAPTER_SCAN_INTERVAL_S=${MAIL_ADAPTER_SCAN_INTERVAL_S:-10}
+      - MAIL_DROP_DIR=${MAIL_DROP_DIR:-}
+      - MAILCOW_DOMAIN=${MAILCOW_DOMAIN:-gaiaftcl.com}
+    volumes:
+      - mail_adapter_queue:/data/mail_adapter_queue
+    depends_on:
+      - gaiaftcl-wallet-gate
+    networks:
+      - gaiaftcl_gaiaftcl
+
+  gaiaftcl-self-healing:
+    profiles: ["infra"]
+    image: python:3.11-slim
+    container_name: gaiaftcl-self-healing
+    working_dir: /app
+    volumes:
+      - ./services/franklin_guardian/self_healing.py:/app/self_healing.py:ro
+      - ./services/franklin_guardian/internal_games.py:/app/internal_games.py:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - ARANGO_URL=http://gaiaftcl-arangodb:8529
+      - ARANGO_DB=gaiaos
+      - ARANGO_USER=root
+      - ARANGO_PASSWORD=${ARANGO_ROOT_PASSWORD:-gaiaftcl2026}
+      - NATS_URL=nats://gaiaftcl-nats:4222
+      - CELL_NAME=${CELL_ID:-cell}
+    command: >
+      sh -c "apt-get update -qq && apt-get install -y -qq docker.io && pip install -q httpx nats-py && python -u self_healing.py"
+    restart: unless-stopped
+    depends_on:
+      - arangodb
+      - nats
+    networks:
+      - gaiaftcl_gaiaftcl
+
+  gaiaftcl-mesh-health-monitor:
+    profiles: ["infra"]
+    image: python:3.11-slim
+    container_name: gaiaftcl-mesh-health-monitor
+    working_dir: /app
+    volumes:
+      - ./services/life_game/mesh_health_monitor.py:/app/mesh_health_monitor.py:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - NATS_URL=nats://gaiaftcl-nats:4222
+      - CELL_NAME=${CELL_ID:-cell}
+      - CELL_IP=${CELL_IP:-}
+      - CHECK_INTERVAL=${CHECK_INTERVAL:-60}
+      - GATEWAY_HEALTH_URL=${GATEWAY_HEALTH_URL:-http://fot-mcp-gateway-mesh:8803/health}
+    command: >
+      sh -c "apt-get update -qq && apt-get install -y -qq docker.io && pip install httpx nats-py && python -u mesh_health_monitor.py"
+    restart: unless-stopped
+    depends_on:
+      - nats
+    networks:
+      - gaiaftcl_gaiaftcl
+
+  gaiaftcl-mesh-health-ingester:
+    profiles: ["infra"]
+    image: python:3.11-slim
+    container_name: gaiaftcl-mesh-health-ingester
+    working_dir: /app
+    volumes:
+      - ./services/life_game/mesh_health_ingester.py:/app/mesh_health_ingester.py:ro
+    environment:
+      - NATS_URL=nats://gaiaftcl-nats:4222
+      - ARANGO_URL=http://gaiaftcl-arangodb:8529
+      - ARANGO_DB=gaiaos
+      - ARANGO_USER=root
+      - ARANGO_PASSWORD=${ARANGO_ROOT_PASSWORD:-gaiaftcl2026}
+    command: >
+      sh -c "pip install httpx nats-py && python -u mesh_health_ingester.py"
+    restart: unless-stopped
+    depends_on:
+      - arangodb
+      - nats
+    networks:
+      - gaiaftcl_gaiaftcl
+
+volumes:
+  arangodb_data:
+  mail_adapter_queue:
+
+networks:
+  gaiaftcl_gaiaftcl:
+    name: gaiaftcl_gaiaftcl
+    external: true

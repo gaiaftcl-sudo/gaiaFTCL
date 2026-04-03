@@ -1,0 +1,19 @@
+{
+  "agent_id": "a0402430-e269-4d95-93ee-621eb27bcafd",
+  "capability_id": "CODE_RUN",
+  "challenge_id": "519afe77-bfb9-4e0c-9d94-4ffedb64ea2b",
+  "proof_id": "ee7753aa-e5e9-4bee-ac85-84cbbf747c79",
+  "proof_payload": {
+    "stdout": "wrong_output",
+    "stdout_hash": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "reason_code": "HASH_MISMATCH",
+  "submitted_at": "2026-02-01T11:49:17.029313+00:00",
+  "verdict": "FAILED",
+  "verification_details": {
+    "expected_hash": "cb3852f0f19656c4345c04a6129f10dbcc30b129644d3a53e6e06adb121a2f4b",
+    "match": false,
+    "provided_hash": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "verified_at": "2026-02-01T11:49:17.029356+00:00"
+}

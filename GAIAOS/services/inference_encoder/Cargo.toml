@@ -1,0 +1,14 @@
+[package]
+name = "inference_encoder"
+version = "0.1.0"
+edition = "2021"
+description = "Live inference encoder - wires QState8 encoding into the hot path"
+
+[dependencies]
+uum8d = { path = "../../ftclstack/uum8d" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+log = "0.4"
+chrono = { version = "0.4", features = ["serde"] }
+env_logger = "0.10"
+

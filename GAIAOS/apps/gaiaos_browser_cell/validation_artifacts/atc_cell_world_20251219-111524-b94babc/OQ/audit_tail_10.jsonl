@@ -1,0 +1,9 @@
+{"ts":1766160469645,"event":"ws_connect","cell_id":"browser_cell_01"}
+{"ts":1766160471584,"event":"ws_disconnect","cell_id":"browser_cell_01"}
+{"ts":1766160881808,"event":"ws_disconnect","cell_id":"browser_cell_01"}
+{"ts":1766160881865,"event":"ws_connect","cell_id":"browser_cell_01"}
+{"ts":1766160926962,"event":"ws_connect","cell_id":"browser_cell_01"}
+{"ts":1766160927370,"event":"ws_disconnect","cell_id":"browser_cell_01"}
+{"ts":1766160927606,"event":"ws_connect","cell_id":"browser_cell_01"}
+{"ts":1766160927861,"event":"ws_disconnect","cell_id":"browser_cell_01"}
+{"ts":1766160928078,"event":"ws_connect","cell_id":"browser_cell_01"}

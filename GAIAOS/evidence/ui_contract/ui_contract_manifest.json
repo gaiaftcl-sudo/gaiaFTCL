@@ -1,0 +1,44 @@
+{
+  "version": "2.0.0",
+  "generated_at": "2026-01-31T20:20:00Z",
+  "git_commit": "310e0eaf71f54fe1a193ed1c4081c432b0e16fbd",
+  "canonical_files": {
+    "domains": {
+      "path": "evidence/ui_expected/domains.json",
+      "sha256": "e1ddaa4ba74e42c47816551cd9de77565626625bb03357d7ff90114b0ee3b91a"
+    },
+    "games": {
+      "path": "evidence/ui_expected/games.json",
+      "sha256": "8cb40a67cfc7519f513175484b122379b0dcadf4786e9a437c94937f83f31b44"
+    },
+    "envelopes": {
+      "path": "evidence/ui_expected/envelopes.json",
+      "sha256": "27fc445d054db14e7a02105e77d0432435ea3a7544af23ef87eff779d3ccba47"
+    },
+    "uum8d_dimensions": {
+      "path": "evidence/ui_expected/uum8d_dimensions.json",
+      "sha256": "d4970ea716933b34896bfc10b6948a60dfa4fe4b86d93f927ce160852aecf23d"
+    },
+    "game_envelopes": {
+      "path": "evidence/ui_expected/game_envelopes.json",
+      "sha256": "3bc0ce6f7c388b8c8086ebb33001a42b71bea532312e6bda7b8b658cc2a0d313"
+    },
+    "game_dimensions": {
+      "path": "evidence/ui_expected/game_dimensions.json",
+      "sha256": "977cb2ade3de0da57b691541499f696942986babb5579d444e2f95e67f348ab7"
+    },
+    "ui_surface_map": {
+      "path": "evidence/ui_contract/ui_surface_map.json",
+      "sha256": "556263a8e20f9fffe3da23c01af0418396e98a33597bdb68308ea11f5917125f"
+    }
+  },
+  "counts": {
+    "domains": 2,
+    "games": 4,
+    "envelopes": 16,
+    "dimensions": 8,
+    "game_envelopes": 11,
+    "game_dimensions": 20,
+    "total_mappings": 61
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "domain_id": "atc",
+  "description": "Air Traffic Control - Aircraft separation and collision avoidance",
+  "closure_type": "PHYSICAL",
+  "time_model": "UTSP",
+  "version": "1.0.0"
+}

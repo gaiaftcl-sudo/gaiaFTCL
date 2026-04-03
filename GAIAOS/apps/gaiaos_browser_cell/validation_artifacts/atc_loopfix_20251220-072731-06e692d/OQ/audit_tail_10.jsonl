@@ -1,0 +1,9 @@
+{"ts":1766232826289,"event":"artifact_write","provider":"aviationweather_airsigmet","file":"/usd/artifacts/aviationweather_airsigmet/airsigmet_1766232826289.json"}
+{"ts":1766233006563,"event":"artifact_write","provider":"aviationweather_airsigmet","file":"/usd/artifacts/aviationweather_airsigmet/airsigmet_1766233006563.json"}
+{"ts":1766233186842,"event":"artifact_write","provider":"aviationweather_airsigmet","file":"/usd/artifacts/aviationweather_airsigmet/airsigmet_1766233186842.json"}
+{"ts":1766233367106,"event":"artifact_write","provider":"aviationweather_airsigmet","file":"/usd/artifacts/aviationweather_airsigmet/airsigmet_1766233367106.json"}
+{"ts":1766233547785,"event":"artifact_write","provider":"aviationweather_airsigmet","file":"/usd/artifacts/aviationweather_airsigmet/airsigmet_1766233547785.json"}
+{"ts":1766233654024,"event":"ws_connect","cell_id":"browser_cell_01"}
+{"ts":1766233654724,"event":"ws_disconnect","cell_id":"browser_cell_01"}
+{"ts":1766233655091,"event":"ws_connect","cell_id":"browser_cell_01"}
+{"ts":1766233662399,"event":"perception_rejected","cell_id":"browser_cell_01","world":"Cell","op_id":"1766233662393-a","payload_digest":"aaa0649bedce3b2e","reason":"invariant_reject","pack_id":"geo_physics"}

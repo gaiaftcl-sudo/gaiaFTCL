@@ -1,0 +1,46 @@
+{
+  "world": "Cell",
+  "provenance": {
+    "source": "ClientUICell",
+    "operator": "operator",
+    "ts_ms": 1766164954818
+  },
+  "ops": [
+    {
+      "op": "SetAttr",
+      "op_id": "ced33a91-1f20-4238-a993-93f3a26e0d08-p",
+      "path": "/GaiaOS/UI/ATC/Region",
+      "name": "gaiaos:corridor",
+      "valueType": "string",
+      "value": "NE_FULL"
+    },
+    {
+      "op": "SetAttr",
+      "op_id": "ced33a91-1f20-4238-a993-93f3a26e0d08-a",
+      "path": "/GaiaOS/UI/ATC/Region",
+      "name": "gaiaos:airport",
+      "valueType": "string",
+      "value": "KJFK"
+    },
+    {
+      "op": "SetAttr",
+      "op_id": "ced33a91-1f20-4238-a993-93f3a26e0d08-b",
+      "path": "/GaiaOS/UI/ATC/Region",
+      "name": "gaiaos:center_wgs84",
+      "valueType": "float3",
+      "value": [
+        40.6413,
+        -73.7781,
+        0
+      ]
+    },
+    {
+      "op": "SetAttr",
+      "op_id": "ced33a91-1f20-4238-a993-93f3a26e0d08-c",
+      "path": "/GaiaOS/UI/ATC/Region",
+      "name": "gaiaos:radius_km",
+      "valueType": "float",
+      "value": 150
+    }
+  ]
+}

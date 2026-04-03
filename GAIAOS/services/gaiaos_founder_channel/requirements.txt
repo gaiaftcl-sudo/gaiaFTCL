@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-arango
+nats-py
+pydantic
+streamlit
+httpx
+python-dotenv
+watchdog

@@ -1,0 +1,29 @@
+{
+  "policy_id": "egress_policy_v1",
+  "version": 1,
+  "updated_at_utc": "2026-02-01T12:00:00Z",
+  "dns": {
+    "mode": "primary_secondary",
+    "primary": "hel1-01",
+    "secondary": "hel1-02",
+    "enabled": true
+  },
+  "mesh": {
+    "mode": "primary_secondary",
+    "primary": "hel1-02",
+    "secondary": "hel1-03",
+    "enabled": false
+  },
+  "hysteresis": {
+    "min_tenure_seconds": 21600,
+    "failover_after_seconds": 1800,
+    "cooldown_seconds": 3600
+  },
+  "eligibility": {
+    "max_heartbeat_age_seconds": 300,
+    "require_services": ["nats", "arangodb"]
+  },
+  "authority": {
+    "policy_write_role": "MOTHER"
+  }
+}

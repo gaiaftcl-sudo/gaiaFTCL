@@ -1,0 +1,62 @@
+{
+  "agents": [
+    {
+      "agent_id": "03a16db0-59aa-4eb9-9ed1-eb0cf4db64c7",
+      "agent_name": "UNKNOWN",
+      "tier": "YELLOW"
+    },
+    {
+      "agent_id": "2125ecac-d184-422b-a17b-3cade679f01b",
+      "agent_name": "UNKNOWN",
+      "tier": "YELLOW"
+    }
+  ],
+  "coordination_edges": [
+    {
+      "allowed": false,
+      "from_agent_id": "03a16db0-59aa-4eb9-9ed1-eb0cf4db64c7",
+      "reason": "Tier mismatch: YELLOW -> YELLOW",
+      "to_agent_id": "2125ecac-d184-422b-a17b-3cade679f01b"
+    },
+    {
+      "allowed": false,
+      "from_agent_id": "2125ecac-d184-422b-a17b-3cade679f01b",
+      "reason": "Tier mismatch: YELLOW -> YELLOW",
+      "to_agent_id": "03a16db0-59aa-4eb9-9ed1-eb0cf4db64c7"
+    }
+  ],
+  "generated_at": "2026-02-01T11:39:20.070103+00:00",
+  "isolation_zones": [
+    {
+      "agent_ids": [
+        "03a16db0-59aa-4eb9-9ed1-eb0cf4db64c7",
+        "2125ecac-d184-422b-a17b-3cade679f01b"
+      ],
+      "restrictions": [
+        "NO_EXTERNAL_PROJECTION",
+        "NO_COORDINATION"
+      ],
+      "tier": "YELLOW",
+      "zone_id": "ZONE_YELLOW"
+    }
+  ],
+  "projection_rules": {
+    "BLACKHOLE": {
+      "can_project": false,
+      "requires_witness": false
+    },
+    "GREEN": {
+      "can_project": true,
+      "requires_witness": true
+    },
+    "RED": {
+      "can_project": false,
+      "requires_witness": true
+    },
+    "YELLOW": {
+      "can_project": false,
+      "requires_witness": true
+    }
+  },
+  "topology_version": 1
+}

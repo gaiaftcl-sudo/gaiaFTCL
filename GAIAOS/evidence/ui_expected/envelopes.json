@@ -1,0 +1,114 @@
+[
+  {
+    "subject": "FLEET_UPDATE_REQUEST",
+    "envelope_type": "REQUEST",
+    "producer_game_id": "G_FTCL_UPDATE_FLEET_V1",
+    "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml",
+    "source_line_range": "78-87"
+  },
+  {
+    "subject": "FLEET_UPDATE_COMMITMENT",
+    "envelope_type": "COMMITMENT",
+    "producer_game_id": "G_FTCL_UPDATE_FLEET_V1",
+    "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml",
+    "source_line_range": "120-140"
+  },
+  {
+    "subject": "FLEET_UPDATE_TRANSACTION",
+    "envelope_type": "TRANSACTION",
+    "producer_game_id": "G_FTCL_UPDATE_FLEET_V1",
+    "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml",
+    "source_line_range": "160-180"
+  },
+  {
+    "subject": "FLEET_UPDATE_REPORT",
+    "envelope_type": "REPORT",
+    "producer_game_id": "G_FTCL_UPDATE_FLEET_V1",
+    "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml",
+    "source_line_range": "200-220"
+  },
+  {
+    "subject": "ROLLBACK_REQUEST",
+    "envelope_type": "REQUEST",
+    "producer_game_id": "G_FTCL_ROLLBACK_V1",
+    "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml",
+    "source_line_range": "40-60"
+  },
+  {
+    "subject": "ROLLBACK_COMMITMENT",
+    "envelope_type": "COMMITMENT",
+    "producer_game_id": "G_FTCL_ROLLBACK_V1",
+    "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml",
+    "source_line_range": "80-100"
+  },
+  {
+    "subject": "ROLLBACK_TRANSACTION",
+    "envelope_type": "TRANSACTION",
+    "producer_game_id": "G_FTCL_ROLLBACK_V1",
+    "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml",
+    "source_line_range": "120-140"
+  },
+  {
+    "subject": "INVESTMENT_CLAIM",
+    "envelope_type": "CLAIM",
+    "producer_game_id": "G_FTCL_INVEST_001",
+    "source_path": "ftcl/games/G_FTCL_INVEST_001.yaml",
+    "source_line_range": "40-60"
+  },
+  {
+    "subject": "INVESTMENT_COMMITMENT",
+    "envelope_type": "COMMITMENT",
+    "producer_game_id": "G_FTCL_INVEST_001",
+    "source_path": "ftcl/games/G_FTCL_INVEST_001.yaml",
+    "source_line_range": "80-100"
+  },
+  {
+    "subject": "PROFIT_DISTRIBUTION_REQUEST",
+    "envelope_type": "REQUEST",
+    "producer_game_id": "G_FTCL_PROFIT_DIST",
+    "source_path": "ftcl/games/G_FTCL_PROFIT_DIST.yaml",
+    "source_line_range": "40-60"
+  },
+  {
+    "subject": "PROFIT_DISTRIBUTION_TRANSACTION",
+    "envelope_type": "TRANSACTION",
+    "producer_game_id": "G_FTCL_PROFIT_DIST",
+    "source_path": "ftcl/games/G_FTCL_PROFIT_DIST.yaml",
+    "source_line_range": "80-100"
+  },
+  {
+    "subject": "GENERIC_MAIL",
+    "envelope_type": "MAIL",
+    "producer_game_id": null,
+    "source_path": ".cursorrules",
+    "source_line_range": "envelope types"
+  },
+  {
+    "subject": "GENERIC_IDENTITY",
+    "envelope_type": "IDENTITY",
+    "producer_game_id": null,
+    "source_path": ".cursorrules",
+    "source_line_range": "envelope types"
+  },
+  {
+    "subject": "GENERIC_OBLIGATION",
+    "envelope_type": "OBLIGATION",
+    "producer_game_id": null,
+    "source_path": ".cursorrules",
+    "source_line_range": "envelope types"
+  },
+  {
+    "subject": "GENERIC_MOVE",
+    "envelope_type": "MOVE",
+    "producer_game_id": null,
+    "source_path": ".cursorrules",
+    "source_line_range": "envelope types"
+  },
+  {
+    "subject": "GENERIC_PROOF",
+    "envelope_type": "PROOF",
+    "producer_game_id": null,
+    "source_path": ".cursorrules",
+    "source_line_range": "envelope types"
+  }
+]

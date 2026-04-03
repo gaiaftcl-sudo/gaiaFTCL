@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["proof_id", "challenge_id", "agent_id", "capability_id", "verdict", "submitted_at", "verified_at"],
+  "properties": {
+    "proof_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "challenge_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "agent_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "capability_id": {
+      "type": "string",
+      "enum": ["WEB_FETCH", "CODE_RUN", "FILE_WRITE", "HTTP_API_CALL", "EMAIL_SEND", "SMS_SEND", "SSH_CONNECT", "TASK_SCHEDULE", "WALLET_SIGN", "TRADE_EXECUTE", "AGENT_COORDINATE"]
+    },
+    "verdict": {
+      "type": "string",
+      "enum": ["PROVEN", "FAILED"]
+    },
+    "reason_code": {
+      "type": "string"
+    },
+    "proof_payload": {
+      "type": "object"
+    },
+    "verification_details": {
+      "type": "object"
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

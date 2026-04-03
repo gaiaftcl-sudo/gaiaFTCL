@@ -1,0 +1,695 @@
+{
+  "episodes": [
+    {
+      "episode_id": "ep_743854be4979",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "Fara-7B (Computer Use Teacher)",
+      "domain": "computer_use",
+      "mission_id": "fara_form_fill",
+      "task_spec": "Navigate to a contact form, fill in: Name='Test User', Email='test@example.com', Message='Hello World'.",
+      "status": "Completed",
+      "step_count": 8,
+      "created_at": "2025-12-02T12:34:48.296880Z",
+      "completed_at": "2025-12-02T12:34:48.297014Z"
+    },
+    {
+      "episode_id": "ep_1b3706f11a09",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "Fara-7B (Computer Use Teacher)",
+      "domain": "computer_use",
+      "mission_id": "fara_screenshot_analyze",
+      "task_spec": "Take a screenshot of the current screen and describe all visible UI elements.",
+      "status": "Completed",
+      "step_count": 3,
+      "created_at": "2025-12-02T12:34:48.297027Z",
+      "completed_at": "2025-12-02T12:34:48.297074Z"
+    },
+    {
+      "episode_id": "ep_d5607288e9fc",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "Fara-7B (Computer Use Teacher)",
+      "domain": "computer_use",
+      "mission_id": "fara_web_search",
+      "task_spec": "Open a web browser, search for 'quantum computing applications', and summarize the top 3 results.",
+      "status": "Completed",
+      "step_count": 10,
+      "created_at": "2025-12-02T12:34:48.296662Z",
+      "completed_at": "2025-12-02T12:34:48.296862Z"
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_74b10e067904",
+      "episode_id": "ep_1b3706f11a09",
+      "index": 1,
+      "raw_input": "Step 1 input for: Take a screenshot of the current screen and describe all visible UI elements.",
+      "raw_output": "Step 1 output: Analyzing task...",
+      "action_type": "click",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_screenshot_analyze",
+        "step_index": 1
+      },
+      "created_at": "2025-12-02T12:34:48.297048Z"
+    },
+    {
+      "step_id": "step_7332d034c259",
+      "episode_id": "ep_d5607288e9fc",
+      "index": 5,
+      "raw_input": "Step 5 input for: Open a web browser, search for 'quantum computing applications', and summarize the top 3 results.",
+      "raw_output": "Step 5 output: Analyzing task...",
+      "action_type": "click",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_web_search",
+        "step_index": 5
+      },
+      "created_at": "2025-12-02T12:34:48.296783Z"
+    },
+    {
+      "step_id": "step_7496bec9cca0",
+      "episode_id": "ep_d5607288e9fc",
+      "index": 8,
+      "raw_input": "Step 8 input for: Open a web browser, search for 'quantum computing applications', and summarize the top 3 results.",
+      "raw_output": "Step 8 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_web_search",
+        "step_index": 8
+      },
+      "created_at": "2025-12-02T12:34:48.296833Z"
+    },
+    {
+      "step_id": "step_8ddb0a5828da",
+      "episode_id": "ep_d5607288e9fc",
+      "index": 6,
+      "raw_input": "Step 6 input for: Open a web browser, search for 'quantum computing applications', and summarize the top 3 results.",
+      "raw_output": "Step 6 output: Analyzing task...",
+      "action_type": "type",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_web_search",
+        "step_index": 6
+      },
+      "created_at": "2025-12-02T12:34:48.296797Z"
+    },
+    {
+      "step_id": "step_3ea17fc67d90",
+      "episode_id": "ep_743854be4979",
+      "index": 4,
+      "raw_input": "Step 4 input for: Navigate to a contact form, fill in: Name='Test User', Email='test@example.com', Message='Hello World'.",
+      "raw_output": "Step 4 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_form_fill",
+        "step_index": 4
+      },
+      "created_at": "2025-12-02T12:34:48.296948Z"
+    },
+    {
+      "step_id": "step_b72838ba43c7",
+      "episode_id": "ep_1b3706f11a09",
+      "index": 0,
+      "raw_input": "Step 0 input for: Take a screenshot of the current screen and describe all visible UI elements.",
+      "raw_output": "Step 0 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_screenshot_analyze",
+        "step_index": 0
+      },
+      "created_at": "2025-12-02T12:34:48.297036Z"
+    },
+    {
+      "step_id": "step_32d2a66478fd",
+      "episode_id": "ep_743854be4979",
+      "index": 0,
+      "raw_input": "Step 0 input for: Navigate to a contact form, fill in: Name='Test User', Email='test@example.com', Message='Hello World'.",
+      "raw_output": "Step 0 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_form_fill",
+        "step_index": 0
+      },
+      "created_at": "2025-12-02T12:34:48.296893Z"
+    },
+    {
+      "step_id": "step_cb4da7b9ce44",
+      "episode_id": "ep_743854be4979",
+      "index": 2,
+      "raw_input": "Step 2 input for: Navigate to a contact form, fill in: Name='Test User', Email='test@example.com', Message='Hello World'.",
+      "raw_output": "Step 2 output: Analyzing task...",
+      "action_type": "type",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_form_fill",
+        "step_index": 2
+      },
+      "created_at": "2025-12-02T12:34:48.296920Z"
+    },
+    {
+      "step_id": "step_7bdb0171f3af",
+      "episode_id": "ep_d5607288e9fc",
+      "index": 0,
+      "raw_input": "Step 0 input for: Open a web browser, search for 'quantum computing applications', and summarize the top 3 results.",
+      "raw_output": "Step 0 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_web_search",
+        "step_index": 0
+      },
+      "created_at": "2025-12-02T12:34:48.296691Z"
+    },
+    {
+      "step_id": "step_0c888d15c026",
+      "episode_id": "ep_d5607288e9fc",
+      "index": 4,
+      "raw_input": "Step 4 input for: Open a web browser, search for 'quantum computing applications', and summarize the top 3 results.",
+      "raw_output": "Step 4 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_web_search",
+        "step_index": 4
+      },
+      "created_at": "2025-12-02T12:34:48.296767Z"
+    },
+    {
+      "step_id": "step_6508f800bf0d",
+      "episode_id": "ep_743854be4979",
+      "index": 7,
+      "raw_input": "Step 7 input for: Navigate to a contact form, fill in: Name='Test User', Email='test@example.com', Message='Hello World'.",
+      "raw_output": "Step 7 output: Analyzing task...",
+      "action_type": "wait",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_form_fill",
+        "step_index": 7
+      },
+      "created_at": "2025-12-02T12:34:48.297002Z"
+    },
+    {
+      "step_id": "step_1848cd6859a9",
+      "episode_id": "ep_743854be4979",
+      "index": 6,
+      "raw_input": "Step 6 input for: Navigate to a contact form, fill in: Name='Test User', Email='test@example.com', Message='Hello World'.",
+      "raw_output": "Step 6 output: Analyzing task...",
+      "action_type": "type",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_form_fill",
+        "step_index": 6
+      },
+      "created_at": "2025-12-02T12:34:48.296987Z"
+    },
+    {
+      "step_id": "step_cc14749a6c70",
+      "episode_id": "ep_d5607288e9fc",
+      "index": 1,
+      "raw_input": "Step 1 input for: Open a web browser, search for 'quantum computing applications', and summarize the top 3 results.",
+      "raw_output": "Step 1 output: Analyzing task...",
+      "action_type": "click",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_web_search",
+        "step_index": 1
+      },
+      "created_at": "2025-12-02T12:34:48.296718Z"
+    },
+    {
+      "step_id": "step_0fa6332a733a",
+      "episode_id": "ep_d5607288e9fc",
+      "index": 3,
+      "raw_input": "Step 3 input for: Open a web browser, search for 'quantum computing applications', and summarize the top 3 results.",
+      "raw_output": "Step 3 output: Analyzing task...",
+      "action_type": "wait",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_web_search",
+        "step_index": 3
+      },
+      "created_at": "2025-12-02T12:34:48.296749Z"
+    },
+    {
+      "step_id": "step_bc5087ac6f93",
+      "episode_id": "ep_d5607288e9fc",
+      "index": 2,
+      "raw_input": "Step 2 input for: Open a web browser, search for 'quantum computing applications', and summarize the top 3 results.",
+      "raw_output": "Step 2 output: Analyzing task...",
+      "action_type": "type",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_web_search",
+        "step_index": 2
+      },
+      "created_at": "2025-12-02T12:34:48.296734Z"
+    },
+    {
+      "step_id": "step_b374a90c12e0",
+      "episode_id": "ep_743854be4979",
+      "index": 5,
+      "raw_input": "Step 5 input for: Navigate to a contact form, fill in: Name='Test User', Email='test@example.com', Message='Hello World'.",
+      "raw_output": "Step 5 output: Analyzing task...",
+      "action_type": "click",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_form_fill",
+        "step_index": 5
+      },
+      "created_at": "2025-12-02T12:34:48.296973Z"
+    },
+    {
+      "step_id": "step_d64228d799df",
+      "episode_id": "ep_1b3706f11a09",
+      "index": 2,
+      "raw_input": "Step 2 input for: Take a screenshot of the current screen and describe all visible UI elements.",
+      "raw_output": "Step 2 output: Analyzing task...",
+      "action_type": "type",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_screenshot_analyze",
+        "step_index": 2
+      },
+      "created_at": "2025-12-02T12:34:48.297063Z"
+    },
+    {
+      "step_id": "step_86aef1f3a4d2",
+      "episode_id": "ep_d5607288e9fc",
+      "index": 7,
+      "raw_input": "Step 7 input for: Open a web browser, search for 'quantum computing applications', and summarize the top 3 results.",
+      "raw_output": "Step 7 output: Analyzing task...",
+      "action_type": "wait",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_web_search",
+        "step_index": 7
+      },
+      "created_at": "2025-12-02T12:34:48.296811Z"
+    },
+    {
+      "step_id": "step_b773a26705d9",
+      "episode_id": "ep_743854be4979",
+      "index": 1,
+      "raw_input": "Step 1 input for: Navigate to a contact form, fill in: Name='Test User', Email='test@example.com', Message='Hello World'.",
+      "raw_output": "Step 1 output: Analyzing task...",
+      "action_type": "click",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_form_fill",
+        "step_index": 1
+      },
+      "created_at": "2025-12-02T12:34:48.296906Z"
+    },
+    {
+      "step_id": "step_aed9c3698377",
+      "episode_id": "ep_743854be4979",
+      "index": 3,
+      "raw_input": "Step 3 input for: Navigate to a contact form, fill in: Name='Test User', Email='test@example.com', Message='Hello World'.",
+      "raw_output": "Step 3 output: Analyzing task...",
+      "action_type": "wait",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_form_fill",
+        "step_index": 3
+      },
+      "created_at": "2025-12-02T12:34:48.296933Z"
+    },
+    {
+      "step_id": "step_a20ea5954d2b",
+      "episode_id": "ep_d5607288e9fc",
+      "index": 9,
+      "raw_input": "Step 9 input for: Open a web browser, search for 'quantum computing applications', and summarize the top 3 results.",
+      "raw_output": "Step 9 output: Analyzing task...",
+      "action_type": "click",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "fara_web_search",
+        "step_index": 9
+      },
+      "created_at": "2025-12-02T12:34:48.296848Z"
+    }
+  ],
+  "qstates": [
+    {
+      "qstate_id": "qs_30744ff1c9b9",
+      "step_id": "step_6508f800bf0d",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.3555824,
+      "amp1": 0.3808886,
+      "amp2": 0.34464228,
+      "amp3": 0.34464228,
+      "amp4": 0.34464228,
+      "amp5": 0.3668698,
+      "amp6": 0.34464228,
+      "amp7": 0.34464228,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.297006Z"
+    },
+    {
+      "qstate_id": "qs_8de3b975eadd",
+      "step_id": "step_cc14749a6c70",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.31610966,
+      "amp1": 0.3386067,
+      "amp2": 0.306384,
+      "amp3": 0.306384,
+      "amp4": 0.5051418,
+      "amp5": 0.39340484,
+      "amp6": 0.306384,
+      "amp7": 0.306384,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296723Z"
+    },
+    {
+      "qstate_id": "qs_b3c354bf4c1b",
+      "step_id": "step_bc5087ac6f93",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.31993327,
+      "amp1": 0.34270242,
+      "amp2": 0.31008998,
+      "amp3": 0.5112519,
+      "amp4": 0.31008998,
+      "amp5": 0.366328,
+      "amp6": 0.31008998,
+      "amp7": 0.31008998,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296738Z"
+    },
+    {
+      "qstate_id": "qs_b114a6288e51",
+      "step_id": "step_8ddb0a5828da",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.32372263,
+      "amp1": 0.34676147,
+      "amp2": 0.31376272,
+      "amp3": 0.51730734,
+      "amp4": 0.31376272,
+      "amp5": 0.33699417,
+      "amp6": 0.31376272,
+      "amp7": 0.31376272,
+      "norm_error": 5.9604645e-8,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296801Z"
+    },
+    {
+      "qstate_id": "qs_fe124dd89de2",
+      "step_id": "step_cb4da7b9ce44",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.31993327,
+      "amp1": 0.34270242,
+      "amp2": 0.31008998,
+      "amp3": 0.5112519,
+      "amp4": 0.31008998,
+      "amp5": 0.366328,
+      "amp6": 0.31008998,
+      "amp7": 0.31008998,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296923Z"
+    },
+    {
+      "qstate_id": "qs_6d849dd00fe7",
+      "step_id": "step_3ea17fc67d90",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.33832836,
+      "amp1": 0.46533933,
+      "amp2": 0.3279191,
+      "amp3": 0.3279191,
+      "amp4": 0.3279191,
+      "amp5": 0.36240664,
+      "amp6": 0.3279191,
+      "amp7": 0.3279191,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296955Z"
+    },
+    {
+      "qstate_id": "qs_9d7b61b0bade",
+      "step_id": "step_0fa6332a733a",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.35243842,
+      "amp1": 0.3775209,
+      "amp2": 0.34159502,
+      "amp3": 0.34159502,
+      "amp4": 0.34159502,
+      "amp5": 0.38707787,
+      "amp6": 0.34159502,
+      "amp7": 0.34159502,
+      "norm_error": 0.0,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296754Z"
+    },
+    {
+      "qstate_id": "qs_f3957711039b",
+      "step_id": "step_b773a26705d9",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.31610966,
+      "amp1": 0.3386067,
+      "amp2": 0.306384,
+      "amp3": 0.306384,
+      "amp4": 0.5051418,
+      "amp5": 0.39340484,
+      "amp6": 0.306384,
+      "amp7": 0.306384,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296909Z"
+    },
+    {
+      "qstate_id": "qs_d8b1848f1a10",
+      "step_id": "step_7496bec9cca0",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.340234,
+      "amp1": 0.4679604,
+      "amp2": 0.32976612,
+      "amp3": 0.32976612,
+      "amp4": 0.32976612,
+      "amp5": 0.34860492,
+      "amp6": 0.32976612,
+      "amp7": 0.32976612,
+      "norm_error": 0.0,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296838Z"
+    },
+    {
+      "qstate_id": "qs_b28cefeddf6c",
+      "step_id": "step_7bdb0171f3af",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.31399998,
+      "amp1": 0.4318779,
+      "amp2": 0.30433923,
+      "amp3": 0.30433923,
+      "amp4": 0.30433923,
+      "amp5": 0.50177056,
+      "amp6": 0.30433923,
+      "amp7": 0.30433923,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296696Z"
+    },
+    {
+      "qstate_id": "qs_693f6a64746a",
+      "step_id": "step_b374a90c12e0",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.32328063,
+      "amp1": 0.346288,
+      "amp2": 0.31333435,
+      "amp3": 0.31333435,
+      "amp4": 0.51660097,
+      "amp5": 0.34056437,
+      "amp6": 0.31333435,
+      "amp7": 0.31333435,
+      "norm_error": 0.0,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296977Z"
+    },
+    {
+      "qstate_id": "qs_bfba1556875d",
+      "step_id": "step_b72838ba43c7",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.31399998,
+      "amp1": 0.4318779,
+      "amp2": 0.30433923,
+      "amp3": 0.30433923,
+      "amp4": 0.30433923,
+      "amp5": 0.50177056,
+      "amp6": 0.30433923,
+      "amp7": 0.30433923,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.297039Z"
+    },
+    {
+      "qstate_id": "qs_e4aacab9c7b2",
+      "step_id": "step_d64228d799df",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.31993327,
+      "amp1": 0.34270242,
+      "amp2": 0.31008998,
+      "amp3": 0.5112519,
+      "amp4": 0.31008998,
+      "amp5": 0.366328,
+      "amp6": 0.31008998,
+      "amp7": 0.31008998,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.297067Z"
+    },
+    {
+      "qstate_id": "qs_95d952fed038",
+      "step_id": "step_a20ea5954d2b",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.3244966,
+      "amp1": 0.34759048,
+      "amp2": 0.31451288,
+      "amp3": 0.31451288,
+      "amp4": 0.5185441,
+      "amp5": 0.3306383,
+      "amp6": 0.31451288,
+      "amp7": 0.31451288,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296852Z"
+    },
+    {
+      "qstate_id": "qs_603d86e75767",
+      "step_id": "step_aed9c3698377",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.35243842,
+      "amp1": 0.3775209,
+      "amp2": 0.34159502,
+      "amp3": 0.34159502,
+      "amp4": 0.34159502,
+      "amp5": 0.38707787,
+      "amp6": 0.34159502,
+      "amp7": 0.34159502,
+      "norm_error": 0.0,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296936Z"
+    },
+    {
+      "qstate_id": "qs_79075fbe3c14",
+      "step_id": "step_1848cd6859a9",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.32372263,
+      "amp1": 0.34676147,
+      "amp2": 0.31376272,
+      "amp3": 0.51730734,
+      "amp4": 0.31376272,
+      "amp5": 0.33699417,
+      "amp6": 0.31376272,
+      "amp7": 0.31376272,
+      "norm_error": 5.9604645e-8,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296991Z"
+    },
+    {
+      "qstate_id": "qs_3a0ae92fc842",
+      "step_id": "step_74b10e067904",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.31610966,
+      "amp1": 0.3386067,
+      "amp2": 0.306384,
+      "amp3": 0.306384,
+      "amp4": 0.5051418,
+      "amp5": 0.39340484,
+      "amp6": 0.306384,
+      "amp7": 0.306384,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.297052Z"
+    },
+    {
+      "qstate_id": "qs_d102c6607c83",
+      "step_id": "step_7332d034c259",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.32328063,
+      "amp1": 0.346288,
+      "amp2": 0.31333435,
+      "amp3": 0.31333435,
+      "amp4": 0.51660097,
+      "amp5": 0.34056437,
+      "amp6": 0.31333435,
+      "amp7": 0.31333435,
+      "norm_error": 0.0,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296787Z"
+    },
+    {
+      "qstate_id": "qs_e763660de2d9",
+      "step_id": "step_32d2a66478fd",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.31399998,
+      "amp1": 0.4318779,
+      "amp2": 0.30433923,
+      "amp3": 0.30433923,
+      "amp4": 0.30433923,
+      "amp5": 0.50177056,
+      "amp6": 0.30433923,
+      "amp7": 0.30433923,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296897Z"
+    },
+    {
+      "qstate_id": "qs_80c3a564239f",
+      "step_id": "step_86aef1f3a4d2",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.3555824,
+      "amp1": 0.3808886,
+      "amp2": 0.34464228,
+      "amp3": 0.34464228,
+      "amp4": 0.34464228,
+      "amp5": 0.3668698,
+      "amp6": 0.34464228,
+      "amp7": 0.34464228,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296817Z"
+    },
+    {
+      "qstate_id": "qs_3533289fccbd",
+      "step_id": "step_0c888d15c026",
+      "teacher_model_id": "fara_7b_teacher",
+      "family": "computer_use",
+      "amp0": 0.33832836,
+      "amp1": 0.46533933,
+      "amp2": 0.3279191,
+      "amp3": 0.3279191,
+      "amp4": 0.3279191,
+      "amp5": 0.36240664,
+      "amp6": 0.3279191,
+      "amp7": 0.3279191,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T12:34:48.296771Z"
+    }
+  ]
+}

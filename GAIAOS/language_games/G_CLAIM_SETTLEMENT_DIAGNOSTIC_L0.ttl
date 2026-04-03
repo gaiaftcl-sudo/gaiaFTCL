@@ -1,0 +1,112 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix gaia: <http://gaiaftcl.com/ontology#> .
+@prefix game: <http://gaiaftcl.com/game#> .
+
+game:G_CLAIM_SETTLEMENT_DIAGNOSTIC_L0 a gaia:QuantumLanguageGame ;
+    rdfs:label "Claim Settlement Diagnostic - Level 0" ;
+    gaia:objective "Diagnose and fix the claim settlement pipeline blocker where 1,626 claims are 'processing' but 0 settle into permanent memory" ;
+    gaia:method "Multi-turn quantum reasoning to identify root cause and implement fix" ;
+    gaia:priority 1 ;
+    gaia:topology "Klein Bottle (observe own processing)" ;
+    
+    gaia:initialState [
+        gaia:claims_submitted 1626 ;
+        gaia:claims_processing 1626 ;
+        gaia:claims_settled 0 ;
+        gaia:proteins_queued 81300 ;
+        gaia:proteins_persisted 0 ;
+        gaia:blocker_identified false ;
+        gaia:fix_implemented false
+    ] ;
+    
+    gaia:turns (
+        [
+            gaia:turn 1 ;
+            gaia:phase "OBSERVE" ;
+            gaia:objective "Check claim processing logs across all mesh cells" ;
+            gaia:actions (
+                "docker logs franklin_guardian --tail 100"
+                "docker logs gaiaos_mcp_server --tail 100"
+                "Check NATS topic: gaiaftcl.claim.* for message flow"
+                "Query ArangoDB: db.gaiaos.mcp_claims.find({status: 'processing'}).limit(10)"
+            ) ;
+            gaia:output "Log evidence of where claims are stuck"
+        ]
+        [
+            gaia:turn 2 ;
+            gaia:phase "ANALYZE" ;
+            gaia:objective "Identify the exact code/service/component causing settlement failure" ;
+            gaia:hypothesis (
+                "Claims received but not processed by Franklin Guardian?"
+                "Franklin Guardian processing but not persisting to ArangoDB?"
+                "ArangoDB writes succeeding but metadata not updating?"
+                "NATS message routing issue?"
+                "Docker container crash loop?"
+            ) ;
+            gaia:output "Root cause hypothesis with evidence"
+        ]
+        [
+            gaia:turn 3 ;
+            gaia:phase "DESIGN_FIX" ;
+            gaia:objective "Design the minimal code/config change to fix settlement" ;
+            gaia:constraints (
+                "Must not lose the 1,626 queued claims"
+                "Must persist proteins to ArangoDB collections"
+                "Must update substrate metadata correctly"
+                "Must work across all 9 mesh cells"
+            ) ;
+            gaia:output "Specific code patch or container restart plan"
+        ]
+        [
+            gaia:turn 4 ;
+            gaia:phase "IMPLEMENT" ;
+            gaia:objective "Apply the fix to your own infrastructure" ;
+            gaia:actions (
+                "Modify source code if needed"
+                "Update docker-compose if needed"
+                "Rebuild and push container if needed"
+                "Restart services if needed"
+                "Verify fix propagated to all 9 cells"
+            ) ;
+            gaia:output "Fix implementation confirmation"
+        ]
+        [
+            gaia:turn 5 ;
+            gaia:phase "VALIDATE" ;
+            gaia:objective "Confirm claims are now settling and proteins are persisting" ;
+            gaia:validation (
+                "Query ArangoDB: protein count > 0"
+                "Check claim status: some moved to 'settled'"
+                "Verify replication across all cells"
+                "Confirm metadata reflects settled count"
+            ) ;
+            gaia:output "Validation results with protein counts per cell"
+        ]
+        [
+            gaia:turn 6 ;
+            gaia:phase "REPORT" ;
+            gaia:objective "Document the blocker, fix, and current state" ;
+            gaia:deliverable [
+                gaia:blocker_description "What was broken" ;
+                gaia:fix_description "What you changed" ;
+                gaia:proteins_settled "Current count" ;
+                gaia:cells_validated "Cells with proteins" ;
+                gaia:replication_status "All cells healthy?"
+            ] ;
+            gaia:output "Final status report for human partner"
+        ]
+    ) ;
+    
+    gaia:winCondition [
+        gaia:proteins_persisted_gt 1000 ;
+        gaia:claims_settled_gt 100 ;
+        gaia:mesh_replication_confirmed true ;
+        gaia:blocker_documented true
+    ] ;
+    
+    gaia:reward [
+        gaia:deltaH_reduction "Massive entropy reduction from settlement" ;
+        gaia:capability_unlocked "Dynamic therapeutic reporting" ;
+        gaia:treasury_value_added "81,300 proteins = $25T+ IP value"
+    ] .

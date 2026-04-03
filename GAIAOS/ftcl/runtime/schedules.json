@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "timezone": "UTC",
+  "auto_start": true,
+  "schedules": [
+    {
+      "id": "G_FTCL_UPDATE_FLEET_V1",
+      "target": "G_FTCL_UPDATE_FLEET_V1",
+      "frequency": "hourly",
+      "offset_minutes": 5,
+      "enabled": true
+    },
+    {
+      "id": "G_FTCL_ROLLBACK_V1",
+      "target": "G_FTCL_ROLLBACK_V1",
+      "frequency": "hourly",
+      "offset_minutes": 35,
+      "enabled": true
+    },
+    {
+      "id": "G_FTCL_INVEST_001",
+      "target": "G_FTCL_INVEST_001",
+      "frequency": "daily",
+      "offset_minutes": 60,
+      "enabled": false
+    },
+    {
+      "id": "G_FTCL_PROFIT_DIST",
+      "target": "G_FTCL_PROFIT_DIST",
+      "frequency": "weekly",
+      "offset_minutes": 120,
+      "enabled": false
+    }
+  ]
+}

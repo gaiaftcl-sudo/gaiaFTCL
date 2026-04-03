@@ -1,0 +1,395 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# G_FTCL_UPDATE_FLEET_V1 - Closed Fleet Update Game
+# ═══════════════════════════════════════════════════════════════════════════════
+# 
+# CANONICAL game for updating GaiaFTCL fleet to a new digest set.
+# All fleet updates MUST go through this game. No exceptions.
+#
+# Supersedes: Watchtower, auto-pull, :latest tags
+# ═══════════════════════════════════════════════════════════════════════════════
+
+game_id: G_FTCL_UPDATE_FLEET_V1
+version: 1.0.0
+type: FLEET_UPDATE
+domain: INFRASTRUCTURE
+closure: STRICT
+canonical: true
+
+metadata:
+  created: 2026-01-19
+  author: governance@gaiaftcl.com
+  constitution_ref: FTCL-UNI-CLOSURE-2.0
+  spec_ref: FTCL-UPDATE-SPEC-1.0
+
+description: |
+  Canonical closed game for updating the GaiaFTCL fleet to a new digest set.
+  
+  Key properties:
+  - Fee is paid UPFRONT before any execution
+  - All images referenced by immutable digest, never by tag
+  - Every step emits a signed truth envelope
+  - Staged rollout with health gates
+  - Automatic rollback on failure
+  - Full audit trail in AKG
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MOVE ORDER
+# ═══════════════════════════════════════════════════════════════════════════════
+
+move_order:
+  - REQUEST
+  - COMMITMENT
+  - TRANSACTION
+  - REPORT
+
+skip_allowed: false
+parallel_allowed: false
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# FEE STRUCTURE
+# ═══════════════════════════════════════════════════════════════════════════════
+
+fee_timing: UPFRONT
+
+fees:
+  request_evaluation:
+    amount: 10
+    currency: QFOT
+    recipient: governance@gaiaftcl.com
+    description: "Evaluate update proposal and generate quote"
+    
+  fleet_update_base:
+    amount: 100
+    currency: QFOT
+    recipient: governance@gaiaftcl.com
+    description: "Base fee for fleet update coordination"
+    
+  per_cell_restart:
+    amount: 5
+    currency: QFOT
+    recipient: "{cell_id}@gaiaftcl.com"
+    description: "Fee per cell for restart execution"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MOVE DEFINITIONS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+moves:
+  REQUEST:
+    description: "Propose update with target digest set"
+    from: "{proposer}@gaiaftcl.com"
+    to: governance@gaiaftcl.com
+    
+    envelope:
+      X-FTCL-Type: REQUEST
+      X-FTCL-Game: G_FTCL_UPDATE_FLEET_V1
+      X-FTCL-Domain: INFRASTRUCTURE
+      X-FTCL-Cost: 0  # Quote returned, not charged yet
+    
+    payload_schema:
+      type: object
+      required:
+        - action
+        - target_digest_set_hash
+        - target_digest_set_url
+        - source_commit
+        - constitution_hash
+        - reason
+      properties:
+        action:
+          const: PROPOSE_UPDATE
+        target_digest_set_hash:
+          type: string
+          pattern: "^sha256:[a-f0-9]{64}$"
+        target_digest_set_url:
+          type: string
+          format: uri
+        source_commit:
+          type: string
+          pattern: "^[a-f0-9]{40}$"
+        constitution_hash:
+          type: string
+          pattern: "^sha256:[a-f0-9]{64}$"
+        reason:
+          type: string
+          minLength: 10
+        rollout_strategy:
+          type: string
+          enum: [canary, standard, immediate]
+          default: standard
+    
+    response_schema:
+      type: object
+      required:
+        - quote
+        - digest_set_verification
+      properties:
+        quote:
+          type: object
+          required:
+            - quote_id
+            - total_fee
+            - valid_until
+            - signature
+          properties:
+            quote_id:
+              type: string
+            request_evaluation_fee:
+              type: number
+            fleet_update_fee:
+              type: number
+            per_cell_restart_fee:
+              type: number
+            total_cells:
+              type: integer
+            total_fee:
+              type: number
+            valid_until:
+              type: string
+              format: date-time
+            signature:
+              type: string
+        digest_set_verification:
+          type: object
+          properties:
+            verified:
+              type: boolean
+            attestations_valid:
+              type: boolean
+            sbom_hashes:
+              type: array
+            provenance_hashes:
+              type: array
+
+  COMMITMENT:
+    description: "Accept quote, authorize fee payment"
+    from: "{proposer}@gaiaftcl.com"
+    to: governance@gaiaftcl.com
+    
+    envelope:
+      X-FTCL-Type: COMMITMENT
+      X-FTCL-Game: G_FTCL_UPDATE_FLEET_V1
+      X-FTCL-Cost: "{total_fee}"
+    
+    payload_schema:
+      type: object
+      required:
+        - action
+        - quote_hash
+        - target_digest_set_hash
+        - payment_authorization
+      properties:
+        action:
+          const: ACCEPT_QUOTE
+        quote_hash:
+          type: string
+          pattern: "^sha256:[a-f0-9]{64}$"
+        target_digest_set_hash:
+          type: string
+          pattern: "^sha256:[a-f0-9]{64}$"
+        payment_authorization:
+          type: string
+          description: "Signed authorization for fee transfer"
+    
+    preconditions:
+      - "Quote must not be expired"
+      - "Digest set must still be available in registry"
+      - "All attestations must still verify"
+      - "Constitution hash must match current constitution"
+
+  TRANSACTION:
+    description: "Fee payment cleared, execution authorized"
+    from: ledger@gaiaftcl.com
+    to: governance@gaiaftcl.com
+    
+    envelope:
+      X-FTCL-Type: TRANSACTION
+      X-FTCL-Game: G_FTCL_UPDATE_FLEET_V1
+    
+    payload_schema:
+      type: object
+      required:
+        - action
+        - commitment_hash
+        - amount
+        - transaction_proof
+      properties:
+        action:
+          const: FEE_CLEARED
+        commitment_hash:
+          type: string
+          pattern: "^sha256:[a-f0-9]{64}$"
+        amount:
+          type: number
+        from_account:
+          type: string
+        to_account:
+          type: string
+        transaction_proof:
+          type: string
+          description: "On-chain or AKG proof of transfer"
+    
+    postconditions:
+      - "Fee is locked and non-refundable"
+      - "Update execution is now AUTHORIZED"
+      - "Staged rollout may begin"
+
+  REPORT:
+    description: "Per-cell execution report and final summary"
+    from: "{cell_id}@gaiaftcl.com | governance@gaiaftcl.com"
+    to: founder@gaiaftcl.com
+    
+    envelope:
+      X-FTCL-Type: REPORT
+      X-FTCL-Game: G_FTCL_UPDATE_FLEET_V1
+    
+    payload_schema:
+      oneOf:
+        - $ref: "#/definitions/cell_report"
+        - $ref: "#/definitions/final_report"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# STAGED ROLLOUT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+rollout:
+  stages:
+    canary:
+      cells: [hel1-05]
+      percentage: 20
+      wait_for_gates: true
+      
+    ring1:
+      cells: [hel1-04]
+      percentage: 40
+      wait_for_gates: true
+      depends_on: canary
+      
+    ring2:
+      cells: [hel1-01, hel1-02, hel1-03]
+      percentage: 100
+      wait_for_gates: true
+      depends_on: ring1
+
+  health_gates:
+    email_outbound:
+      test: "Send signed REPORT via SMTP"
+      timeout: 60s
+      required: true
+      
+    mcp_call:
+      test: "Invoke gaiaos_health via MCP"
+      timeout: 30s
+      required: true
+      
+    ledger_write_read:
+      test: "Write/read test document to AKG"
+      timeout: 30s
+      required: true
+      
+    replay_determinism:
+      test: "Verify running digest matches commitment"
+      timeout: 10s
+      required: true
+
+  failure_policy:
+    action: ROLLBACK
+    target: prior_digest_set
+    fee_refund: false
+    emit_failure_report: true
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# DEFINITIONS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+definitions:
+  cell_report:
+    type: object
+    required:
+      - action
+      - cell_id
+      - stage
+      - new_digest_set_hash
+      - health_gates
+    properties:
+      action:
+        const: CELL_UPDATE_COMPLETE
+      cell_id:
+        type: string
+      stage:
+        type: string
+        enum: [canary, ring1, ring2]
+      prior_digest_set_hash:
+        type: string
+      new_digest_set_hash:
+        type: string
+      services_restarted:
+        type: array
+        items:
+          type: object
+          properties:
+            service:
+              type: string
+            digest:
+              type: string
+      health_gates:
+        type: object
+        properties:
+          email_outbound:
+            type: string
+            enum: [PASS, FAIL]
+          mcp_call:
+            type: string
+            enum: [PASS, FAIL]
+          ledger_write_read:
+            type: string
+            enum: [PASS, FAIL]
+          replay_determinism:
+            type: string
+            enum: [PASS, FAIL]
+      attestation_verification:
+        type: string
+        enum: [PASS, FAIL]
+
+  final_report:
+    type: object
+    required:
+      - action
+      - transaction_hash
+      - cells_updated
+      - final_digest_set_hash
+      - total_cost
+    properties:
+      action:
+        const: FLEET_UPDATE_FINALIZED
+      transaction_hash:
+        type: string
+      cells_updated:
+        type: array
+        items:
+          type: string
+      cells_failed:
+        type: array
+        items:
+          type: string
+      rollback_triggered:
+        type: boolean
+      final_digest_set_hash:
+        type: string
+      total_cost:
+        type: number
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ENFORCEMENT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+enforcement:
+  unauthorized_mutation:
+    definition: |
+      Any container restart that changes code without a preceding 
+      COMMITMENT+TRANSACTION referencing the new digest set.
+    consequence:
+      - Emit FAILURE immediately
+      - Quarantine cell from mesh
+      - Log violation to AKG
+      - Require manual remediation

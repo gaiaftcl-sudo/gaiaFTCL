@@ -1,0 +1,175 @@
+# GaiaFTCL Local Cell Stack
+# Local dev only: mac-lima (Lima VM) or mac-orb (OrbStack).
+# Production: Debian VMs — use docker-compose.cell.yml.
+
+services:
+  # Core quantum substrate
+  quantum-substrate:
+    image: python:3.11-slim
+    container_name: gaiaftcl-substrate
+    restart: unless-stopped
+    environment:
+      - CELL_ID=${CELL_ID:-local}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./stubs:/app
+    working_dir: /app
+    command: bash -c "pip install -q -r requirements.txt && python substrate.py"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Virtue engine
+  virtue-engine:
+    image: python:3.11-slim
+    container_name: gaiaftcl-virtue
+    restart: unless-stopped
+    environment:
+      - CELL_ID=${CELL_ID:-local}
+    ports:
+      - "8700:8700"
+    volumes:
+      - ./stubs:/app
+    working_dir: /app
+    command: bash -c "pip install -q -r requirements.txt && python virtue.py"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8700/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # MCP Gateway
+  mcp-gateway:
+    image: python:3.11-slim
+    container_name: gaiaftcl-mcp
+    restart: unless-stopped
+    environment:
+      - CELL_ID=${CELL_ID:-local}
+      - ARANGO_URL=http://arangodb:8529
+    ports:
+      - "8830:8830"
+    volumes:
+      - ./stubs:/app
+    working_dir: /app
+    command: bash -c "pip install -q -r requirements.txt && python mcp.py"
+    depends_on:
+      - arangodb
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8830/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Game Runner
+  game-runner:
+    image: python:3.11-slim
+    container_name: gaiaftcl-game-runner
+    restart: unless-stopped
+    environment:
+      - CELL_ID=${CELL_ID:-local}
+    ports:
+      - "8801:8801"
+    volumes:
+      - ./stubs:/app
+    working_dir: /app
+    command: bash -c "pip install -q -r requirements.txt && python game_runner.py"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8801/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ArangoDB for AKG
+  arangodb:
+    image: arangodb:3.11
+    container_name: gaiaftcl-arangodb
+    restart: unless-stopped
+    environment:
+      - ARANGO_ROOT_PASSWORD=gaiaftcl2026
+    ports:
+      - "8529:8529"
+    volumes:
+      - arangodb_data:/var/lib/arangodb3
+
+  # NATS for messaging
+  nats:
+    image: nats:2.10-alpine
+    container_name: gaiaftcl-nats
+    restart: unless-stopped
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    command: ["--http_port", "8222", "--jetstream"]
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8222/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Bitcoin Core Node
+  bitcoin-core:
+    image: lncm/bitcoind:v27.0
+    container_name: gaiaftcl-bitcoin-core
+    restart: unless-stopped
+    environment:
+      - BITCOIN_DATA=/data
+    ports:
+      - "8332:8332"
+      - "8333:8333"
+    volumes:
+      - bitcoin_data:/data
+    command: >
+      bitcoind
+      -server=1
+      -rpcallowip=0.0.0.0/0
+      -rpcbind=0.0.0.0
+      -rpcuser=bitcoin
+      -rpcpassword=bitcoin
+      -txindex=1
+      -prune=0
+    healthcheck:
+      test: ["CMD", "bitcoin-cli", "-rpcuser=bitcoin", "-rpcpassword=bitcoin", "getblockchaininfo"]
+      interval: 60s
+      timeout: 30s
+      retries: 5
+      start_period: 300s
+
+  # Bitcoin Heartbeat - Emergent Time (τ)
+  bitcoin-heartbeat:
+    build:
+      context: .
+      dockerfile: services/bitcoin_heartbeat/Dockerfile
+    container_name: gaiaftcl-bitcoin-heartbeat
+    restart: unless-stopped
+    environment:
+      - BITCOIN_RPC_URL=http://bitcoin-core:8332
+      - BITCOIN_RPC_USER=bitcoin
+      - BITCOIN_RPC_PASS=bitcoin
+      - NATS_URL=nats://nats:4222
+      - HEARTBEAT_POLL_SECONDS=30
+    ports:
+      - "8850:8850"
+    depends_on:
+      - nats
+      - bitcoin-core
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8850/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  arangodb_data:
+  bitcoin_data:
+
+networks:
+  default:
+    name: gaiaftcl

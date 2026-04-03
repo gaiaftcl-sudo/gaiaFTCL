@@ -1,0 +1,22 @@
+[package]
+name = "gaiaos_comm_agent"
+version = "0.1.0"
+edition = "2021"
+description = "GaiaOS Comm Agent - Per-cell communication gateway"
+
+[dependencies]
+futures-util = "0.3"
+tokio = { version = "1.35", features = ["full"] }
+axum = { version = "0.7", features = ["json"] }
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.6", features = ["v4", "serde"] }
+reqwest = { version = "0.11", features = ["json"] }
+async-nats = "0.36"
+
+# Consciousness layer
+gaiaos_introspection = { path = "../gaiaos_introspection" }

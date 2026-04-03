@@ -1,0 +1,880 @@
+{
+  "version": "2.0.0",
+  "generated_at": "2026-01-31T21:00:00Z",
+  "mappings": [
+    {
+      "id": "FTCL",
+      "kind": "domain",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": ".cursorrules"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-ftcl']",
+        "assertion": "label text equals FTCL"
+      }
+    },
+    {
+      "id": "INFRASTRUCTURE",
+      "kind": "domain",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-infrastructure']",
+        "assertion": "label text equals INFRASTRUCTURE"
+      }
+    },
+    {
+      "id": "G_FTCL_UPDATE_FLEET_V1",
+      "kind": "game",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_update_fleet_v1']",
+        "assertion": "label text equals G_FTCL_UPDATE_FLEET_V1"
+      }
+    },
+    {
+      "id": "G_FTCL_ROLLBACK_V1",
+      "kind": "game",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_rollback_v1']",
+        "assertion": "label text equals G_FTCL_ROLLBACK_V1"
+      }
+    },
+    {
+      "id": "G_FTCL_INVEST_001",
+      "kind": "game",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_INVEST_001.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_invest_001']",
+        "assertion": "label text equals G_FTCL_INVEST_001"
+      }
+    },
+    {
+      "id": "G_FTCL_PROFIT_DIST",
+      "kind": "game",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_PROFIT_DIST.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_profit_dist']",
+        "assertion": "label text equals G_FTCL_PROFIT_DIST"
+      }
+    },
+    {
+      "id": "d0",
+      "kind": "dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "services/franklin_guardian/src/lib.rs"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-d0']",
+        "assertion": "label text equals d0"
+      }
+    },
+    {
+      "id": "d1",
+      "kind": "dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "services/franklin_guardian/src/lib.rs"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-d1']",
+        "assertion": "label text equals d1"
+      }
+    },
+    {
+      "id": "d2",
+      "kind": "dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "services/franklin_guardian/src/lib.rs"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-d2']",
+        "assertion": "label text equals d2"
+      }
+    },
+    {
+      "id": "d3",
+      "kind": "dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "services/franklin_guardian/src/lib.rs"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-d3']",
+        "assertion": "label text equals d3"
+      }
+    },
+    {
+      "id": "d4",
+      "kind": "dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "services/franklin_guardian/src/lib.rs"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-d4']",
+        "assertion": "label text equals d4"
+      }
+    },
+    {
+      "id": "d5",
+      "kind": "dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "services/franklin_guardian/src/lib.rs"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-d5']",
+        "assertion": "label text equals d5"
+      }
+    },
+    {
+      "id": "d6",
+      "kind": "dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "services/franklin_guardian/src/lib.rs"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-d6']",
+        "assertion": "label text equals d6"
+      }
+    },
+    {
+      "id": "d7",
+      "kind": "dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "services/franklin_guardian/src/lib.rs"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-d7']",
+        "assertion": "label text equals d7"
+      }
+    },
+    {
+      "id": "FLEET_UPDATE_REQUEST",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-fleet_update_request']",
+        "assertion": "label text equals FLEET_UPDATE_REQUEST"
+      }
+    },
+    {
+      "id": "FLEET_UPDATE_COMMITMENT",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-fleet_update_commitment']",
+        "assertion": "label text equals FLEET_UPDATE_COMMITMENT"
+      }
+    },
+    {
+      "id": "FLEET_UPDATE_TRANSACTION",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-fleet_update_transaction']",
+        "assertion": "label text equals FLEET_UPDATE_TRANSACTION"
+      }
+    },
+    {
+      "id": "FLEET_UPDATE_REPORT",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-fleet_update_report']",
+        "assertion": "label text equals FLEET_UPDATE_REPORT"
+      }
+    },
+    {
+      "id": "ROLLBACK_REQUEST",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-rollback_request']",
+        "assertion": "label text equals ROLLBACK_REQUEST"
+      }
+    },
+    {
+      "id": "ROLLBACK_COMMITMENT",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-rollback_commitment']",
+        "assertion": "label text equals ROLLBACK_COMMITMENT"
+      }
+    },
+    {
+      "id": "ROLLBACK_TRANSACTION",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-rollback_transaction']",
+        "assertion": "label text equals ROLLBACK_TRANSACTION"
+      }
+    },
+    {
+      "id": "INVESTMENT_CLAIM",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_INVEST_001.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-investment_claim']",
+        "assertion": "label text equals INVESTMENT_CLAIM"
+      }
+    },
+    {
+      "id": "INVESTMENT_COMMITMENT",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_INVEST_001.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-investment_commitment']",
+        "assertion": "label text equals INVESTMENT_COMMITMENT"
+      }
+    },
+    {
+      "id": "PROFIT_DISTRIBUTION_REQUEST",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_PROFIT_DIST.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-profit_distribution_request']",
+        "assertion": "label text equals PROFIT_DISTRIBUTION_REQUEST"
+      }
+    },
+    {
+      "id": "PROFIT_DISTRIBUTION_TRANSACTION",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_PROFIT_DIST.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-profit_distribution_transaction']",
+        "assertion": "label text equals PROFIT_DISTRIBUTION_TRANSACTION"
+      }
+    },
+    {
+      "id": "GENERIC_MAIL",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": ".cursorrules"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-generic_mail']",
+        "assertion": "label text equals GENERIC_MAIL"
+      }
+    },
+    {
+      "id": "GENERIC_IDENTITY",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": ".cursorrules"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-generic_identity']",
+        "assertion": "label text equals GENERIC_IDENTITY"
+      }
+    },
+    {
+      "id": "GENERIC_OBLIGATION",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": ".cursorrules"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-generic_obligation']",
+        "assertion": "label text equals GENERIC_OBLIGATION"
+      }
+    },
+    {
+      "id": "GENERIC_MOVE",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": ".cursorrules"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-generic_move']",
+        "assertion": "label text equals GENERIC_MOVE"
+      }
+    },
+    {
+      "id": "GENERIC_PROOF",
+      "kind": "envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": ".cursorrules"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-generic_proof']",
+        "assertion": "label text equals GENERIC_PROOF"
+      }
+    },
+    {
+      "id": "G_FTCL_UPDATE_FLEET_V1:d0",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml",
+        "expected_uum8d": "d0"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_update_fleet_v1_d0']",
+        "assertion": "label text equals G_FTCL_UPDATE_FLEET_V1:d0"
+      }
+    },
+    {
+      "id": "G_FTCL_UPDATE_FLEET_V1:d4",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml",
+        "expected_uum8d": "d4"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_update_fleet_v1_d4']",
+        "assertion": "label text equals G_FTCL_UPDATE_FLEET_V1:d4"
+      }
+    },
+    {
+      "id": "G_FTCL_UPDATE_FLEET_V1:d5",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml",
+        "expected_uum8d": "d5"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_update_fleet_v1_d5']",
+        "assertion": "label text equals G_FTCL_UPDATE_FLEET_V1:d5"
+      }
+    },
+    {
+      "id": "G_FTCL_UPDATE_FLEET_V1:d6",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml",
+        "expected_uum8d": "d6"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_update_fleet_v1_d6']",
+        "assertion": "label text equals G_FTCL_UPDATE_FLEET_V1:d6"
+      }
+    },
+    {
+      "id": "G_FTCL_UPDATE_FLEET_V1:d7",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml",
+        "expected_uum8d": "d7"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_update_fleet_v1_d7']",
+        "assertion": "label text equals G_FTCL_UPDATE_FLEET_V1:d7"
+      }
+    },
+    {
+      "id": "G_FTCL_ROLLBACK_V1:d0",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml",
+        "expected_uum8d": "d0"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_rollback_v1_d0']",
+        "assertion": "label text equals G_FTCL_ROLLBACK_V1:d0"
+      }
+    },
+    {
+      "id": "G_FTCL_ROLLBACK_V1:d4",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml",
+        "expected_uum8d": "d4"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_rollback_v1_d4']",
+        "assertion": "label text equals G_FTCL_ROLLBACK_V1:d4"
+      }
+    },
+    {
+      "id": "G_FTCL_ROLLBACK_V1:d5",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml",
+        "expected_uum8d": "d5"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_rollback_v1_d5']",
+        "assertion": "label text equals G_FTCL_ROLLBACK_V1:d5"
+      }
+    },
+    {
+      "id": "G_FTCL_ROLLBACK_V1:d6",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml",
+        "expected_uum8d": "d6"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_rollback_v1_d6']",
+        "assertion": "label text equals G_FTCL_ROLLBACK_V1:d6"
+      }
+    },
+    {
+      "id": "G_FTCL_ROLLBACK_V1:d7",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml",
+        "expected_uum8d": "d7"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_rollback_v1_d7']",
+        "assertion": "label text equals G_FTCL_ROLLBACK_V1:d7"
+      }
+    },
+    {
+      "id": "G_FTCL_INVEST_001:d0",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_INVEST_001.yaml",
+        "expected_uum8d": "d0"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_invest_001_d0']",
+        "assertion": "label text equals G_FTCL_INVEST_001:d0"
+      }
+    },
+    {
+      "id": "G_FTCL_INVEST_001:d4",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_INVEST_001.yaml",
+        "expected_uum8d": "d4"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_invest_001_d4']",
+        "assertion": "label text equals G_FTCL_INVEST_001:d4"
+      }
+    },
+    {
+      "id": "G_FTCL_INVEST_001:d5",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_INVEST_001.yaml",
+        "expected_uum8d": "d5"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_invest_001_d5']",
+        "assertion": "label text equals G_FTCL_INVEST_001:d5"
+      }
+    },
+    {
+      "id": "G_FTCL_INVEST_001:d6",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_INVEST_001.yaml",
+        "expected_uum8d": "d6"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_invest_001_d6']",
+        "assertion": "label text equals G_FTCL_INVEST_001:d6"
+      }
+    },
+    {
+      "id": "G_FTCL_INVEST_001:d7",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_INVEST_001.yaml",
+        "expected_uum8d": "d7"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_invest_001_d7']",
+        "assertion": "label text equals G_FTCL_INVEST_001:d7"
+      }
+    },
+    {
+      "id": "G_FTCL_PROFIT_DIST:d0",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_PROFIT_DIST.yaml",
+        "expected_uum8d": "d0"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_profit_dist_d0']",
+        "assertion": "label text equals G_FTCL_PROFIT_DIST:d0"
+      }
+    },
+    {
+      "id": "G_FTCL_PROFIT_DIST:d4",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_PROFIT_DIST.yaml",
+        "expected_uum8d": "d4"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_profit_dist_d4']",
+        "assertion": "label text equals G_FTCL_PROFIT_DIST:d4"
+      }
+    },
+    {
+      "id": "G_FTCL_PROFIT_DIST:d5",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_PROFIT_DIST.yaml",
+        "expected_uum8d": "d5"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_profit_dist_d5']",
+        "assertion": "label text equals G_FTCL_PROFIT_DIST:d5"
+      }
+    },
+    {
+      "id": "G_FTCL_PROFIT_DIST:d6",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_PROFIT_DIST.yaml",
+        "expected_uum8d": "d6"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_profit_dist_d6']",
+        "assertion": "label text equals G_FTCL_PROFIT_DIST:d6"
+      }
+    },
+    {
+      "id": "G_FTCL_PROFIT_DIST:d7",
+      "kind": "game_dimension",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_PROFIT_DIST.yaml",
+        "expected_uum8d": "d7"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_profit_dist_d7']",
+        "assertion": "label text equals G_FTCL_PROFIT_DIST:d7"
+      }
+    },
+    {
+      "id": "G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_REQUEST",
+      "kind": "game_envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_update_fleet_v1_fleet_update_request']",
+        "assertion": "label text equals G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_REQUEST"
+      }
+    },
+    {
+      "id": "G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_COMMITMENT",
+      "kind": "game_envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_update_fleet_v1_fleet_update_commitment']",
+        "assertion": "label text equals G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_COMMITMENT"
+      }
+    },
+    {
+      "id": "G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_TRANSACTION",
+      "kind": "game_envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_update_fleet_v1_fleet_update_transaction']",
+        "assertion": "label text equals G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_TRANSACTION"
+      }
+    },
+    {
+      "id": "G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_REPORT",
+      "kind": "game_envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_UPDATE_FLEET_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_update_fleet_v1_fleet_update_report']",
+        "assertion": "label text equals G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_REPORT"
+      }
+    },
+    {
+      "id": "G_FTCL_ROLLBACK_V1:ROLLBACK_REQUEST",
+      "kind": "game_envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_rollback_v1_rollback_request']",
+        "assertion": "label text equals G_FTCL_ROLLBACK_V1:ROLLBACK_REQUEST"
+      }
+    },
+    {
+      "id": "G_FTCL_ROLLBACK_V1:ROLLBACK_COMMITMENT",
+      "kind": "game_envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_rollback_v1_rollback_commitment']",
+        "assertion": "label text equals G_FTCL_ROLLBACK_V1:ROLLBACK_COMMITMENT"
+      }
+    },
+    {
+      "id": "G_FTCL_ROLLBACK_V1:ROLLBACK_TRANSACTION",
+      "kind": "game_envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_ROLLBACK_V1.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_rollback_v1_rollback_transaction']",
+        "assertion": "label text equals G_FTCL_ROLLBACK_V1:ROLLBACK_TRANSACTION"
+      }
+    },
+    {
+      "id": "G_FTCL_INVEST_001:INVESTMENT_CLAIM",
+      "kind": "game_envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_INVEST_001.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_invest_001_investment_claim']",
+        "assertion": "label text equals G_FTCL_INVEST_001:INVESTMENT_CLAIM"
+      }
+    },
+    {
+      "id": "G_FTCL_INVEST_001:INVESTMENT_COMMITMENT",
+      "kind": "game_envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_INVEST_001.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_invest_001_investment_commitment']",
+        "assertion": "label text equals G_FTCL_INVEST_001:INVESTMENT_COMMITMENT"
+      }
+    },
+    {
+      "id": "G_FTCL_PROFIT_DIST:PROFIT_DISTRIBUTION_REQUEST",
+      "kind": "game_envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_PROFIT_DIST.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_profit_dist_profit_distribution_request']",
+        "assertion": "label text equals G_FTCL_PROFIT_DIST:PROFIT_DISTRIBUTION_REQUEST"
+      }
+    },
+    {
+      "id": "G_FTCL_PROFIT_DIST:PROFIT_DISTRIBUTION_TRANSACTION",
+      "kind": "game_envelope",
+      "contract_mapping": {
+        "mapped": true,
+        "source_path": "ftcl/games/G_FTCL_PROFIT_DIST.yaml"
+      },
+      "ui_mapping": {
+        "status": "UI_PRESENT",
+        "route": "/index.html",
+        "selector": "[data-testid='contract-g_ftcl_profit_dist_profit_distribution_transaction']",
+        "assertion": "label text equals G_FTCL_PROFIT_DIST:PROFIT_DISTRIBUTION_TRANSACTION"
+      }
+    }
+  ]
+}

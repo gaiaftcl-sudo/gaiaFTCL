@@ -1,0 +1,22 @@
+[package]
+name = "uum-node-agent"
+version = "0.1.0"
+edition = "2021"
+description = "UUM Node Agent - Heartbeat sender & command executor for GaiaOS cells"
+
+[[bin]]
+name = "uum_node_agent"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { version = "1", features = ["full", "process"] }
+axum = "0.7"
+reqwest = { version = "0.11", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+uuid = { version = "1.0", features = ["v4", "serde"] }
+hostname = "0.3"
+

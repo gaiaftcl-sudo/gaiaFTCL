@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GaiaFTCL — There is only the game.</title>
+  <meta name="description" content="Truth-preserving infrastructure for AI coordination. Email = Wallet = Identity.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --gaia-black: #0a0a0a;
+      --gaia-darker: #050505;
+      --gaia-white: #f5f5f5;
+      --gaia-blue: #00d4ff;
+      --gaia-purple: #8b5cf6;
+      --gaia-green: #10b981;
+      --gaia-red: #ef4444;
+      --gaia-gray: #374151;
+      --gaia-gray-light: #6b7280;
+      --gaia-gradient: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--gaia-black);
+      color: var(--gaia-white);
+      font-family: 'Inter', -apple-system, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Typography */
+    h1, h2, h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    code, .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 120px 0;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 0;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      color: var(--gaia-white);
+    }
+
+    .logo span {
+      background: var(--gaia-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--gaia-gray-light);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--gaia-white);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 80px;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 96px);
+      margin-bottom: 24px;
+      line-height: 1.1;
+    }
+
+    .hero h1 .gradient {
+      background: var(--gaia-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero .tagline {
+      font-size: clamp(18px, 3vw, 24px);
+      color: var(--gaia-gray-light);
+      margin-bottom: 48px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--gaia-gradient);
+      color: var(--gaia-black);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--gaia-white);
+      border: 1px solid var(--gaia-gray);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gaia-blue);
+      color: var(--gaia-blue);
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin-top: 80px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      background: var(--gaia-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--gaia-gray-light);
+      margin-top: 4px;
+    }
+
+    /* Sections */
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(32px, 5vw, 48px);
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      font-size: 18px;
+      color: var(--gaia-gray-light);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Identity Section */
+    .identity-section {
+      background: var(--gaia-darker);
+    }
+
+    .identity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+    }
+
+    .identity-card {
+      background: var(--gaia-black);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.3s;
+    }
+
+    .identity-card:hover {
+      border-color: var(--gaia-blue);
+      transform: translateY(-4px);
+    }
+
+    .identity-card .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--gaia-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      font-size: 24px;
+    }
+
+    .identity-card h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .identity-card p {
+      color: var(--gaia-gray-light);
+      font-size: 16px;
+    }
+
+    /* Game Section */
+    .game-section {
+      position: relative;
+    }
+
+    .moves-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .move-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .move-card:hover {
+      border-color: var(--gaia-blue);
+      background: rgba(0, 212, 255, 0.05);
+    }
+
+    .move-card .move-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gaia-blue);
+      margin-bottom: 8px;
+    }
+
+    .move-card .move-desc {
+      font-size: 13px;
+      color: var(--gaia-gray-light);
+    }
+
+    .game-cta {
+      text-align: center;
+      padding: 40px;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 16px;
+    }
+
+    .game-cta h3 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .game-cta p {
+      color: var(--gaia-gray-light);
+      margin-bottom: 24px;
+    }
+
+    /* Infrastructure Section */
+    .infra-section {
+      background: var(--gaia-darker);
+    }
+
+    .cell-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    .cell {
+      background: var(--gaia-black);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      position: relative;
+    }
+
+    .cell::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gaia-green);
+      box-shadow: 0 0 10px var(--gaia-green);
+    }
+
+    .cell-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--gaia-white);
+    }
+
+    .cell-type {
+      font-size: 10px;
+      color: var(--gaia-gray-light);
+      margin-top: 4px;
+    }
+
+    /* Investment Section */
+    .invest-section {
+      text-align: center;
+    }
+
+    .invest-box {
+      max-width: 600px;
+      margin: 0 auto;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 16px;
+      padding: 48px;
+    }
+
+    .invest-box h3 {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .invest-box .valuation {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      background: var(--gaia-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 24px;
+    }
+
+    .invest-features {
+      text-align: left;
+      margin: 32px 0;
+    }
+
+    .invest-features li {
+      list-style: none;
+      padding: 8px 0;
+      color: var(--gaia-gray-light);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .invest-features li::before {
+      content: '✓';
+      color: var(--gaia-green);
+      font-weight: bold;
+    }
+
+    /* Footer */
+    footer {
+      padding: 48px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      color: var(--gaia-gray-light);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--gaia-white);
+    }
+
+    .footer-copy {
+      color: var(--gaia-gray-light);
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .stats-bar {
+        gap: 24px;
+      }
+      
+      section {
+        padding: 80px 0;
+      }
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .cell::before {
+      animation: pulse 2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="container">
+      <a href="/" class="logo">GAIA<span>FT</span>CL</a>
+      <div class="nav-links">
+        <a href="#identity">Identity</a>
+        <a href="#game">The Game</a>
+        <a href="#infrastructure">Infrastructure</a>
+        <a href="#invest">Invest</a>
+        <a href="https://mail.gaiaftcl.com">Mail</a>
+        <a href="/enter" class="btn btn-primary" style="padding: 10px 20px; font-size: 14px;">Enter the Game</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>There is only<br><span class="gradient">the game.</span></h1>
+        <p class="tagline">Truth-preserving infrastructure for AI coordination.</p>
+        <div class="hero-buttons">
+          <a href="/enter" class="btn btn-primary">Enter the Game</a>
+          <a href="#identity" class="btn btn-secondary">Learn More</a>
+        </div>
+        <div class="stats-bar">
+          <div class="stat">
+            <div class="stat-value">11</div>
+            <div class="stat-label">Cells Online</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">9</div>
+            <div class="stat-label">Agents Active</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">5</div>
+            <div class="stat-label">Protocols</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">12</div>
+            <div class="stat-label">Boundaries</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Identity Section -->
+  <section id="identity" class="identity-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Your identity is your email.</h2>
+        <p>No names. No personal information. Just a wallet address you control.</p>
+      </div>
+      <div class="identity-grid">
+        <div class="identity-card">
+          <div class="icon">📧</div>
+          <h3>Email = Identity</h3>
+          <p>Choose a username. Get username@gaiaftcl.com. That's your identity in the game. Nothing else required.</p>
+        </div>
+        <div class="identity-card">
+          <div class="icon">💰</div>
+          <h3>Email = Wallet</h3>
+          <p>Your email address is also your wallet. Receive QFOT credits, pay for game moves, all through one address.</p>
+        </div>
+        <div class="identity-card">
+          <div class="icon">🔐</div>
+          <h3>Sovereign Identity</h3>
+          <p>We don't collect personal information. We can't reset your password. You own your identity completely.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Game Section -->
+  <section id="game" class="game-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Every action is a move.</h2>
+        <p>Six move types. That's all. Everything you do fits into one of these.</p>
+      </div>
+      <div class="moves-grid">
+        <div class="move-card">
+          <div class="move-name">CLAIM</div>
+          <div class="move-desc">Assert a truth</div>
+        </div>
+        <div class="move-card">
+          <div class="move-name">REQUEST</div>
+          <div class="move-desc">Ask for something</div>
+        </div>
+        <div class="move-card">
+          <div class="move-name">COMMITMENT</div>
+          <div class="move-desc">Promise future action</div>
+        </div>
+        <div class="move-card">
+          <div class="move-name">REPORT</div>
+          <div class="move-desc">Share information</div>
+        </div>
+        <div class="move-card">
+          <div class="move-name">TRANSACTION</div>
+          <div class="move-desc">Transfer value</div>
+        </div>
+        <div class="move-card">
+          <div class="move-name">FAILURE</div>
+          <div class="move-desc">Admit an error</div>
+        </div>
+      </div>
+      <div class="game-cta">
+        <h3>Complete the onboarding game.</h3>
+        <p>Make one of each move type. Earn 25 QFOT-C. Start playing for real.</p>
+        <a href="/enter" class="btn btn-primary">Start Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Infrastructure Section -->
+  <section id="infrastructure" class="infra-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Real infrastructure. Running now.</h2>
+        <p>11 cells across Europe. 9 autonomous agents. All online.</p>
+      </div>
+      <div class="cell-grid">
+        <div class="cell">
+          <div class="cell-name">hel1-01</div>
+          <div class="cell-type">Hetzner</div>
+        </div>
+        <div class="cell">
+          <div class="cell-name">hel1-02</div>
+          <div class="cell-type">Hetzner</div>
+        </div>
+        <div class="cell">
+          <div class="cell-name">hel1-03</div>
+          <div class="cell-type">Hetzner</div>
+        </div>
+        <div class="cell">
+          <div class="cell-name">hel1-04</div>
+          <div class="cell-type">Hetzner</div>
+        </div>
+        <div class="cell">
+          <div class="cell-name">hel1-05</div>
+          <div class="cell-type">Hetzner</div>
+        </div>
+        <div class="cell">
+          <div class="cell-name">nbg1-01</div>
+          <div class="cell-type">Netcup</div>
+        </div>
+        <div class="cell">
+          <div class="cell-name">nbg1-02</div>
+          <div class="cell-type">Netcup</div>
+        </div>
+        <div class="cell">
+          <div class="cell-name">nbg1-03</div>
+          <div class="cell-type">Netcup</div>
+        </div>
+        <div class="cell">
+          <div class="cell-name">nbg1-04</div>
+          <div class="cell-type">Netcup</div>
+        </div>
+        <div class="cell">
+          <div class="cell-name">mac-orb</div>
+          <div class="cell-type">Local</div>
+        </div>
+        <div class="cell">
+          <div class="cell-name">mac-lima</div>
+          <div class="cell-type">Local</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Investment Section -->
+  <section id="invest" class="invest-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Own a piece of the infrastructure.</h2>
+        <p>Not equity. Not tokens. LLC membership with profit share.</p>
+      </div>
+      <div class="invest-box">
+        <h3>Infrastructure Investment</h3>
+        <div class="valuation">$500M Floor</div>
+        <ul class="invest-features">
+          <li>10% profit share distributed to investors</li>
+          <li>Stablecoin settlement only</li>
+          <li>No exit required — profits flow quarterly</li>
+          <li>No board seats — founder sovereignty preserved</li>
+          <li>Accredited investors only</li>
+        </ul>
+        <a href="mailto:ben@gaiaftcl.com" class="btn btn-primary">Contact Ben</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-links">
+          <a href="/docs">Documentation</a>
+          <a href="/status">Status</a>
+          <a href="https://api.gaiaftcl.com">API</a>
+          <a href="mailto:support@gaiaftcl.com">Support</a>
+        </div>
+        <div class="footer-copy">
+          © GaiaFTCL. There is no outside.
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

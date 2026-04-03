@@ -1,0 +1,46 @@
+{
+  "world": "Cell",
+  "provenance": {
+    "source": "ClientUICell",
+    "operator": "operator",
+    "ts_ms": 1766234508336
+  },
+  "ops": [
+    {
+      "op": "SetAttr",
+      "op_id": "77004ffc-809c-463d-9421-6f22308f6219-p",
+      "path": "/GaiaOS/UI/ATC/Region",
+      "name": "gaiaos:corridor",
+      "valueType": "string",
+      "value": "NE_FULL"
+    },
+    {
+      "op": "SetAttr",
+      "op_id": "77004ffc-809c-463d-9421-6f22308f6219-a",
+      "path": "/GaiaOS/UI/ATC/Region",
+      "name": "gaiaos:airport",
+      "valueType": "string",
+      "value": "KBOS"
+    },
+    {
+      "op": "SetAttr",
+      "op_id": "77004ffc-809c-463d-9421-6f22308f6219-b",
+      "path": "/GaiaOS/UI/ATC/Region",
+      "name": "gaiaos:center_wgs84",
+      "valueType": "float3",
+      "value": [
+        42.3656,
+        -71.0096,
+        0
+      ]
+    },
+    {
+      "op": "SetAttr",
+      "op_id": "77004ffc-809c-463d-9421-6f22308f6219-c",
+      "path": "/GaiaOS/UI/ATC/Region",
+      "name": "gaiaos:radius_km",
+      "valueType": "float",
+      "value": 150
+    }
+  ]
+}

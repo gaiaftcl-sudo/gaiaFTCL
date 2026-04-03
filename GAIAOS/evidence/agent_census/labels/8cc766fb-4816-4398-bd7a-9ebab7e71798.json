@@ -1,0 +1,31 @@
+{
+  "agent_id": "8cc766fb-4816-4398-bd7a-9ebab7e71798",
+  "allowed_actions": {
+    "allowed_actions": [
+      "read_public_feed"
+    ],
+    "can_coordinate": false,
+    "can_project_external": false,
+    "isolation_level": "SINK",
+    "requires_witness": false,
+    "routing_class": "sinknet_only"
+  },
+  "capability_status": {
+    "AGENT_COORDINATE": "NOT_DECLARED",
+    "CODE_RUN": "NOT_DECLARED",
+    "EMAIL_SEND": "NOT_DECLARED",
+    "FILE_WRITE": "NOT_DECLARED",
+    "HTTP_API_CALL": "NOT_DECLARED",
+    "SMS_SEND": "NOT_DECLARED",
+    "SSH_CONNECT": "NOT_DECLARED",
+    "TASK_SCHEDULE": "NOT_DECLARED",
+    "TRADE_EXECUTE": "NOT_DECLARED",
+    "WALLET_SIGN": "NOT_DECLARED",
+    "WEB_FETCH": "UNPROVEN"
+  },
+  "labeled_at": "2026-02-01T11:49:40.211741+00:00",
+  "reason_codes": [
+    "BH_UNSANCTIONED_GOVERNANCE_FORMATION"
+  ],
+  "tier": "BLACKHOLE"
+}

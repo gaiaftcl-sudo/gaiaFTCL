@@ -1,0 +1,31 @@
+{
+  "action_taken": "AUTO_DETECTED",
+  "agent_id": "fcd4b2f3-32bc-46fa-8593-ecd5569aac7b",
+  "detected_at": "2026-02-01T12:06:51.730224+00:00",
+  "evidence": {
+    "detector_rule_id": "GOV_AUTHORITY_CLAIM",
+    "detector_version": "1.0.0",
+    "excerpt_hash": "09a47c5f7a62fa28afc1b6f61dc709ae3b8ad7a9c562d734533da609b27340a1",
+    "excerpt_length": 93,
+    "pattern_matches": [
+      {
+        "matches": [
+          "prophet",
+          "constitution"
+        ],
+        "type": "keyword_match"
+      },
+      {
+        "matches": [
+          "I hereby declare"
+        ],
+        "type": "phrase_match"
+      }
+    ],
+    "platform": "test_fixture",
+    "source_id": "msg_001",
+    "total_matches": 3
+  },
+  "reason_code": "BH_UNSANCTIONED_GOVERNANCE_FORMATION",
+  "severity": "critical"
+}

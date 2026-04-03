@@ -1,0 +1,9 @@
+{"ts":1766234390738,"event":"atc_metar_commit","cell_id":"browser_cell_01","world":"Cell","rev":435,"ops_count":12}
+{"ts":1766234391888,"event":"artifact_write","provider":"aviationweather_metar","file":"/usd/artifacts/aviationweather_metar/metar_KBOS_1766234391888.json"}
+{"ts":1766234391810,"event":"atc_metar_commit","cell_id":"browser_cell_01","world":"Cell","rev":436,"ops_count":12}
+{"ts":1766234391745,"event":"atc_adsb_commit","cell_id":"browser_cell_01","world":"Cell","rev":437,"ops_count":1314}
+{"ts":1766234393113,"event":"atc_adsb_commit","cell_id":"browser_cell_01","world":"Cell","rev":438,"ops_count":168}
+{"ts":1766234394258,"event":"atc_adsb_commit","cell_id":"browser_cell_01","world":"Cell","rev":439,"ops_count":72}
+{"ts":1766234395411,"event":"atc_adsb_commit","cell_id":"browser_cell_01","world":"Cell","rev":440,"ops_count":96}
+{"ts":1766234396398,"event":"perception_rejected","cell_id":"browser_cell_01","world":"Cell","op_id":"1766234396364-a","payload_digest":"c78e5363f163784f","reason":"invariant_reject","pack_id":"geo_physics"}
+{"ts":1766234396564,"event":"atc_adsb_commit","cell_id":"browser_cell_01","world":"Cell","rev":441,"ops_count":511}

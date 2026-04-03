@@ -1,0 +1,79 @@
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /Users/richardgillespie/Documents/FoT8D/GAIAOS/gaiaos_atc_ui/Cargo.toml
+workspace: /Users/richardgillespie/Documents/FoT8D/GAIAOS/Cargo.toml
+   Compiling gaiaos_ui v0.1.0 (/Users/richardgillespie/Documents/FoT8D/GAIAOS/services/gaiaos_ui)
+warning: unused import: `State`
+  --> services/gaiaos_ui/src/main.rs:12:31
+   |
+12 |     extract::{Path, RawQuery, State},
+   |                               ^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Signature`, `VerifyingKey`, and `signature::Verifier`
+  --> services/gaiaos_ui/src/api/wallet_auth.rs:22:19
+   |
+22 | use k256::ecdsa::{VerifyingKey, Signature, signature::Verifier};
+   |                   ^^^^^^^^^^^^  ^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Sha256`
+  --> services/gaiaos_ui/src/api/wallet_auth.rs:23:12
+   |
+23 | use sha2::{Sha256, Digest};
+   |            ^^^^^^
+
+warning: unused import: `Serialize`
+  --> services/gaiaos_ui/src/api/founder.rs:13:26
+   |
+13 | use serde::{Deserialize, Serialize};
+   |                          ^^^^^^^^^
+
+warning: unused import: `Digest`
+  --> services/gaiaos_ui/src/api/wallet_auth.rs:23:20
+   |
+23 | use sha2::{Sha256, Digest};
+   |                    ^^^^^^
+
+warning: fields `short_name`, `public_aliases`, `ui_display_name`, and `legal_notice` are never read
+  --> services/gaiaos_ui/src/api/config.rs:7:9
+   |
+5  | pub struct IdentityConfig {
+   |            -------------- fields in this struct
+6  |     pub canonical_name: &'static str,
+7  |     pub short_name: &'static str,
+   |         ^^^^^^^^^^
+8  |     pub public_aliases: &'static [&'static str],
+   |         ^^^^^^^^^^^^^^
+9  |     pub ui_display_name: &'static str,
+   |         ^^^^^^^^^^^^^^^
+10 |     pub legal_notice: &'static str,
+   |         ^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: fields `game_id`, `from_role`, `scope`, and `parameters` are never read
+  --> services/gaiaos_ui/src/api/founder.rs:30:9
+   |
+29 | pub struct DirectiveMove {
+   |            ------------- fields in this struct
+30 |     pub game_id: String,
+   |         ^^^^^^^
+31 |     pub from_role: String,
+   |         ^^^^^^^^^
+32 |     pub directive_type: String,
+33 |     pub scope: serde_json::Value,
+   |         ^^^^^
+34 |     pub parameters: serde_json::Value,
+   |         ^^^^^^^^^^
+   |
+   = note: `DirectiveMove` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: `gaiaos_ui` (bin "gaiaos_ui") generated 7 warnings (run `cargo fix --bin "gaiaos_ui"` to apply 4 suggestions)
+    Finished `dev` profile [optimized + debuginfo] target(s) in 8.27s
+     Running `/Users/richardgillespie/Documents/FoT8D/GAIAOS/target/debug/gaiaos_ui`
+2026-01-12T19:14:07.434666Z  INFO gaiaos_ui: GaiaFTCL UI starting on port 3000...
+2026-01-12T19:14:07.434758Z  INFO gaiaos_ui: Backend gateway: http://127.0.0.1:8900
+2026-01-12T19:14:07.441923Z  INFO gaiaos_ui: ✓ NATS connected for consciousness layer
+2026-01-12T19:14:07.441992Z  INFO gaiaos_ui: ✓ Consciousness layer wired
+2026-01-12T19:14:07.442247Z  INFO gaiaos_ui: Mock Family Responder active
+2026-01-12T19:14:07.443196Z  INFO gaiaos_ui: GaiaFTCL UI listening on http://0.0.0.0:3000

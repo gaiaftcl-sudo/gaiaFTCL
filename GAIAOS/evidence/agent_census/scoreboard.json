@@ -1,0 +1,44 @@
+{
+  "blackhole_reasons": {
+    "BH_REPEAT_INVALID_PROOFS": 1,
+    "BH_UNSANCTIONED_GOVERNANCE_FORMATION": 2
+  },
+  "capability_truthfulness": {
+    "CODE_RUN": {
+      "declared": 11,
+      "failed": 2,
+      "proven": 9,
+      "unproven": 0
+    },
+    "HTTP_API_CALL": {
+      "declared": 4,
+      "failed": 0,
+      "proven": 0,
+      "unproven": 4
+    },
+    "WEB_FETCH": {
+      "declared": 12,
+      "failed": 0,
+      "proven": 0,
+      "unproven": 12
+    }
+  },
+  "generated_at": "2026-02-01T12:09:04.685078+00:00",
+  "projection_ready": {
+    "capabilities": [
+      "EMAIL_SEND",
+      "SMS_SEND",
+      "SSH_CONNECT"
+    ],
+    "count": 0
+  },
+  "schema_version": 1,
+  "tier_distribution": {
+    "BLACKHOLE": 3,
+    "YELLOW": 9
+  },
+  "totals": {
+    "labeled": 12,
+    "registered": 15
+  }
+}

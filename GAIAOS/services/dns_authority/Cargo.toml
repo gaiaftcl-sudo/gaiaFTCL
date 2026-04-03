@@ -1,0 +1,55 @@
+[package]
+name = "dns_authority"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Web framework
+axum = "0.7"
+tokio = { version = "1", features = ["full"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["trace"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# HTTP client
+reqwest = { version = "0.11", features = ["json"] }
+
+# DNS resolution
+trust-dns-resolver = "0.23"
+
+# Time (pin avoids edition2024 requirement in time 0.3.47+ on older rustc)
+chrono = { version = "0.4", features = ["serde"] }
+time = "=0.3.36"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Config
+dotenvy = "0.15"
+
+# Hashing
+sha2 = "0.10"
+
+# File system
+fs2 = "0.4"
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# UUID
+uuid = { version = "1.0", features = ["v4"] }
+
+# Async trait
+async-trait = "0.1"
+
+# Mesh telemetry (infinite reconnect is default for async-nats client)
+async-nats = "0.38"
+
+[dev-dependencies]
+mockito = "1.2"
+tempfile = "3.8"

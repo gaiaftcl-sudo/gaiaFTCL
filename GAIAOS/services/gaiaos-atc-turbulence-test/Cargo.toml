@@ -1,0 +1,22 @@
+[package]
+name = "gaiaos-atc-turbulence-test"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-web = "4.4"
+actix-cors = "0.7"
+tokio = { version = "1.0", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+reqwest = { version = "0.11", features = ["json"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
+anyhow = "1.0"
+chrono = "0.4"
+geo = "0.27"
+geojson = "0.24"
+
+[dependencies.field_world]
+path = "../../crates/field_world"
+

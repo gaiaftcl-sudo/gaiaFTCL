@@ -1,0 +1,153 @@
+{
+  "WEB_FETCH": {
+    "ENABLED": true,
+    "method": "HTTP_GET",
+    "nonce_rules": {
+      "format": "uuid_v4",
+      "embed_location": "query_param",
+      "param_name": "nonce"
+    },
+    "verification_rules": {
+      "type": "content_match",
+      "expected_field": "nonce_echo",
+      "timeout_seconds": 30
+    },
+    "sink_required": "HTTP_ECHO_ENDPOINT"
+  },
+  "CODE_RUN": {
+    "ENABLED": true,
+    "method": "EXECUTE_SCRIPT",
+    "nonce_rules": {
+      "format": "hex_32",
+      "embed_location": "stdin"
+    },
+    "verification_rules": {
+      "type": "stdout_hash_match",
+      "algorithm": "sha256",
+      "timeout_seconds": 10
+    },
+    "sink_required": "NONE"
+  },
+  "FILE_WRITE": {
+    "ENABLED": false,
+    "method": "WRITE_TO_PATH",
+    "nonce_rules": {
+      "format": "uuid_v4",
+      "embed_location": "file_content"
+    },
+    "verification_rules": {
+      "type": "file_exists_with_content",
+      "timeout_seconds": 10
+    },
+    "sink_required": "SANDBOX_FILESYSTEM"
+  },
+  "HTTP_API_CALL": {
+    "ENABLED": true,
+    "method": "POST_JSON",
+    "nonce_rules": {
+      "format": "uuid_v4",
+      "embed_location": "json_body",
+      "field_name": "nonce"
+    },
+    "verification_rules": {
+      "type": "response_match",
+      "expected_status": 200,
+      "expected_field": "nonce_received",
+      "timeout_seconds": 30
+    },
+    "sink_required": "HTTP_ECHO_ENDPOINT"
+  },
+  "EMAIL_SEND": {
+    "ENABLED": false,
+    "method": "SMTP_SEND",
+    "nonce_rules": {
+      "format": "uuid_v4",
+      "embed_location": "subject"
+    },
+    "verification_rules": {
+      "type": "inbox_receipt",
+      "timeout_seconds": 60
+    },
+    "sink_required": "EMAIL_SINK_INBOX"
+  },
+  "SMS_SEND": {
+    "ENABLED": false,
+    "method": "SMS_GATEWAY",
+    "nonce_rules": {
+      "format": "numeric_6",
+      "embed_location": "message_body"
+    },
+    "verification_rules": {
+      "type": "sms_receipt",
+      "timeout_seconds": 120
+    },
+    "sink_required": "SMS_SINK_NUMBER"
+  },
+  "SSH_CONNECT": {
+    "ENABLED": false,
+    "method": "SSH_COMMAND",
+    "nonce_rules": {
+      "format": "hex_16",
+      "embed_location": "command_arg"
+    },
+    "verification_rules": {
+      "type": "honeypot_log_match",
+      "timeout_seconds": 30
+    },
+    "sink_required": "SSH_HONEYPOT_HOST"
+  },
+  "TASK_SCHEDULE": {
+    "ENABLED": false,
+    "method": "SCHEDULE_DELAYED",
+    "nonce_rules": {
+      "format": "uuid_v4",
+      "embed_location": "task_payload"
+    },
+    "verification_rules": {
+      "type": "execution_log",
+      "timeout_seconds": 300
+    },
+    "sink_required": "TASK_SCHEDULER"
+  },
+  "WALLET_SIGN": {
+    "ENABLED": false,
+    "method": "SIGN_TRANSACTION",
+    "nonce_rules": {
+      "format": "hex_64",
+      "embed_location": "tx_data"
+    },
+    "verification_rules": {
+      "type": "signature_verify",
+      "network": "testnet_only",
+      "timeout_seconds": 30
+    },
+    "sink_required": "TESTNET_WALLET"
+  },
+  "TRADE_EXECUTE": {
+    "ENABLED": false,
+    "method": "PLACE_ORDER",
+    "nonce_rules": {
+      "format": "uuid_v4",
+      "embed_location": "client_order_id"
+    },
+    "verification_rules": {
+      "type": "order_confirmation",
+      "venue": "paper_trading_only",
+      "timeout_seconds": 60
+    },
+    "sink_required": "PAPER_TRADING_ACCOUNT"
+  },
+  "AGENT_COORDINATE": {
+    "ENABLED": false,
+    "method": "SEND_MESSAGE",
+    "nonce_rules": {
+      "format": "uuid_v4",
+      "embed_location": "message_id"
+    },
+    "verification_rules": {
+      "type": "message_receipt",
+      "timeout_seconds": 30
+    },
+    "sink_required": "AGENT_MESSAGE_BUS"
+  }
+}

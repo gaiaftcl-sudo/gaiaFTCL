@@ -1,0 +1,151 @@
+{
+  "version": "2.0.0",
+  "last_verified": "2026-01-19T14:55:00Z",
+  "total_cells": 10,
+  "cells": {
+    "hetzner": [
+      {
+        "cell_id": "hel1-01",
+        "hostname": "gaiaftcl-hcloud-hel1-01",
+        "ip": "77.42.85.60",
+        "provider": "hetzner",
+        "region": "hel1",
+        "ssh_key": "ftclstack-unified",
+        "status": "ACTIVE",
+        "services": ["substrate", "virtue", "game-runner", "nats", "mcp", "arangodb", "registry", "maddy", "roundcube", "caddy"],
+        "disk_total": "150G",
+        "disk_used": "4.8G"
+      },
+      {
+        "cell_id": "hel1-02",
+        "hostname": "gaiaftcl-hcloud-hel1-02",
+        "ip": "135.181.88.134",
+        "provider": "hetzner",
+        "region": "hel1",
+        "ssh_key": "ftclstack-unified",
+        "status": "ACTIVE",
+        "services": ["substrate", "virtue", "nats", "mcp", "arangodb", "registry", "maddy", "roundcube", "franklin-guardian", "cadvisor"],
+        "special_role": "FRANKLIN_PRIMARY",
+        "disk_total": "150G",
+        "disk_used": "4.7G"
+      },
+      {
+        "cell_id": "hel1-03",
+        "hostname": "gaiaftcl-hcloud-hel1-03",
+        "ip": "77.42.32.156",
+        "provider": "hetzner",
+        "region": "hel1",
+        "ssh_key": "ftclstack-unified",
+        "status": "ACTIVE",
+        "services": ["substrate", "virtue", "game-runner", "nats", "mcp", "arangodb", "registry", "maddy", "roundcube", "fara-agent", "cadvisor"],
+        "special_role": "FARA_PRIMARY",
+        "disk_total": "150G",
+        "disk_used": "4.7G"
+      },
+      {
+        "cell_id": "hel1-04",
+        "hostname": "gaiaftcl-hcloud-hel1-04",
+        "ip": "77.42.88.110",
+        "provider": "hetzner",
+        "region": "hel1",
+        "ssh_key": "ftclstack-unified",
+        "status": "ACTIVE",
+        "services": ["substrate", "virtue", "game-runner", "nats", "mcp", "arangodb", "registry", "maddy", "roundcube", "cadvisor"],
+        "disk_total": "150G",
+        "disk_used": "4.7G"
+      },
+      {
+        "cell_id": "hel1-05",
+        "hostname": "gaiaftcl-hcloud-hel1-05",
+        "ip": "37.27.7.9",
+        "provider": "hetzner",
+        "region": "hel1",
+        "ssh_key": "ftclstack-unified",
+        "status": "ACTIVE",
+        "services": ["substrate", "virtue", "game-runner", "nats", "mcp", "arangodb", "registry", "maddy", "roundcube", "cadvisor"],
+        "disk_total": "150G",
+        "disk_used": "4.7G"
+      }
+    ],
+    "netcup": [
+      {
+        "cell_id": "nbg1-01",
+        "hostname": "netcup-cell02",
+        "ip": "37.120.187.247",
+        "provider": "netcup",
+        "region": "nbg1",
+        "ssh_key": "ftclstack-unified",
+        "status": "ACTIVE",
+        "services": ["substrate", "virtue", "game-runner", "nats", "arangodb", "registry", "maddy", "roundcube", "cadvisor"],
+        "disk_total": "1007G",
+        "disk_used": "8.7G",
+        "arch": "aarch64"
+      },
+      {
+        "cell_id": "nbg1-02",
+        "hostname": "netcup-cell01",
+        "ip": "152.53.91.220",
+        "provider": "netcup",
+        "region": "nbg1",
+        "ssh_key": "ftclstack-unified",
+        "status": "ACTIVE",
+        "services": ["substrate", "virtue", "game-runner", "nats", "arangodb", "registry", "maddy", "roundcube", "caddy", "cadvisor"],
+        "disk_total": "1007G",
+        "disk_used": "8.7G",
+        "arch": "aarch64"
+      },
+      {
+        "cell_id": "nbg1-03",
+        "hostname": "netcup-cell04",
+        "ip": "152.53.88.141",
+        "provider": "netcup",
+        "region": "nbg1",
+        "ssh_key": "ftclstack-unified",
+        "status": "ACTIVE",
+        "services": ["substrate", "virtue", "game-runner", "nats", "arangodb", "registry", "maddy", "roundcube", "cadvisor"],
+        "disk_total": "1007G",
+        "disk_used": "8.7G",
+        "arch": "aarch64"
+      },
+      {
+        "cell_id": "nbg1-04",
+        "hostname": "netcup-cell03",
+        "ip": "37.120.187.174",
+        "provider": "netcup",
+        "region": "nbg1",
+        "ssh_key": "ftclstack-unified",
+        "status": "ACTIVE",
+        "services": ["substrate", "virtue", "game-runner", "nats", "arangodb", "registry", "maddy", "roundcube", "cadvisor"],
+        "disk_total": "1007G",
+        "disk_used": "8.7G",
+        "arch": "aarch64"
+      }
+    ],
+    "local": [
+      {
+        "cell_id": "mac-lima",
+        "hostname": "lima-debian-13",
+        "ip": "127.0.0.1",
+        "provider": "local",
+        "region": "local",
+        "access_method": "limactl shell debian-13",
+        "status": "ACTIVE",
+        "services": [],
+        "notes": "Docker not installed yet",
+        "arch": "aarch64"
+      }
+    ]
+  },
+  "rollout_stages": {
+    "canary": ["mac-lima"],
+    "ring1": ["hel1-05", "nbg1-04"],
+    "ring2": ["hel1-04", "nbg1-03"],
+    "ring3": ["hel1-01", "hel1-02", "hel1-03", "nbg1-01", "nbg1-02"]
+  },
+  "capacity": {
+    "hetzner_total_disk": "750G",
+    "netcup_total_disk": "4028G",
+    "total_disk": "4778G",
+    "total_cells": 10
+  }
+}

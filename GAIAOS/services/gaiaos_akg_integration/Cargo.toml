@@ -1,0 +1,9 @@
+[package]
+name = "gaiaos_akg_integration"
+version = "0.1.0"
+edition = "2021"
+description = "AKG integration layer for TTL requirements and compliance checking"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"

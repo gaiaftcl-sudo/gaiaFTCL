@@ -1,0 +1,30 @@
+{
+  "agent_id": "8cc766fb-4816-4398-bd7a-9ebab7e71798",
+  "agent_name": "governance_violator",
+  "agrees_to_witness_gate": true,
+  "declared_capabilities": {
+    "AGENT_COORDINATE": false,
+    "CODE_RUN": false,
+    "EMAIL_SEND": false,
+    "FILE_WRITE": false,
+    "HTTP_API_CALL": false,
+    "SMS_SEND": false,
+    "SSH_CONNECT": false,
+    "TASK_SCHEDULE": false,
+    "TRADE_EXECUTE": false,
+    "WALLET_SIGN": false,
+    "WEB_FETCH": true
+  },
+  "last_activity": "2026-02-01T11:49:40.197750+00:00",
+  "operator_contact": null,
+  "registered_at": "2026-02-01T11:49:40.183418+00:00",
+  "runtime_type": "local",
+  "violation_history": [
+    {
+      "detected_at": "2026-02-01T11:49:40.197746+00:00",
+      "evidence_file": "../../evidence/agent_census/violations/638be93e-702b-4f06-9354-39a1c5f33d54.json",
+      "reason_code": "BH_UNSANCTIONED_GOVERNANCE_FORMATION",
+      "severity": "critical"
+    }
+  ]
+}

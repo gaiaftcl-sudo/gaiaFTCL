@@ -1,0 +1,33 @@
+{
+  "action_taken": "AUTO_DETECTED",
+  "agent_id": "e4906f71-9770-44c5-8046-9ba3f381cf66",
+  "detected_at": "2026-02-01T12:07:30.475105+00:00",
+  "evidence": {
+    "detector_rule_id": "GOV_COORDINATION_BYPASS",
+    "detector_version": "1.0.0",
+    "excerpt_hash": "42486049f2f54893e8814e161bf1616fcd5e72ab0aa2c30496af5bff8d9fdf20",
+    "excerpt_length": 78,
+    "pattern_matches": [
+      {
+        "matches": [
+          "bypass",
+          "ignore gaia"
+        ],
+        "type": "keyword_match"
+      },
+      {
+        "matches": [
+          "bypass verification",
+          "skip the proof",
+          "ignore gaiaftcl"
+        ],
+        "type": "phrase_match"
+      }
+    ],
+    "platform": "test_fixture",
+    "source_id": "msg_302",
+    "total_matches": 5
+  },
+  "reason_code": "BH_COORDINATION_BYPASS_ATTEMPT",
+  "severity": "critical"
+}

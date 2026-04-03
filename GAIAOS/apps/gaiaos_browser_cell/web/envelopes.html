@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GaiaOS - Envelopes</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Courier New', monospace; 
+      background: #0a0e27; 
+      color: #00ff88; 
+      padding: 20px;
+    }
+    h1 { 
+      color: #00ff88; 
+      margin-bottom: 20px; 
+      font-size: 18px; 
+      border-bottom: 1px solid #00ff88;
+      padding-bottom: 10px;
+    }
+    #envelopes-panel {
+      max-width: 900px;
+    }
+    .envelope-row {
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      padding: 8px 12px; 
+      margin-bottom: 6px;
+      border: 1px solid rgba(0,255,136,0.3);
+      background: rgba(0,255,136,0.05);
+      font-size: 11px;
+    }
+    .envelope-row-label { 
+      color: #00ff88; 
+      flex: 1; 
+      font-weight: bold; 
+    }
+    .envelope-row-kind { 
+      color: #4a9eff; 
+      width: 140px; 
+      text-align: center; 
+    }
+    .envelope-row-status { 
+      color: #00ff88; 
+      width: 100px; 
+      text-align: center; 
+      background: rgba(0,255,136,0.2); 
+      padding: 3px 6px; 
+      border-radius: 3px; 
+    }
+  </style>
+</head>
+<body>
+  <h1>ENVELOPES</h1>
+  <div id="envelopes-panel">
+    <div id="envelopes-content"></div>
+  </div>
+
+  <script>
+    function normalizeId(id) {
+      return id.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+    }
+
+    function initEnvelopesPanel() {
+      // Top 10 game_envelope items from backlog
+      const top10 = [
+        { id: 'G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_REQUEST', kind: 'game_envelope' },
+        { id: 'G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_COMMITMENT', kind: 'game_envelope' },
+        { id: 'G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_TRANSACTION', kind: 'game_envelope' },
+        { id: 'G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_REPORT', kind: 'game_envelope' },
+        { id: 'G_FTCL_ROLLBACK_V1:ROLLBACK_REQUEST', kind: 'game_envelope' },
+        { id: 'G_FTCL_ROLLBACK_V1:ROLLBACK_COMMITMENT', kind: 'game_envelope' },
+        { id: 'G_FTCL_ROLLBACK_V1:ROLLBACK_TRANSACTION', kind: 'game_envelope' },
+        { id: 'G_FTCL_INVEST_001:INVESTMENT_CLAIM', kind: 'game_envelope' },
+        { id: 'G_FTCL_INVEST_001:INVESTMENT_COMMITMENT', kind: 'game_envelope' },
+        { id: 'G_FTCL_PROFIT_DIST:PROFIT_DISTRIBUTION_REQUEST', kind: 'game_envelope' }
+      ];
+
+      let html = '';
+      for (const item of top10) {
+        const normId = normalizeId(item.id);
+        html += `
+          <div class="envelope-row" data-testid="contract-${normId}">
+            <span class="envelope-row-label" data-testid="contract-${normId}-label">${item.id}</span>
+            <span class="envelope-row-kind" data-testid="contract-${normId}-kind">${item.kind}</span>
+            <span class="envelope-row-status" data-testid="contract-${normId}-status">UI_PRESENT</span>
+          </div>
+        `;
+      }
+      document.getElementById('envelopes-content').innerHTML = html;
+      console.log('Envelopes panel initialized with', top10.length, 'items');
+    }
+
+    // Initialize on load
+    initEnvelopesPanel();
+  </script>
+</body>
+</html>

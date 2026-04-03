@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>GaiaOS ATC - 8D Physics Engine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0a0a12;
+      --bg-panel: rgba(12, 12, 20, 0.95);
+      --text-primary: #e8e8f0;
+      --text-secondary: #8888a0;
+      --text-muted: #555566;
+      --accent-aircraft: #00ffcc;
+      --accent-weather: #4da6ff;
+      --accent-green: #00cc66;
+      --accent-yellow: #ffcc00;
+      --accent-red: #ff3355;
+      --accent-purple: #a855f7;
+      --border-color: rgba(100, 100, 140, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, sans-serif;
+      overflow: hidden;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+
+    .leaflet-container {
+      background: var(--bg-dark);
+    }
+
+    .leaflet-control-zoom a {
+      background: var(--bg-panel) !important;
+      color: var(--text-primary) !important;
+      border-color: var(--border-color) !important;
+    }
+
+    .leaflet-control-zoom a:hover {
+      background: #1a1a2e !important;
+    }
+
+    /* Status Panel */
+    .status-panel {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 16px 20px;
+      background: var(--bg-panel);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      font-size: 13px;
+      z-index: 1000;
+      min-width: 220px;
+      backdrop-filter: blur(12px);
+    }
+
+    .status-panel h3 {
+      margin: 0 0 12px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent-aircraft);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+    }
+
+    .status-row .label {
+      color: var(--text-secondary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .status-row .value {
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .status-row .value.aircraft {
+      color: var(--accent-aircraft);
+    }
+
+    .status-row .value.weather {
+      color: var(--accent-weather);
+    }
+
+    .status-row .value.radar {
+      color: var(--accent-purple);
+    }
+
+    .status-divider {
+      height: 1px;
+      background: var(--border-color);
+      margin: 10px 0;
+    }
+
+    /* Legend */
+    .legend-panel {
+      position: absolute;
+      bottom: 24px;
+      left: 16px;
+      padding: 12px 16px;
+      background: var(--bg-panel);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      font-size: 11px;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+    }
+
+    .legend-panel h4 {
+      margin: 0 0 8px 0;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .legend-section {
+      margin-bottom: 10px;
+    }
+
+    .legend-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 0;
+      color: var(--text-secondary);
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    /* Aircraft icon - proper aviation style */
+    .aircraft-icon {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .aircraft-icon svg {
+      width: 20px;
+      height: 20px;
+      filter: drop-shadow(0 0 4px rgba(0, 255, 204, 0.6));
+    }
+
+    .aircraft-label {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      padding: 1px 4px;
+      border-radius: 2px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--accent-aircraft);
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+
+    /* Weather marker */
+    .weather-temp {
+      background: var(--bg-panel);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* Popup styling */
+    .leaflet-popup-content-wrapper {
+      background: var(--bg-panel);
+      color: var(--text-primary);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .leaflet-popup-tip {
+      background: var(--bg-panel);
+    }
+
+    .leaflet-popup-content {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      margin: 12px;
+    }
+
+    .leaflet-popup-content b {
+      color: var(--accent-aircraft);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+    }
+
+    .popup-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 2px 0;
+    }
+
+    .popup-row .lbl {
+      color: var(--text-secondary);
+    }
+
+    .popup-row .val {
+      color: var(--text-primary);
+    }
+
+    .popup-8d {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .popup-8d-title {
+      font-size: 9px;
+      color: var(--accent-purple);
+      margin-bottom: 4px;
+    }
+
+    .popup-8d-vec {
+      font-size: 8px;
+      color: var(--text-muted);
+      word-break: break-all;
+    }
+
+    /* Layer control */
+    .leaflet-control-layers {
+      background: var(--bg-panel);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      padding: 8px 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--text-primary);
+    }
+
+    .leaflet-control-layers-toggle {
+      background-color: var(--bg-panel);
+    }
+
+    /* Radar opacity slider */
+    .radar-control {
+      position: absolute;
+      bottom: 24px;
+      right: 16px;
+      padding: 12px 16px;
+      background: var(--bg-panel);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+    }
+
+    .radar-control h4 {
+      margin: 0 0 8px 0;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+
+    .radar-control input[type="range"] {
+      width: 120px;
+      accent-color: var(--accent-purple);
+    }
+
+    .radar-time {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <div class="status-panel">
+    <h3>⚡ GaiaOS 8D ATC</h3>
+    <div class="status-row">
+      <span class="label">AIRCRAFT</span>
+      <span class="value aircraft" id="aircraft-count">0</span>
+    </div>
+    <div class="status-row">
+      <span class="label">WEATHER</span>
+      <span class="value weather" id="weather-count">0</span>
+    </div>
+    <div class="status-row">
+      <span class="label">RADAR</span>
+      <span class="value radar" id="radar-status">Loading...</span>
+    </div>
+    <div class="status-divider"></div>
+    <div class="status-row">
+      <span class="label">UPDATED</span>
+      <span class="value" id="last-update">-</span>
+    </div>
+    <div class="status-row">
+      <span class="label">SOURCE</span>
+      <span class="value" style="color: var(--accent-green);">LIVE</span>
+    </div>
+  </div>
+
+  <div class="legend-panel">
+    <div class="legend-section">
+      <h4>Aircraft Altitude</h4>
+      <div class="legend-item">
+        <div class="legend-color" style="background: #00ffcc;"></div>
+        <span>&gt; FL350 (Cruise)</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: #4da6ff;"></div>
+        <span>FL180-350 (Climb/Desc)</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: #ffcc00;"></div>
+        <span>&lt; FL180 (Terminal)</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: #ff6600;"></div>
+        <span>&lt; 5000ft (Approach)</span>
+      </div>
+    </div>
+    <div class="legend-section">
+      <h4>Radar Intensity</h4>
+      <div class="legend-item">
+        <div class="legend-color" style="background: #00ff00;"></div>
+        <span>Light Rain</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: #ffff00;"></div>
+        <span>Moderate</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: #ff6600;"></div>
+        <span>Heavy</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background: #ff0000;"></div>
+        <span>Severe</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="radar-control">
+    <h4>🛰️ Radar Layer</h4>
+    <input type="range" id="radar-opacity" min="0" max="100" value="60" />
+    <div class="radar-time" id="radar-time">-</div>
+  </div>
+
+  <script>
+    const CRYSTAL_URL = `http://${window.location.hostname}:8765/crystal/snapshot`;
+    const RAINVIEWER_API = 'https://api.rainviewer.com/public/weather-maps.json';
+
+    const map = L.map('map', { worldCopyJump: true, zoomControl: true }).setView([39, -98], 4);
+
+    // Base layers
+    const darkLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19,
+      attribution: '© OSM © CARTO'
+    });
+
+    const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 19,
+      attribution: '© Esri'
+    });
+
+    darkLayer.addTo(map);
+
+    // Overlay layers
+    const aircraftLayer = L.layerGroup().addTo(map);
+    const weatherLayer = L.layerGroup().addTo(map);
+    let radarLayer = null;
+    let radarFrames = [];
+    let currentRadarFrame = 0;
+
+    // Layer controls
+    const baseLayers = {
+      "🌑 Dark": darkLayer,
+      "🛰️ Satellite": satelliteLayer
+    };
+
+    const overlays = {
+      "✈️ Aircraft": aircraftLayer,
+      "🌡️ Weather Points": weatherLayer
+    };
+
+    L.control.layers(baseLayers, overlays, { collapsed: false }).addTo(map);
+
+    // DOM elements
+    const aircraftCount = document.getElementById('aircraft-count');
+    const weatherCount = document.getElementById('weather-count');
+    const lastUpdate = document.getElementById('last-update');
+    const radarStatus = document.getElementById('radar-status');
+    const radarOpacity = document.getElementById('radar-opacity');
+    const radarTime = document.getElementById('radar-time');
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // RAINVIEWER RADAR LAYER (FREE GLOBAL RADAR)
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    async function loadRadar() {
+      try {
+        const resp = await fetch(RAINVIEWER_API);
+        const data = await resp.json();
+
+        radarFrames = data.radar.past.concat(data.radar.nowcast || []);
+        const latestFrame = radarFrames[radarFrames.length - 1];
+
+        if (radarLayer) {
+          map.removeLayer(radarLayer);
+        }
+
+        // RainViewer tile URL format
+        radarLayer = L.tileLayer(`https://tilecache.rainviewer.com${latestFrame.path}/256/{z}/{x}/{y}/2/1_1.png`, {
+          opacity: radarOpacity.value / 100,
+          zIndex: 100
+        }).addTo(map);
+
+        const radarDate = new Date(latestFrame.time * 1000);
+        radarTime.textContent = radarDate.toLocaleTimeString();
+        radarStatus.textContent = 'Active';
+        radarStatus.style.color = '#a855f7';
+
+      } catch (err) {
+        console.error('Radar load failed:', err);
+        radarStatus.textContent = 'Offline';
+        radarStatus.style.color = '#ff3355';
+      }
+    }
+
+    // Radar opacity control
+    radarOpacity.addEventListener('input', () => {
+      if (radarLayer) {
+        radarLayer.setOpacity(radarOpacity.value / 100);
+      }
+    });
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // AIRCRAFT RENDERING - PROPER AVIATION ICONS
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    function getAltitudeColor(altFt) {
+      if (altFt == null) return '#888888';
+      if (altFt > 35000) return '#00ffcc';  // Cruise
+      if (altFt > 18000) return '#4da6ff';  // Climb/Descent
+      if (altFt > 5000) return '#ffcc00';   // Terminal
+      return '#ff6600';                      // Approach
+    }
+
+    function formatAlt(m) {
+      if (m == null) return '-';
+      const ft = Math.round(m * 3.28084);
+      if (ft > 18000) return `FL${Math.round(ft / 100)}`;
+      return ft.toLocaleString() + ' ft';
+    }
+
+    function formatSpeed(kts) {
+      if (kts == null) return '-';
+      return Math.round(kts) + ' kts';
+    }
+
+    function formatSpeedFromMs(ms) {
+      if (ms == null) return '-';
+      return Math.round(ms * 1.94384) + ' kts';
+    }
+
+    // SVG aircraft icon (proper aviation style)
+    function createAircraftSVG(color, rotation) {
+      return `
+        <svg viewBox="0 0 24 24" style="transform: rotate(${rotation}deg);">
+          <path fill="${color}" d="M12 2L8 8H4L2 12L4 16H8L12 22L16 16H20L22 12L20 8H16L12 2Z"/>
+          <circle cx="12" cy="12" r="2" fill="#000"/>
+        </svg>
+      `;
+    }
+
+    function createAircraftMarker(p) {
+      const lat = p.center_lat;
+      const lon = p.center_lon;
+      if (lat == null || lon == null) return null;
+
+      const callsign = (p.callsign || '').trim();
+      const icao = p.icao24 || '';
+      const label = callsign || icao || 'N/A';
+
+      // Handle both m and ft altitude
+      const altM = p.center_alt_m || p.altitude_m;
+      const altFt = p.altitude_ft || (altM ? altM * 3.28084 : null);
+
+      // Handle both kts and m/s velocity
+      const velKts = p.velocity_kts || (p.velocity_ms ? p.velocity_ms * 1.94384 : null);
+
+      const hdg = p.heading_deg || 0;
+      const color = getAltitudeColor(altFt);
+      const d_vec = p.d_vec || [];
+
+      const icon = L.divIcon({
+        className: 'aircraft-icon',
+        html: `
+          <div class="aircraft-icon">
+            ${createAircraftSVG(color, hdg)}
+            <div class="aircraft-label">${label}</div>
+          </div>
+        `,
+        iconSize: [24, 36],
+        iconAnchor: [12, 12]
+      });
+
+      const marker = L.marker([lat, lon], { icon, title: label });
+
+      const d_vec_str = d_vec.length > 0
+        ? d_vec.map(v => v.toFixed(3)).join(', ')
+        : 'N/A';
+
+      marker.bindPopup(`
+        <div style="min-width:180px">
+          <b>${label}</b>
+          <div class="popup-row"><span class="lbl">ICAO24</span><span class="val">${icao || '-'}</span></div>
+          <div class="popup-row"><span class="lbl">Type</span><span class="val">${p.aircraft_type || '-'}</span></div>
+          <div class="popup-row"><span class="lbl">Altitude</span><span class="val" style="color:${color}">${formatAlt(altM)}</span></div>
+          <div class="popup-row"><span class="lbl">Speed</span><span class="val">${velKts ? formatSpeed(velKts) : formatSpeedFromMs(p.velocity_ms)}</span></div>
+          <div class="popup-row"><span class="lbl">Heading</span><span class="val">${Math.round(hdg)}°</span></div>
+          <div class="popup-row"><span class="lbl">V/S</span><span class="val">${p.vertical_rate_fpm ? Math.round(p.vertical_rate_fpm) + ' fpm' : '-'}</span></div>
+          <div class="popup-row"><span class="lbl">Position</span><span class="val">${lat.toFixed(4)}°, ${lon.toFixed(4)}°</span></div>
+          <div class="popup-8d">
+            <div class="popup-8d-title">8D VECTOR</div>
+            <div class="popup-8d-vec">[${d_vec_str}]</div>
+          </div>
+        </div>
+      `);
+
+      return marker;
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // WEATHER POINT RENDERING
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    function weatherColor(temp, visibility) {
+      if (visibility != null && visibility < 1600) return '#ff3355';
+      if (visibility != null && visibility < 5000) return '#ff6600';
+      if (temp != null && temp < -10) return '#4da6ff';
+      if (visibility != null && visibility < 8000) return '#ffcc00';
+      return '#00cc66';
+    }
+
+    function createWeatherMarker(p) {
+      const lat = p.center_lat;
+      const lon = p.center_lon;
+      if (lat == null || lon == null) return null;
+
+      const temp = p.temperature_c;
+      const wind = p.wind_speed_ms;
+      const vis = p.visibility_m;
+      const hum = p.humidity_pct;
+      const color = weatherColor(temp, vis);
+      const d_vec = p.d_vec || [];
+
+      const tempStr = temp != null ? `${temp.toFixed(0)}°C` : '-';
+
+      const icon = L.divIcon({
+        className: '',
+        html: `<div class="weather-temp" style="border:1px solid ${color}; color:${color};">${tempStr}</div>`,
+        iconSize: [40, 18],
+        iconAnchor: [20, 9]
+      });
+
+      const marker = L.marker([lat, lon], { icon, title: `Weather: ${tempStr}` });
+
+      const d_vec_str = d_vec.length > 0
+        ? d_vec.map(v => v.toFixed(3)).join(', ')
+        : 'N/A';
+
+      marker.bindPopup(`
+        <div style="min-width:160px">
+          <b style="color:${color}">🌡️ Weather</b>
+          <div class="popup-row"><span class="lbl">Temp</span><span class="val">${temp != null ? temp.toFixed(1) + '°C' : '-'}</span></div>
+          <div class="popup-row"><span class="lbl">Wind</span><span class="val">${wind != null ? wind.toFixed(1) + ' m/s' : '-'}</span></div>
+          <div class="popup-row"><span class="lbl">Visibility</span><span class="val">${vis != null ? (vis / 1000).toFixed(1) + ' km' : '-'}</span></div>
+          <div class="popup-row"><span class="lbl">Humidity</span><span class="val">${hum != null ? hum.toFixed(0) + '%' : '-'}</span></div>
+          <div class="popup-8d">
+            <div class="popup-8d-title">8D VECTOR</div>
+            <div class="popup-8d-vec">[${d_vec_str}]</div>
+          </div>
+        </div>
+      `);
+
+      return marker;
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // DATA LOADING FROM CRYSTAL SNAPSHOT
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    async function loadData() {
+      const bounds = map.getBounds();
+      const center = bounds.getCenter();
+      const radius = Math.min(bounds.getNorthEast().distanceTo(bounds.getSouthWest()) / 2000, 1000);
+
+      try {
+        const resp = await fetch(CRYSTAL_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            lat: center.lat,
+            lon: center.lng,
+            radius_km: radius,
+            seconds_back: 1800,
+            seconds_forward: 60
+          })
+        });
+
+        if (!resp.ok) throw new Error('Crystal unavailable');
+
+        const data = await resp.json();
+
+        aircraftLayer.clearLayers();
+        weatherLayer.clearLayers();
+
+        const aircraft = data.atc || [];
+        const weather = data.weather || [];
+
+        aircraft.forEach(p => {
+          const m = createAircraftMarker(p);
+          if (m) aircraftLayer.addLayer(m);
+        });
+
+        weather.forEach(p => {
+          const m = createWeatherMarker(p);
+          if (m) weatherLayer.addLayer(m);
+        });
+
+        aircraftCount.textContent = aircraft.length.toLocaleString();
+        weatherCount.textContent = weather.length;
+        lastUpdate.textContent = new Date().toLocaleTimeString();
+
+      } catch (err) {
+        console.error('Crystal failed:', err.message);
+        aircraftCount.textContent = 'Error';
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // INITIALIZATION
+    // ═══════════════════════════════════════════════════════════════════════════
+
+    // Load radar first
+    loadRadar();
+
+    // Load aircraft/weather data
+    loadData();
+
+    // Refresh on map move
+    map.on('moveend', loadData);
+
+    // Auto refresh aircraft every 30 seconds
+    setInterval(loadData, 30000);
+
+    // Auto refresh radar every 5 minutes
+    setInterval(loadRadar, 300000);
+  </script>
+</body>
+
+</html>

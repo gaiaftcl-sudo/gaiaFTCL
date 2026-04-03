@@ -1,0 +1,261 @@
+{
+  "run_id": "atc_entropy_budget_20251220-081511-27d0963",
+  "ts": "2025-12-20T13:15:50.575Z",
+  "files": [
+    {
+      "path": "IQ/IQ.md",
+      "bytes": 647,
+      "mtime_ms": 1766236514818
+    },
+    {
+      "path": "IQ/docker_ps.txt",
+      "bytes": 4442,
+      "mtime_ms": 1766236514036
+    },
+    {
+      "path": "IQ/live_usdc_head.txt",
+      "bytes": 11,
+      "mtime_ms": 1766236514057
+    },
+    {
+      "path": "IQ/transport_capabilities.json",
+      "bytes": 1291,
+      "mtime_ms": 1766236514053
+    },
+    {
+      "path": "IQ/transport_health.json",
+      "bytes": 96,
+      "mtime_ms": 1766236514049
+    },
+    {
+      "path": "OQ/OQ_ASTRO.md",
+      "bytes": 154,
+      "mtime_ms": 1766236539109
+    },
+    {
+      "path": "OQ/OQ_CELL.md",
+      "bytes": 252,
+      "mtime_ms": 1766236527100
+    },
+    {
+      "path": "OQ/OQ_HUMAN.md",
+      "bytes": 154,
+      "mtime_ms": 1766236534532
+    },
+    {
+      "path": "OQ/audit_tail_10.jsonl",
+      "bytes": 1183,
+      "mtime_ms": 1766236527100
+    },
+    {
+      "path": "OQ/capabilities_after_astro.json",
+      "bytes": 1291,
+      "mtime_ms": 1766236539109
+    },
+    {
+      "path": "OQ/capabilities_after_cell.json",
+      "bytes": 1291,
+      "mtime_ms": 1766236527078
+    },
+    {
+      "path": "OQ/capabilities_after_human.json",
+      "bytes": 1291,
+      "mtime_ms": 1766236534532
+    },
+    {
+      "path": "OQ/perception_last.json",
+      "bytes": 1048,
+      "mtime_ms": 1766236527090
+    },
+    {
+      "path": "OQ/perception_rejections_tail_20.ndjson",
+      "bytes": 2152,
+      "mtime_ms": 1766236527100
+    },
+    {
+      "path": "PQ/PQ.md",
+      "bytes": 411,
+      "mtime_ms": 1766236547087
+    },
+    {
+      "path": "PQ/capabilities_after_resync.json",
+      "bytes": 1291,
+      "mtime_ms": 1766236547086
+    },
+    {
+      "path": "PQ/sustained_ws_msgs.png",
+      "bytes": 219116,
+      "mtime_ms": 1766236543999
+    },
+    {
+      "path": "PQ/ws_resync_connected.png",
+      "bytes": 218670,
+      "mtime_ms": 1766236547079
+    },
+    {
+      "path": "diagnostics/browser_console.log",
+      "bytes": 844,
+      "mtime_ms": 1766236539383
+    },
+    {
+      "path": "diagnostics/har_probe.log",
+      "bytes": 0,
+      "mtime_ms": 1766236547681
+    },
+    {
+      "path": "diagnostics/index_generator.log",
+      "bytes": 0,
+      "mtime_ms": 1766236550506
+    },
+    {
+      "path": "diagnostics/network.har",
+      "bytes": 1636727,
+      "mtime_ms": 1766236550464
+    },
+    {
+      "path": "diagnostics/playwright.log",
+      "bytes": 1568,
+      "mtime_ms": 1766236547660
+    },
+    {
+      "path": "diagnostics/playwright_output/.last-run.json",
+      "bytes": 45,
+      "mtime_ms": 1766236547661
+    },
+    {
+      "path": "diagnostics/server.log",
+      "bytes": 5485,
+      "mtime_ms": 1766236511844
+    },
+    {
+      "path": "meta/run_meta.json",
+      "bytes": 135,
+      "mtime_ms": 1766236514014
+    },
+    {
+      "path": "ui_worlds/astro/README.md",
+      "bytes": 186,
+      "mtime_ms": 1766236539109
+    },
+    {
+      "path": "ui_worlds/astro/functions/perception_mark.png",
+      "bytes": 80486,
+      "mtime_ms": 1766236539034
+    },
+    {
+      "path": "ui_worlds/astro/views/default.png",
+      "bytes": 45633,
+      "mtime_ms": 1766236536315
+    },
+    {
+      "path": "ui_worlds/astro/views/degraded_capability.png",
+      "bytes": 48058,
+      "mtime_ms": 1766236537489
+    },
+    {
+      "path": "ui_worlds/astro/views/global.png",
+      "bytes": 48267,
+      "mtime_ms": 1766236537312
+    },
+    {
+      "path": "ui_worlds/astro/views/zoomed.png",
+      "bytes": 45790,
+      "mtime_ms": 1766236536808
+    },
+    {
+      "path": "ui_worlds/cell/README.md",
+      "bytes": 280,
+      "mtime_ms": 1766236527100
+    },
+    {
+      "path": "ui_worlds/cell/functions/perception_mark.png",
+      "bytes": 120674,
+      "mtime_ms": 1766236525456
+    },
+    {
+      "path": "ui_worlds/cell/functions/perception_reject_toast.png",
+      "bytes": 127593,
+      "mtime_ms": 1766236527073
+    },
+    {
+      "path": "ui_worlds/cell/views/camera_mode_airport.png",
+      "bytes": 37961,
+      "mtime_ms": 1766236521007
+    },
+    {
+      "path": "ui_worlds/cell/views/camera_mode_corridor.png",
+      "bytes": 73845,
+      "mtime_ms": 1766236520174
+    },
+    {
+      "path": "ui_worlds/cell/views/camera_mode_traffic.png",
+      "bytes": 117960,
+      "mtime_ms": 1766236521747
+    },
+    {
+      "path": "ui_worlds/cell/views/danger_toggled.png",
+      "bytes": 121153,
+      "mtime_ms": 1766236523330
+    },
+    {
+      "path": "ui_worlds/cell/views/default.png",
+      "bytes": 160415,
+      "mtime_ms": 1766236516694
+    },
+    {
+      "path": "ui_worlds/cell/views/degraded_capability.png",
+      "bytes": 162537,
+      "mtime_ms": 1766236519380
+    },
+    {
+      "path": "ui_worlds/cell/views/global.png",
+      "bytes": 163237,
+      "mtime_ms": 1766236519032
+    },
+    {
+      "path": "ui_worlds/cell/views/global_earth.png",
+      "bytes": 116183,
+      "mtime_ms": 1766236517644
+    },
+    {
+      "path": "ui_worlds/cell/views/vectors_toggled.png",
+      "bytes": 121004,
+      "mtime_ms": 1766236522529
+    },
+    {
+      "path": "ui_worlds/cell/views/zoomed.png",
+      "bytes": 129604,
+      "mtime_ms": 1766236518282
+    },
+    {
+      "path": "ui_worlds/human/README.md",
+      "bytes": 281,
+      "mtime_ms": 1766236534532
+    },
+    {
+      "path": "ui_worlds/human/functions/perception_mark.png",
+      "bytes": 214513,
+      "mtime_ms": 1766236534358
+    },
+    {
+      "path": "ui_worlds/human/views/default.png",
+      "bytes": 160069,
+      "mtime_ms": 1766236529298
+    },
+    {
+      "path": "ui_worlds/human/views/degraded_capability.png",
+      "bytes": 160490,
+      "mtime_ms": 1766236532148
+    },
+    {
+      "path": "ui_worlds/human/views/global.png",
+      "bytes": 160475,
+      "mtime_ms": 1766236531569
+    },
+    {
+      "path": "ui_worlds/human/views/zoomed.png",
+      "bytes": 160709,
+      "mtime_ms": 1766236530243
+    }
+  ]
+}

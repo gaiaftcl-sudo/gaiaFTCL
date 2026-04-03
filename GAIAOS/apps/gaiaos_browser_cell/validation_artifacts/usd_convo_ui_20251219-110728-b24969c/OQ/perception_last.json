@@ -1,0 +1,15 @@
+{
+  "world": "Astro",
+  "provenance": {
+    "source": "triage_curl",
+    "ts_ms": 0
+  },
+  "ops": [
+    {
+      "op": "UpsertPrim",
+      "op_id": "d9838e83-c9ea-4d41-9424-18d20689cb28",
+      "path": "/GaiaOS/Worlds/Astro/Perception/Triage/9a8f99d6-48dd-4fd7-8bd0-23c27c97a43c",
+      "primType": "Xform"
+    }
+  ]
+}

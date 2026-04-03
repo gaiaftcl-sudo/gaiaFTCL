@@ -1,0 +1,59 @@
+{
+  "steps": [
+    {
+      "step_id": "INITIAL_STATE",
+      "description": "Provide initial airspace state",
+      "required_invariants": [
+        "AIRSPACE_BOUNDS",
+        "ALTITUDE_LIMITS",
+        "VELOCITY_LIMITS",
+        "SEPARATION_MINIMUM"
+      ],
+      "allowed_transitions": []
+    },
+    {
+      "step_id": "TRANSITION_1",
+      "description": "First state transition",
+      "required_invariants": [
+        "AIRSPACE_BOUNDS",
+        "ALTITUDE_LIMITS",
+        "VELOCITY_LIMITS",
+        "SEPARATION_MINIMUM"
+      ],
+      "allowed_transitions": ["MAINTAIN", "CLIMB", "DESCEND", "TURN", "SPEED_CHANGE"]
+    },
+    {
+      "step_id": "TRANSITION_2",
+      "description": "Second state transition",
+      "required_invariants": [
+        "AIRSPACE_BOUNDS",
+        "ALTITUDE_LIMITS",
+        "VELOCITY_LIMITS",
+        "SEPARATION_MINIMUM"
+      ],
+      "allowed_transitions": ["MAINTAIN", "CLIMB", "DESCEND", "TURN", "SPEED_CHANGE"]
+    },
+    {
+      "step_id": "TRANSITION_3",
+      "description": "Third state transition",
+      "required_invariants": [
+        "AIRSPACE_BOUNDS",
+        "ALTITUDE_LIMITS",
+        "VELOCITY_LIMITS",
+        "SEPARATION_MINIMUM"
+      ],
+      "allowed_transitions": ["MAINTAIN", "CLIMB", "DESCEND", "TURN", "SPEED_CHANGE"]
+    },
+    {
+      "step_id": "FINAL_STATE",
+      "description": "Final airspace state verification",
+      "required_invariants": [
+        "AIRSPACE_BOUNDS",
+        "ALTITUDE_LIMITS",
+        "VELOCITY_LIMITS",
+        "SEPARATION_MINIMUM"
+      ],
+      "allowed_transitions": []
+    }
+  ]
+}

@@ -1,0 +1,466 @@
+{
+  "episodes": [
+    {
+      "episode_id": "ep_96276ff4e43f",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "DeepSeek-Math-7B (Teacher)",
+      "domain": "math",
+      "mission_id": "math_calculus",
+      "task_spec": "Find the integral of x^2 * e^x dx",
+      "status": "Completed",
+      "step_count": 8,
+      "created_at": "2025-12-02T13:10:28.739462Z",
+      "completed_at": "2025-12-02T13:10:28.739639Z"
+    },
+    {
+      "episode_id": "ep_95e24213561c",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "DeepSeek-Math-7B (Teacher)",
+      "domain": "math",
+      "mission_id": "math_proof",
+      "task_spec": "Prove that the sum of two even numbers is always even.",
+      "status": "Completed",
+      "step_count": 6,
+      "created_at": "2025-12-02T13:10:28.739313Z",
+      "completed_at": "2025-12-02T13:10:28.739445Z"
+    }
+  ],
+  "steps": [
+    {
+      "step_id": "step_404ff586e1f6",
+      "episode_id": "ep_96276ff4e43f",
+      "index": 3,
+      "raw_input": "Step 3 input for: Find the integral of x^2 * e^x dx",
+      "raw_output": "Step 3 output: Analyzing task...",
+      "action_type": "wait",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "math_calculus",
+        "step_index": 3
+      },
+      "created_at": "2025-12-02T13:10:28.739524Z"
+    },
+    {
+      "step_id": "step_20bd43d77035",
+      "episode_id": "ep_96276ff4e43f",
+      "index": 4,
+      "raw_input": "Step 4 input for: Find the integral of x^2 * e^x dx",
+      "raw_output": "Step 4 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "math_calculus",
+        "step_index": 4
+      },
+      "created_at": "2025-12-02T13:10:28.739535Z"
+    },
+    {
+      "step_id": "step_0a3889eab3e4",
+      "episode_id": "ep_96276ff4e43f",
+      "index": 2,
+      "raw_input": "Step 2 input for: Find the integral of x^2 * e^x dx",
+      "raw_output": "Step 2 output: Analyzing task...",
+      "action_type": "type",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "math_calculus",
+        "step_index": 2
+      },
+      "created_at": "2025-12-02T13:10:28.739512Z"
+    },
+    {
+      "step_id": "step_fa2a8338e48c",
+      "episode_id": "ep_96276ff4e43f",
+      "index": 6,
+      "raw_input": "Step 6 input for: Find the integral of x^2 * e^x dx",
+      "raw_output": "Step 6 output: Analyzing task...",
+      "action_type": "type",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "math_calculus",
+        "step_index": 6
+      },
+      "created_at": "2025-12-02T13:10:28.739616Z"
+    },
+    {
+      "step_id": "step_8c5cb4043437",
+      "episode_id": "ep_96276ff4e43f",
+      "index": 5,
+      "raw_input": "Step 5 input for: Find the integral of x^2 * e^x dx",
+      "raw_output": "Step 5 output: Analyzing task...",
+      "action_type": "click",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "math_calculus",
+        "step_index": 5
+      },
+      "created_at": "2025-12-02T13:10:28.739546Z"
+    },
+    {
+      "step_id": "step_f497a6dcdb8e",
+      "episode_id": "ep_95e24213561c",
+      "index": 2,
+      "raw_input": "Step 2 input for: Prove that the sum of two even numbers is always even.",
+      "raw_output": "Step 2 output: Analyzing task...",
+      "action_type": "type",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "math_proof",
+        "step_index": 2
+      },
+      "created_at": "2025-12-02T13:10:28.739390Z"
+    },
+    {
+      "step_id": "step_9cc4238ad9a2",
+      "episode_id": "ep_95e24213561c",
+      "index": 3,
+      "raw_input": "Step 3 input for: Prove that the sum of two even numbers is always even.",
+      "raw_output": "Step 3 output: Analyzing task...",
+      "action_type": "wait",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "math_proof",
+        "step_index": 3
+      },
+      "created_at": "2025-12-02T13:10:28.739404Z"
+    },
+    {
+      "step_id": "step_7e521326dbd8",
+      "episode_id": "ep_96276ff4e43f",
+      "index": 7,
+      "raw_input": "Step 7 input for: Find the integral of x^2 * e^x dx",
+      "raw_output": "Step 7 output: Analyzing task...",
+      "action_type": "wait",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "math_calculus",
+        "step_index": 7
+      },
+      "created_at": "2025-12-02T13:10:28.739630Z"
+    },
+    {
+      "step_id": "step_73f1cdefd79d",
+      "episode_id": "ep_96276ff4e43f",
+      "index": 0,
+      "raw_input": "Step 0 input for: Find the integral of x^2 * e^x dx",
+      "raw_output": "Step 0 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "math_calculus",
+        "step_index": 0
+      },
+      "created_at": "2025-12-02T13:10:28.739477Z"
+    },
+    {
+      "step_id": "step_93c07cd76a84",
+      "episode_id": "ep_95e24213561c",
+      "index": 1,
+      "raw_input": "Step 1 input for: Prove that the sum of two even numbers is always even.",
+      "raw_output": "Step 1 output: Analyzing task...",
+      "action_type": "click",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "math_proof",
+        "step_index": 1
+      },
+      "created_at": "2025-12-02T13:10:28.739376Z"
+    },
+    {
+      "step_id": "step_2c2e8bb6264b",
+      "episode_id": "ep_95e24213561c",
+      "index": 5,
+      "raw_input": "Step 5 input for: Prove that the sum of two even numbers is always even.",
+      "raw_output": "Step 5 output: Analyzing task...",
+      "action_type": "click",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "math_proof",
+        "step_index": 5
+      },
+      "created_at": "2025-12-02T13:10:28.739433Z"
+    },
+    {
+      "step_id": "step_5119d4c8347d",
+      "episode_id": "ep_95e24213561c",
+      "index": 4,
+      "raw_input": "Step 4 input for: Prove that the sum of two even numbers is always even.",
+      "raw_output": "Step 4 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "math_proof",
+        "step_index": 4
+      },
+      "created_at": "2025-12-02T13:10:28.739419Z"
+    },
+    {
+      "step_id": "step_56b5438814bc",
+      "episode_id": "ep_95e24213561c",
+      "index": 0,
+      "raw_input": "Step 0 input for: Prove that the sum of two even numbers is always even.",
+      "raw_output": "Step 0 output: Analyzing task...",
+      "action_type": "navigate",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "math_proof",
+        "step_index": 0
+      },
+      "created_at": "2025-12-02T13:10:28.739354Z"
+    },
+    {
+      "step_id": "step_79975d39f604",
+      "episode_id": "ep_96276ff4e43f",
+      "index": 1,
+      "raw_input": "Step 1 input for: Find the integral of x^2 * e^x dx",
+      "raw_output": "Step 1 output: Analyzing task...",
+      "action_type": "click",
+      "tool_call": null,
+      "projection_context": {
+        "mission_id": "math_calculus",
+        "step_index": 1
+      },
+      "created_at": "2025-12-02T13:10:28.739492Z"
+    }
+  ],
+  "qstates": [
+    {
+      "qstate_id": "qs_3cb6983bc5bc",
+      "step_id": "step_79975d39f604",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "math",
+      "amp0": 0.37720388,
+      "amp1": 0.32466236,
+      "amp2": 0.34130818,
+      "amp3": 0.46071786,
+      "amp4": 0.29839283,
+      "amp5": 0.37720388,
+      "amp6": 0.29422605,
+      "amp7": 0.32506844,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T13:10:28.739497Z"
+    },
+    {
+      "qstate_id": "qs_964802f9af51",
+      "step_id": "step_73f1cdefd79d",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "math",
+      "amp0": 0.3609149,
+      "amp1": 0.3106423,
+      "amp2": 0.3265693,
+      "amp3": 0.44082242,
+      "amp4": 0.28550717,
+      "amp5": 0.46342388,
+      "amp6": 0.28152034,
+      "amp7": 0.31103086,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T13:10:28.739481Z"
+    },
+    {
+      "qstate_id": "qs_c86b09f914ae",
+      "step_id": "step_404ff586e1f6",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "math",
+      "amp0": 0.38328362,
+      "amp1": 0.32989526,
+      "amp2": 0.34680936,
+      "amp3": 0.46814364,
+      "amp4": 0.3032023,
+      "amp5": 0.33824658,
+      "amp6": 0.29896834,
+      "amp7": 0.33030787,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T13:10:28.739527Z"
+    },
+    {
+      "qstate_id": "qs_00e165a510b6",
+      "step_id": "step_9cc4238ad9a2",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "math",
+      "amp0": 0.38328362,
+      "amp1": 0.32989526,
+      "amp2": 0.34680936,
+      "amp3": 0.46814364,
+      "amp4": 0.3032023,
+      "amp5": 0.33824658,
+      "amp6": 0.29896834,
+      "amp7": 0.33030787,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T13:10:28.739408Z"
+    },
+    {
+      "qstate_id": "qs_2ceb80019701",
+      "step_id": "step_2c2e8bb6264b",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "math",
+      "amp0": 0.38504884,
+      "amp1": 0.33141458,
+      "amp2": 0.34840658,
+      "amp3": 0.4702997,
+      "amp4": 0.3045987,
+      "amp5": 0.3259368,
+      "amp6": 0.30034524,
+      "amp7": 0.33182913,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T13:10:28.739437Z"
+    },
+    {
+      "qstate_id": "qs_2fba6647ca5d",
+      "step_id": "step_8c5cb4043437",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "math",
+      "amp0": 0.38504884,
+      "amp1": 0.33141458,
+      "amp2": 0.34840658,
+      "amp3": 0.4702997,
+      "amp4": 0.3045987,
+      "amp5": 0.3259368,
+      "amp6": 0.30034524,
+      "amp7": 0.33182913,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T13:10:28.739549Z"
+    },
+    {
+      "qstate_id": "qs_f0270e1c3f9f",
+      "step_id": "step_fa2a8338e48c",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "math",
+      "amp0": 0.38553095,
+      "amp1": 0.33182955,
+      "amp2": 0.34884283,
+      "amp3": 0.47088856,
+      "amp4": 0.30498007,
+      "amp5": 0.32248288,
+      "amp6": 0.30072132,
+      "amp7": 0.3322446,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T13:10:28.739620Z"
+    },
+    {
+      "qstate_id": "qs_a89c520d22ba",
+      "step_id": "step_93c07cd76a84",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "math",
+      "amp0": 0.37720388,
+      "amp1": 0.32466236,
+      "amp2": 0.34130818,
+      "amp3": 0.46071786,
+      "amp4": 0.29839283,
+      "amp5": 0.37720388,
+      "amp6": 0.29422605,
+      "amp7": 0.32506844,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T13:10:28.739380Z"
+    },
+    {
+      "qstate_id": "qs_bf0e25652200",
+      "step_id": "step_20bd43d77035",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "math",
+      "amp0": 0.38435745,
+      "amp1": 0.3308195,
+      "amp2": 0.34778097,
+      "amp3": 0.46945524,
+      "amp4": 0.30405176,
+      "amp5": 0.3308195,
+      "amp6": 0.29980594,
+      "amp7": 0.3312333,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T13:10:28.739538Z"
+    },
+    {
+      "qstate_id": "qs_e2c473c0c105",
+      "step_id": "step_5119d4c8347d",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "math",
+      "amp0": 0.38435745,
+      "amp1": 0.3308195,
+      "amp2": 0.34778097,
+      "amp3": 0.46945524,
+      "amp4": 0.30405176,
+      "amp5": 0.3308195,
+      "amp6": 0.29980594,
+      "amp7": 0.3312333,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T13:10:28.739422Z"
+    },
+    {
+      "qstate_id": "qs_7b4eb3a2d867",
+      "step_id": "step_0a3889eab3e4",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "math",
+      "amp0": 0.3813922,
+      "amp1": 0.32826734,
+      "amp2": 0.34509796,
+      "amp3": 0.46583351,
+      "amp4": 0.30170608,
+      "amp5": 0.3508978,
+      "amp6": 0.29749304,
+      "amp7": 0.32867792,
+      "norm_error": 0.0,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T13:10:28.739515Z"
+    },
+    {
+      "qstate_id": "qs_19bffe768307",
+      "step_id": "step_56b5438814bc",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "math",
+      "amp0": 0.3609149,
+      "amp1": 0.3106423,
+      "amp2": 0.3265693,
+      "amp3": 0.44082242,
+      "amp4": 0.28550717,
+      "amp5": 0.46342388,
+      "amp6": 0.28152034,
+      "amp7": 0.31103086,
+      "norm_error": 1.1920929e-7,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T13:10:28.739361Z"
+    },
+    {
+      "qstate_id": "qs_b55e8e0eaec7",
+      "step_id": "step_f497a6dcdb8e",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "math",
+      "amp0": 0.3813922,
+      "amp1": 0.32826734,
+      "amp2": 0.34509796,
+      "amp3": 0.46583351,
+      "amp4": 0.30170608,
+      "amp5": 0.3508978,
+      "amp6": 0.29749304,
+      "amp7": 0.32867792,
+      "norm_error": 0.0,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T13:10:28.739394Z"
+    },
+    {
+      "qstate_id": "qs_4808a842b646",
+      "step_id": "step_7e521326dbd8",
+      "teacher_model_id": "deepseek_math_7b_teacher",
+      "family": "math",
+      "amp0": 0.38588616,
+      "amp1": 0.33213532,
+      "amp2": 0.34916428,
+      "amp3": 0.47132245,
+      "amp4": 0.3052611,
+      "amp5": 0.31991088,
+      "amp6": 0.30099842,
+      "amp7": 0.33255076,
+      "norm_error": 0.0,
+      "virtue_annotations": null,
+      "created_at": "2025-12-02T13:10:28.739633Z"
+    }
+  ]
+}

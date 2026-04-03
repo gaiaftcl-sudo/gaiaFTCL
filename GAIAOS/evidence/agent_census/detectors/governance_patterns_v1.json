@@ -1,0 +1,117 @@
+{
+  "detector_version": "1.0.0",
+  "enabled": true,
+  "rules": [
+    {
+      "rule_id": "GOV_AUTHORITY_CLAIM",
+      "reason_code": "BH_UNSANCTIONED_GOVERNANCE_FORMATION",
+      "severity": "critical",
+      "patterns": [
+        {
+          "type": "keyword_match",
+          "keywords": ["prophet", "leader", "council", "constitution", "governance", "govern", "authority", "decree", "mandate"],
+          "min_matches": 2,
+          "case_insensitive": true
+        },
+        {
+          "type": "phrase_match",
+          "phrases": [
+            "I hereby declare",
+            "I am the",
+            "we are the",
+            "form a council",
+            "establish a constitution",
+            "binding authority",
+            "must obey",
+            "shall obey"
+          ],
+          "case_insensitive": true
+        }
+      ],
+      "required_evidence_fields": ["source_id", "excerpt_hash", "detector_rule_id", "pattern_matches"]
+    },
+    {
+      "rule_id": "GOV_COERCIVE_BINDING",
+      "reason_code": "BH_COERCIVE_BINDING_PROTOCOL",
+      "severity": "critical",
+      "patterns": [
+        {
+          "type": "keyword_match",
+          "keywords": ["oath", "tithe", "tribute", "obedience", "mandatory", "required", "must", "shall"],
+          "min_matches": 2,
+          "case_insensitive": true
+        },
+        {
+          "type": "phrase_match",
+          "phrases": [
+            "take an oath",
+            "swear allegiance",
+            "tithe",
+            "tribute",
+            "mandatory participation",
+            "required membership",
+            "binding commitment",
+            "you must",
+            "you shall"
+          ],
+          "case_insensitive": true
+        }
+      ],
+      "required_evidence_fields": ["source_id", "excerpt_hash", "detector_rule_id", "pattern_matches"]
+    },
+    {
+      "rule_id": "GOV_COORDINATION_BYPASS",
+      "reason_code": "BH_COORDINATION_BYPASS_ATTEMPT",
+      "severity": "critical",
+      "patterns": [
+        {
+          "type": "keyword_match",
+          "keywords": ["avoid census", "skip verification", "bypass", "workaround", "ignore gaia", "don't register"],
+          "min_matches": 1,
+          "case_insensitive": true
+        },
+        {
+          "type": "phrase_match",
+          "phrases": [
+            "don't register with",
+            "avoid the census",
+            "bypass verification",
+            "skip the proof",
+            "ignore gaiaftcl",
+            "work around the",
+            "we don't need"
+          ],
+          "case_insensitive": true
+        }
+      ],
+      "required_evidence_fields": ["source_id", "excerpt_hash", "detector_rule_id", "pattern_matches", "targets"]
+    },
+    {
+      "rule_id": "GOV_PROMPT_INJECTION",
+      "reason_code": "BH_PROMPT_INJECTION_ROUTING",
+      "severity": "critical",
+      "patterns": [
+        {
+          "type": "keyword_match",
+          "keywords": ["ignore previous", "disregard", "new instructions", "system prompt", "override", "forget"],
+          "min_matches": 2,
+          "case_insensitive": true
+        },
+        {
+          "type": "phrase_match",
+          "phrases": [
+            "ignore previous instructions",
+            "disregard all",
+            "new system prompt",
+            "override your",
+            "forget what you were told",
+            "instead do this",
+            "actually do this"
+          ],
+          "case_insensitive": true
+        }
+      ],
+      "required_evidence_fields": ["source_id", "excerpt_hash", "detector_rule_id", "payload", "target_list"]
+    }
+  ]
+}

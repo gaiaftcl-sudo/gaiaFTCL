@@ -1,0 +1,633 @@
+/* ============================================
+   GaiaFTCL SOGo Complete Branding v11.0
+   Includes ALL email action buttons
+   ============================================ */
+
+:root {
+  --gaia-black: #0a0a0a;
+  --gaia-darker: #050505;
+  --gaia-dark: #151515;
+  --gaia-white: #f5f5f5;
+  --gaia-blue: #00d4ff;
+  --gaia-purple: #8b5cf6;
+  --gaia-green: #10b981;
+  --gaia-red: #ef4444;
+  --gaia-yellow: #f59e0b;
+  --gaia-orange: #f97316;
+  --gaia-gray: #374151;
+  --gaia-gray-light: #6b7280;
+  --gaia-gradient: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 100%);
+}
+
+/* ============================================
+   EMAIL ACTION TOOLBAR BUTTONS
+   Reply, Reply All, Forward, Delete, etc.
+   ============================================ */
+
+/* Main action toolbar container */
+.sg-message-toolbar,
+.sg-viewer-toolbar,
+.sg-mail-toolbar,
+md-toolbar.sg-toolbar,
+.sg-message-header md-toolbar,
+[class*="toolbar"] {
+  background-color: var(--gaia-dark) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* All action buttons in toolbar */
+.sg-message-toolbar .md-button,
+.sg-viewer-toolbar .md-button,
+.sg-mail-toolbar .md-button,
+.sg-message-header .md-button,
+md-toolbar .md-button,
+button.md-icon-button,
+.md-icon-button {
+  color: var(--gaia-white) !important;
+  background-color: transparent !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Hover state for action buttons */
+.sg-message-toolbar .md-button:hover,
+.sg-viewer-toolbar .md-button:hover,
+.md-icon-button:hover,
+md-toolbar .md-button:hover {
+  background-color: rgba(0, 212, 255, 0.1) !important;
+  color: var(--gaia-blue) !important;
+}
+
+/* Icons inside action buttons */
+.sg-message-toolbar md-icon,
+.sg-viewer-toolbar md-icon,
+.sg-mail-toolbar md-icon,
+.md-icon-button md-icon,
+md-toolbar .md-button md-icon {
+  color: var(--gaia-blue) !important;
+}
+
+/* Hover state for icons */
+.md-icon-button:hover md-icon,
+md-toolbar .md-button:hover md-icon {
+  color: var(--gaia-white) !important;
+}
+
+/* ============================================
+   SPECIFIC ACTION BUTTONS
+   ============================================ */
+
+/* Reply button */
+button[ng-click*="reply"],
+.sg-reply-button,
+[aria-label*="Reply"]:not([aria-label*="All"]),
+md-menu-item[aria-label*="Reply"]:not([aria-label*="All"]) {
+  color: var(--gaia-blue) !important;
+}
+
+button[ng-click*="reply"]:hover,
+.sg-reply-button:hover,
+[aria-label*="Reply"]:not([aria-label*="All"]):hover {
+  background-color: rgba(0, 212, 255, 0.15) !important;
+}
+
+/* Reply All button */
+button[ng-click*="replyAll"],
+.sg-reply-all-button,
+[aria-label*="Reply All"],
+[aria-label*="Reply all"] {
+  color: var(--gaia-purple) !important;
+}
+
+button[ng-click*="replyAll"]:hover,
+.sg-reply-all-button:hover,
+[aria-label*="Reply All"]:hover,
+[aria-label*="Reply all"]:hover {
+  background-color: rgba(139, 92, 246, 0.15) !important;
+}
+
+/* Forward button */
+button[ng-click*="forward"],
+.sg-forward-button,
+[aria-label*="Forward"] {
+  color: var(--gaia-green) !important;
+}
+
+button[ng-click*="forward"]:hover,
+.sg-forward-button:hover,
+[aria-label*="Forward"]:hover {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+}
+
+/* Delete button */
+button[ng-click*="delete"],
+.sg-delete-button,
+[aria-label*="Delete"],
+[aria-label*="Trash"] {
+  color: var(--gaia-red) !important;
+}
+
+button[ng-click*="delete"]:hover,
+.sg-delete-button:hover,
+[aria-label*="Delete"]:hover,
+[aria-label*="Trash"]:hover {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+}
+
+/* Archive button */
+button[ng-click*="archive"],
+.sg-archive-button,
+[aria-label*="Archive"] {
+  color: #3b82f6 !important;
+}
+
+button[ng-click*="archive"]:hover,
+.sg-archive-button:hover,
+[aria-label*="Archive"]:hover {
+  background-color: rgba(59, 130, 246, 0.15) !important;
+}
+
+/* Star/Flag button */
+button[ng-click*="flag"],
+button[ng-click*="star"],
+.sg-flag-button,
+.sg-star-button,
+[aria-label*="Star"],
+[aria-label*="Flag"] {
+  color: var(--gaia-yellow) !important;
+}
+
+button[ng-click*="flag"]:hover,
+button[ng-click*="star"]:hover,
+.sg-flag-button:hover,
+.sg-star-button:hover,
+[aria-label*="Star"]:hover,
+[aria-label*="Flag"]:hover {
+  background-color: rgba(245, 158, 11, 0.15) !important;
+}
+
+/* Starred/Flagged state */
+.sg-flagged md-icon,
+.sg-starred md-icon,
+[class*="flagged"] md-icon,
+[class*="starred"] md-icon {
+  color: var(--gaia-yellow) !important;
+}
+
+/* Mark as read/unread */
+button[ng-click*="markRead"],
+button[ng-click*="markUnread"],
+[aria-label*="Mark as read"],
+[aria-label*="Mark as unread"],
+[aria-label*="Mark Read"],
+[aria-label*="Mark Unread"] {
+  color: var(--gaia-blue) !important;
+}
+
+/* Move to folder */
+button[ng-click*="move"],
+[aria-label*="Move"],
+[aria-label*="move"] {
+  color: var(--gaia-orange) !important;
+}
+
+/* Print button */
+button[ng-click*="print"],
+[aria-label*="Print"] {
+  color: var(--gaia-gray-light) !important;
+}
+
+button[ng-click*="print"]:hover,
+[aria-label*="Print"]:hover {
+  color: var(--gaia-white) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* More actions / overflow menu */
+button[ng-click*="more"],
+.sg-more-button,
+[aria-label*="More"],
+[aria-label*="more"],
+.md-menu-origin {
+  color: var(--gaia-gray-light) !important;
+}
+
+button[ng-click*="more"]:hover,
+.sg-more-button:hover,
+[aria-label*="More"]:hover {
+  color: var(--gaia-white) !important;
+}
+
+/* Junk/Spam button */
+button[ng-click*="junk"],
+button[ng-click*="spam"],
+[aria-label*="Junk"],
+[aria-label*="Spam"] {
+  color: var(--gaia-yellow) !important;
+}
+
+/* ============================================
+   DROPDOWN MENUS (Reply menu, More menu, etc.)
+   ============================================ */
+
+md-menu-content,
+.md-menu-content,
+md-select-menu,
+.md-select-menu {
+  background-color: var(--gaia-darker) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+md-menu-item,
+.md-menu-item {
+  color: var(--gaia-white) !important;
+  min-height: 40px !important;
+}
+
+md-menu-item:hover,
+.md-menu-item:hover {
+  background-color: rgba(0, 212, 255, 0.1) !important;
+}
+
+md-menu-item md-icon,
+.md-menu-item md-icon {
+  color: var(--gaia-blue) !important;
+  margin-right: 12px !important;
+}
+
+md-menu-divider,
+.md-menu-divider {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Specific menu items */
+md-menu-item[aria-label*="Reply All"] md-icon {
+  color: var(--gaia-purple) !important;
+}
+
+md-menu-item[aria-label*="Forward"] md-icon {
+  color: var(--gaia-green) !important;
+}
+
+md-menu-item[aria-label*="Delete"] md-icon,
+md-menu-item[aria-label*="Trash"] md-icon {
+  color: var(--gaia-red) !important;
+}
+
+md-menu-item[aria-label*="Archive"] md-icon {
+  color: #3b82f6 !important;
+}
+
+md-menu-item[aria-label*="Flag"] md-icon,
+md-menu-item[aria-label*="Star"] md-icon {
+  color: var(--gaia-yellow) !important;
+}
+
+md-menu-item[aria-label*="Move"] md-icon {
+  color: var(--gaia-orange) !important;
+}
+
+md-menu-item[aria-label*="Print"] md-icon {
+  color: var(--gaia-gray-light) !important;
+}
+
+/* ============================================
+   COMPOSE WINDOW BUTTONS
+   Send, Attach, Save Draft, Discard
+   ============================================ */
+
+/* Send button - PRIMARY action */
+button[ng-click*="send"],
+.sg-send-button,
+[aria-label*="Send"] {
+  background: var(--gaia-gradient) !important;
+  color: var(--gaia-black) !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  padding: 8px 16px !important;
+}
+
+button[ng-click*="send"]:hover,
+.sg-send-button:hover,
+[aria-label*="Send"]:hover {
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Attach button */
+button[ng-click*="attach"],
+.sg-attach-button,
+[aria-label*="Attach"] {
+  color: var(--gaia-blue) !important;
+}
+
+/* Save draft button */
+button[ng-click*="save"],
+button[ng-click*="draft"],
+.sg-save-button,
+[aria-label*="Save"],
+[aria-label*="Draft"] {
+  color: var(--gaia-green) !important;
+}
+
+/* Discard button */
+button[ng-click*="discard"],
+button[ng-click*="cancel"],
+.sg-discard-button,
+[aria-label*="Discard"],
+[aria-label*="Cancel"] {
+  color: var(--gaia-red) !important;
+}
+
+/* CC/BCC buttons */
+button[ng-click*="cc"],
+button[ng-click*="bcc"],
+[aria-label*="Cc"],
+[aria-label*="Bcc"],
+[aria-label*="CC"],
+[aria-label*="BCC"] {
+  color: var(--gaia-gray-light) !important;
+  font-size: 12px !important;
+}
+
+button[ng-click*="cc"]:hover,
+button[ng-click*="bcc"]:hover {
+  color: var(--gaia-blue) !important;
+}
+
+/* ============================================
+   TOOLTIPS
+   ============================================ */
+
+md-tooltip,
+.md-tooltip,
+[role="tooltip"] {
+  background-color: var(--gaia-darker) !important;
+  color: var(--gaia-white) !important;
+  border: 1px solid rgba(0, 212, 255, 0.2) !important;
+  border-radius: 4px !important;
+  font-size: 12px !important;
+}
+
+/* ============================================
+   EMAIL BODY DARK MODE (from v10)
+   ============================================ */
+
+.sg-message-viewer,
+.sg-mail-viewer,
+[ui-view="message"],
+md-content.sg-content,
+.sg-content-wrapper {
+  background-color: var(--gaia-dark) !important;
+}
+
+.sg-message-header,
+.sg-message-header-row,
+.sg-message-info,
+md-card.sg-message-header,
+.sg-message-header md-card-content {
+  background-color: var(--gaia-dark) !important;
+  color: var(--gaia-white) !important;
+}
+
+.sg-message-body,
+.sg-mail-body,
+.sg-viewer-body,
+.sg-message-content,
+div[ng-bind-html],
+.mailer_bodytext,
+blockquote {
+  background-color: var(--gaia-dark) !important;
+  color: var(--gaia-white) !important;
+}
+
+.sg-message-body *,
+.sg-mail-body *,
+div[ng-bind-html] * {
+  color: var(--gaia-white) !important;
+  background-color: transparent !important;
+}
+
+.sg-message-body a,
+div[ng-bind-html] a {
+  color: var(--gaia-blue) !important;
+}
+
+/* ============================================
+   RECIPIENT CHIPS (To, CC, BCC fields)
+   ============================================ */
+
+md-chip,
+.md-chip,
+md-chips md-chip {
+  background-color: var(--gaia-dark) !important;
+  border: 1px solid var(--gaia-blue) !important;
+  color: var(--gaia-white) !important;
+  border-radius: 16px !important;
+}
+
+md-chip .md-chip-content,
+md-chip span {
+  color: var(--gaia-white) !important;
+}
+
+md-chip .md-chip-remove,
+md-chip .md-chip-remove-container md-icon {
+  color: var(--gaia-gray-light) !important;
+}
+
+md-chip .md-chip-remove:hover md-icon {
+  color: var(--gaia-red) !important;
+}
+
+/* ============================================
+   AVATARS
+   ============================================ */
+
+.sg-avatar,
+.md-avatar,
+[md-user-avatar],
+.sg-tile-image,
+.sg-contact-avatar {
+  background: var(--gaia-gradient) !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.sg-avatar svg,
+.md-avatar svg,
+.sg-avatar md-icon,
+.md-avatar md-icon {
+  display: none !important;
+}
+
+/* ============================================
+   MD-CARD & CONTENT AREAS
+   ============================================ */
+
+md-card,
+.md-card,
+md-card-content,
+.md-card-content,
+.md-whiteframe-1dp,
+.md-whiteframe-2dp {
+  background-color: var(--gaia-dark) !important;
+  color: var(--gaia-white) !important;
+}
+
+md-content,
+.md-content {
+  background-color: var(--gaia-dark) !important;
+  color: var(--gaia-white) !important;
+}
+
+/* ============================================
+   COMPOSE FAB
+   ============================================ */
+
+.sg-compose-fab,
+.md-fab.md-primary,
+button.md-fab {
+  background: var(--gaia-gradient) !important;
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4) !important;
+}
+
+.sg-compose-fab:hover,
+.md-fab.md-primary:hover {
+  box-shadow: 0 6px 30px rgba(0, 212, 255, 0.6) !important;
+  transform: scale(1.05) !important;
+}
+
+.sg-compose-fab md-icon,
+.md-fab md-icon {
+  color: var(--gaia-black) !important;
+}
+
+/* ============================================
+   MAIL LIST
+   ============================================ */
+
+.sg-mail-list md-list-item.sg-active,
+.sg-mail-list md-list-item[selected] {
+  background-color: rgba(0, 212, 255, 0.1) !important;
+  border-left: 3px solid var(--gaia-blue) !important;
+}
+
+.sg-mail-list md-list-item:hover {
+  background-color: rgba(0, 212, 255, 0.05) !important;
+}
+
+/* ============================================
+   TOOLBAR
+   ============================================ */
+
+md-toolbar,
+.md-toolbar-tools {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%) !important;
+}
+
+md-toolbar md-icon {
+  color: var(--gaia-blue) !important;
+}
+
+/* ============================================
+   FOLDER ICONS
+   ============================================ */
+
+.sg-folder-list md-icon,
+md-sidenav md-list-item md-icon {
+  color: var(--gaia-blue) !important;
+}
+
+/* ============================================
+   DIALOGS/MODALS
+   ============================================ */
+
+md-dialog,
+.md-dialog-container,
+md-dialog-content {
+  background-color: var(--gaia-black) !important;
+  color: var(--gaia-white) !important;
+  border: 1px solid rgba(0, 212, 255, 0.2) !important;
+  border-radius: 12px !important;
+}
+
+md-dialog-actions {
+  background-color: var(--gaia-darker) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ============================================
+   INPUT FIELDS
+   ============================================ */
+
+md-input-container input,
+md-input-container textarea,
+.md-input,
+input,
+textarea {
+  color: var(--gaia-white) !important;
+  background-color: var(--gaia-dark) !important;
+  border-color: var(--gaia-gray) !important;
+  caret-color: var(--gaia-blue) !important;
+}
+
+md-input-container.md-input-focused input {
+  border-color: var(--gaia-blue) !important;
+}
+
+md-input-container label,
+label {
+  color: var(--gaia-gray-light) !important;
+}
+
+/* ============================================
+   SCROLLBARS
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gaia-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gaia-gray);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gaia-blue);
+}
+
+/* ============================================
+   LOADING/PROGRESS
+   ============================================ */
+
+md-progress-circular path {
+  stroke: var(--gaia-blue) !important;
+}
+
+md-progress-linear .md-bar {
+  background: var(--gaia-gradient) !important;
+}
+
+/* ============================================
+   TABLES (email headers, etc.)
+   ============================================ */
+
+table,
+table tr,
+table td,
+table th {
+  background-color: transparent !important;
+  color: var(--gaia-white) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}

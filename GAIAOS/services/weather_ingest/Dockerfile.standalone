@@ -1,0 +1,57 @@
+# GaiaOS Weather Ingest Service (Standalone Build)
+# Open-Meteo → 8D World Patches
+
+FROM rust:1.83-slim-bookworm AS builder
+
+WORKDIR /app
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+	pkg-config \
+	libssl-dev \
+	&& rm -rf /var/lib/apt/lists/*
+
+# Copy Cargo files first for caching
+COPY Cargo.toml ./
+
+# Create dummy main to build dependencies
+RUN mkdir -p src && \
+	echo 'fn main() { println!("placeholder"); }' > src/main.rs && \
+	cargo build --release && \
+	rm -rf src
+
+# Copy actual source
+COPY src ./src
+
+# Build the actual binary
+RUN touch src/main.rs && cargo build --release
+
+# Runtime stage
+FROM debian:bookworm-slim
+
+WORKDIR /app
+
+# Install runtime dependencies
+RUN apt-get update && apt-get install -y \
+	ca-certificates \
+	libssl3 \
+	curl \
+	&& rm -rf /var/lib/apt/lists/*
+
+# Copy binary from builder
+COPY --from=builder /app/target/release/weather-ingest /app/weather-ingest
+
+# Create non-root user
+RUN useradd -r -s /bin/false gaiaos && \
+	chown -R gaiaos:gaiaos /app
+
+USER gaiaos
+
+ENV HOST=0.0.0.0
+ENV PORT=8750
+ENV RUST_LOG=info
+
+EXPOSE 8750
+
+CMD ["/app/weather-ingest"]
+

@@ -1,0 +1,17 @@
+{
+  "tube_session_id": "f497b306-2ce3-4fa9-a582-7b25a20cd1c7",
+  "domain_id": "atc",
+  "agent_id": "test_agent_atc",
+  "current_step_index": 5,
+  "started_at": "2026-02-01T12:53:59.830743+00:00",
+  "steps_completed": [
+    "INITIAL_STATE",
+    "TRANSITION_1",
+    "TRANSITION_2",
+    "TRANSITION_3",
+    "FINAL_STATE"
+  ],
+  "invariant_failures": [
+    "SEPARATION_MINIMUM"
+  ]
+}

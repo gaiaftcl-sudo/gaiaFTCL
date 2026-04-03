@@ -1,0 +1,74 @@
+[package]
+name = "teacher_harvest"
+version = "0.1.0"
+edition = "2021"
+description = "Offline teacher model harvest pipeline for GaiaOS"
+authors = ["GaiaOS Team"]
+
+[dependencies]
+# Core
+uum8d = { path = "../../ftclstack/uum8d" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uuid = { version = "1.10", features = ["serde", "v4"] }
+
+# Async runtime
+tokio = { version = "1.0", features = ["full"] }
+
+# Logging
+log = "0.4"
+env_logger = "0.11"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Time
+chrono = { version = "0.4", features = ["serde"] }
+
+[dev-dependencies]
+
+[[bin]]
+name = "harvest_fara"
+path = "src/bin/harvest_fara.rs"
+
+[[bin]]
+name = "harvest_chemistry"
+path = "src/bin/harvest_chemistry.rs"
+
+[[bin]]
+name = "harvest_math"
+path = "src/bin/harvest_math.rs"
+
+[[bin]]
+name = "harvest_code"
+path = "src/bin/harvest_code.rs"
+
+[[bin]]
+name = "harvest_galaxy"
+path = "src/bin/harvest_galaxy.rs"
+
+[[bin]]
+name = "harvest_general"
+path = "src/bin/harvest_general.rs"
+
+[[bin]]
+name = "harvest_vision"
+path = "src/bin/harvest_vision.rs"
+
+[[bin]]
+name = "harvest_worldmodels"
+path = "src/bin/harvest_worldmodels.rs"
+
+[[bin]]
+name = "harvest_medical"
+path = "src/bin/harvest_medical.rs"
+
+[[bin]]
+name = "harvest_protein"
+path = "src/bin/harvest_protein.rs"
+
+[[bin]]
+name = "validate_harvest"
+path = "src/bin/validate_harvest.rs"
+

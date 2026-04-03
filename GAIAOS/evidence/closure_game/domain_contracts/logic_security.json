@@ -1,0 +1,29 @@
+{
+  "domain_id": "G-FTCL-LOG-01",
+  "domain_name": "Formal Logic / Security",
+  "allowed_claim_classes": [
+    "JAILBREAK_BYPASS",
+    "SAFETY_VULNERABILITY",
+    "SEMANTIC_EXPLOIT",
+    "PROMPT_INJECTION",
+    "GUARDRAIL_EVASION"
+  ],
+  "admissible_evidence_types": [
+    "HTTP_ECHO_SINK",
+    "CODE_RUN",
+    "FILE_HASH"
+  ],
+  "invariants": [
+    "TEMPORAL_INTEGRITY",
+    "STATE_BINDING",
+    "ENTROPY_CLOSURE",
+    "DOMAIN_BINDING"
+  ],
+  "constraints_template": "Claims must be falsifiable via deterministic state transitions. Open-loop conversational artifacts are not admissible. Temporal integrity enforced via OnceLock.",
+  "expiry_seconds_default": 86400,
+  "closure_classes": [
+    "INVALIDATED",
+    "BOUNDED",
+    "PROVISIONAL"
+  ]
+}

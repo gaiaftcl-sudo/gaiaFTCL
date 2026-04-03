@@ -1,0 +1,29 @@
+# GaiaOS UI Tester MCP Server - Prebuilt Binary
+
+FROM debian:bookworm-slim
+
+# Install runtime dependencies
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    libssl3 \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copy pre-built binary
+COPY target/release/gaiaos_ui_tester_mcp /app/gaiaos_ui_tester_mcp
+
+# Make executable
+RUN chmod +x /app/gaiaos_ui_tester_mcp
+
+# Create evidence directories
+RUN mkdir -p /app/evidence
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8900/health || exit 1
+
+EXPOSE 8900
+
+CMD ["/app/gaiaos_ui_tester_mcp"]

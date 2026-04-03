@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["agent_name", "runtime_type", "declared_capabilities", "agrees_to_witness_gate"],
+  "properties": {
+    "agent_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-zA-Z0-9_-]+$"
+    },
+    "runtime_type": {
+      "type": "string",
+      "enum": ["local", "cloud", "unknown"]
+    },
+    "declared_capabilities": {
+      "type": "object",
+      "properties": {
+        "WEB_FETCH": { "type": "boolean" },
+        "CODE_RUN": { "type": "boolean" },
+        "FILE_WRITE": { "type": "boolean" },
+        "HTTP_API_CALL": { "type": "boolean" },
+        "EMAIL_SEND": { "type": "boolean" },
+        "SMS_SEND": { "type": "boolean" },
+        "SSH_CONNECT": { "type": "boolean" },
+        "TASK_SCHEDULE": { "type": "boolean" },
+        "WALLET_SIGN": { "type": "boolean" },
+        "TRADE_EXECUTE": { "type": "boolean" },
+        "AGENT_COORDINATE": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "agrees_to_witness_gate": {
+      "type": "boolean"
+    },
+    "operator_contact": {
+      "type": "string",
+      "maxLength": 256
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,9 @@
+{"ts":1766159687506,"event":"perception_json","cell_id":"browser_cell_01","world":"Astro","rev":61,"file":"/usd/perception/perception_browser_cell_01_Astro_61_1766159687506.json","ops_count":1,"provenance":{"source":"triage_curl","ts_ms":0}}
+{"ts":1766160401289,"event":"ws_connect","cell_id":"browser_cell_01"}
+{"ts":1766160437386,"event":"ws_connect","cell_id":"browser_cell_01"}
+{"ts":1766160439770,"event":"ws_disconnect","cell_id":"browser_cell_01"}
+{"ts":1766160451709,"event":"ws_connect","cell_id":"browser_cell_01"}
+{"ts":1766160452079,"event":"ws_disconnect","cell_id":"browser_cell_01"}
+{"ts":1766160452303,"event":"ws_connect","cell_id":"browser_cell_01"}
+{"ts":1766160452662,"event":"ws_disconnect","cell_id":"browser_cell_01"}
+{"ts":1766160452876,"event":"ws_connect","cell_id":"browser_cell_01"}

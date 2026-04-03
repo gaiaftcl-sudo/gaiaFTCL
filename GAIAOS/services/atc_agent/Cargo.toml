@@ -1,0 +1,26 @@
+[package]
+name = "atc-agent"
+version = "0.1.0"
+edition = "2021"
+description = "GaiaOS ATC Agent - NATS consumer + weather fusion + world_patches writer"
+
+[workspace]
+
+[[bin]]
+name = "atc-agent"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { version = "1.35", features = ["full"] }
+chrono = { version = "0.4", features = ["serde"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+reqwest = { version = "0.11", features = ["json", "native-tls"] }
+log = "0.4"
+env_logger = "0.10"
+thiserror = "1.0"
+async-nats = "0.17"
+futures = "0.3"
+uuid = { version = "1.0", features = ["v4"] }
+rand = "0.8"
+

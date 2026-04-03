@@ -1,0 +1,38 @@
+=== docker ps ===
+NAMES                                      IMAGE                                    STATUS                  PORTS
+gaiaos_browser_cell-usd-transport-cell-1   gaiaos_browser_cell-usd-transport-cell   Up 15 hours (healthy)   0.0.0.0:8792->8790/tcp, [::]:8792->8790/tcp
+gaiaos_browser_cell-usd-exporter-1         gaiaos_browser_cell-usd-exporter         Up 23 hours (healthy)   0.0.0.0:8897->8085/tcp, [::]:8897->8085/tcp
+gaiaos_browser_cell-nginx-1                nginx:alpine                             Up 23 hours             0.0.0.0:8896->80/tcp, [::]:8896->80/tcp
+gaiaos_browser_cell-grafana-1              grafana/grafana:11.4.0                   Up 23 hours             0.0.0.0:3002->3000/tcp, [::]:3002->3000/tcp
+gaiaos_browser_cell-prometheus-1           prom/prometheus:v2.55.1                  Up 23 hours             0.0.0.0:9091->9090/tcp, [::]:9091->9090/tcp
+gaiaos-nginx                               nginx:alpine                             Up 37 hours             0.0.0.0:8086->80/tcp, [::]:8086->80/tcp
+gaiaos-usd-transport-cell                  review-usd-transport-cell                Up 37 hours (healthy)   0.0.0.0:8791->8790/tcp, [::]:8791->8790/tcp
+gaiaos-usd-exporter                        review-usd-exporter                      Up 37 hours (healthy)   0.0.0.0:8085->8085/tcp, [::]:8085->8085/tcp
+gaiaos-atc-ui                              9c3736755815                             Up 40 hours             0.0.0.0:8082->80/tcp, [::]:8082->80/tcp
+gaiaos-atc-backend                         gaiaos-gaiaos-atc-backend                Up 2 days               0.0.0.0:3001->3000/tcp, [::]:3001->3000/tcp
+gaiaos-arango                              arangodb:3.11                            Up 3 days               0.0.0.0:8529->8529/tcp, [::]:8529->8529/tcp
+gaiaos-atc-visible                         ghcr.io/gaiaos/gaiaos-atc-ui:visible     Up 3 days               0.0.0.0:8084->80/tcp, [::]:8084->80/tcp
+atc-flight-aggregator                      atc_mirror_world-flight-aggregator       Up 5 days               
+atc-consciousness-agent                    atc_mirror_world-atc-agent               Up 5 days               0.0.0.0:8850->8850/tcp, [::]:8850->8850/tcp
+atc-globe-ui                               atc_mirror_world-globe-ui                Up 5 days               80/tcp, 0.0.0.0:7300->7300/tcp, [::]:7300->7300/tcp
+gaiaos-core-agent                          gaiaos-core-agent                        Up 5 days (healthy)     0.0.0.0:8804->8804/tcp, [::]:8804->8804/tcp
+gaiaos-akg-gnn                             gaiaos-akg-gnn                           Up 5 days (healthy)     0.0.0.0:8700->8080/tcp, [::]:8700->8080/tcp
+gaiaos-vchip                               gaiaos-vchip                             Up 5 days (healthy)     0.0.0.0:8001->8001/tcp, [::]:8001->8001/tcp
+gaiaos-mcp-server                          gaiaos-mcp-server                        Up 5 days (healthy)     0.0.0.0:9000->9000/tcp, [::]:9000->9000/tcp
+gaiaos-spatial-gateway                     gaiaos-spatial-gateway                   Up 5 days (healthy)     0.0.0.0:9300->8080/tcp, [::]:9300->8080/tcp
+gaiaos-llm-router                          gaiaos-llm-router                        Up 5 days (healthy)     0.0.0.0:8790->8790/tcp, [::]:8790->8790/tcp
+gaiaos-franklin-guardian                   gaiaos-franklin-guardian                 Up 5 days (healthy)     0.0.0.0:8803->8803/tcp, [::]:8803->8803/tcp
+gaiaos-virtue-engine                       gaiaos-virtue-engine                     Up 5 days (healthy)     0.0.0.0:8810->8810/tcp, [::]:8810->8810/tcp
+gaiaos-nats                                nats:2.10-alpine                         Up 5 days (healthy)     0.0.0.0:4222->4222/tcp, [::]:4222->4222/tcp, 0.0.0.0:8222->8222/tcp, [::]:8222->8222/tcp, 6222/tcp
+gaiaos-ollama                              ollama/ollama:latest                     Up 5 days (unhealthy)   0.0.0.0:11434->11434/tcp, [::]:11434->11434/tcp
+
+=== docker compose ps (apps/gaiaos_browser_cell) ===
+NAME                                       IMAGE                                    COMMAND                  SERVICE              CREATED        STATUS                  PORTS
+gaiaos_browser_cell-grafana-1              grafana/grafana:11.4.0                   "/run.sh"                grafana              23 hours ago   Up 23 hours             0.0.0.0:3002->3000/tcp, [::]:3002->3000/tcp
+gaiaos_browser_cell-nginx-1                nginx:alpine                             "/docker-entrypoint.…"   nginx                23 hours ago   Up 23 hours             0.0.0.0:8896->80/tcp, [::]:8896->80/tcp
+gaiaos_browser_cell-prometheus-1           prom/prometheus:v2.55.1                  "/bin/prometheus --c…"   prometheus           23 hours ago   Up 23 hours             0.0.0.0:9091->9090/tcp, [::]:9091->9090/tcp
+gaiaos_browser_cell-usd-exporter-1         gaiaos_browser_cell-usd-exporter         "python /app/main.py"    usd-exporter         23 hours ago   Up 23 hours (healthy)   0.0.0.0:8897->8085/tcp, [::]:8897->8085/tcp
+gaiaos_browser_cell-usd-transport-cell-1   gaiaos_browser_cell-usd-transport-cell   "python /app/main.py"    usd-transport-cell   15 hours ago   Up 15 hours (healthy)   0.0.0.0:8792->8790/tcp, [::]:8792->8790/tcp
+
+=== docker compose logs tail (apps/gaiaos_browser_cell) ===
+=== docker compose logs tail (apps/gaiaos_browser_cell) ===

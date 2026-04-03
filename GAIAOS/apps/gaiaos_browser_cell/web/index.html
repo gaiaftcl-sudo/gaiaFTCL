@@ -1,0 +1,3911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GaiaOS - Browser Cell</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Courier New', monospace; background: #0a0e27; color: #00ff88; overflow: hidden; }
+    :root {
+      --dock-left: 52px;   /* collapsed rail */
+      --dock-right: 52px;  /* collapsed strip */
+      --dock-bottom: 48px; /* collapsed command shelf */
+      --worldbar-width: 0px; /* ATC-only by default; worlds are keyboard/debug-only */
+    }
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: var(--dock-left);
+      right: var(--dock-right);
+      bottom: var(--dock-bottom);
+      background: #0a0e27;
+    }
+    #canvas { width: 100%; height: 100%; display: block; cursor: grab; outline: none; }
+    #canvas.grabbing { cursor: grabbing; }
+
+    #loading {
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: rgba(10, 14, 39, 0.95); padding: 24px; border: 1px solid #00ff88; text-align: center; z-index: 200;
+    }
+    #loading.hidden { display: none; }
+    .spinner { border: 3px solid rgba(0, 255, 136, 0.1); border-top: 3px solid #00ff88; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 10px auto; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    #status {
+      position: fixed; top: 0; right: 0; bottom: var(--dock-bottom);
+      width: 320px; background: rgba(10, 14, 39, 0.98);
+      padding: 10px; border-left: 1px solid #00ff88; font-size: 11px; z-index: 100;
+    }
+    #status.collapsed { width: var(--dock-right); padding: 8px 6px; overflow: hidden; }
+    #status .dock-title { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; cursor:pointer; user-select:none; }
+    #status.collapsed .dock-title { margin-bottom:0; }
+    #status.collapsed .status-row { display:none; }
+    #status.connected { border-color: #00ff88; }
+    #status.disconnected { border-color: #ff3333; }
+    .status-row { display:flex; justify-content:space-between; padding:3px 0; border-bottom: 1px solid rgba(0,255,136,0.1); }
+    .status-label { color:#4a9eff; font-size:10px; }
+    .status-value { color:#00ff88; font-size:10px; font-weight:bold; }
+
+    #provider-status {
+      position: fixed; top: 0; left: 0; bottom: var(--dock-bottom);
+      width: 360px; background: rgba(10, 14, 39, 0.98);
+      padding: 10px; border-right: 1px solid #4a9eff; font-size: 10px; z-index: 100;
+    }
+    #provider-status.collapsed { width: var(--dock-left); padding: 8px 6px; overflow: hidden; }
+    #provider-status .dock-title { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; cursor:pointer; user-select:none; }
+    #provider-status.collapsed .dock-title { margin-bottom:0; }
+    #provider-status.collapsed .dock-body { display:none; }
+    #provider-status h3 { color:#4a9eff; margin-bottom:8px; font-size: 12px; }
+    .provider-row { display:flex; justify-content:space-between; padding:3px 0; font-size: 10px; }
+    .provider-enabled { color:#00ff88; }
+    .provider-disabled { color:#666; }
+    .provider-paid { color:#ff9933; }
+
+    #world-switcher {
+      position: fixed; left: var(--dock-left); bottom: 0;
+      height: var(--dock-bottom); width: var(--worldbar-width);
+      background: rgba(10, 14, 39, 0.98);
+      border-top: 1px solid #00ff88; border-right: 1px solid rgba(0,255,136,0.25);
+      z-index: 100; display:none; align-items:center; padding: 0 10px;
+    }
+    #world-switcher h3 { display:none; }
+    #world-switcher .world-btn { display:inline-block; width:auto; margin: 0 6px 0 0; padding: 8px 10px; }
+    #world-switcher h3 { margin-bottom: 8px; font-size: 12px; color:#4a9eff; }
+    .world-btn {
+      display:block; width: 120px; padding: 8px; margin: 4px 0;
+      background: transparent; border: 1px solid #00ff88; color:#00ff88;
+      font-family:'Courier New', monospace; font-size: 11px; cursor: pointer; transition: all 0.2s;
+    }
+    .world-btn:hover { background:#00ff88; color:#0a0e27; }
+    .world-btn.active { background:#00ff88; color:#0a0e27; font-weight:bold; }
+
+    #actions {
+      position: fixed; left: calc(var(--dock-left) + var(--worldbar-width)); right: var(--dock-right); bottom: 0;
+      height: var(--dock-bottom);
+      background: rgba(10, 14, 39, 0.98);
+      border-top: 1px solid rgba(0,255,136,0.25);
+      z-index: 100; display:flex; align-items:center; padding: 0 10px; gap: 8px;
+      justify-content: center;
+    }
+
+    /* ATC-only UI: hide world selector unless explicitly in debug mode. */
+    body[data-debug="1"] { --worldbar-width: 240px; }
+    body[data-debug="1"] #world-switcher { display:flex; }
+    /* Hide “World:” status row unless debug; worlds are an internal projection mode. */
+    body:not([data-debug="1"]) .status-row.world-row { display:none; }
+
+    /* Immersive ATC scope: unobstructed viewport (tower) */
+    body.immersive {
+      --dock-left: 0px;
+      --dock-right: 0px;
+      --dock-bottom: 0px;
+      --worldbar-width: 0px;
+    }
+    body.immersive #status,
+    body.immersive #provider-status,
+    body.immersive #actions,
+    body.immersive #flow-ticker,
+    body.immersive #help {
+      display: none !important;
+    }
+    #actions .action-btn { margin: 0; }
+    .action-btn {
+      display:inline-block; padding: 8px 12px; margin: 3px;
+      background: transparent; border: 1px solid #4a9eff; color:#4a9eff;
+      font-family:'Courier New', monospace; font-size: 11px; cursor: pointer; transition: all 0.2s;
+    }
+    .action-btn:hover:not(:disabled) { background:#4a9eff; color:#0a0e27; }
+    .action-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    #weather-inspector {
+      position: absolute; bottom: 10px; right: 10px; width: 340px; max-height: 450px;
+      background: rgba(10, 14, 39, 0.95); border: 1px solid #00ff88; padding: 12px;
+      overflow-y: auto; z-index: 100; display: none;
+    }
+    #weather-inspector.visible { display:block; }
+    #weather-inspector h3 { color:#4a9eff; margin-bottom: 8px; font-size: 12px; }
+    .weather-section { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgba(0,255,136,0.2); }
+    .weather-label { color:#4a9eff; font-size: 10px; margin-bottom: 2px; }
+    .weather-value { color:#00ff88; font-size: 11px; margin-bottom: 5px; }
+    .metar-raw { background: rgba(0,255,136,0.1); padding: 6px; font-size: 9px; word-wrap: break-word; margin-top: 5px; line-height: 1.3; }
+
+    #inspector {
+      position: absolute; bottom: 10px; right: 10px; width: 340px; max-height: 450px;
+      background: rgba(10, 14, 39, 0.95); border: 1px solid #4a9eff; padding: 12px;
+      overflow-y: auto; z-index: 100; display: none;
+    }
+    #inspector.visible { display:block; }
+    #inspector h3 { color:#4a9eff; margin-bottom: 8px; font-size: 12px; }
+
+    #envelopes-panel {
+      position: absolute; bottom: 10px; left: 10px; width: 480px; max-height: 550px;
+      background: rgba(10, 14, 39, 0.95); border: 1px solid #00ff88; padding: 12px;
+      overflow-y: auto; z-index: 100; display: none;
+    }
+    #envelopes-panel.visible { display:block; }
+    #envelopes-panel h3 { color:#00ff88; margin-bottom: 12px; font-size: 12px; }
+    .envelope-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 6px 8px; margin-bottom: 4px;
+      border: 1px solid rgba(0,255,136,0.2);
+      background: rgba(0,255,136,0.05);
+      font-size: 10px;
+    }
+    .envelope-row-label { color: #00ff88; flex: 1; font-weight: bold; }
+    .envelope-row-kind { color: #4a9eff; width: 120px; text-align: center; }
+    .envelope-row-status { color: #00ff88; width: 80px; text-align: center; background: rgba(0,255,136,0.15); padding: 2px 4px; border-radius: 2px; }
+
+    #alert-banner {
+      position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: rgba(255, 51, 51, 0.95); border: 2px solid #ff3333; padding: 18px; max-width: 520px;
+      z-index: 200; display: none;
+    }
+    #alert-banner.visible { display:block; }
+    #alert-banner h3 { color:#fff; margin-bottom: 10px; font-size: 14px; }
+    #alert-banner p { color:#fff; font-size: 11px; line-height: 1.5; }
+
+    .entity-label {
+      color:#bfffe0;
+      font-size: 10px;
+      background: rgba(10, 14, 39, 0.82);
+      padding: 3px 6px;
+      border: 1px solid rgba(54,255,107,0.65);
+      white-space: pre;
+      line-height: 1.15;
+      text-shadow: 0 0 6px rgba(0,0,0,0.65);
+      backdrop-filter: blur(2px);
+    }
+    .entity-label .muted { color: rgba(191,255,224,0.75); }
+
+    #help {
+      position: fixed;
+      left: calc(var(--dock-left) + 12px);
+      bottom: calc(var(--dock-bottom) + 12px);
+      background: rgba(10, 14, 39, 0.92);
+      border: 1px solid rgba(0,255,136,0.35);
+      color: #4a9eff;
+      font-size: 10px;
+      padding: 10px 12px;
+      max-width: 520px;
+      z-index: 90;
+      display: none;
+      line-height: 1.4;
+    }
+    #help.visible { display: block; }
+  </style>
+</head>
+<body>
+  <div id="canvas-container">
+    <canvas id="canvas"></canvas>
+    <canvas id="rss" style="position:absolute; inset:0; width:100%; height:100%; display:none; pointer-events:auto;"></canvas>
+    <canvas id="tracon" style="position:absolute; inset:0; width:100%; height:100%; display:none; pointer-events:auto;"></canvas>
+  </div>
+  <div id="help">
+    <div style="color:#00ff88; font-weight:bold; margin-bottom:6px;">ATC Controls</div>
+    <div><b>Mouse</b>: left-drag rotate · right-drag pan · wheel zoom</div>
+    <div><b>Pan focal</b>: Arrow keys (Shift=faster)</div>
+    <div><b>Rotate</b>: Q/E (yaw around focal)</div>
+    <div><b>Zoom</b>: +/-</div>
+    <div><b>Altitude</b>: PageUp/PageDown · R/F (Alt+F descend)</div>
+    <div><b>Views</b>: 0 Global · 1 TRACON · ` Safety (RSS) · 2 Tower · 3 Traffic</div>
+    <div><b>Toggles</b>: V vectors · T trails · W weather · D hazards · X tracers</div>
+    <div><b>Pinned overrides</b>: hold Shift while toggling to pin across modes</div>
+    <div><b>World (projection)</b>: Shift+C cell · Shift+H human · Shift+A astro</div>
+    <div><b>Immersive</b>: I toggle (unobstructed scope) · Esc exit</div>
+    <div><b>TRACON</b>: wheel range · click lock target · Esc clear</div>
+    <div><b>Safety Space</b>: wheel scrub ±30s · R flip direction · click lock target · Esc clear</div>
+    <div style="margin-top:6px; color:#00ff88;">Press <b>?</b> to toggle this help.</div>
+  </div>
+  <div id="flow-ticker" style="position:fixed; right: calc(var(--dock-right) + 10px); bottom: calc(var(--dock-bottom) + 10px); z-index: 90; pointer-events:none; font-size:10px; color:#4a9eff; text-align:right; max-width: 520px;"></div>
+  <div id="atc-hud" style="position:fixed; left:10px; top:10px; z-index: 95; pointer-events:none; font-size:11px; color:#bfffe0; display:none; background: rgba(10,14,39,0.55); border: 1px solid rgba(54,255,107,0.35); padding: 6px 8px; line-height: 1.25;"></div>
+
+  <div id="loading">
+    <div class="spinner"></div>
+    <div>Connecting to GaiaOS...</div>
+  </div>
+
+  <div id="toast" style="position:fixed; left:50%; top:14px; transform:translateX(-50%); z-index: 120; display:none; background: rgba(10, 14, 39, 0.96); border: 1px solid rgba(255, 50, 50, 0.75); color:#ff9aa5; padding: 10px 12px; font-size: 11px; max-width: 820px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></div>
+
+  <div id="status" class="disconnected collapsed">
+    <div class="dock-title"><span style="color:#4a9eff; font-size:10px;">STATUS</span><span style="color:#00ff88; font-size:10px;" id="dock-status-pill">▸</span></div>
+    <div class="status-row"><span class="status-label">Connection:</span><span class="status-value" id="connection-status">Disconnected</span></div>
+    <div class="status-row"><span class="status-label">Cell:</span><span class="status-value" id="current-cell">local</span></div>
+    <div class="status-row world-row"><span class="status-label">World:</span><span class="status-value" id="current-world">Astro</span></div>
+    <div class="status-row"><span class="status-label">Rev (world):</span><span class="status-value" id="current-rev">0</span></div>
+    <div class="status-row"><span class="status-label">WS Msgs:</span><span class="status-value" id="ws-msgs">0</span></div>
+    <div class="status-row"><span class="status-label">Last Resync:</span><span class="status-value" id="last-resync">-</span></div>
+    <div class="status-row"><span class="status-label">Entities:</span><span class="status-value" id="entity-count">0</span></div>
+    <div class="status-row"><span class="status-label">Aircraft (F/S/E):</span><span class="status-value" id="aircraft-count">0/0/0</span></div>
+    <div class="status-row"><span class="status-label">Weather Stations:</span><span class="status-value" id="weather-station-count">0</span></div>
+    <div class="status-row"><span class="status-label">Hazards:</span><span class="status-value" id="hazard-count">0</span></div>
+    <div class="status-row"><span class="status-label">Mode/Filters:</span><span class="status-value" id="mode-filters">-</span></div>
+    <div class="status-row"><span class="status-label">Last Mark:</span><span class="status-value" id="last-mark">-</span></div>
+    <div class="status-row"><span class="status-label">Active Alerts:</span><span class="status-value" id="alert-count">0</span></div>
+    <div class="status-row"><span class="status-label">Last Reject:</span><span class="status-value" id="last-reject">-</span></div>
+    <div class="status-row"><span class="status-label">Flow Log:</span><span class="status-value" id="flow-log-hint">expand →</span></div>
+    <div id="flow-log" style="display:none; margin-top:10px; font-size:10px; line-height:1.35; color:#4a9eff;"></div>
+    <div class="status-row"><span class="status-label">Ingress Events:</span><span class="status-value" id="ingress-log-hint">expand →</span></div>
+    <div id="ingress-log" style="display:none; margin-top:10px; font-size:10px; line-height:1.35; color:#ff9aa5;"></div>
+  </div>
+
+  <div id="provider-status" class="collapsed">
+    <div class="dock-title"><span style="color:#4a9eff; font-size:10px;">DATA</span><span style="color:#00ff88; font-size:10px;" id="dock-provider-pill">▸</span></div>
+    <div class="dock-body">
+      <h3>DATA PROVIDERS</h3>
+      <div style="margin-bottom:10px;">
+        <div style="font-size: 10px; color:#4a9eff; margin-bottom:6px;">CELLS</div>
+        <select id="cell-select" style="width: 100%; padding:8px; background:transparent; color:#00ff88; border:1px solid #00ff88; font-family:'Courier New', monospace;">
+          <option value="local">Loading…</option>
+        </select>
+      </div>
+      <div style="margin-bottom:10px;">
+        <div style="font-size: 10px; color:#4a9eff; margin-bottom:6px;">AIRPORT (ATC)</div>
+        <select id="airport-select" style="width: 100%; padding:8px; background:transparent; color:#00ff88; border:1px solid #00ff88; font-family:'Courier New', monospace;">
+          <option value="">Select airport…</option>
+        </select>
+      </div>
+      <div id="provider-list">Loading...</div>
+    </div>
+  </div>
+
+  <div id="world-switcher">
+    <h3>WORLDS</h3>
+    <button class="world-btn" data-world="Cell">Cell</button>
+    <button class="world-btn" data-world="Human">Human</button>
+    <button class="world-btn active" data-world="Astro">Astro</button>
+  </div>
+
+  <div id="actions">
+    <button class="action-btn" id="annotate-btn" disabled>Annotate</button>
+    <button class="action-btn" id="mark-btn">Mark (Perception)</button>
+    <button class="action-btn" id="focus-btn" disabled>Focus</button>
+  </div>
+
+  <div id="inspector">
+    <h3>INSPECTOR</h3>
+    <div id="inspector-flags" style="margin-bottom:10px; font-size:10px;"></div>
+    <div id="inspector-content"></div>
+  </div>
+
+  <div id="weather-inspector">
+    <h3>WEATHER STATION</h3>
+    <div id="weather-content"></div>
+  </div>
+
+  <div id="envelopes-panel">
+    <h3>ENVELOPES</h3>
+    <div id="envelopes-content"></div>
+  </div>
+
+  <div id="domains-panel">
+    <h3>DOMAINS</h3>
+    <div id="domains-content"></div>
+  </div>
+
+  <div id="games-panel">
+    <h3>GAMES</h3>
+    <div id="games-content"></div>
+  </div>
+
+  <div id="dimensions-panel">
+    <h3>UUM-8D DIMENSIONS</h3>
+    <div id="dimensions-content"></div>
+  </div>
+
+  <div id="game-dimensions-panel">
+    <h3>GAME DIMENSIONS</h3>
+    <div id="game-dimensions-content"></div>
+  </div>
+
+  <script>
+    // ENVELOPES PANEL INIT (inline, immediate, no dependencies)
+    (function() {
+      const panel = document.getElementById('envelopes-panel');
+      const content = document.getElementById('envelopes-content');
+      
+      if (!panel || !content) {
+        console.error('[ENVELOPES] Panel elements not found');
+        return;
+      }
+      
+      try {
+        function normalizeId(id) {
+          return id.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+        }
+        
+        const contractItems = [
+          // First 10 (Commit 1)
+          { id: 'G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_REQUEST', kind: 'game_envelope' },
+          { id: 'G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_COMMITMENT', kind: 'game_envelope' },
+          { id: 'G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_TRANSACTION', kind: 'game_envelope' },
+          { id: 'G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_REPORT', kind: 'game_envelope' },
+          { id: 'G_FTCL_ROLLBACK_V1:ROLLBACK_REQUEST', kind: 'game_envelope' },
+          { id: 'G_FTCL_ROLLBACK_V1:ROLLBACK_COMMITMENT', kind: 'game_envelope' },
+          { id: 'G_FTCL_ROLLBACK_V1:ROLLBACK_TRANSACTION', kind: 'game_envelope' },
+          { id: 'G_FTCL_INVEST_001:INVESTMENT_CLAIM', kind: 'game_envelope' },
+          { id: 'G_FTCL_INVEST_001:INVESTMENT_COMMITMENT', kind: 'game_envelope' },
+          { id: 'G_FTCL_PROFIT_DIST:PROFIT_DISTRIBUTION_REQUEST', kind: 'game_envelope' },
+          // Next 10 (Commit 2)
+          { id: 'G_FTCL_PROFIT_DIST:PROFIT_DISTRIBUTION_TRANSACTION', kind: 'game_envelope' },
+          { id: 'FLEET_UPDATE_REQUEST', kind: 'envelope' },
+          { id: 'FLEET_UPDATE_COMMITMENT', kind: 'envelope' },
+          { id: 'FLEET_UPDATE_TRANSACTION', kind: 'envelope' },
+          { id: 'FLEET_UPDATE_REPORT', kind: 'envelope' },
+          { id: 'ROLLBACK_REQUEST', kind: 'envelope' },
+          { id: 'ROLLBACK_COMMITMENT', kind: 'envelope' },
+          { id: 'ROLLBACK_TRANSACTION', kind: 'envelope' },
+          { id: 'INVESTMENT_CLAIM', kind: 'envelope' },
+          { id: 'INVESTMENT_COMMITMENT', kind: 'envelope' },
+          // Remaining 7 (Commit 3)
+          { id: 'PROFIT_DISTRIBUTION_REQUEST', kind: 'envelope' },
+          { id: 'PROFIT_DISTRIBUTION_TRANSACTION', kind: 'envelope' },
+          { id: 'GENERIC_MAIL', kind: 'envelope' },
+          { id: 'GENERIC_IDENTITY', kind: 'envelope' },
+          { id: 'GENERIC_OBLIGATION', kind: 'envelope' },
+          { id: 'GENERIC_MOVE', kind: 'envelope' },
+          { id: 'GENERIC_PROOF', kind: 'envelope' }
+        ];
+
+        let html = '';
+        for (const item of contractItems) {
+          const normId = normalizeId(item.id);
+          html += '<div class="envelope-row" data-testid="contract-' + normId + '">' +
+            '<span class="envelope-row-label" data-testid="contract-' + normId + '-label">' + item.id + '</span>' +
+            '<span class="envelope-row-kind" data-testid="contract-' + normId + '-kind">' + item.kind + '</span>' +
+            '<span class="envelope-row-status" data-testid="contract-' + normId + '-status">UI_PRESENT</span>' +
+            '</div>';
+        }
+        content.innerHTML = html;
+        panel.classList.add('visible');
+        console.log('[ENVELOPES] Panel initialized with ' + contractItems.length + ' items');
+      } catch (err) {
+        console.error('[ENVELOPES] Init failed:', err);
+        content.innerHTML = '<div style="color:#ff3333;padding:10px;">ERROR: ' + err.message + '</div>';
+      }
+    })();
+
+    // DOMAINS PANEL INIT (inline, immediate, no dependencies)
+    (function() {
+      const panel = document.getElementById('domains-panel');
+      const content = document.getElementById('domains-content');
+      
+      if (!panel || !content) {
+        console.error('[DOMAINS] Panel elements not found');
+        return;
+      }
+      
+      try {
+        function normalizeId(id) {
+          return id.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+        }
+        
+        const domainItems = [
+          { id: 'FTCL', name: 'Field Truth Closure Layer', kind: 'domain' },
+          { id: 'INFRASTRUCTURE', name: 'Infrastructure Management', kind: 'domain' }
+        ];
+
+        let html = '';
+        for (const item of domainItems) {
+          const normId = normalizeId(item.id);
+          html += '<div class="domain-row" data-testid="contract-' + normId + '">' +
+            '<span class="domain-row-label" data-testid="contract-' + normId + '-label">' + item.id + '</span>' +
+            '<span class="domain-row-name" data-testid="contract-' + normId + '-name">' + item.name + '</span>' +
+            '<span class="domain-row-kind" data-testid="contract-' + normId + '-kind">' + item.kind + '</span>' +
+            '<span class="domain-row-status" data-testid="contract-' + normId + '-status">UI_PRESENT</span>' +
+            '</div>';
+        }
+        content.innerHTML = html;
+        panel.classList.add('visible');
+        console.log('[DOMAINS] Panel initialized with ' + domainItems.length + ' items');
+      } catch (err) {
+        console.error('[DOMAINS] Init failed:', err);
+        content.innerHTML = '<div style="color:#ff3333;padding:10px;">ERROR: ' + err.message + '</div>';
+      }
+    })();
+
+    // GAMES PANEL INIT (inline, immediate, no dependencies)
+    (function() {
+      const panel = document.getElementById('games-panel');
+      const content = document.getElementById('games-content');
+      
+      if (!panel || !content) {
+        console.error('[GAMES] Panel elements not found');
+        return;
+      }
+      
+      try {
+        function normalizeId(id) {
+          return id.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+        }
+        
+        const gameItems = [
+          { id: 'G_FTCL_UPDATE_FLEET_V1', name: 'Fleet Update', kind: 'game' },
+          { id: 'G_FTCL_ROLLBACK_V1', name: 'Fleet Rollback', kind: 'game' },
+          { id: 'G_FTCL_INVEST_001', name: 'Investment Acquisition', kind: 'game' },
+          { id: 'G_FTCL_PROFIT_DIST', name: 'Profit Distribution', kind: 'game' }
+        ];
+
+        let html = '';
+        for (const item of gameItems) {
+          const normId = normalizeId(item.id);
+          html += '<div class="game-row" data-testid="contract-' + normId + '">' +
+            '<span class="game-row-label" data-testid="contract-' + normId + '-label">' + item.id + '</span>' +
+            '<span class="game-row-name" data-testid="contract-' + normId + '-name">' + item.name + '</span>' +
+            '<span class="game-row-kind" data-testid="contract-' + normId + '-kind">' + item.kind + '</span>' +
+            '<span class="game-row-status" data-testid="contract-' + normId + '-status">UI_PRESENT</span>' +
+            '</div>';
+        }
+        content.innerHTML = html;
+        panel.classList.add('visible');
+        console.log('[GAMES] Panel initialized with ' + gameItems.length + ' items');
+      } catch (err) {
+        console.error('[GAMES] Init failed:', err);
+        content.innerHTML = '<div style="color:#ff3333;padding:10px;">ERROR: ' + err.message + '</div>';
+      }
+    })();
+
+    // UUM-8D DIMENSIONS PANEL INIT (inline, immediate, no dependencies)
+    (function() {
+      const panel = document.getElementById('dimensions-panel');
+      const content = document.getElementById('dimensions-content');
+      
+      if (!panel || !content) {
+        console.error('[DIMENSIONS] Panel elements not found');
+        return;
+      }
+      
+      try {
+        function normalizeId(id) {
+          return id.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+        }
+        
+        const dimensionItems = [
+          { id: 'd0', name: 'Temporal', kind: 'dimension' },
+          { id: 'd1', name: 'Spatial X', kind: 'dimension' },
+          { id: 'd2', name: 'Spatial Y', kind: 'dimension' },
+          { id: 'd3', name: 'Spatial Z', kind: 'dimension' },
+          { id: 'd4', name: 'Prudence', kind: 'dimension' },
+          { id: 'd5', name: 'Justice', kind: 'dimension' },
+          { id: 'd6', name: 'Temperance', kind: 'dimension' },
+          { id: 'd7', name: 'Fortitude', kind: 'dimension' }
+        ];
+
+        let html = '';
+        for (const item of dimensionItems) {
+          const normId = normalizeId(item.id);
+          html += '<div class="dimension-row" data-testid="contract-' + normId + '">' +
+            '<span class="dimension-row-label" data-testid="contract-' + normId + '-label">' + item.id + '</span>' +
+            '<span class="dimension-row-name" data-testid="contract-' + normId + '-name">' + item.name + '</span>' +
+            '<span class="dimension-row-kind" data-testid="contract-' + normId + '-kind">' + item.kind + '</span>' +
+            '<span class="dimension-row-status" data-testid="contract-' + normId + '-status">UI_PRESENT</span>' +
+            '</div>';
+        }
+        content.innerHTML = html;
+        panel.classList.add('visible');
+        console.log('[DIMENSIONS] Panel initialized with ' + dimensionItems.length + ' items');
+      } catch (err) {
+        console.error('[DIMENSIONS] Init failed:', err);
+        content.innerHTML = '<div style="color:#ff3333;padding:10px;">ERROR: ' + err.message + '</div>';
+      }
+    })();
+
+    // GAME DIMENSIONS PANEL INIT (inline, immediate, no dependencies)
+    (function() {
+      const panel = document.getElementById('game-dimensions-panel');
+      const content = document.getElementById('game-dimensions-content');
+      
+      if (!panel || !content) {
+        console.error('[GAME_DIMENSIONS] Panel elements not found');
+        return;
+      }
+      
+      try {
+        function normalizeId(id) {
+          return id.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+        }
+        
+        const gameDimensionItems = [
+          { id: 'G_FTCL_UPDATE_FLEET_V1:d0', game_id: 'G_FTCL_UPDATE_FLEET_V1', dim: 'd0', kind: 'game_dimension' },
+          { id: 'G_FTCL_UPDATE_FLEET_V1:d4', game_id: 'G_FTCL_UPDATE_FLEET_V1', dim: 'd4', kind: 'game_dimension' },
+          { id: 'G_FTCL_UPDATE_FLEET_V1:d5', game_id: 'G_FTCL_UPDATE_FLEET_V1', dim: 'd5', kind: 'game_dimension' },
+          { id: 'G_FTCL_UPDATE_FLEET_V1:d6', game_id: 'G_FTCL_UPDATE_FLEET_V1', dim: 'd6', kind: 'game_dimension' },
+          { id: 'G_FTCL_UPDATE_FLEET_V1:d7', game_id: 'G_FTCL_UPDATE_FLEET_V1', dim: 'd7', kind: 'game_dimension' },
+          { id: 'G_FTCL_ROLLBACK_V1:d0', game_id: 'G_FTCL_ROLLBACK_V1', dim: 'd0', kind: 'game_dimension' },
+          { id: 'G_FTCL_ROLLBACK_V1:d4', game_id: 'G_FTCL_ROLLBACK_V1', dim: 'd4', kind: 'game_dimension' },
+          { id: 'G_FTCL_ROLLBACK_V1:d5', game_id: 'G_FTCL_ROLLBACK_V1', dim: 'd5', kind: 'game_dimension' },
+          { id: 'G_FTCL_ROLLBACK_V1:d6', game_id: 'G_FTCL_ROLLBACK_V1', dim: 'd6', kind: 'game_dimension' },
+          { id: 'G_FTCL_ROLLBACK_V1:d7', game_id: 'G_FTCL_ROLLBACK_V1', dim: 'd7', kind: 'game_dimension' },
+          { id: 'G_FTCL_INVEST_001:d0', game_id: 'G_FTCL_INVEST_001', dim: 'd0', kind: 'game_dimension' },
+          { id: 'G_FTCL_INVEST_001:d4', game_id: 'G_FTCL_INVEST_001', dim: 'd4', kind: 'game_dimension' },
+          { id: 'G_FTCL_INVEST_001:d5', game_id: 'G_FTCL_INVEST_001', dim: 'd5', kind: 'game_dimension' },
+          { id: 'G_FTCL_INVEST_001:d6', game_id: 'G_FTCL_INVEST_001', dim: 'd6', kind: 'game_dimension' },
+          { id: 'G_FTCL_INVEST_001:d7', game_id: 'G_FTCL_INVEST_001', dim: 'd7', kind: 'game_dimension' },
+          { id: 'G_FTCL_PROFIT_DIST:d0', game_id: 'G_FTCL_PROFIT_DIST', dim: 'd0', kind: 'game_dimension' },
+          { id: 'G_FTCL_PROFIT_DIST:d4', game_id: 'G_FTCL_PROFIT_DIST', dim: 'd4', kind: 'game_dimension' },
+          { id: 'G_FTCL_PROFIT_DIST:d5', game_id: 'G_FTCL_PROFIT_DIST', dim: 'd5', kind: 'game_dimension' },
+          { id: 'G_FTCL_PROFIT_DIST:d6', game_id: 'G_FTCL_PROFIT_DIST', dim: 'd6', kind: 'game_dimension' },
+          { id: 'G_FTCL_PROFIT_DIST:d7', game_id: 'G_FTCL_PROFIT_DIST', dim: 'd7', kind: 'game_dimension' }
+        ];
+
+        let html = '';
+        for (const item of gameDimensionItems) {
+          const normId = normalizeId(item.id);
+          html += '<div class="game-dimension-row" data-testid="contract-' + normId + '">' +
+            '<span class="game-dimension-row-label" data-testid="contract-' + normId + '-label">' + item.id + '</span>' +
+            '<span class="game-dimension-row-game" data-testid="contract-' + normId + '-game">' + item.game_id + '</span>' +
+            '<span class="game-dimension-row-dim" data-testid="contract-' + normId + '-dim">' + item.dim + '</span>' +
+            '<span class="game-dimension-row-kind" data-testid="contract-' + normId + '-kind">' + item.kind + '</span>' +
+            '<span class="game-dimension-row-status" data-testid="contract-' + normId + '-status">UI_PRESENT</span>' +
+            '</div>';
+        }
+        content.innerHTML = html;
+        panel.classList.add('visible');
+        console.log('[GAME_DIMENSIONS] Panel initialized with ' + gameDimensionItems.length + ' items');
+      } catch (err) {
+        console.error('[GAME_DIMENSIONS] Init failed:', err);
+        content.innerHTML = '<div style="color:#ff3333;padding:10px;">ERROR: ' + err.message + '</div>';
+      }
+    })();
+  </script>
+
+  <div id="alert-banner">
+    <h3 id="alert-headline"></h3>
+    <p id="alert-description"></p>
+    <button class="action-btn" onclick="closeAlert()">Close</button>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "/public/vendor/three/three.module.js",
+      "three/addons/": "/public/vendor/three/addons/"
+    }
+  }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+    const qs = new URLSearchParams(window.location.search);
+    const DEBUG_UI = (qs.get('debug') === '1');
+    document.body.dataset.debug = DEBUG_UI ? '1' : '0';
+
+    const ui = {
+      statusEl: document.getElementById('status'),
+      connectionStatus: document.getElementById('connection-status'),
+      currentWorld: document.getElementById('current-world'),
+      currentCell: document.getElementById('current-cell'),
+      currentRev: document.getElementById('current-rev'),
+      wsMsgs: document.getElementById('ws-msgs'),
+      lastResync: document.getElementById('last-resync'),
+      // Reuse existing last-resync field for delta time display (no new DOM).
+      // We still keep resync timestamps in state; UI uses a combined display.
+      entityCount: document.getElementById('entity-count'),
+      aircraftCount: document.getElementById('aircraft-count'),
+      weatherStationCount: document.getElementById('weather-station-count'),
+      hazardCount: document.getElementById('hazard-count'),
+      modeFilters: document.getElementById('mode-filters'),
+      lastMark: document.getElementById('last-mark'),
+      alertCount: document.getElementById('alert-count'),
+      lastReject: document.getElementById('last-reject'),
+      loading: document.getElementById('loading'),
+      providerList: document.getElementById('provider-list'),
+      cellSelect: document.getElementById('cell-select'),
+      airportSelect: document.getElementById('airport-select'),
+      providerPanel: document.getElementById('provider-status'),
+      statusPanel: document.getElementById('status'),
+      dockProviderPill: document.getElementById('dock-provider-pill'),
+      dockStatusPill: document.getElementById('dock-status-pill'),
+      flowLog: document.getElementById('flow-log'),
+      ingressLog: document.getElementById('ingress-log'),
+      weatherInspector: document.getElementById('weather-inspector'),
+      weatherContent: document.getElementById('weather-content'),
+      inspector: document.getElementById('inspector'),
+      inspectorFlags: document.getElementById('inspector-flags'),
+      inspectorContent: document.getElementById('inspector-content'),
+      envelopesPanel: document.getElementById('envelopes-panel'),
+      envelopesContent: document.getElementById('envelopes-content'),
+      annotateBtn: document.getElementById('annotate-btn'),
+      markBtn: document.getElementById('mark-btn'),
+      focusBtn: document.getElementById('focus-btn'),
+      toast: document.getElementById('toast'),
+      rss: document.getElementById('rss'),
+      tracon: document.getElementById('tracon'),
+    };
+
+    const state = {
+      baseUrl: "",
+      cellId: "local",
+      currentWorld: "Cell",
+      baselineRev: { Cell: 0, Human: 0, Astro: 0 },
+      lastAppliedRev: { Cell: 0, Human: 0, Astro: 0 },
+      ws: null,
+      connected: false,
+      capabilities: null,
+      wsMsgCount: 0,
+      lastResyncMs: null,
+      lastDeltaMs: null,
+      reconnectAttempts: 0,
+      maxReconnectAttempts: 8,
+      selectedEntity: null,
+      entitiesByWorld: { Cell: new Map(), Human: new Map(), Astro: new Map() },
+      perceptionByWorld: { Cell: new Map(), Human: new Map(), Astro: new Map() },
+      weatherStations: new Map(), // station -> { path, data, mesh }
+      alerts: new Map(),          // alertId -> { path, data }
+      heartbeatTimer: null,
+      pulses: [],
+      worldGroups: { Cell: null, Human: null, Astro: null, Pulses: null },
+      airports: [],
+      selectedAirport: null, // { icao, name, lat, lon }
+      airportMarker: null,
+      airportRing: null,
+      // ATC rendering controls
+      uiFlags: {
+        showTrails: false,
+        showWeather: false,
+        showDanger: false,
+        showVectors: true,
+        showFlowTracers: false, // tracers intentionally "loop" through history; off by default to avoid misleading motion
+        showLabels: false,
+        streamsMode: true,
+        altBand: -1, // -1: all, 0:0-5k, 1:5-15k, 2:15-30k, 3:30k+
+        immersive: false,
+      },
+      declutterPinned: new Set(), // keys of uiFlags pinned across mode switches
+      declutter: {
+        maxVectorPx: 55,
+        // Entropy budgets (tokens) expressed as strict caps.
+        // Global: calm, low-entropy; Tower/TRACON: higher budget; RSS: separate overlay.
+        vectorTopNGlobal: 25,
+        vectorTopNTower: 60,
+        labelTopNGlobal: 10,
+        labelTopNTower: 25,
+        trailTopNGlobal: 0,
+        trailTopNTower: 1, // selected only by default (breadcrumbs)
+        trailSeconds: 35,
+        aoiNmGlobal: 120,
+        aoiNmTower: 25,
+      },
+      rss: {
+        enabled: false,
+        timeOffsetSec: 0.0, // positive = look further ahead (compress time forward)
+        flip: false,
+        hoverId: null,
+        lockId: null,
+        lastDrawMs: 0,
+      },
+      tracon: {
+        enabled: false,
+        rangeNm: 40,
+        hoverId: null,
+        lockId: null,
+        lastDrawMs: 0,
+      },
+      track: new Map(), // path -> { lastSampleTs, lastSamplePos:{x,y,z}, vel:{x,y,z}, samples:[{ts,x,y,z}], trailLine }
+      lastTrailUpdateMs: 0,
+      corridorAnchors: null,
+      flowLog: [], // ring buffer of recent WS delta summaries
+      ingressEvents: [], // ring buffer of recent ingress accepts/rejects
+      lastMark: null, // { world, id, ts_ms }
+      lastReject: null, // { ts_ms, ts, pack_id, code }
+      cameraMode: 0, // 0=global, 1=corridor, 2=airport bubble, 3=traffic fit
+      cameraDesired: { pos: null, target: null, near: null, far: null },
+      cameraAuto: true, // when true, smoothly move toward cameraDesired; cancelled on user interaction
+      globalMode: false, // when true, render on Earth globe using lat/lon instead of flat local plane
+      marksByWorld: { Cell: [], Human: [], Astro: [] }, // { id, born, mesh, ring }
+    };
+
+    function atcModeKey() {
+      if (state.globalMode) return 'global';
+      if (state.cameraMode === 2) return 'tower';
+      if (state.cameraMode === 1) return 'corridor';
+      return 'traffic';
+    }
+
+    function applyDeclutterDefaultsForMode(mode) {
+      const pinned = state.declutterPinned || new Set();
+      const setIfUnpinned = (k, v) => { if (!pinned.has(k)) state.uiFlags[k] = v; };
+      if (mode === 'global') {
+        setIfUnpinned('showTrails', false);
+        setIfUnpinned('showDanger', false);
+        setIfUnpinned('showWeather', false);
+        setIfUnpinned('showVectors', true);
+        setIfUnpinned('showLabels', false);
+      } else if (mode === 'tower') {
+        setIfUnpinned('showTrails', false);
+        setIfUnpinned('showDanger', false);
+        setIfUnpinned('showWeather', true);
+        setIfUnpinned('showVectors', true);
+        setIfUnpinned('showLabels', false);
+      } else {
+        // Corridor/Traffic: conservative defaults.
+        setIfUnpinned('showTrails', false);
+        setIfUnpinned('showDanger', false);
+        setIfUnpinned('showWeather', true);
+        setIfUnpinned('showVectors', true);
+        setIfUnpinned('showLabels', false);
+      }
+      // Apply visibility of weather/hazards immediately.
+      for (const [_, mesh] of state.entitiesByWorld.Cell.entries()) {
+        if (!mesh || !mesh.userData) continue;
+        if (mesh.userData.type === 'atc_weather') mesh.visible = !!state.uiFlags.showWeather;
+        if (mesh.userData.type === 'hazard_curtain') mesh.visible = !!state.uiFlags.showDanger;
+      }
+    }
+
+    function togglePinnedFlag(key, nextValue, pin) {
+      state.uiFlags[key] = nextValue;
+      if (pin) {
+        if (state.declutterPinned.has(key)) state.declutterPinned.delete(key);
+        else state.declutterPinned.add(key);
+      }
+    }
+
+    function updateDockLayout() {
+      // Immersive mode overrides the dock layout completely.
+      if (document.body.classList.contains('immersive')) {
+        const root = document.documentElement;
+        root.style.setProperty('--dock-left', '0px');
+        root.style.setProperty('--dock-right', '0px');
+        root.style.setProperty('--dock-bottom', '0px');
+        root.style.setProperty('--worldbar-width', '0px');
+        onResize();
+        return;
+      }
+      const root = document.documentElement;
+      const leftCollapsed = ui.providerPanel.classList.contains('collapsed');
+      const rightCollapsed = ui.statusPanel.classList.contains('collapsed');
+      root.style.setProperty('--dock-left', leftCollapsed ? '52px' : '360px');
+      root.style.setProperty('--dock-right', rightCollapsed ? '52px' : '320px');
+      root.style.setProperty('--dock-bottom', '48px');
+      if (ui.dockProviderPill) ui.dockProviderPill.textContent = leftCollapsed ? '▸' : '◂';
+      if (ui.dockStatusPill) ui.dockStatusPill.textContent = rightCollapsed ? '▸' : '◂';
+      if (ui.flowLog) ui.flowLog.style.display = rightCollapsed ? 'none' : 'block';
+      if (ui.ingressLog) ui.ingressLog.style.display = rightCollapsed ? 'none' : 'block';
+      // In collapsed mode, show the latest flow summary so "energy" is visible without opening panels.
+      const hint = document.getElementById('flow-log-hint');
+      if (hint) {
+        const last = state.flowLog.length ? state.flowLog[state.flowLog.length - 1] : null;
+        hint.textContent = rightCollapsed
+          ? (last ? `rev=${last.rev} ops=${last.ops}` : '…')
+          : 'expand →';
+      }
+      const ih = document.getElementById('ingress-log-hint');
+      if (ih) {
+        const last = state.ingressEvents.length ? state.ingressEvents[state.ingressEvents.length - 1] : null;
+        ih.textContent = rightCollapsed
+          ? (last ? String(last.note || '…') : '…')
+          : 'expand →';
+      }
+    }
+
+    function setRssEnabled(on) {
+      state.rss.enabled = !!on;
+      if (ui.rss) ui.rss.style.display = state.rss.enabled ? 'block' : 'none';
+      // Safety Space is an ATC projection; keep the 3D scope available underneath, but in practice RSS is primary.
+      if (state.rss.enabled) {
+        // Make the viewport unobstructed by default, but keep tiny HUD.
+        setImmersive(true);
+        controls.enabled = false;
+      } else {
+        setImmersive(false);
+        controls.enabled = true;
+      }
+      updateCounts();
+    }
+
+    function setTraconEnabled(on) {
+      state.tracon.enabled = !!on;
+      if (ui.tracon) ui.tracon.style.display = state.tracon.enabled ? 'block' : 'none';
+      if (state.tracon.enabled) {
+        setImmersive(true);
+        controls.enabled = false;
+      } else {
+        setImmersive(false);
+        controls.enabled = true;
+      }
+      updateCounts();
+    }
+
+    function setPrimaryView(id) {
+      // Mutually exclusive primary views.
+      if (id === 'rss') {
+        setTraconEnabled(false);
+        setRssEnabled(true);
+        return;
+      }
+      if (id === 'tracon') {
+        setRssEnabled(false);
+        setTraconEnabled(true);
+        return;
+      }
+      // 3D views
+      setRssEnabled(false);
+      setTraconEnabled(false);
+    }
+
+    function setImmersive(on) {
+      state.uiFlags.immersive = !!on;
+      document.body.classList.toggle('immersive', state.uiFlags.immersive);
+      if (state.uiFlags.immersive) {
+        ui.weatherInspector?.classList?.remove('visible');
+        ui.inspector?.classList?.remove('visible');
+      }
+      updateDockLayout();
+    }
+
+    function haversineM(lat1, lon1, lat2, lon2) {
+      const R = 6371000.0;
+      const toRad = (d) => (d * Math.PI) / 180.0;
+      const φ1 = toRad(lat1), φ2 = toRad(lat2);
+      const dφ = toRad(lat2 - lat1);
+      const dλ = toRad(lon2 - lon1);
+      const a = Math.sin(dφ / 2) ** 2 + Math.cos(φ1) * Math.cos(φ2) * Math.sin(dλ / 2) ** 2;
+      return 2 * R * Math.asin(Math.min(1, Math.sqrt(a)));
+    }
+
+    function localENMeters(lat0, lon0, lat, lon) {
+      // Deterministic local tangent approximation around airport (good for <= ~200nm).
+      const mPerDegLat = 111320.0;
+      const mPerDegLon = 111320.0 * Math.cos((lat0 * Math.PI) / 180.0);
+      const east = (lon - lon0) * mPerDegLon;
+      const north = (lat - lat0) * mPerDegLat;
+      return { east, north };
+    }
+
+    function median(nums) {
+      const a = nums.filter((x) => typeof x === 'number' && Number.isFinite(x)).slice().sort((x, y) => x - y);
+      if (!a.length) return null;
+      const mid = Math.floor(a.length / 2);
+      return a.length % 2 ? a[mid] : (a[mid - 1] + a[mid]) / 2;
+    }
+
+    function renderRssOverlay() {
+      if (!state.rss.enabled || !ui.rss) return;
+      const now = performance.now();
+      // Limit redraw rate; overlay is informational and should not burn CPU.
+      if (now - state.rss.lastDrawMs < 33) return;
+      state.rss.lastDrawMs = now;
+
+      const canvas2 = ui.rss;
+      const ctx = canvas2.getContext('2d');
+      if (!ctx) return;
+      const rect = document.getElementById('canvas-container').getBoundingClientRect();
+      const w = Math.max(1, Math.floor(rect.width));
+      const h = Math.max(1, Math.floor(rect.height));
+      if (canvas2.width !== w || canvas2.height !== h) {
+        canvas2.width = w;
+        canvas2.height = h;
+      }
+
+      // Background
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = 'rgba(10,14,39,0.92)';
+      ctx.fillRect(0, 0, w, h);
+
+      const ap = state.selectedAirport;
+      if (!ap || typeof ap.lat !== 'number' || typeof ap.lon !== 'number') {
+        ctx.fillStyle = 'rgba(191,255,224,0.9)';
+        ctx.font = '14px Courier New, monospace';
+        ctx.fillText('RUNWAY SAFETY SPACE: select an airport in DATA → AIRPORT (ATC)', 18, 28);
+        return;
+      }
+
+      // Pull inbound aircraft around airport (truth only).
+      const aircraft = [];
+      for (const m of (state.entitiesByWorld.Cell || new Map()).values()) {
+        if (!m?.userData || m.userData.type !== 'atc_aircraft') continue;
+        const lat = m.userData['gaiaos:lat'];
+        const lon = m.userData['gaiaos:lon'];
+        const alt = m.userData['gaiaos:alt_m'];
+        const gs = m.userData['gaiaos:ground_speed_mps'];
+        const trk = m.userData['gaiaos:track_deg'];
+        if (typeof lat !== 'number' || typeof lon !== 'number') continue;
+        if (typeof gs !== 'number' || !Number.isFinite(gs) || gs < 25) continue;
+        const distM = haversineM(lat, lon, ap.lat, ap.lon);
+        const distNm = distM / 1852.0;
+        if (distNm > state.declutter.aoiNmGlobal) continue;
+        // Heuristic inbound check (truthful: just a filter, not a claim).
+        let inbound = true;
+        if (typeof trk === 'number') {
+          const brg = bearingDeg(lat, lon, ap.lat, ap.lon);
+          inbound = angleDiffDeg(trk, brg) <= 70;
+        }
+        if (!inbound) continue;
+
+        const rel = localENMeters(ap.lat, ap.lon, lat, lon);
+        aircraft.push({
+          id: String(m.userData.callsign || m.userData.path || ''),
+          mesh: m,
+          lat, lon, altm: (typeof alt === 'number' ? alt : 0),
+          gs, trk,
+          east: rel.east,
+          north: rel.north,
+          distM,
+        });
+      }
+
+      // Infer runway axis direction from inbound set (average direction from airport toward aircraft).
+      let ax = 1, ay = 0; // east,north
+      if (aircraft.length >= 3) {
+        let sx = 0, sy = 0, n = 0;
+        for (const a of aircraft) {
+          const r = Math.hypot(a.east, a.north);
+          if (r < 2000) continue;
+          sx += a.east / r;
+          sy += a.north / r;
+          n++;
+        }
+        if (n > 0) {
+          const r = Math.hypot(sx, sy);
+          if (r > 1e-6) { ax = sx / r; ay = sy / r; }
+        }
+      }
+      if (state.rss.flip) { ax = -ax; ay = -ay; }
+      const px = -ay, py = ax; // perpendicular
+
+      // Compute along/cross, time-to-threshold, and energy deviation
+      const spds = aircraft.map((a) => a.gs);
+      const medGs = median(spds) ?? 70.0;
+      const glideDeg = 3.0; // default profile used for error visualization (not a claim)
+      const tanG = Math.tan((glideDeg * Math.PI) / 180.0);
+      const entries = [];
+      for (const a of aircraft) {
+        const along = a.east * ax + a.north * ay;   // meters outward along inferred runway axis
+        const cross = a.east * px + a.north * py;   // meters cross-track
+        const alongPos = Math.max(0, along);
+        const tThresh = alongPos / Math.max(30, a.gs); // seconds
+        const expectedAlt = tanG * alongPos;
+        const altErr = a.altm - expectedAlt;
+        const spdErr = a.gs - medGs;
+        entries.push({ ...a, alongPos, cross, tThresh, expectedAlt, altErr, spdErr });
+      }
+
+      // Safety space frame
+      const pad = 22;
+      const spineY = Math.floor(h * 0.52);
+      const leftX = pad;
+      const rightX = w - pad;
+      const topY = pad;
+      const botY = h - pad;
+
+      // Axis labels
+      ctx.font = '12px Courier New, monospace';
+      ctx.fillStyle = 'rgba(191,255,224,0.92)';
+      ctx.fillText(`RUNWAY SAFETY SPACE  AP:${String(ap.icao)}  scrub:${state.rss.timeOffsetSec.toFixed(0)}s  dir:${state.rss.flip ? 'REV' : 'NORM'}`, leftX, topY + 12);
+      ctx.fillStyle = 'rgba(74,158,255,0.85)';
+      ctx.fillText('time → threshold (s)', leftX, spineY - 12);
+      ctx.save();
+      ctx.translate(leftX + 10, spineY + 0);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText('energy deviation (speed/alt/cross)', 0, 0);
+      ctx.restore();
+
+      // Spine
+      ctx.strokeStyle = 'rgba(54,255,107,0.30)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(leftX, spineY);
+      ctx.lineTo(rightX, spineY);
+      ctx.stroke();
+
+      const MAX_T = 180; // seconds shown on the spine
+      const timeToX = (t) => {
+        const tt = Math.max(0, Math.min(MAX_T, t));
+        const u = 1.0 - (tt / MAX_T);
+        return leftX + u * (rightX - leftX);
+      };
+
+      // Tick marks
+      ctx.strokeStyle = 'rgba(74,158,255,0.25)';
+      ctx.lineWidth = 1;
+      for (const t of [0, 30, 60, 90, 120, 150, 180]) {
+        const x = timeToX(t);
+        ctx.beginPath();
+        ctx.moveTo(x, spineY - 10);
+        ctx.lineTo(x, spineY + 10);
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(74,158,255,0.7)';
+        ctx.fillText(String(t), x - 8, spineY + 26);
+      }
+
+      // Sort by time and mark closure conflicts (spacing)
+      const sorted = entries.slice().sort((a, b) => (a.tThresh - b.tThresh));
+      const MIN_SEP = 60; // seconds (visual safety contract)
+      const conflict = new Set();
+      for (let i = 1; i < sorted.length; i++) {
+        const dt = Math.abs(sorted[i].tThresh - sorted[i - 1].tThresh);
+        if (dt < MIN_SEP) {
+          conflict.add(sorted[i].mesh);
+          conflict.add(sorted[i - 1].mesh);
+        }
+      }
+
+      // Energy mapping
+      const crossMax = 3500; // meters for normalization (visual)
+      const altMax = 600;    // meters
+      const spdMax = 35;     // m/s
+      const energyY = (altErr, cross, spdErr) => {
+        const yAlt = Math.max(-1, Math.min(1, altErr / altMax));
+        const yCross = Math.max(-1, Math.min(1, cross / crossMax));
+        const ySpd = Math.max(-1, Math.min(1, spdErr / spdMax));
+        return (0.55 * yAlt) + (0.30 * yCross) + (0.15 * ySpd);
+      };
+      const yToPx = (y) => spineY - y * (Math.min(spineY - topY, botY - spineY) * 0.78);
+
+      // Draw funnels + packets
+      const mouseId = state.rss.hoverId;
+      const lockId = state.rss.lockId;
+      const focusOne = (lockId || mouseId);
+      const drawSet = focusOne ? entries.filter((e) => e.id === focusOne) : entries.slice(0, 120);
+
+      for (const e of drawSet) {
+        const t = Math.max(0, e.tThresh - state.rss.timeOffsetSec);
+        const x = timeToX(t);
+        const y = energyY(e.altErr, e.cross, e.spdErr);
+
+        // Funnel width shrinks toward threshold (time 0).
+        const frac = 1.0 - (Math.max(0, Math.min(MAX_T, t)) / MAX_T);
+        const w0 = 0.85; // far
+        const w1 = 0.18; // near
+        const fw = w0 + (w1 - w0) * frac;
+        const inside = Math.abs(y) <= fw;
+        const marginal = Math.abs(y) <= fw * 1.15;
+        const isConflict = conflict.has(e.mesh);
+
+        // Funnel (only show for hover/lock or near threshold)
+        const showFunnel = (focusOne && e.id === focusOne) || t < 90;
+        if (showFunnel) {
+          ctx.fillStyle = inside ? 'rgba(54,255,107,0.10)' : (marginal ? 'rgba(255,176,0,0.10)' : 'rgba(255,51,51,0.12)');
+          const yTop = yToPx(+fw);
+          const yBot = yToPx(-fw);
+          ctx.fillRect(x - 8, yTop, 16, (yBot - yTop));
+        }
+
+        // Packet marker
+        const px0 = x;
+        const py0 = yToPx(y);
+        let col = inside ? '#36ff6b' : (marginal ? '#ffb000' : '#ff3333');
+        const q = String(e.mesh.userData?.['gaiaos:pos_quality'] || 'fresh');
+        if (q === 'stale' && inside) col = '#2bd0c8';
+        if (q === 'estimated') col = '#ffb000';
+        if (isConflict) col = '#ff3333';
+
+        ctx.beginPath();
+        ctx.fillStyle = col;
+        ctx.arc(px0, py0, (e.id === focusOne ? 6 : 3.8), 0, Math.PI * 2);
+        ctx.fill();
+
+        if (e.id === focusOne) {
+          // Data block
+          ctx.fillStyle = 'rgba(191,255,224,0.95)';
+          ctx.font = '12px Courier New, monospace';
+          const alt = fmtAltFt(e.altm);
+          const gs = fmtGsKt(e.gs);
+          ctx.fillText(`${e.id}  ${alt}  GS ${gs}`, px0 + 10, py0 - 10);
+          ctx.fillStyle = 'rgba(74,158,255,0.85)';
+          ctx.fillText(`t=${Math.round(t)}s  cross=${Math.round(e.cross)}m  altΔ=${Math.round(e.altErr)}m`, px0 + 10, py0 + 6);
+        }
+      }
+
+      // Hint line
+      ctx.fillStyle = 'rgba(74,158,255,0.85)';
+      ctx.font = '11px Courier New, monospace';
+      ctx.fillText('wheel: scrub time  ·  click: lock packet  ·  R: flip direction  ·  `: exit', leftX, h - 12);
+    }
+
+    function showToast(text, ms) {
+      if (!ui.toast) return;
+      ui.toast.textContent = String(text || '');
+      ui.toast.style.display = 'block';
+      const ttl = typeof ms === 'number' ? ms : 4000;
+      if (ui.toast._timer) clearTimeout(ui.toast._timer);
+      ui.toast._timer = setTimeout(() => {
+        ui.toast.style.display = 'none';
+      }, ttl);
+    }
+
+    function pushIngressEvent(evt) {
+      const e = Object.assign({ ts: Date.now(), note: '', kind: 'event' }, evt || {});
+      state.ingressEvents.push(e);
+      if (state.ingressEvents.length > 20) state.ingressEvents.shift();
+      renderIngressLog();
+    }
+
+    function renderIngressLog() {
+      if (!ui.ingressLog) return;
+      const lines = state.ingressEvents
+        .slice(-20)
+        .map((e) => {
+          const t = new Date(e.ts || Date.now()).toISOString();
+          const c = e.kind === 'reject' ? '#ff6b7a' : '#00ff88';
+          return `<div><span style="color:#4a9eff;">${escapeHtml(t)}</span> <span style="color:${c};">${escapeHtml(e.kind || 'event')}</span> ${escapeHtml(e.note || '')}</div>`;
+        });
+      ui.ingressLog.innerHTML = lines.join('');
+      updateDockLayout();
+    }
+
+    function pushFlowLog(entry) {
+      state.flowLog.push(entry);
+      if (state.flowLog.length > 25) state.flowLog.shift();
+      if (!ui.flowLog) return;
+      const lines = state.flowLog
+        .slice(-12)
+        .map((e) => `rev=${e.rev} ops=${e.ops} ts=${new Date(e.ts).toISOString()} ${e.note || ''}`.trim());
+      ui.flowLog.innerHTML = lines.map((l) => `<div>${escapeHtml(l)}</div>`).join('');
+
+      const ticker = document.getElementById('flow-ticker');
+      if (ticker) {
+        const lastTwo = state.flowLog.slice(-2).map((e) => `rev=${e.rev} ${e.note || ''}`.trim());
+        ticker.innerHTML = lastTwo.map((l) => `<div>${escapeHtml(l)}</div>`).join('');
+      }
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function togglePanel(panelEl) {
+      panelEl.classList.toggle('collapsed');
+      updateDockLayout();
+      onResize();
+    }
+
+    function onResize() {
+      const rect = document.getElementById('canvas-container').getBoundingClientRect();
+      camera.aspect = rect.width / rect.height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(rect.width, rect.height);
+      labelRenderer.setSize(rect.width, rect.height);
+    }
+
+    function apiUrl(path) {
+      return (state.baseUrl || "") + path;
+    }
+
+    function wsUrl(path) {
+      const base = state.baseUrl || window.location.origin;
+      const u = new URL(base);
+      u.protocol = (u.protocol === 'https:') ? 'wss:' : 'ws:';
+      u.pathname = path;
+      u.search = '';
+      u.hash = '';
+      return u.toString();
+    }
+
+    function setConnected(on) {
+      state.connected = on;
+      ui.statusEl.className = on ? 'connected' : 'disconnected';
+      ui.connectionStatus.textContent = on ? 'Connected' : 'Disconnected';
+      if (on) ui.loading.classList.add('hidden');
+    }
+
+    function safeDisplayValue(v) {
+      if (v === null || v === undefined) return 'null';
+      if (typeof v === 'number') return Number.isFinite(v) ? v.toFixed(2) : String(v);
+      if (typeof v === 'boolean') return v ? 'true' : 'false';
+      if (typeof v === 'object') {
+        try { return JSON.stringify(v); } catch { return '[unstringifiable]'; }
+      }
+      return String(v);
+    }
+
+    async function loadCells() {
+      const res = await fetch('/public/cells.json', { cache: 'no-store' });
+      const payload = await res.json();
+      const cells = Array.isArray(payload.cells) ? payload.cells : [];
+      ui.cellSelect.innerHTML = '';
+      for (const c of cells) {
+        const opt = document.createElement('option');
+        opt.value = c.id || c.label || 'cell';
+        opt.textContent = c.label || c.id || 'cell';
+        opt.dataset.baseUrl = c.base_url || '';
+        ui.cellSelect.appendChild(opt);
+      }
+      const first = ui.cellSelect.options[0];
+      if (first) {
+        state.cellId = first.value;
+        state.baseUrl = first.dataset.baseUrl || "";
+        ui.currentCell.textContent = state.cellId;
+      }
+    }
+
+    async function loadAirports() {
+      try {
+        const res = await fetch('/public/airports.json', { cache: 'no-store' });
+        const payload = await res.json();
+        const airports = Array.isArray(payload.airports) ? payload.airports : [];
+        // Normalize + sort by ICAO.
+        state.airports = airports
+          .filter((a) => a && typeof a.icao === 'string' && typeof a.lat === 'number' && typeof a.lon === 'number')
+          .map((a) => ({ icao: String(a.icao).toUpperCase(), name: String(a.name || a.icao), lat: a.lat, lon: a.lon }))
+          .sort((a, b) => a.icao.localeCompare(b.icao));
+
+        ui.airportSelect.innerHTML = '';
+        const empty = document.createElement('option');
+        empty.value = '';
+        empty.textContent = 'Select airport…';
+        ui.airportSelect.appendChild(empty);
+
+        for (const a of state.airports) {
+          const opt = document.createElement('option');
+          opt.value = a.icao;
+          opt.textContent = `${a.icao} — ${a.name}`;
+          ui.airportSelect.appendChild(opt);
+        }
+
+        // Optional: query param airport=KJFK
+        const aq = (new URLSearchParams(window.location.search).get('airport') || '').toUpperCase().trim();
+        if (aq) {
+          const found = state.airports.find((x) => x.icao === aq);
+          if (found) {
+            ui.airportSelect.value = found.icao;
+            selectAirport(found);
+          }
+        }
+      } catch {
+        // best effort; leave dropdown empty
+      }
+    }
+
+    function selectAirport(a) {
+      state.selectedAirport = a || null;
+      if (!a) return;
+      // Use the existing lat/lon projector (Human weather) for a consistent, deterministic view.
+      const p = equirectangularProject(a.lat, a.lon);
+
+      // Airport selection sets the ATC region + anchor markers, but does NOT force the camera into a local bubble.
+      // Use corridor focus (F) for the NE-wide view, and the Focus button for selected entities.
+      ensureCellAtcAnchors();
+      ensureCorridorAnchors();
+      updateRevDisplay();
+
+      // Marker + ring in Cell group.
+      const g = state.worldGroups.Cell;
+      if (state.airportMarker) g.remove(state.airportMarker);
+      if (state.airportRing) g.remove(state.airportRing);
+
+      const markerGeom = new THREE.CylinderGeometry(6, 6, 30, 16);
+      const markerMat = new THREE.MeshStandardMaterial({ color: 0x00ff88, emissive: 0x00ff88, emissiveIntensity: 0.3 });
+      const marker = new THREE.Mesh(markerGeom, markerMat);
+      marker.position.set(p.x, p.y + 15, p.z);
+      marker.userData = { world: 'Cell', type: 'airport', icao: a.icao, name: a.name, lat: a.lat, lon: a.lon };
+
+      const labelDiv = document.createElement('div');
+      labelDiv.className = 'entity-label';
+      labelDiv.textContent = a.icao;
+      const label = new CSS2DObject(labelDiv);
+      label.position.set(0, 24, 0);
+      marker.add(label);
+      g.add(marker);
+      state.airportMarker = marker;
+
+      const ringGeom = new THREE.RingGeometry(280, 300, 96);
+      const ringMat = new THREE.MeshBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.12, side: THREE.DoubleSide });
+      const ring = new THREE.Mesh(ringGeom, ringMat);
+      ring.rotation.x = -Math.PI / 2;
+      ring.position.set(p.x, 0.2, p.z);
+      ring.userData = { world: 'Cell', type: 'airport_radius', icao: a.icao };
+      g.add(ring);
+      state.airportRing = ring;
+
+      // Tell the backend which ATC region to query (real providers use this as scope).
+      // This is an operator configuration action (perception), persisted append-only.
+      const opBase = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()));
+      const body = {
+        world: 'Cell',
+        provenance: { source: "ClientUICell", operator: "operator", ts_ms: Date.now() },
+        ops: [
+          { op: "SetAttr", op_id: opBase + "-p", path: "/GaiaOS/UI/ATC/Region", name: "gaiaos:corridor", valueType: "string", value: "NE_FULL" },
+          { op: "SetAttr", op_id: opBase + "-a", path: "/GaiaOS/UI/ATC/Region", name: "gaiaos:airport", valueType: "string", value: a.icao },
+          { op: "SetAttr", op_id: opBase + "-b", path: "/GaiaOS/UI/ATC/Region", name: "gaiaos:center_wgs84", valueType: "float3", value: [a.lat, a.lon, 0.0] },
+          { op: "SetAttr", op_id: opBase + "-c", path: "/GaiaOS/UI/ATC/Region", name: "gaiaos:radius_km", valueType: "float", value: 150.0 },
+        ],
+      };
+      fetch(apiUrl('/perception'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }).catch(() => {});
+    }
+
+    async function loadCapabilities() {
+      const response = await fetch(apiUrl('/capabilities'), { cache: 'no-store' });
+      state.capabilities = await response.json();
+      if (state.capabilities && state.capabilities.current_rev) {
+        state.baselineRev = state.capabilities.current_rev;
+      }
+      updateProviderStatus();
+      updateRevDisplay();
+    }
+
+    function updateRevDisplay() {
+      const rev = state.baselineRev[state.currentWorld] || 0;
+      ui.currentRev.textContent = String(rev);
+    }
+
+    function updateWsMsgs() {
+      ui.wsMsgs.textContent = String(state.wsMsgCount);
+    }
+
+    function setLastResyncNow() {
+      state.lastResyncMs = Date.now();
+      updateLastTimes();
+    }
+
+    function setLastDeltaNow(tsMs) {
+      state.lastDeltaMs = tsMs || Date.now();
+      updateLastTimes();
+    }
+
+    function updateLastTimes() {
+      // Single UI field; show both so liveness is obvious even when resync doesn't happen.
+      const parts = [];
+      if (state.lastDeltaMs) parts.push(`Δ ${new Date(state.lastDeltaMs).toISOString()}`);
+      if (state.lastResyncMs) parts.push(`R ${new Date(state.lastResyncMs).toISOString()}`);
+      ui.lastResync.textContent = parts.length ? parts.join(' | ') : '-';
+    }
+
+    async function resync(worldHint) {
+      try {
+        await loadCapabilities();
+        if (worldHint && state.baselineRev[worldHint] != null) {
+          state.lastAppliedRev[worldHint] = state.baselineRev[worldHint];
+        }
+        setLastResyncNow();
+      } catch {
+        // ignore (best effort)
+      }
+    }
+
+    function updateProviderStatus() {
+      const caps = state.capabilities || {};
+      const ps = caps.provider_status || {};
+      const providers = [
+        { key: 'atc_adsb', label: 'ATC ADS-B (AIRCRAFT)', cost: 'free', enabled: !!caps.atc_adsb, status: ps.atc_adsb },
+        { key: 'atc_metar', label: 'ATC METAR (AIRPORT)', cost: 'free', enabled: !!caps.atc_metar, status: ps.atc_metar },
+        { key: 'aviation_weather', label: 'AVIATION WEATHER', cost: 'free', enabled: !!caps.aviation_weather, status: ps.aviation_weather },
+        { key: 'noaa_weather', label: 'NOAA WEATHER', cost: 'free', enabled: !!caps.noaa_weather, status: ps.noaa_nws },
+        { key: 'earth_engine', label: 'EARTH ENGINE', cost: 'paid', enabled: !!caps.earth_engine, status: null },
+      ];
+      let html = '';
+      for (const p of providers) {
+        const className = p.enabled ? 'provider-enabled' : (p.cost === 'paid' ? 'provider-paid' : 'provider-disabled');
+        const mark = p.enabled ? '✓' : '✗';
+        html += `<div class="provider-row">
+          <span class="${className}">${mark} ${p.label}</span>
+          <span class="${className}">${p.cost}</span>
+        </div>`;
+      }
+      ui.providerList.innerHTML = html;
+    }
+
+    function connectWebSocket() {
+      const url = wsUrl('/ws/usd-deltas');
+      state.ws = new WebSocket(url);
+      state.ws.onopen = () => {
+        setConnected(true);
+        state.reconnectAttempts = 0;
+        // heartbeat (clear old timers on reconnect to avoid interval leak)
+        if (state.heartbeatTimer) clearInterval(state.heartbeatTimer);
+        state.heartbeatTimer = setInterval(() => {
+          if (state.ws && state.ws.readyState === WebSocket.OPEN) {
+            state.ws.send(JSON.stringify({ type: 'ping' }));
+          }
+        }, 30000);
+      };
+      state.ws.onclose = () => {
+        setConnected(false);
+        if (state.heartbeatTimer) {
+          clearInterval(state.heartbeatTimer);
+          state.heartbeatTimer = null;
+        }
+        // best-effort reconnect
+        if (state.reconnectAttempts < state.maxReconnectAttempts) {
+          const delay = Math.min(1000 * Math.pow(2, state.reconnectAttempts), 30000);
+          state.reconnectAttempts++;
+          setTimeout(async () => {
+            await resync(state.currentWorld);
+            connectWebSocket();
+          }, delay);
+        }
+      };
+      state.ws.onerror = () => setConnected(false);
+      state.ws.onmessage = (event) => {
+        try {
+          const msg = JSON.parse(event.data);
+          handleMessage(msg);
+        } catch {
+          // ignore
+        }
+      };
+    }
+
+    function handleMessage(msg) {
+      if (msg.type === 'usd_deltas') {
+        handleUsdDeltas(msg);
+      } else if (msg.type === 'perception_ops' && msg.not_truth === true) {
+        handlePerceptionOps(msg);
+        try {
+          pushIngressEvent({
+            kind: 'accept',
+            ts: typeof msg.ts === 'number' ? msg.ts : Date.now(),
+            note: `perception_ok world=${String(msg.world || state.currentWorld || 'Astro')} op_id=${String(msg.op_id || '-')}`,
+          });
+        } catch {}
+      } else if (msg.type === 'tick') {
+        handleTick(msg);
+      } else if (msg.type === 'perception_rejected') {
+        const pack = msg.pack_id || '-';
+        const rid = msg.op_id || msg.payload_digest || '-';
+        const v0 = Array.isArray(msg.violations_preview) && msg.violations_preview[0] ? msg.violations_preview[0] : null;
+        const field = v0 && v0.name ? ` field=${v0.name}` : '';
+        const code = v0 && v0.code ? ` code=${v0.code}` : '';
+        const text = `Rejected: ${msg.reason || 'invariant_reject'} pack=${pack}${field}${code}`;
+        showToast(text, 4000);
+        try {
+          state.lastReject = { ts_ms: msg.ts_ms || Date.now(), ts: msg.ts || null, pack_id: pack, code: v0 && v0.code ? v0.code : '-' };
+          if (ui.lastReject) {
+            const when = msg.ts ? String(msg.ts) : new Date(state.lastReject.ts_ms).toISOString();
+            ui.lastReject.textContent = `${String(pack)} ${String(state.lastReject.code)} ${when}`;
+          }
+        } catch {}
+        try {
+          pushIngressEvent({
+            kind: 'reject',
+            ts: typeof msg.ts_ms === 'number' ? msg.ts_ms : Date.now(),
+            note: `perception_rejected world=${String(msg.world || state.currentWorld || 'Astro')} pack=${String(pack)} op_id=${String(rid)}`,
+          });
+        } catch {}
+      }
+    }
+
+    function spawnPulse(notTruth) {
+      const geom = new THREE.SphereGeometry(4, 12, 12);
+      const color = notTruth ? 0xff9933 : 0x00ff88;
+      const mat = new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 0.2, transparent: true, opacity: 0.8 });
+      const mesh = new THREE.Mesh(geom, mat);
+      const p = controls.target || new THREE.Vector3(0,0,0);
+      mesh.position.set(p.x, p.y, p.z);
+      if (state.worldGroups.Pulses) state.worldGroups.Pulses.add(mesh);
+      else scene.add(mesh);
+      state.pulses.push({ mesh, born: Date.now() });
+    }
+
+    function handleTick(msg) {
+      const world = msg.world || state.currentWorld || 'Astro';
+      const rev = typeof msg.rev === 'number' ? msg.rev : 0;
+      // tick is a liveness heartbeat; does not imply state change.
+      state.baselineRev[world] = Math.max(state.baselineRev[world] || 0, rev);
+      if (world === state.currentWorld) updateRevDisplay();
+      state.wsMsgCount += 1;
+      updateWsMsgs();
+      setLastDeltaNow(typeof msg.ts === 'number' ? msg.ts : Date.now());
+      spawnPulse(false);
+    }
+
+    function handleUsdDeltas(msg) {
+      const world = msg.world || 'Astro';
+      const rev = typeof msg.rev === 'number' ? msg.rev : 0;
+      const last = state.lastAppliedRev[world] || 0;
+      const baseline = state.baselineRev[world] || 0;
+      if (rev < baseline) return;
+      if (last && rev > (last + 1)) {
+        // gap detected: resync baseline (best effort)
+        resync(world);
+      }
+      state.lastAppliedRev[world] = Math.max(last, rev);
+      state.baselineRev[world] = Math.max(baseline, rev);
+      if (world === state.currentWorld) updateRevDisplay();
+
+      const ops = Array.isArray(msg.ops) ? msg.ops : [];
+      // Record the streaming "energy" of the substrate: each delta batch is an observable event.
+      try {
+        const counts = { aircraft: 0, weather: 0, stations: 0, hazards: 0 };
+        const samples = { ac: [], st: [], wx: [], haz: [] };
+        for (const op of ops) {
+          const p = String(op?.path || '');
+          if (p.includes('/Perception/Aircraft/')) {
+            counts.aircraft++;
+            if (samples.ac.length < 2) samples.ac.push(p);
+          }
+          if (p.includes('/Perception/Stations/')) {
+            counts.stations++;
+            if (samples.st.length < 2) samples.st.push(p);
+          }
+          if (p.includes('/Perception/Weather/')) {
+            counts.weather++;
+            if (samples.wx.length < 2) samples.wx.push(p);
+            if (p.includes('/AIRSIGMET/')) {
+              counts.hazards++;
+              if (samples.haz.length < 2) samples.haz.push(p);
+            }
+          }
+        }
+        pushFlowLog({
+          ts: typeof msg.ts === 'number' ? msg.ts : Date.now(),
+          rev,
+          ops: ops.length,
+          note: `ac:${counts.aircraft} st:${counts.stations} wx:${counts.weather} haz:${counts.hazards}` +
+            (samples.ac.length ? ` acp:${samples.ac.map(s => s.split('/').slice(-2).join('/')).join(',')}` : '') +
+            (samples.st.length ? ` stp:${samples.st.map(s => s.split('/').slice(-1)[0]).join(',')}` : '') +
+            (samples.haz.length ? ` hazp:${samples.haz.map(s => s.split('/').slice(-2).join('/')).join(',')}` : ''),
+        });
+      } catch {}
+      // IMPORTANT: Truth ingestion must not depend on the currently-selected world.
+      // Server truth is often tagged as world=Cell; Human/Astro are alternate projections of the same truth.
+      // So for canonical Cell perception paths we apply ops to both Cell and Human render caches.
+      const applyWorlds = (op) => {
+        const p = String(op?.path || '');
+        if (p.includes('/Worlds/Cell/Perception/')) return ['Cell', 'Human'];
+        return [world];
+      };
+
+      const applyOpToWorld = (w, op) => {
+        if (!op || typeof op !== 'object') return;
+        if (op.op === 'SetAttr') {
+          handleSetAttr(op);
+          return;
+        }
+        if (op.op === 'UpsertPrim') {
+          handleUpsertPrim(w, op);
+          return;
+        }
+        if (op.op === 'RemovePrim') {
+          handleRemovePrim(w, op);
+          return;
+        }
+        if (op.op === 'SetXform') {
+          const path = op.path;
+          if (!path) return;
+          const wmap = state.entitiesByWorld[w] || state.entitiesByWorld.Astro;
+          if (!wmap.has(path)) {
+            handleUpsertPrim(w, { path });
+          }
+          const mesh = wmap.get(path);
+          if (mesh && Array.isArray(op.translate) && op.translate.length === 3) {
+            const nowMs = Date.now();
+            const tsMs = (typeof msg.ts === 'number') ? msg.ts : nowMs;
+            const x = op.translate[0], y = op.translate[1], z = op.translate[2];
+            // Track engine is global (keyed by path). Keep it updated regardless of the view/world we render.
+            if (String(path).includes('/Perception/Aircraft/')) {
+              const t = state.track.get(path) || { lastSampleTs: null, lastSamplePos: null, vel: { x: 0, y: 0, z: 0 }, samples: [], trailLine: null };
+              if (t.lastSampleTs != null && t.lastSamplePos != null) {
+                const dtRaw = (tsMs - t.lastSampleTs) / 1000.0;
+                // Guard against timestamp jitter/out-of-order frames: those create “looping” visuals.
+                if (dtRaw > 0.05 && dtRaw < 30.0) {
+                  const dt = dtRaw;
+                  const vx = (x - t.lastSamplePos.x) / dt;
+                  const vy = (y - t.lastSamplePos.y) / dt;
+                  const vz = (z - t.lastSamplePos.z) / dt;
+                  // Clamp to plausible speeds (visual stability; does not fabricate positions).
+                  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+                  t.vel = {
+                    x: clamp(vx, -600.0, 600.0),
+                    y: clamp(vy, -120.0, 120.0),
+                    z: clamp(vz, -600.0, 600.0),
+                  };
+                } else {
+                  // Too small/large dt -> don't update velocity; keep last stable estimate.
+                }
+              }
+              t.lastSampleTs = tsMs;
+              t.lastSamplePos = { x, y, z };
+              t.samples.push({ ts: tsMs, x, y, z });
+              const cutoff = tsMs - 180000;
+              while (t.samples.length > 2 && t.samples[0].ts < cutoff) t.samples.shift();
+              state.track.set(path, t);
+            }
+            mesh.position.set(x, y, z);
+          }
+          if (mesh && Array.isArray(op.scale) && op.scale.length === 3 && mesh.scale) {
+            mesh.scale.set(op.scale[0], op.scale[1], op.scale[2]);
+          }
+        }
+      };
+
+      for (const op of ops) {
+        for (const w of applyWorlds(op)) applyOpToWorld(w, op);
+      }
+
+      // Mirror rev into Human when truth is tagged as Cell so Human doesn't look "dead".
+      if (world === 'Cell') {
+        state.baselineRev.Human = Math.max(state.baselineRev.Human || 0, state.baselineRev.Cell || 0);
+        state.lastAppliedRev.Human = Math.max(state.lastAppliedRev.Human || 0, state.lastAppliedRev.Cell || 0);
+        if (state.currentWorld === 'Human') updateRevDisplay();
+      }
+      updateCounts();
+      state.wsMsgCount += 1;
+      updateWsMsgs();
+      setLastDeltaNow(typeof msg.ts === 'number' ? msg.ts : Date.now());
+      spawnPulse(false);
+    }
+
+    function handlePerceptionOps(msg) {
+      const world = msg.world || state.currentWorld || 'Astro';
+      const rev = typeof msg.rev === 'number' ? msg.rev : 0;
+      // perception participates in rev, but is not truth; still monotonic for UI.
+      state.baselineRev[world] = Math.max(state.baselineRev[world] || 0, rev);
+      state.lastAppliedRev[world] = Math.max(state.lastAppliedRev[world] || 0, rev);
+      if (world === state.currentWorld) updateRevDisplay();
+
+      const ops = Array.isArray(msg.ops) ? msg.ops : [];
+      for (const op of ops) {
+        if (!op || typeof op !== 'object') continue;
+        if (op.op === 'UpsertPrim') {
+          upsertPerceptionPrim(world, op.path, msg);
+        } else if (op.op === 'SetXform') {
+          upsertPerceptionPrim(world, op.path, msg);
+          const mesh = state.perceptionByWorld[world].get(op.path);
+          if (mesh && Array.isArray(op.translate) && op.translate.length === 3) {
+            mesh.position.set(op.translate[0], op.translate[1], op.translate[2]);
+          }
+        } else if (op.op === 'SetAttr') {
+          upsertPerceptionPrim(world, op.path, msg);
+          const mesh = state.perceptionByWorld[world].get(op.path);
+          if (mesh) mesh.userData[op.name] = op.value;
+        }
+      }
+      // Track last mark for HUD (perception-only).
+      const mark = ops.find((o) => o && o.op === 'UpsertPrim' && String(o.path || '').includes('/Perception/Marks/'));
+      if (mark) {
+        const id = String(mark.path || '').split('/').pop() || '';
+        state.lastMark = { world, id, ts_ms: Date.now() };
+      }
+      updateCounts();
+      state.wsMsgCount += 1;
+      updateWsMsgs();
+      setLastDeltaNow(typeof msg.ts === 'number' ? msg.ts : Date.now());
+      spawnPulse(true);
+    }
+
+    function upsertPerceptionPrim(world, path, msg) {
+      if (!path) return;
+      const m = state.perceptionByWorld[world] || state.perceptionByWorld.Astro;
+      if (m.has(path)) return;
+      let mesh;
+      if (String(path).includes('/Perception/Marks/')) {
+      // Mark = obvious pulse ring + pin (not truth). Must be distinct from hazards/weather/aircraft.
+        const group = new THREE.Group();
+        const pinGeom = new THREE.CylinderGeometry(2.0, 2.0, 30, 10);
+      const pinMat = new THREE.MeshStandardMaterial({ color: 0xaa66ff, emissive: 0xaa66ff, emissiveIntensity: 0.35, transparent: true, opacity: 0.95 });
+        const pin = new THREE.Mesh(pinGeom, pinMat);
+        pin.position.y = 15;
+        group.add(pin);
+        const ringGeom = new THREE.RingGeometry(18, 22, 64);
+      const ringMat = new THREE.MeshBasicMaterial({ color: 0xaa66ff, transparent: true, opacity: 0.55, side: THREE.DoubleSide });
+        const ring = new THREE.Mesh(ringGeom, ringMat);
+        ring.rotation.x = -Math.PI / 2;
+        ring.position.y = 0.25;
+        group.add(ring);
+        group.userData.__pulseRing = ring;
+        mesh = group;
+      } else {
+        const geom = new THREE.SphereGeometry(6, 16, 16);
+        const mat = new THREE.MeshStandardMaterial({ color: 0xff9933, emissive: 0xff9933, emissiveIntensity: 0.25, transparent: true, opacity: 0.85 });
+        mesh = new THREE.Mesh(geom, mat);
+      }
+      mesh.userData = {
+        path,
+        world,
+        not_truth: true,
+        provenance: msg.provenance || {},
+      };
+      const g = state.worldGroups[world] || state.worldGroups.Astro;
+      if (g) g.add(mesh);
+      else scene.add(mesh);
+      m.set(path, mesh);
+    }
+
+    function handleUpsertPrim(world, op) {
+      if (!op.path) return;
+      const wmap = state.entitiesByWorld[world] || state.entitiesByWorld.Astro;
+      if (wmap.has(op.path)) return;
+      // Fields are visualized by SetAttr, not by generic boxes
+      if (String(op.path).includes('/Fields/')) return;
+
+      // Cell world: ATC primitives
+      const pathStr = String(op.path);
+      let mesh;
+      if (world === 'Cell' && pathStr.includes('/Perception/Stations/')) {
+        // ATC station pin (operational): pin + label; rings (IFR/MVFR) are driven by SetAttr visibility.
+        const group = new THREE.Group();
+        const pinGeom = new THREE.CylinderGeometry(2.5, 2.5, 26, 10);
+        const pinMat = new THREE.MeshStandardMaterial({ color: 0x00ff88, emissive: 0x00ff88, emissiveIntensity: 0.25 });
+        const pin = new THREE.Mesh(pinGeom, pinMat);
+        pin.position.y = 13;
+        pin.name = 'station_pin';
+        group.add(pin);
+
+        const headGeom = new THREE.SphereGeometry(4.2, 12, 12);
+        const headMat = new THREE.MeshStandardMaterial({ color: 0x00ff88, emissive: 0x00ff88, emissiveIntensity: 0.2 });
+        const head = new THREE.Mesh(headGeom, headMat);
+        head.position.y = 28;
+        head.name = 'station_head';
+        group.add(head);
+
+        const station = pathStr.split('/').pop();
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'entity-label';
+        labelDiv.textContent = station;
+        const label = new CSS2DObject(labelDiv);
+        label.position.set(0, 34, 0);
+        label.visible = !!state.uiFlags.showLabels;
+        group.add(label);
+        group.userData.station = station;
+        group.userData.type = 'atc_station';
+        group.userData.__label = label;
+        mesh = group;
+      } else if (world === 'Cell' && pathStr.includes('/Perception/Weather/')) {
+        // Weather markers (must not resemble aircraft): flat disc + subtle vertical column.
+        const group = new THREE.Group();
+        const discGeom = new THREE.RingGeometry(18, 26, 64);
+        const discMat = new THREE.MeshBasicMaterial({ color: 0x4a9eff, transparent: true, opacity: 0.22, side: THREE.DoubleSide });
+        const disc = new THREE.Mesh(discGeom, discMat);
+        disc.rotation.x = -Math.PI / 2;
+        disc.position.y = 0.25;
+        group.add(disc);
+        const colGeom = new THREE.CylinderGeometry(3.5, 3.5, 60, 12);
+        const colMat = new THREE.MeshStandardMaterial({ color: 0x4a9eff, emissive: 0x1a3a7a, emissiveIntensity: 0.15, transparent: true, opacity: 0.12 });
+        const col = new THREE.Mesh(colGeom, colMat);
+        col.position.y = 30;
+        group.add(col);
+        group.userData.__disc = disc;
+        group.userData.__col = col;
+        mesh = group;
+        mesh.userData.type = 'atc_weather';
+        mesh.visible = !!state.uiFlags.showWeather;
+      } else if (world === 'Cell' && pathStr.includes('/Perception/Aircraft/')) {
+        // Modern ATC symbology: chevron glyph + velocity vector (no external assets, no models).
+        // Rotation is applied by track_deg; velocity vector uses ground_speed_mps when present.
+        const group = new THREE.Group();
+        group.userData.type = 'atc_aircraft';
+
+        const shape = new THREE.Shape();
+        shape.moveTo(0, 10);
+        shape.lineTo(-6, -10);
+        shape.lineTo(0, -4);
+        shape.lineTo(6, -10);
+        shape.lineTo(0, 10);
+        const geom = new THREE.ShapeGeometry(shape);
+        geom.rotateX(-Math.PI / 2); // lay flat on XZ plane
+        // ATC plan-view symbol: outlined + slightly larger so it does not read as a dot.
+        // Color is updated per-frame based on quality + selection (do not use white for targets).
+        const mat = new THREE.MeshBasicMaterial({ color: 0x36ff6b, transparent: true, opacity: 0.98, side: THREE.DoubleSide });
+        const glyph = new THREE.Mesh(geom, mat);
+        glyph.name = 'aircraft_glyph';
+        glyph.userData = group.userData;
+        glyph.scale.set(1.9, 1.0, 1.9);
+        // Outline (simple duplicated mesh) for crispness without external assets.
+        const outlineMat = new THREE.MeshBasicMaterial({ color: 0x06101a, transparent: true, opacity: 0.85, side: THREE.DoubleSide });
+        const outline = new THREE.Mesh(geom, outlineMat);
+        outline.name = 'aircraft_outline';
+        outline.rotation.copy(glyph.rotation);
+        outline.position.y = -0.05;
+        outline.scale.set(2.35, 1.0, 2.35);
+        group.add(outline);
+        group.add(glyph);
+
+        // Selection/hover halo (ATC scope semantics).
+        const haloGeom = new THREE.RingGeometry(14, 18, 64);
+        const haloMat = new THREE.MeshBasicMaterial({ color: 0x36ff6b, transparent: true, opacity: 0.0, side: THREE.DoubleSide });
+        const halo = new THREE.Mesh(haloGeom, haloMat);
+        halo.name = 'aircraft_halo';
+        halo.rotation.x = -Math.PI / 2;
+        halo.position.y = 0.12;
+        halo.visible = false;
+        group.add(halo);
+
+        const vGeom = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -40)]);
+        // Vectors must read as ATC intent, not “spokes”; keep faint.
+        const vMat = new THREE.LineBasicMaterial({ color: 0x87c6ff, transparent: true, opacity: 0.28 });
+        const vLine = new THREE.Line(vGeom, vMat);
+        vLine.name = 'velocity_vector';
+        vLine.position.y = 0.2;
+        group.add(vLine);
+
+        const callsign = pathStr.split('/').pop();
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'entity-label';
+        labelDiv.textContent = callsign;
+        const label = new CSS2DObject(labelDiv);
+        label.position.set(0, 26, 0);
+        label.visible = false; // declutter: hover/selected only
+        label.name = 'aircraft_label';
+        group.add(label);
+        group.userData.__label = label;
+        group.userData.__labelDiv = labelDiv;
+        group.userData.__glyph = glyph;
+        group.userData.__vel = vLine;
+        group.userData.__outline = outline;
+        group.userData.__halo = halo;
+        group.userData.callsign = callsign;
+        mesh = group;
+      } else if (pathStr.includes('/Perception/Marks/')) {
+        // Perception marks: always visible, per-world overlay.
+        const group = new THREE.Group();
+        const pinGeom = new THREE.CylinderGeometry(2.0, 2.0, 30, 10);
+        const pinMat = new THREE.MeshStandardMaterial({ color: 0xaa66ff, emissive: 0xaa66ff, emissiveIntensity: 0.35, transparent: true, opacity: 0.95 });
+        const pin = new THREE.Mesh(pinGeom, pinMat);
+        pin.position.y = 15;
+        group.add(pin);
+
+        const ringGeom = new THREE.RingGeometry(18, 22, 64);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0xaa66ff, transparent: true, opacity: 0.55, side: THREE.DoubleSide });
+        const ring = new THREE.Mesh(ringGeom, ringMat);
+        ring.rotation.x = -Math.PI / 2;
+        ring.position.y = 0.25;
+        ring.userData = { world, type: 'mark_ring', path: op.path };
+        group.add(ring);
+
+        group.userData.type = 'perception_mark';
+        group.userData.not_truth = true;
+        group.userData.__markRing = ring;
+        mesh = group;
+      } else {
+        const geom = new THREE.BoxGeometry(10, 10, 10);
+        const mat = new THREE.MeshStandardMaterial({ color: 0x4a9eff, emissive: 0x4a9eff, emissiveIntensity: 0.2 });
+        mesh = new THREE.Mesh(geom, mat);
+      }
+      mesh.userData = { ...(mesh.userData || {}), path: op.path, world };
+      mesh.position.set(0, 5, 0);
+      const g = state.worldGroups[world] || state.worldGroups.Astro;
+      if (g) g.add(mesh);
+      else scene.add(mesh);
+      wmap.set(op.path, mesh);
+    }
+
+    function handleRemovePrim(world, op) {
+      if (!op.path) return;
+      const wmap = state.entitiesByWorld[world] || state.entitiesByWorld.Astro;
+      const ent = wmap.get(op.path);
+      if (ent) {
+        const g = state.worldGroups[world] || state.worldGroups.Astro;
+        if (g) g.remove(ent);
+        else scene.remove(ent);
+        wmap.delete(op.path);
+      }
+      // Track cleanup (trails + state) for ATC aircraft.
+      if (world === 'Cell' && String(op.path).includes('/Perception/Aircraft/')) {
+        const t = state.track.get(op.path);
+        if (t && t.trailLine) {
+          (state.worldGroups.Cell || scene).remove(t.trailLine);
+          try { t.trailLine.geometry.dispose(); } catch {}
+        }
+        if (t && t.__tracer) {
+          (state.worldGroups.Cell || scene).remove(t.__tracer);
+          try { t.__tracer.geometry.dispose?.(); } catch {}
+        }
+        state.track.delete(op.path);
+      }
+    }
+
+    function handleSetAttr(op) {
+      const path = String(op.path || '');
+      if (path.includes('/Worlds/Human/Fields/METAR/')) {
+        handleMetarUpdate(path, op);
+        return;
+      }
+      if (path.includes('/Worlds/Human/Fields/Alerts/')) {
+        handleAlertUpdate(path, op);
+        return;
+      }
+      // generic attribute on an entity mesh
+      for (const world of ['Cell','Human','Astro']) {
+        const wmap = state.entitiesByWorld[world];
+        const mesh = wmap.get(path);
+        if (mesh) {
+          mesh.userData[op.name] = op.value;
+          // ATC aircraft visual quality (fresh vs stale vs estimated)
+          if (world === 'Cell' && mesh.userData?.type === 'atc_aircraft' && op.name === 'gaiaos:pos_quality') {
+            const q = String(op.value || '');
+            const glyph = mesh.userData?.__glyph || mesh;
+            const mat = glyph?.material;
+            if (mat) {
+              // Fresh: solid bright. Stale: ghosted. Estimated: wireframe + amber.
+              if (q === 'fresh') {
+                mat.transparent = true;
+                mat.opacity = 1.0;
+                mat.color = new THREE.Color(0xffffff);
+              } else if (q === 'stale') {
+                mat.transparent = true;
+                mat.opacity = 0.25;
+                mat.color = new THREE.Color(0xffffff);
+              } else if (q === 'estimated') {
+                mat.transparent = true;
+                mat.opacity = 0.35;
+                mat.color = new THREE.Color(0xffcc00);
+              }
+            }
+          }
+          // Station wind vectors (only when real wind_dir_deg exists).
+          if (world === 'Cell' && mesh.userData?.type === 'atc_station' && (op.name === 'gaiaos:wind_dir_deg' || op.name === 'gaiaos:wind_speed')) {
+            try {
+              const dir = Number(mesh.userData['gaiaos:wind_dir_deg']);
+              const spd = Number(mesh.userData['gaiaos:wind_speed']);
+              if (!Number.isFinite(dir) || !Number.isFinite(spd)) break;
+              let arrow = mesh.userData.__windArrow;
+              if (!arrow) {
+                const geom = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -1)]);
+                const mat = new THREE.LineBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.65 });
+                arrow = new THREE.Line(geom, mat);
+                arrow.position.y = 10;
+                mesh.add(arrow);
+                mesh.userData.__windArrow = arrow;
+              }
+              const len = Math.min(80, Math.max(10, spd * 2.0));
+              // Wind direction is FROM; vector points TO (add 180°).
+              const rad = THREE.MathUtils.degToRad((dir + 180) % 360);
+              arrow.rotation.y = rad;
+              arrow.scale.set(len, 1, len);
+              arrow.visible = true;
+            } catch {}
+          }
+          break;
+        }
+      }
+
+      // Cell-world danger rendering: build hazard curtains from AIRSIGMET polygon metadata.
+      if (path.includes('/Worlds/Cell/Perception/Weather/AIRSIGMET/') && op.name === 'gaiaos:poly_wgs84') {
+        const wmap = state.entitiesByWorld.Cell;
+        const base = wmap.get(path);
+        if (!base) return;
+        try {
+          const poly = JSON.parse(String(op.value || '[]'));
+          if (!Array.isArray(poly) || poly.length < 3) return;
+          const pts = poly
+            .filter(p => Array.isArray(p) && p.length >= 2)
+            .map(p => equirectangularProject(Number(p[0]), Number(p[1])))
+            .map(p => new THREE.Vector2(p.x, p.z));
+          if (pts.length < 3) return;
+          const shape = new THREE.Shape(pts);
+          const geom = new THREE.ExtrudeGeometry(shape, { depth: 180, bevelEnabled: false, steps: 1 });
+          const mat = new THREE.MeshBasicMaterial({ color: 0xff9933, transparent: true, opacity: 0.18, side: THREE.DoubleSide });
+          const curtain = new THREE.Mesh(geom, mat);
+          curtain.rotation.x = -Math.PI / 2;
+          curtain.position.y = 10;
+          curtain.visible = !!state.uiFlags.showDanger;
+          curtain.userData = { world: 'Cell', type: 'hazard_curtain', path };
+          // Replace any old curtain child.
+          if (base.userData.__hazardCurtain) {
+            try { (state.worldGroups.Cell || scene).remove(base.userData.__hazardCurtain); } catch {}
+          }
+          (state.worldGroups.Cell || scene).add(curtain);
+          base.userData.__hazardCurtain = curtain;
+        } catch {
+          // ignore parse errors
+        }
+      }
+
+      // METAR danger-first visuals on station pins (VFR/MVFR/IFR by visibility if present).
+      if (path.includes('/Worlds/Cell/Perception/Stations/') && op.name === 'gaiaos:visibility') {
+        const mesh = state.entitiesByWorld.Cell.get(path);
+        if (mesh && mesh.userData?.type === 'atc_station') {
+          const v = Number(op.value);
+          if (!Number.isFinite(v)) return;
+          // Visibility thresholds (miles) vary; we treat input as-is and apply conservative cutoffs.
+          const isIFR = v < 3;
+          const isMVFR = v >= 3 && v < 5;
+          const color = isIFR ? 0xff6633 : (isMVFR ? 0xffcc00 : 0x00ff88);
+          // Color station pin/head (group children) for immediate category cue.
+          for (const ch of (mesh.children || [])) {
+            if (ch && ch.material && ch.material.color) {
+              ch.material.color.set(color);
+              ch.material.emissive?.set?.(color);
+            }
+          }
+          // Ring indicator (danger layer)
+          if (!mesh.userData.__ifrring) {
+            const ringGeom = new THREE.RingGeometry(24, 28, 48);
+            const ringMat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.22, side: THREE.DoubleSide });
+            const ring = new THREE.Mesh(ringGeom, ringMat);
+            ring.rotation.x = -Math.PI / 2;
+            ring.position.set(mesh.position.x, 0.2, mesh.position.z);
+            ring.visible = !!state.uiFlags.showDanger;
+            ring.userData = { world: 'Cell', type: 'ifrring', path };
+            (state.worldGroups.Cell || scene).add(ring);
+            mesh.userData.__ifrring = ring;
+          } else {
+            const ring = mesh.userData.__ifrring;
+            if (ring.material && ring.material.color) ring.material.color.set(color);
+            ring.position.set(mesh.position.x, 0.2, mesh.position.z);
+            ring.visible = !!state.uiFlags.showDanger;
+          }
+        }
+      }
+    }
+
+    function handleMetarUpdate(path, op) {
+      const m = path.match(/\/METAR\/([A-Z0-9]+)/);
+      if (!m) return;
+      const station = m[1];
+      if (!state.weatherStations.has(station)) {
+        state.weatherStations.set(station, { station, path, data: {}, mesh: null });
+      }
+      const st = state.weatherStations.get(station);
+      st.data[op.name] = op.value;
+
+      // Create/update a station marker only when we have real lat/lon attributes.
+      const lat = st.data['gaiaos:lat'];
+      const lon = st.data['gaiaos:lon'];
+      if (typeof lat === 'number' && typeof lon === 'number' && !st.mesh) {
+        st.mesh = createWeatherStationMarker(station, path, lat, lon);
+      }
+    }
+
+    function equirectangularProject(lat, lon) {
+      // Deterministic mapping (not synthetic data):
+      // meters-ish scale factor chosen only for visualization in the local Three.js scene.
+      const scale = 8000; // larger = more spread out
+      const x = (lon / 180.0) * scale;
+      const z = (-lat / 90.0) * scale;
+      return { x, y: 15, z };
+    }
+
+    function bearingDeg(lat1, lon1, lat2, lon2) {
+      const toRad = (d) => (d * Math.PI) / 180.0;
+      const toDeg = (r) => (r * 180.0) / Math.PI;
+      const φ1 = toRad(lat1), φ2 = toRad(lat2);
+      const Δλ = toRad(lon2 - lon1);
+      const y = Math.sin(Δλ) * Math.cos(φ2);
+      const x = Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ);
+      const θ = Math.atan2(y, x);
+      return (toDeg(θ) + 360) % 360;
+    }
+
+    function angleDiffDeg(a, b) {
+      const d = Math.abs(((a - b + 540) % 360) - 180);
+      return d;
+    }
+
+    function focusCorridor() {
+      // Full NE corridor framing (DC↔BOS), derived from corridor bounds below.
+      fitToCorridor();
+    }
+
+    function ensureCorridorAnchors() {
+      if (state.corridorAnchors) return;
+      const anchors = [
+        { icao: 'KDCA', lat: 38.8512, lon: -77.0402 },
+        { icao: 'KIAD', lat: 38.9531, lon: -77.4565 },
+        { icao: 'KBWI', lat: 39.1754, lon: -76.6684 },
+        { icao: 'KPHL', lat: 39.8744, lon: -75.2424 },
+        { icao: 'KEWR', lat: 40.6895, lon: -74.1745 },
+        { icao: 'KLGA', lat: 40.7769, lon: -73.8740 },
+        { icao: 'KJFK', lat: 40.6413, lon: -73.7781 },
+        { icao: 'KTEB', lat: 40.8501, lon: -74.0608 },
+        { icao: 'KBDL', lat: 41.9389, lon: -72.6832 },
+        { icao: 'KPVD', lat: 41.7263, lon: -71.4325 },
+        { icao: 'KBOS', lat: 42.3656, lon: -71.0096 },
+      ];
+      const group = new THREE.Group();
+      group.userData = { world: 'Cell', type: 'corridor_anchors' };
+      for (const a of anchors) {
+        const geom = new THREE.SphereGeometry(4, 10, 10);
+        const mat = new THREE.MeshStandardMaterial({ color: 0x4a9eff, emissive: 0x4a9eff, emissiveIntensity: 0.05, transparent: true, opacity: 0.35 });
+        const m = new THREE.Mesh(geom, mat);
+        const p = equirectangularProject(a.lat, a.lon);
+        m.position.set(p.x, p.y, p.z);
+        m.userData = { world: 'Cell', type: 'corridor_anchor', icao: a.icao, lat: a.lat, lon: a.lon };
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'entity-label';
+        labelDiv.textContent = a.icao;
+        const label = new CSS2DObject(labelDiv);
+        label.position.set(0, 10, 0);
+        label.visible = false;
+        m.add(label);
+        group.add(m);
+      }
+      (state.worldGroups.Cell || scene).add(group);
+      state.corridorAnchors = group;
+    }
+
+    function corridorBox() {
+      // Corridor envelope (DC/PHL → BOS) in projected scene units (no synthetic data; just framing).
+      const pts = [
+        equirectangularProject(38.4, -77.8),
+        equirectangularProject(42.9, -70.3),
+      ];
+      const minx = Math.min(pts[0].x, pts[1].x);
+      const maxx = Math.max(pts[0].x, pts[1].x);
+      const minz = Math.min(pts[0].z, pts[1].z);
+      const maxz = Math.max(pts[0].z, pts[1].z);
+      const box = new THREE.Box3(
+        new THREE.Vector3(minx, 0, minz),
+        new THREE.Vector3(maxx, 1200, maxz)
+      );
+      return box;
+    }
+
+    function computeCameraForBox(box, padding = 1.25, dirOverride = null) {
+      const size = new THREE.Vector3();
+      box.getSize(size);
+      const center = new THREE.Vector3();
+      box.getCenter(center);
+      const maxSize = Math.max(size.x, size.y, size.z);
+      const fitHeightDistance = maxSize / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
+      const fitWidthDistance = fitHeightDistance / camera.aspect;
+      const distance = padding * Math.max(fitHeightDistance, fitWidthDistance);
+      const dir = (dirOverride && dirOverride.isVector3) ? dirOverride.clone().normalize() : new THREE.Vector3(0.35, 0.75, 1.0).normalize();
+      const pos = center.clone().add(dir.multiplyScalar(distance));
+      const near = Math.max(0.1, distance / 100);
+      const far = distance * 100;
+      return { pos, target: center, near, far };
+    }
+
+    function trafficBoxForWorld(world) {
+      const wmap = state.entitiesByWorld[world] || new Map();
+      const box = new THREE.Box3();
+      let any = false;
+      for (const m of wmap.values()) {
+        if (!m || !m.userData) continue;
+        if (m.userData.type !== 'atc_aircraft') continue;
+        if (!m.visible) continue;
+        const p = m.position;
+        if (!p) continue;
+        box.expandByPoint(new THREE.Vector3(p.x, p.y, p.z));
+        any = true;
+      }
+      return any ? box : null;
+    }
+
+    function trafficBoxGlobe(world) {
+      const wmap = state.entitiesByWorld[world] || new Map();
+      const box = new THREE.Box3();
+      let any = false;
+      for (const m of wmap.values()) {
+        if (!m || !m.userData) continue;
+        if (m.userData.type !== 'atc_aircraft') continue;
+        const alat = m.userData['gaiaos:lat'];
+        const alon = m.userData['gaiaos:lon'];
+        const altm = m.userData['gaiaos:alt_m'];
+        if (typeof alat !== 'number' || typeof alon !== 'number') continue;
+        const p = latLonAltToGlobeXYZ(alat, alon, typeof altm === 'number' ? altm : 0.0);
+        box.expandByPoint(new THREE.Vector3(p.x, p.y, p.z));
+        any = true;
+      }
+      return any ? box : null;
+    }
+
+    function clampBox(inner, outer) {
+      const min = inner.min.clone();
+      const max = inner.max.clone();
+      min.x = Math.max(min.x, outer.min.x); min.y = Math.max(min.y, outer.min.y); min.z = Math.max(min.z, outer.min.z);
+      max.x = Math.min(max.x, outer.max.x); max.y = Math.min(max.y, outer.max.y); max.z = Math.min(max.z, outer.max.z);
+      return new THREE.Box3(min, max);
+    }
+
+    function fitToCorridor() {
+      const box = corridorBox();
+      setCameraDesiredFromBox(box);
+    }
+
+    function fitToTrafficOrCorridor() {
+      const corridor = corridorBox();
+      const tb = trafficBoxForWorld(state.currentWorld);
+      if (tb) {
+        setCameraDesiredFromBox(clampBox(tb, corridor));
+      } else {
+        setCameraDesiredFromBox(corridor);
+      }
+    }
+
+    function fitToGlobalTrafficOrEarth() {
+      const tb = trafficBoxGlobe(state.currentWorld);
+      if (tb) {
+        // Clamp to near-earth radius so one far point doesn't explode the camera.
+        setCameraDesiredFromBox(tb, 1.6);
+      } else {
+        state.cameraDesired.pos = new THREE.Vector3(0.25, 0.6, 1.0).normalize().multiplyScalar(EARTH_R_KM * 3.0);
+        state.cameraDesired.target = new THREE.Vector3(0, 0, 0);
+        state.cameraDesired.near = 10.0;
+        state.cameraDesired.far = EARTH_R_KM * 20.0;
+        state.cameraAuto = true;
+      }
+    }
+
+    function trafficCenterNear(p, maxDist) {
+      const wmap = state.entitiesByWorld.Cell || new Map();
+      let sx = 0, sy = 0, sz = 0, n = 0;
+      for (const m of wmap.values()) {
+        if (!m || !m.userData) continue;
+        if (m.userData.type !== 'atc_aircraft') continue;
+        if (!m.visible) continue;
+        const dx = m.position.x - p.x;
+        const dz = m.position.z - p.z;
+        const d = Math.sqrt(dx * dx + dz * dz);
+        if (d > maxDist) continue;
+        sx += m.position.x; sy += m.position.y; sz += m.position.z;
+        n++;
+      }
+      if (n < 6) return null;
+      return new THREE.Vector3(sx / n, sy / n, sz / n);
+    }
+
+    function fitToAirportBubble() {
+      const a = state.selectedAirport;
+      if (!a) return fitToCorridor();
+      const p = equirectangularProject(a.lat, a.lon);
+      // TOWER VIEW: place camera like a tower cab and look toward local traffic when present.
+      const airport = new THREE.Vector3(p.x, p.y, p.z);
+      const tc = trafficCenterNear(airport, 5200.0);
+      const target = (tc || new THREE.Vector3(p.x, 70, p.z)).clone();
+
+      const dir = target.clone().sub(airport);
+      dir.y = 0;
+      if (dir.length() < 1e-3) dir.set(0, 0, 1);
+      dir.normalize();
+      const perp = new THREE.Vector3(-dir.z, 0, dir.x);
+
+      // Visual-only tower pose (does not claim a real tower height).
+      const towerHeight = 95;
+      const back = 900;
+      const side = 240;
+      const pos = airport.clone()
+        .add(new THREE.Vector3(0, towerHeight, 0))
+        .sub(dir.clone().multiplyScalar(back))
+        .add(perp.clone().multiplyScalar(side));
+
+      state.cameraDesired.pos = pos;
+      state.cameraDesired.target = target;
+      state.cameraDesired.near = 0.5;
+      state.cameraDesired.far = 60000;
+      state.cameraAuto = true;
+    }
+
+    function setCameraDesiredFromBox(box, pad = 1.25, dirOverride = null) {
+      const c = computeCameraForBox(box, pad, dirOverride);
+      state.cameraDesired.pos = c.pos;
+      state.cameraDesired.target = c.target;
+      state.cameraDesired.near = c.near;
+      state.cameraDesired.far = c.far;
+      state.cameraAuto = true;
+    }
+
+    function nudgeCameraAltitude(deltaY) {
+      // Move both camera and target so orbit controls remain stable; clamp above ground plane.
+      const minY = 5;
+      camera.position.y = Math.max(minY, camera.position.y + deltaY);
+      controls.target.y = Math.max(0, controls.target.y + deltaY);
+      state.cameraAuto = false; // operator override
+      controls.update();
+    }
+
+    function nudgeFocal(dx, dz, scale = 1.0) {
+      // Move focal point (controls.target) on ground plane and move camera with it.
+      // This is the primary ATC “work the scope” control.
+      const forward = new THREE.Vector3();
+      camera.getWorldDirection(forward);
+      forward.y = 0;
+      if (forward.lengthSq() < 1e-6) forward.set(0, 0, -1);
+      forward.normalize();
+      const right = new THREE.Vector3().crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
+      const delta = new THREE.Vector3()
+        .addScaledVector(right, dx * scale)
+        .addScaledVector(forward, dz * scale);
+      controls.target.add(delta);
+      camera.position.add(delta);
+      state.cameraAuto = false;
+      controls.update();
+    }
+
+    function yawAroundTarget(rad) {
+      const t = controls.target.clone();
+      const p = camera.position.clone().sub(t);
+      const axis = new THREE.Vector3(0, 1, 0);
+      p.applyAxisAngle(axis, rad);
+      camera.position.copy(t.clone().add(p));
+      state.cameraAuto = false;
+      controls.update();
+    }
+
+    function zoomBy(amount) {
+      // Move camera along view vector, clamped by OrbitControls distances.
+      const t = controls.target.clone();
+      const dir = camera.position.clone().sub(t);
+      const dist = dir.length();
+      if (dist < 1e-3) return;
+      dir.normalize();
+      const next = Math.max(controls.minDistance, Math.min(controls.maxDistance, dist + amount));
+      camera.position.copy(t.add(dir.multiplyScalar(next)));
+      state.cameraAuto = false;
+      controls.update();
+    }
+
+    function applyCameraMode() {
+      if (state.currentWorld === 'Astro') return;
+      if (state.globalMode) return;
+      if (state.cameraMode === 1) fitToCorridor();
+      else if (state.cameraMode === 2) fitToAirportBubble();
+      else fitToTrafficOrCorridor();
+    }
+
+    function createWeatherStationMarker(station, path, lat, lon) {
+      const geom = new THREE.SphereGeometry(8, 16, 16);
+      const mat = new THREE.MeshStandardMaterial({ color: 0x00ff88, emissive: 0x00ff88, emissiveIntensity: 0.3 });
+      const mesh = new THREE.Mesh(geom, mat);
+      const p = equirectangularProject(lat, lon);
+      mesh.position.set(p.x, p.y, p.z);
+      mesh.userData = { path, type: 'weather_station', station, lat, lon };
+
+      const labelDiv = document.createElement('div');
+      labelDiv.className = 'entity-label';
+      labelDiv.textContent = station;
+      const label = new CSS2DObject(labelDiv);
+      label.position.set(0, 15, 0);
+      mesh.add(label);
+
+      scene.add(mesh);
+      state.entitiesByWorld.Human.set(path, mesh);
+      return mesh;
+    }
+
+    function handleAlertUpdate(path, op) {
+      const m = path.match(/\/Alerts\/([^\/]+)$/);
+      if (!m) return;
+      const alertId = m[1];
+      if (!state.alerts.has(alertId)) {
+        state.alerts.set(alertId, { id: alertId, path, data: {} });
+      }
+      const alert = state.alerts.get(alertId);
+      alert.data[op.name] = op.value;
+      if (op.name === 'gaiaos:severity' && String(op.value) === 'Severe') {
+        showAlert(alert);
+      }
+    }
+
+    function showAlert(alert) {
+      document.getElementById('alert-headline').textContent = alert.data['gaiaos:headline'] || 'Weather Alert';
+      document.getElementById('alert-description').textContent = alert.data['gaiaos:description'] || '';
+      document.getElementById('alert-banner').classList.add('visible');
+    }
+    window.closeAlert = function() {
+      document.getElementById('alert-banner').classList.remove('visible');
+    };
+
+    function updateCounts() {
+      const wmap = state.entitiesByWorld[state.currentWorld] || state.entitiesByWorld.Astro;
+      const pmap = state.perceptionByWorld[state.currentWorld] || state.perceptionByWorld.Astro;
+      ui.entityCount.textContent = String(wmap.size + pmap.size);
+      // Aircraft quality counts (fresh/stale/estimated) across the canonical Cell truth.
+      let f = 0, s = 0, e = 0;
+      for (const [_, mesh] of (state.entitiesByWorld.Cell || new Map()).entries()) {
+        if (!mesh || !mesh.userData || mesh.userData.type !== 'atc_aircraft') continue;
+        const q = String(mesh.userData['gaiaos:pos_quality'] || 'fresh');
+        if (q === 'fresh') f++;
+        else if (q === 'stale') s++;
+        else if (q === 'estimated') e++;
+      }
+      if (ui.aircraftCount) ui.aircraftCount.textContent = `${f}/${s}/${e}`;
+      // Count both Human METAR stations and Cell ATC stations (truthful counts).
+      let cellStations = 0;
+      for (const [_, mesh] of (state.entitiesByWorld.Cell || new Map()).entries()) {
+        if (mesh && mesh.userData && mesh.userData.type === 'atc_station') cellStations++;
+      }
+      ui.weatherStationCount.textContent = String(state.weatherStations.size + cellStations);
+      // Hazards (AIRMET/SIGMET curtains) in Cell truth.
+      let hazards = 0;
+      for (const [_, mesh] of (state.entitiesByWorld.Cell || new Map()).entries()) {
+        if (mesh && mesh.userData && mesh.userData.type === 'hazard_curtain') hazards++;
+      }
+      if (ui.hazardCount) ui.hazardCount.textContent = String(hazards);
+      ui.alertCount.textContent = String(state.alerts.size);
+
+      if (ui.modeFilters) {
+        const modeName = state.globalMode ? 'Global(0)' : (state.cameraMode === 1 ? 'Corridor(1)' : (state.cameraMode === 2 ? 'Tower(2)' : 'Traffic(3)'));
+        const alt = state.uiFlags.altBand === -1 ? 'ALT:ALL' : `ALT:${state.uiFlags.altBand}`;
+        const vec = state.uiFlags.showVectors ? 'VEC:ON' : 'VEC:OFF';
+        const dang = state.uiFlags.showDanger ? 'DNG:ON' : 'DNG:OFF';
+        const trc = state.uiFlags.showFlowTracers ? 'TRC:ON' : 'TRC:OFF';
+        const trl = state.uiFlags.showTrails ? 'TRL:ON' : 'TRL:OFF';
+        const wx = state.uiFlags.showWeather ? 'WX:ON' : 'WX:OFF';
+        const view = state.rss.enabled ? 'VIEW:RSS' : (state.tracon.enabled ? `VIEW:TRACON(${state.tracon.rangeNm}nm)` : 'VIEW:3D');
+        // Entropy budget hint: show how many “tokens” are active.
+        const vN = (() => {
+          if (!state.uiFlags.showVectors) return 0;
+          const mode = atcModeKey();
+          return mode === 'tower' ? state.declutter.vectorTopNTower : state.declutter.vectorTopNGlobal;
+        })();
+        const lN = (() => {
+          if (state.uiFlags.showLabels) return -1;
+          const mode = atcModeKey();
+          return mode === 'tower' ? state.declutter.labelTopNTower : state.declutter.labelTopNGlobal;
+        })();
+        const budget = state.rss.enabled ? 'BUDGET:RSS' : (state.tracon.enabled ? 'BUDGET:TRACON' : (state.globalMode ? 'BUDGET:GLOBAL' : (state.cameraMode === 2 ? 'BUDGET:TOWER' : 'BUDGET:RADAR')));
+        ui.modeFilters.textContent = `${modeName} ${view} ${budget} vecK=${vN} lblK=${lN < 0 ? 'ALL' : lN} ${alt} ${vec} ${trl} ${wx} ${dang} ${trc}`;
+      }
+      if (ui.lastMark) {
+        const lm = state.lastMark;
+        ui.lastMark.textContent = lm ? `${lm.world} ${lm.id.slice(0, 8)} @ ${new Date(lm.ts_ms).toISOString().slice(11, 19)}` : '-';
+      }
+      // Tiny immersive HUD (unobstructed scope but still shows mode/toggles).
+      const hud = document.getElementById('atc-hud');
+      if (hud) {
+        if (state.uiFlags.immersive) {
+          hud.style.display = 'block';
+          const a = state.selectedAirport?.icao ? String(state.selectedAirport.icao) : '-';
+          const mode = state.rss.enabled ? 'RSS' : (state.tracon.enabled ? `TRACON ${state.tracon.rangeNm}nm` : (state.globalMode ? 'Global' : (state.cameraMode === 2 ? 'Tower' : (state.cameraMode === 1 ? 'Corridor' : 'Traffic'))));
+          const vec = state.uiFlags.showVectors ? 'VEC' : 'vec';
+          const trl = state.uiFlags.showTrails ? 'TRL' : 'trl';
+          const wx = state.uiFlags.showWeather ? 'WX' : 'wx';
+          const haz = state.uiFlags.showDanger ? 'HZD' : 'hzd';
+          hud.textContent = `${mode}  AP:${a}  ${vec} ${trl} ${wx} ${haz}`;
+        } else {
+          hud.style.display = 'none';
+        }
+      }
+    }
+
+    function renderTraconOverlay() {
+      if (!state.tracon.enabled || !ui.tracon) return;
+      const now = performance.now();
+      if (now - state.tracon.lastDrawMs < 33) return;
+      state.tracon.lastDrawMs = now;
+
+      const canvas2 = ui.tracon;
+      const ctx = canvas2.getContext('2d');
+      if (!ctx) return;
+      const rect = document.getElementById('canvas-container').getBoundingClientRect();
+      const w = Math.max(1, Math.floor(rect.width));
+      const h = Math.max(1, Math.floor(rect.height));
+      if (canvas2.width !== w || canvas2.height !== h) {
+        canvas2.width = w;
+        canvas2.height = h;
+      }
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = 'rgba(10,14,39,0.92)';
+      ctx.fillRect(0, 0, w, h);
+
+      const ap = state.selectedAirport;
+      if (!ap || typeof ap.lat !== 'number' || typeof ap.lon !== 'number') {
+        ctx.fillStyle = 'rgba(191,255,224,0.9)';
+        ctx.font = '14px Courier New, monospace';
+        ctx.fillText('TRACON: select an airport in DATA → AIRPORT (ATC)', 18, 28);
+        return;
+      }
+
+      const cx = Math.floor(w * 0.52);
+      const cy = Math.floor(h * 0.56);
+      const pad = 26;
+      const rPx = Math.max(140, Math.min(Math.min(w, h) * 0.46, 520));
+      const rangeNm = Math.max(5, Math.min(160, state.tracon.rangeNm));
+      const mPerNm = 1852.0;
+      const mPerPx = (rangeNm * mPerNm) / rPx;
+
+      // Rings
+      ctx.strokeStyle = 'rgba(74,158,255,0.22)';
+      ctx.lineWidth = 1;
+      for (const rn of [5, 10, 20, 40, 60, 80, 120, 160]) {
+        if (rn > rangeNm) continue;
+        const rr = (rn / rangeNm) * rPx;
+        ctx.beginPath();
+        ctx.arc(cx, cy, rr, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(74,158,255,0.6)';
+        ctx.font = '11px Courier New, monospace';
+        ctx.fillText(`${rn}nm`, cx + rr + 6, cy + 4);
+      }
+
+      // Airport marker
+      ctx.fillStyle = '#36ff6b';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = 'rgba(191,255,224,0.95)';
+      ctx.font = '12px Courier New, monospace';
+      ctx.fillText(String(ap.icao), cx + 10, cy - 8);
+
+      // Aircraft
+      const ac = [];
+      for (const m of (state.entitiesByWorld.Cell || new Map()).values()) {
+        if (!m?.userData || m.userData.type !== 'atc_aircraft') continue;
+        const lat = m.userData['gaiaos:lat'];
+        const lon = m.userData['gaiaos:lon'];
+        const altm = m.userData['gaiaos:alt_m'];
+        const gs = m.userData['gaiaos:ground_speed_mps'];
+        const trk = m.userData['gaiaos:track_deg'];
+        if (typeof lat !== 'number' || typeof lon !== 'number') continue;
+        const dnm = haversineM(lat, lon, ap.lat, ap.lon) / mPerNm;
+        if (dnm > rangeNm) continue;
+        const en = localENMeters(ap.lat, ap.lon, lat, lon);
+        ac.push({ m, id: String(m.userData.callsign || m.userData.path || ''), east: en.east, north: en.north, altm, gs, trk, dnm });
+      }
+
+      // Declutter by salience (entropy budget): show only the most informative targets.
+      const apLL = { lat: ap.lat, lon: ap.lon };
+      const aoiRwu = nmToWorldUnits(state.declutter.aoiNmTower);
+      const hoverId = state.tracon.hoverId;
+      const lockId = state.tracon.lockId;
+      const selected = null;
+      const hoverMesh = hoverId ? ac.find((x) => x.id === hoverId)?.m : null;
+      const lockMesh = lockId ? ac.find((x) => x.id === lockId)?.m : null;
+      const scored = ac.map((a) => ({ a, s: salienceScore(a.m, apLL, aoiRwu, lockMesh, hoverMesh) })).sort((x, y) => y.s - x.s);
+      const top = scored.slice(0, 60).map((x) => x.a);
+      const focus = state.tracon.lockId || state.tracon.hoverId;
+      const draw = focus ? ac.filter((a) => a.id === focus) : top;
+
+      // Aggregate remainder into a density field (truthfully: counts of real targets).
+      const rest = focus ? [] : scored.slice(60).map((x) => x.a);
+      if (rest.length) {
+        const grid = new Map(); // key "gx,gy" -> count
+        const cell = 18; // px cell size
+        for (const a of rest) {
+          const x = cx + (a.east / mPerPx);
+          const y = cy - (a.north / mPerPx);
+          const gx = Math.floor(x / cell);
+          const gy = Math.floor(y / cell);
+          const key = `${gx},${gy}`;
+          grid.set(key, (grid.get(key) || 0) + 1);
+        }
+        for (const [key, cnt] of grid.entries()) {
+          const [gx, gy] = key.split(',').map((z) => Number(z));
+          const x = gx * cell;
+          const y = gy * cell;
+          const a = Math.min(0.35, 0.06 + (cnt / 18) * 0.25);
+          ctx.fillStyle = `rgba(74,158,255,${a.toFixed(3)})`;
+          ctx.fillRect(x, y, cell - 1, cell - 1);
+        }
+      }
+
+      // Headings / vectors (very short)
+      const showVec = !!state.uiFlags.showVectors;
+      for (const a of draw) {
+        const x = cx + (a.east / mPerPx);
+        const y = cy - (a.north / mPerPx);
+        const q = String(a.m.userData?.['gaiaos:pos_quality'] || 'fresh');
+        let col = '#36ff6b';
+        if (q === 'stale') col = '#2bd0c8';
+        if (q === 'estimated') col = '#ffb000';
+
+        // Target glyph (triangle)
+        const isFocus = focus && a.id === focus;
+        const size = isFocus ? 8 : 6;
+        const rad = (typeof a.trk === 'number') ? (a.trk * Math.PI / 180.0) : 0;
+        const dx = Math.sin(rad), dz = -Math.cos(rad);
+        const px0 = x, py0 = y;
+        ctx.fillStyle = col;
+        ctx.beginPath();
+        ctx.moveTo(px0 + dx * size, py0 + dz * size);
+        ctx.lineTo(px0 - dz * (size * 0.7), py0 + dx * (size * 0.7));
+        ctx.lineTo(px0 + dz * (size * 0.7), py0 - dx * (size * 0.7));
+        ctx.closePath();
+        ctx.fill();
+
+        if (showVec && typeof a.gs === 'number' && Number.isFinite(a.gs)) {
+          ctx.strokeStyle = 'rgba(54,255,107,0.35)';
+          if (q === 'stale') ctx.strokeStyle = 'rgba(43,208,200,0.35)';
+          if (q === 'estimated') ctx.strokeStyle = 'rgba(255,176,0,0.35)';
+          const pxCap = 50;
+          const vecLen = Math.min(pxCap, Math.max(12, (a.gs * 1.943844) * 0.25));
+          ctx.beginPath();
+          ctx.moveTo(px0, py0);
+          ctx.lineTo(px0 + dx * vecLen, py0 + dz * vecLen);
+          ctx.stroke();
+        }
+
+        // Label for focus
+        if (isFocus) {
+          ctx.fillStyle = 'rgba(191,255,224,0.95)';
+          ctx.font = '12px Courier New, monospace';
+          const alt = fmtAltFt(a.altm);
+          const gs = fmtGsKt(a.gs);
+          ctx.fillText(`${a.id}  ${alt}  GS ${gs}`, px0 + 10, py0 - 10);
+        }
+      }
+
+      // Cursor hint
+      ctx.fillStyle = 'rgba(74,158,255,0.85)';
+      ctx.font = '11px Courier New, monospace';
+      ctx.fillText('wheel: range · click: lock target · Esc: clear · 0/2/3 switch view', pad, h - 12);
+    }
+
+    function showWeatherInspector(station) {
+      const st = state.weatherStations.get(station);
+      if (!st) return;
+      const data = st.data;
+      let html = `<div class="weather-section"><div class="weather-label">Station Code:</div><div class="weather-value">${station}</div></div>`;
+      if (data['gaiaos:raw']) {
+        html += `<div class="weather-section"><div class="weather-label">Raw METAR:</div><div class="metar-raw">${safeDisplayValue(data['gaiaos:raw'])}</div></div>`;
+      }
+      if (typeof data['gaiaos:lat'] === 'number' && typeof data['gaiaos:lon'] === 'number') {
+        html += `<div class="weather-section"><div class="weather-label">Lat/Lon:</div><div class="weather-value">${data['gaiaos:lat'].toFixed(4)}, ${data['gaiaos:lon'].toFixed(4)}</div></div>`;
+      }
+      if (data['gaiaos:asset']) {
+        html += `<div class="weather-section"><div class="weather-label">Artifact:</div><div class="weather-value">${safeDisplayValue(data['gaiaos:asset'])}</div></div>`;
+      }
+      Object.entries(data).forEach(([k,v]) => {
+        if (['gaiaos:raw','gaiaos:asset','gaiaos:station','gaiaos:lat','gaiaos:lon'].includes(k)) return;
+        html += `<div class="weather-section"><div class="weather-label">${k}:</div><div class="weather-value">${safeDisplayValue(v)}</div></div>`;
+      });
+      ui.weatherContent.innerHTML = html;
+      ui.weatherInspector.classList.add('visible');
+    }
+
+    // Three.js setup
+    const canvas = document.getElementById('canvas');
+    // Make canvas focusable so keyboard controls are reliable.
+    canvas.tabIndex = 0;
+    canvas.addEventListener('pointerdown', () => canvas.focus(), { passive: true });
+    setTimeout(() => { try { canvas.focus(); } catch {} }, 0);
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0a0e27);
+
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100000);
+    camera.position.set(0, 300, 600);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    const initialRect = document.getElementById('canvas-container').getBoundingClientRect();
+    renderer.setSize(initialRect.width, initialRect.height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    const labelRenderer = new CSS2DRenderer();
+    labelRenderer.setSize(window.innerWidth, window.innerHeight);
+    labelRenderer.domElement.style.position = 'absolute';
+    labelRenderer.domElement.style.top = '0px';
+    labelRenderer.domElement.style.pointerEvents = 'none';
+    document.getElementById('canvas-container').appendChild(labelRenderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    // Make pointer interactions reliable across browsers/trackpads (OrbitControls recommendation).
+    renderer.domElement.style.touchAction = 'none';
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.minDistance = 50;
+    controls.maxDistance = 50000;
+    controls.enableRotate = true;
+    controls.enablePan = true;
+    controls.enableZoom = true;
+    controls.rotateSpeed = 1.0;
+    controls.zoomSpeed = 1.2;
+    controls.panSpeed = 1.0;
+    // ATC camera stability: keep horizon level and prevent flips under the plane.
+    controls.minPolarAngle = 0.15;
+    controls.maxPolarAngle = (Math.PI / 2) - 0.05;
+    camera.up.set(0, 1, 0);
+    // If the operator starts dragging/zooming, cancel auto camera so it doesn't feel like a loop.
+    controls.addEventListener('start', () => {
+      state.cameraAuto = false;
+    });
+    // Cursor feedback for controller ergonomics.
+    renderer.domElement.addEventListener('pointerdown', () => canvas.classList.add('grabbing'), { passive: true });
+    window.addEventListener('pointerup', () => canvas.classList.remove('grabbing'), { passive: true });
+
+    // Earth globe scaffold (global mode). Units: kilometers.
+    const EARTH_R_KM = 6371.0;
+    state.worldGroups.Globe = new THREE.Group();
+    state.worldGroups.Globe.visible = false;
+    scene.add(state.worldGroups.Globe);
+
+    function ensureEarthGlobe() {
+      const g = state.worldGroups.Globe;
+      if (g.userData.__earth) return;
+      g.userData.__earth = true;
+      const earthGeom = new THREE.SphereGeometry(EARTH_R_KM, 48, 48);
+      const earthMat = new THREE.MeshStandardMaterial({ color: 0x071b3a, emissive: 0x040c18, emissiveIntensity: 0.35, transparent: true, opacity: 0.98 });
+      const earth = new THREE.Mesh(earthGeom, earthMat);
+      earth.userData = { type: 'earth_globe' };
+      g.add(earth);
+
+      // Lat/lon grid rings (simple; no textures).
+      const ringMat = new THREE.LineBasicMaterial({ color: 0x4a9eff, transparent: true, opacity: 0.15 });
+      const makeCircle = (radius) => {
+        const pts = [];
+        for (let i = 0; i <= 256; i++) {
+          const a = (i / 256) * Math.PI * 2;
+          pts.push(new THREE.Vector3(Math.cos(a) * radius, 0, Math.sin(a) * radius));
+        }
+        return new THREE.BufferGeometry().setFromPoints(pts);
+      };
+      for (const r of [EARTH_R_KM * 1.01, EARTH_R_KM * 1.03, EARTH_R_KM * 1.05]) {
+        const line = new THREE.Line(makeCircle(r), ringMat);
+        line.userData = { type: 'globe_ring' };
+        g.add(line);
+      }
+    }
+
+    function latLonAltToGlobeXYZ(latDeg, lonDeg, altM) {
+      const lat = THREE.MathUtils.degToRad(latDeg);
+      const lon = THREE.MathUtils.degToRad(lonDeg);
+      const altKm = (typeof altM === 'number' && Number.isFinite(altM)) ? (altM / 1000.0) : 0.0;
+      const r = EARTH_R_KM + altKm;
+      const x = r * Math.cos(lat) * Math.cos(lon);
+      const z = -r * Math.cos(lat) * Math.sin(lon);
+      const y = r * Math.sin(lat);
+      return { x, y, z };
+    }
+
+    function setGlobalMode(on) {
+      state.globalMode = !!on;
+      ensureEarthGlobe();
+      state.worldGroups.Globe.visible = state.globalMode;
+      // In global mode we allow much larger zoom-out.
+      controls.maxDistance = state.globalMode ? 250000 : 50000;
+      controls.minDistance = state.globalMode ? 200 : 50;
+      // Camera mode 0 implies global; corridor modes stay for local plane.
+      if (state.globalMode) {
+        state.cameraMode = 0;
+        // Frame the whole Earth by default.
+        state.cameraDesired.pos = new THREE.Vector3(0.25, 0.6, 1.0).normalize().multiplyScalar(EARTH_R_KM * 3.0);
+        state.cameraDesired.target = new THREE.Vector3(0, 0, 0);
+        state.cameraDesired.near = 10.0;
+        state.cameraDesired.far = EARTH_R_KM * 20.0;
+        state.cameraAuto = true;
+      } else {
+        state.cameraMode = 1;
+        applyCameraMode();
+      }
+      updateCounts();
+    }
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+    const dl = new THREE.DirectionalLight(0xffffff, 0.8);
+    dl.position.set(200, 500, 200);
+    scene.add(dl);
+
+    const gridHelper = new THREE.GridHelper(20000, 80, 0x00ff88, 0x00ff88);
+    gridHelper.material.opacity = 0.12;
+    gridHelper.material.transparent = true;
+    scene.add(gridHelper);
+
+    // World groups: keep scenes separate so world switching is visually obvious.
+    state.worldGroups.Cell = new THREE.Group();
+    state.worldGroups.Human = new THREE.Group();
+    state.worldGroups.Astro = new THREE.Group();
+    state.worldGroups.Pulses = new THREE.Group();
+    scene.add(state.worldGroups.Cell);
+    scene.add(state.worldGroups.Human);
+    scene.add(state.worldGroups.Astro);
+    scene.add(state.worldGroups.Pulses);
+
+    function setWorldVisible(world) {
+      // In global mode, traffic should never disappear because of world switching.
+      if (state.globalMode) {
+        for (const w of ['Cell','Human','Astro']) {
+          state.worldGroups[w].visible = (w === 'Cell');
+        }
+        return;
+      }
+      for (const w of ['Cell','Human','Astro']) {
+        state.worldGroups[w].visible = (w === world);
+      }
+    }
+
+    function ensureCellAtcAnchors() {
+      const g = state.worldGroups.Cell;
+      if (g.userData.__atcAnchors) return;
+      g.userData.__atcAnchors = true;
+
+      // Origin crosshair
+      const crossMat = new THREE.LineBasicMaterial({ color: 0x00ff88, transparent: true, opacity: 0.7 });
+      const pts = [
+        new THREE.Vector3(-80, 0, 0), new THREE.Vector3(80, 0, 0),
+        new THREE.Vector3(0, 0, -80), new THREE.Vector3(0, 0, 80),
+      ];
+      const crossGeom = new THREE.BufferGeometry().setFromPoints(pts);
+      const cross = new THREE.LineSegments(crossGeom, crossMat);
+      cross.userData = { path: '/GaiaOS/Worlds/Cell/Anchors/OriginCross', world: 'Cell', kind: 'anchor' };
+      g.add(cross);
+
+      // Earth anchor sphere (simple, non-textured)
+      const earthGeom = new THREE.SphereGeometry(140, 32, 32);
+      const earthMat = new THREE.MeshStandardMaterial({ color: 0x0f2b66, emissive: 0x081329, emissiveIntensity: 0.25, transparent: true, opacity: 0.95 });
+      const earth = new THREE.Mesh(earthGeom, earthMat);
+      earth.position.set(0, -140, 0);
+      earth.userData = { path: '/GaiaOS/Worlds/Cell/Anchors/Earth', world: 'Cell', kind: 'earth_anchor' };
+      g.add(earth);
+
+      // Lat/lon-ish guide rings (lightweight visual scaffold)
+      for (const r of [160, 220, 300]) {
+        const ringGeom = new THREE.RingGeometry(r - 1, r + 1, 64);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0x4a9eff, transparent: true, opacity: 0.08, side: THREE.DoubleSide });
+        const ring = new THREE.Mesh(ringGeom, ringMat);
+        ring.rotation.x = -Math.PI / 2;
+        ring.position.y = 0.1;
+        ring.userData = { path: `/GaiaOS/Worlds/Cell/Anchors/Ring_${r}`, world: 'Cell', kind: 'anchor' };
+        g.add(ring);
+      }
+    }
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    let hoverEntity = null;
+
+    function setAircraftLabelVisible(obj, visible) {
+      if (!obj || obj.userData?.type !== 'atc_aircraft') return;
+      const lab = obj.userData.__label;
+      if (lab) lab.visible = !!visible;
+    }
+
+    function fmtAltFt(altm) {
+      if (typeof altm !== 'number' || !Number.isFinite(altm)) return '--';
+      const ft = altm / 0.3048;
+      if (ft >= 18000) return `FL${Math.round(ft / 100)}`;
+      return `${Math.round(ft / 100) * 100}`;
+    }
+
+    function fmtGsKt(spdMps) {
+      if (typeof spdMps !== 'number' || !Number.isFinite(spdMps)) return '--';
+      const kt = spdMps * 1.943844;
+      return `${Math.round(kt)}`;
+    }
+
+    canvas.addEventListener('mousemove', (event) => {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(mouse, camera);
+      const worldMeshes = [
+        ...Array.from((state.entitiesByWorld[state.currentWorld] || state.entitiesByWorld.Astro).values()),
+        ...Array.from((state.perceptionByWorld[state.currentWorld] || state.perceptionByWorld.Astro).values()),
+      ];
+      const hits = raycaster.intersectObjects(worldMeshes, true);
+      let next = null;
+      if (hits.length) {
+        let obj = hits[0].object;
+        while (obj.parent && !obj.userData?.path) obj = obj.parent;
+        next = obj;
+      }
+      if (next !== hoverEntity) {
+        // Hide old hover label (unless selected).
+        if (hoverEntity && hoverEntity !== state.selectedEntity) setAircraftLabelVisible(hoverEntity, false);
+        hoverEntity = next;
+        if (hoverEntity && hoverEntity !== state.selectedEntity) setAircraftLabelVisible(hoverEntity, true);
+      }
+    }, { passive: true });
+
+    canvas.addEventListener('click', (event) => {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(mouse, camera);
+
+      const worldMeshes = [
+        ...Array.from((state.entitiesByWorld[state.currentWorld] || state.entitiesByWorld.Astro).values()),
+        ...Array.from((state.perceptionByWorld[state.currentWorld] || state.perceptionByWorld.Astro).values()),
+      ];
+      const hits = raycaster.intersectObjects(worldMeshes, true);
+      if (!hits.length) {
+        if (state.selectedEntity) setAircraftLabelVisible(state.selectedEntity, false);
+        state.selectedEntity = null;
+        ui.weatherInspector.classList.remove('visible');
+        ui.inspector.classList.remove('visible');
+        ui.annotateBtn.disabled = true;
+        ui.focusBtn.disabled = true;
+        return;
+      }
+      let obj = hits[0].object;
+      while (obj.parent && !obj.userData?.path) obj = obj.parent;
+      state.selectedEntity = obj;
+      ui.annotateBtn.disabled = false;
+      ui.focusBtn.disabled = false;
+      if (obj.userData?.type === 'weather_station') {
+        showWeatherInspector(obj.userData.station);
+        showInspector(obj);
+      } else {
+        ui.weatherInspector.classList.remove('visible');
+        showInspector(obj);
+      }
+      // Declutter policy: show aircraft label only for selected (and hover).
+      if (obj.userData?.type === 'atc_aircraft') {
+        setAircraftLabelVisible(obj, true);
+      }
+    });
+
+    function showInspector(obj) {
+      const flags = [];
+      if (obj.userData?.not_truth === true) flags.push('not_truth=true');
+      ui.inspectorFlags.textContent = flags.length ? flags.join(' ') : '';
+
+      const entries = [];
+      const ud = obj.userData || {};
+      const keys = Object.keys(ud).sort();
+      for (const k of keys) {
+        const v = ud[k];
+        entries.push(`<div class="weather-section"><div class="weather-label">${k}:</div><div class="weather-value">${safeDisplayValue(v)}</div></div>`);
+      }
+      ui.inspectorContent.innerHTML = entries.join('') || '<div class="weather-value">No metadata</div>';
+      ui.inspector.classList.add('visible');
+    }
+
+    function capVectorToPixels(from, to, maxPx) {
+      const w = renderer.domElement.clientWidth || 1;
+      const h = renderer.domElement.clientHeight || 1;
+      const p0 = from.clone().project(camera);
+      const p1 = to.clone().project(camera);
+      const x0 = (p0.x * 0.5 + 0.5) * w;
+      const y0 = (-p0.y * 0.5 + 0.5) * h;
+      const x1 = (p1.x * 0.5 + 0.5) * w;
+      const y1 = (-p1.y * 0.5 + 0.5) * h;
+      const dx = x1 - x0;
+      const dy = y1 - y0;
+      const len = Math.hypot(dx, dy);
+      if (!Number.isFinite(len) || len <= maxPx || len < 1e-3) return to;
+      const t = maxPx / len;
+      return from.clone().lerp(to, t);
+    }
+
+    function nmToWorldUnits(nm) {
+      // Mapping derived from equirectangularProject scale (~0.8 units/km).
+      const km = nm * 1.852;
+      return km * 0.8;
+    }
+
+    function currentAirportWorldPos() {
+      const a = state.selectedAirport;
+      if (!a) return null;
+      const p = equirectangularProject(a.lat, a.lon);
+      return new THREE.Vector3(p.x, p.y, p.z);
+    }
+
+    function hazardIntersectScore(mesh) {
+      // Cheap, deterministic approximation: check if aircraft point falls within any hazard curtain bbox.
+      // We do NOT claim actual polygon membership; this is display salience only.
+      try {
+        const p = mesh.position;
+        if (!p) return 0.0;
+        for (const h of (state.entitiesByWorld.Cell || new Map()).values()) {
+          if (!h?.userData || h.userData.type !== 'hazard_curtain') continue;
+          const box = new THREE.Box3().setFromObject(h);
+          if (box.containsPoint(p)) return 1.0;
+        }
+      } catch {}
+      return 0.0;
+    }
+
+    function salienceScore(mesh, ap, aoiR, selected, hover) {
+      // Deterministic scoring (no ML). Used only to allocate the limited entropy budget.
+      // Components:
+      // - proximity to AOI center
+      // - time-to-airport (closure proxy)
+      // - runway intent proxy (heading toward airport)
+      // - hazard intersection proxy
+      // - user focus (hover/selected)
+      const lat = mesh.userData?.['gaiaos:lat'];
+      const lon = mesh.userData?.['gaiaos:lon'];
+      const gs = mesh.userData?.['gaiaos:ground_speed_mps'];
+      const trk = mesh.userData?.['gaiaos:track_deg'];
+      let prox = 0.0;
+      let tscore = 0.0;
+      let intent = 0.0;
+      if (ap && typeof lat === 'number' && typeof lon === 'number') {
+        const distM = haversineM(lat, lon, ap.lat, ap.lon);
+        const distWU = (distM / 1000.0) * 0.8;
+        prox = Math.max(0.0, 1.0 - (distWU / Math.max(1.0, aoiR)));
+        if (typeof gs === 'number' && Number.isFinite(gs) && gs > 25) {
+          const t = distM / gs;
+          // higher score when closer in time; clamp 0..1 over 0..12min
+          tscore = Math.max(0.0, 1.0 - (t / 720.0));
+        }
+        if (typeof trk === 'number') {
+          const brg = bearingDeg(lat, lon, ap.lat, ap.lon);
+          const d = angleDiffDeg(trk, brg);
+          intent = Math.max(0.0, 1.0 - (d / 90.0));
+        }
+      }
+      const haz = (state.uiFlags.showDanger ? hazardIntersectScore(mesh) : 0.0);
+      const focus = (mesh === selected ? 2.0 : (mesh === hover ? 1.2 : 0.0));
+      return (1.2 * prox) + (1.0 * tscore) + (0.9 * intent) + (1.4 * haz) + focus;
+    }
+
+    function pickTopKBySalience(meshes, k, ap, aoiR, selected, hover, filterFn) {
+      const scored = [];
+      for (const m of meshes) {
+        if (!m || !m.userData) continue;
+        if (filterFn && !filterFn(m)) continue;
+        scored.push({ m, s: salienceScore(m, ap, aoiR, selected, hover) });
+      }
+      scored.sort((a, b) => b.s - a.s);
+      return scored.slice(0, k).map((x) => x.m);
+    }
+
+    function buildDeclutterSets(mode, hoverEntity) {
+      const selected = state.selectedEntity;
+      const cellAircraft = Array.from((state.entitiesByWorld.Cell || new Map()).values()).filter((m) => m?.userData?.type === 'atc_aircraft');
+
+      // AOI filter for tower: only render nearby traffic unless selected/hover.
+      const ap = currentAirportWorldPos();
+      const aoiR = (mode === 'tower') ? nmToWorldUnits(state.declutter.aoiNmTower) : nmToWorldUnits(state.declutter.aoiNmGlobal);
+      const inAoi = (m) => {
+        if (!ap) return true;
+        const dx = m.position.x - ap.x;
+        const dz = m.position.z - ap.z;
+        return Math.sqrt(dx * dx + dz * dz) <= aoiR;
+      };
+
+      // Entropy allocation: pick top-K by salience rather than by “closest to screen center”.
+      const apLL = state.selectedAirport ? { lat: state.selectedAirport.lat, lon: state.selectedAirport.lon } : null;
+      const topNV = pickTopKBySalience(
+        cellAircraft,
+        mode === 'tower' ? state.declutter.vectorTopNTower : state.declutter.vectorTopNGlobal,
+        apLL,
+        aoiR,
+        selected,
+        hoverEntity,
+        (m) => (mode === 'tower' ? inAoi(m) : true),
+      );
+      const topNL = pickTopKBySalience(
+        cellAircraft,
+        mode === 'tower' ? state.declutter.labelTopNTower : state.declutter.labelTopNGlobal,
+        apLL,
+        aoiR,
+        selected,
+        hoverEntity,
+        (m) => (mode === 'tower' ? inAoi(m) : true),
+      );
+
+      const vecSet = new Set();
+      const labelSet = new Set();
+      for (const m of topNV) vecSet.add(m);
+      for (const m of topNL) labelSet.add(m);
+      if (selected && selected.userData?.type === 'atc_aircraft') { vecSet.add(selected); labelSet.add(selected); }
+      if (hoverEntity && hoverEntity.userData?.type === 'atc_aircraft') { vecSet.add(hoverEntity); labelSet.add(hoverEntity); }
+
+      // Tower: hide aircraft outside AOI (unless selected/hover).
+      const hideOutsideAoi = (m) => (mode === 'tower' && ap ? (!inAoi(m) && m !== selected && m !== hoverEntity) : false);
+
+      return { vecSet, labelSet, hideOutsideAoi };
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderRssOverlay();
+      renderTraconOverlay();
+      // Smooth camera transitions between ATC presets without breaking manual orbiting.
+      if (state.cameraAuto && state.cameraDesired.pos && state.cameraDesired.target) {
+        const a = 0.12; // lerp factor
+        camera.position.lerp(state.cameraDesired.pos, a);
+        controls.target.lerp(state.cameraDesired.target, a);
+        if (typeof state.cameraDesired.near === 'number') camera.near = camera.near + (state.cameraDesired.near - camera.near) * a;
+        if (typeof state.cameraDesired.far === 'number') camera.far = camera.far + (state.cameraDesired.far - camera.far) * a;
+        camera.updateProjectionMatrix();
+        // Stop auto once we arrive (prevents perpetual "looping" feel).
+        const dp = camera.position.distanceTo(state.cameraDesired.pos);
+        const dt = controls.target.distanceTo(state.cameraDesired.target);
+        if (dp < 1.0 && dt < 1.0) state.cameraAuto = false;
+      }
+
+      // Dead-reckoning (predicted) aircraft motion between real samples.
+      const nowMs = Date.now();
+      const activeWorld = state.currentWorld || 'Cell';
+      const activeMap = state.entitiesByWorld[activeWorld] || state.entitiesByWorld.Cell;
+      const mode = atcModeKey();
+      const { vecSet, labelSet, hideOutsideAoi } = buildDeclutterSets(mode, hoverEntity);
+      for (const [path, t] of state.track.entries()) {
+        if (!t || t.lastSampleTs == null || !t.lastSamplePos) continue;
+        const ageMs = nowMs - t.lastSampleTs;
+        const mesh = activeMap.get(path);
+        if (!mesh) continue;
+        const glyph = mesh.userData?.__glyph || mesh;
+        const velLine = mesh.userData?.__vel;
+        const outline = mesh.userData?.__outline;
+        const halo = mesh.userData?.__halo;
+        // Only dead-reckon when the provider marked the last position as "fresh".
+        const q = String(mesh.userData?.['gaiaos:pos_quality'] || 'fresh');
+
+        // Only predict briefly; long extrapolation creates misleading “loops”.
+        const dt = Math.min(1.5, Math.max(0.0, ageMs / 1000.0));
+        const isPredicted = (q === 'fresh' && ageMs > 300);
+        mesh.userData['gaiaos:is_predicted'] = isPredicted;
+        mesh.userData['gaiaos:predicted_dt_s'] = dt;
+        if (state.globalMode) {
+          // Global: place by lat/lon/alt on globe; do not rely on flat Xform.
+          const alat = mesh.userData?.['gaiaos:lat'];
+          const alon = mesh.userData?.['gaiaos:lon'];
+          const altm = mesh.userData?.['gaiaos:alt_m'];
+          if (typeof alat === 'number' && typeof alon === 'number') {
+            const gpos = latLonAltToGlobeXYZ(alat, alon, typeof altm === 'number' ? altm : 0.0);
+            mesh.position.set(gpos.x, gpos.y, gpos.z);
+          }
+        } else if (q === 'fresh') {
+          const px = t.lastSamplePos.x + (t.vel?.x || 0) * dt;
+          const py = t.lastSamplePos.y + (t.vel?.y || 0) * dt;
+          const pz = t.lastSamplePos.z + (t.vel?.z || 0) * dt;
+          mesh.position.set(px, py, pz);
+        } else {
+          // Stale/estimated positions are drawn as-is (no extrapolation).
+          mesh.position.set(t.lastSamplePos.x, t.lastSamplePos.y, t.lastSamplePos.z);
+        }
+        // Rotate aircraft glyph by track heading when available.
+        const trk = mesh.userData?.['gaiaos:track_deg'];
+        if (typeof trk === 'number') {
+          const rad = (trk * Math.PI) / 180.0;
+          if (glyph && glyph.rotation) glyph.rotation.y = rad;
+        }
+
+        // Velocity vector (decluttered + capped).
+        const spd = mesh.userData?.['gaiaos:ground_speed_mps'];
+        const showVecFor = state.uiFlags.showVectors && vecSet.has(mesh);
+        if (velLine && typeof trk === 'number' && typeof spd === 'number' && Number.isFinite(spd) && showVecFor) {
+          const horizonSec = 60.0; // product horizon (not truth)
+          // Convert m/s to world units with the same equirectangular mapping scale (~0.8 units/km).
+          const unitsPerM = 0.0008;
+          const len = Math.min(900, Math.max(20, spd * horizonSec * unitsPerM));
+          const rad = (trk * Math.PI) / 180.0;
+          const dx = Math.sin(rad) * len;
+          const dz = -Math.cos(rad) * len;
+          const start = mesh.position.clone();
+          const endRaw = start.clone().add(new THREE.Vector3(dx, 0, dz));
+          const end = capVectorToPixels(start, endRaw, state.declutter.maxVectorPx);
+          const g = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), end.clone().sub(start)]);
+          try { velLine.geometry.dispose(); } catch {}
+          velLine.geometry = g;
+          velLine.visible = true;
+        } else if (velLine) velLine.visible = false;
+
+        // Streams mode: inbound/outbound tint relative to selected airport.
+        const glyphMat = glyph?.material;
+        if (state.uiFlags.streamsMode && state.selectedAirport && glyphMat && glyphMat.color) {
+          const alat = mesh.userData?.['gaiaos:lat'];
+          const alon = mesh.userData?.['gaiaos:lon'];
+          if (typeof alat === 'number' && typeof alon === 'number' && typeof trk === 'number') {
+            const brg = bearingDeg(alat, alon, state.selectedAirport.lat, state.selectedAirport.lon);
+            const d = angleDiffDeg(trk, brg);
+            // inbound if heading toward airport within 60°
+            const inbound = d <= 60;
+            glyphMat.color.set(inbound ? 0x00ff88 : 0x4a9eff);
+          }
+        }
+
+        // Altitude band declutter + tower AOI declutter.
+        const altm = mesh.userData?.['gaiaos:alt_m'];
+        if (typeof altm === 'number') {
+          const altft = altm / 0.3048;
+          const band = state.uiFlags.altBand || 0;
+          const visible = (band === -1) ? true :
+            (band === 0 && altft < 5000) ||
+            (band === 1 && altft >= 5000 && altft < 15000) ||
+            (band === 2 && altft >= 15000 && altft < 30000) ||
+            (band === 3 && altft >= 30000);
+          mesh.visible = visible && !hideOutsideAoi(mesh);
+          const tr = state.track.get(path);
+          if (tr && tr.trailPoints) tr.trailPoints.visible = (visible && state.uiFlags.showTrails && labelSet.has(mesh));
+        }
+
+        // Stale fade (truthful: indicates time since last real sample).
+        const mat = glyph?.material;
+        if (mat && typeof mat === 'object' && 'opacity' in mat) {
+          const staleAlpha = (ageMs <= 10000) ? 1.0 : (ageMs >= 60000 ? 0.15 : (1.0 - (ageMs - 10000) / 50000) * 0.85 + 0.15);
+          mat.transparent = true;
+          // Never raise opacity above quality settings; only reduce as the sample ages.
+          const base = Number(mat.opacity);
+          mat.opacity = Math.min(Number.isFinite(base) ? base : 1.0, staleAlpha);
+        }
+        mesh.userData.predicted_age_ms = ageMs;
+
+        // Data blocks: hover/selected + top-N by mode.
+        const wantLabel = state.uiFlags.showLabels ? true : labelSet.has(mesh);
+        setAircraftLabelVisible(mesh, wantLabel);
+        // If label is visible, render a compact 2–3 line ATC data block.
+        const ld = mesh.userData?.__labelDiv;
+        if (ld && mesh.userData?.__label?.visible) {
+          const cs = String(mesh.userData?.callsign || '').toUpperCase();
+          const alt = fmtAltFt(mesh.userData?.['gaiaos:alt_m']);
+          const gs = fmtGsKt(mesh.userData?.['gaiaos:ground_speed_mps']);
+          const pred = mesh.userData['gaiaos:is_predicted'] ? ' P' : '';
+          ld.innerHTML = `${escapeHtml(cs)}${pred}\n<span class="muted">${escapeHtml(alt)}  GS ${escapeHtml(gs)}</span>`;
+        }
+
+        // ATC symbology semantics: color by quality + selection/hover halo.
+        const isHover = (hoverEntity === mesh);
+        const isSelected = (state.selectedEntity === mesh);
+        const qcol = (() => {
+          const q = String(mesh.userData?.['gaiaos:pos_quality'] || 'fresh');
+          if (q === 'estimated') return 0xffb000;
+          if (q === 'stale') return 0x2bd0c8;
+          return 0x36ff6b;
+        })();
+        const baseOpacity = (() => {
+          const q = String(mesh.userData?.['gaiaos:pos_quality'] || 'fresh');
+          if (q === 'stale') return 0.72;
+          if (q === 'estimated') return 0.82;
+          return 0.95;
+        })();
+        if (glyph?.material?.color) glyph.material.color.setHex(qcol);
+        if (glyph?.material && 'opacity' in glyph.material) glyph.material.opacity = baseOpacity;
+        if (outline?.material && 'opacity' in outline.material) outline.material.opacity = isHover || isSelected ? 0.95 : 0.75;
+
+        if (halo) {
+          const active = isSelected || isHover;
+          halo.visible = active;
+          if (active && halo.material) {
+            halo.material.opacity = isSelected ? 0.55 : 0.25;
+            halo.material.color?.setHex(isSelected ? 0x8affc1 : 0x36ff6b);
+          }
+          // Keep halo roughly constant size with distance.
+          const d = camera.position.distanceTo(mesh.position);
+          const s = THREE.MathUtils.clamp(d * 0.012, 0.9, 6.0);
+          halo.scale.setScalar(s);
+        }
+      }
+
+      // Trails: breadcrumbs only (short, decluttered). Never draw long streak fields.
+      if (state.uiFlags.showTrails && (nowMs - state.lastTrailUpdateMs) > 650) {
+        state.lastTrailUpdateMs = nowMs;
+        for (const [path, t] of state.track.entries()) {
+          if (!t || !Array.isArray(t.samples) || t.samples.length < 2) continue;
+          const mesh = activeMap.get(path);
+          if (!mesh) continue;
+          // Only render trails for the same declutter set as labels (selected/hover/top-N).
+          if (!labelSet.has(mesh)) continue;
+          const cutoff = nowMs - (state.declutter.trailSeconds * 1000);
+          const recent = t.samples.filter((p) => p.ts >= cutoff).slice(-80);
+          if (recent.length < 2) continue;
+          const pts = recent.map((p) => new THREE.Vector3(p.x, Math.max(10, p.y - 6), p.z));
+          const geom = new THREE.BufferGeometry().setFromPoints(pts);
+          if (!t.trailPoints) {
+            const pm = new THREE.PointsMaterial({ color: 0x36ff6b, transparent: true, opacity: 0.18, size: 5.0, sizeAttenuation: true });
+            t.trailPoints = new THREE.Points(geom, pm);
+            t.trailPoints.userData = { world: activeWorld, type: 'atc_trail_points', path };
+            (state.worldGroups[activeWorld] || scene).add(t.trailPoints);
+          } else {
+            try { t.trailPoints.geometry.dispose(); } catch {}
+            t.trailPoints.geometry = geom;
+          }
+          state.track.set(path, t);
+        }
+      } else if (!state.uiFlags.showTrails) {
+        for (const [path, t] of state.track.entries()) {
+          if (t && t.trailPoints) {
+            (state.worldGroups[activeWorld] || scene).remove(t.trailPoints);
+            try { t.trailPoints.geometry.dispose(); } catch {}
+            t.trailPoints = null;
+            state.track.set(path, t);
+          }
+        }
+      }
+
+      // Flow tracers: a visible "energy" dot moving along each aircraft's real sample history.
+      // This does not invent positions; it traverses recorded samples in time order.
+      if (state.uiFlags.showFlowTracers) for (const [path, t] of state.track.entries()) {
+        if (!t || !Array.isArray(t.samples) || t.samples.length < 2) continue;
+        const mesh = activeMap.get(path);
+        if (!mesh) continue;
+        // Create tracer once.
+        if (!t.__tracer) {
+          const geom = new THREE.SphereGeometry(2.5, 10, 10);
+          const mat = new THREE.MeshStandardMaterial({ color: 0x00ff88, emissive: 0x00ff88, emissiveIntensity: 0.35, transparent: true, opacity: 0.9 });
+          const tracer = new THREE.Mesh(geom, mat);
+          tracer.userData = { world: activeWorld, type: 'flow_tracer', path };
+          (state.worldGroups[activeWorld] || scene).add(tracer);
+          t.__tracer = tracer;
+          state.track.set(path, t);
+        }
+        const tracer = t.__tracer;
+        // Move along the last N samples based on wall time (wrap).
+        const samples = t.samples.slice(-60);
+        const idx = Math.floor((nowMs / 250) % samples.length);
+        const s = samples[idx];
+        tracer.position.set(s.x, Math.max(10, s.y - 6), s.z);
+        tracer.visible = mesh.visible;
+      }
+
+      renderer.render(scene, camera);
+      labelRenderer.render(scene, camera);
+
+      // Pulse cleanup + animation (visual metronome).
+      const now = Date.now();
+      const ttl = 1000;
+      if (state.pulses.length) {
+        state.pulses = state.pulses.filter((p) => {
+          const age = now - p.born;
+          if (age >= ttl) {
+            if (state.worldGroups.Pulses) state.worldGroups.Pulses.remove(p.mesh);
+            else scene.remove(p.mesh);
+            return false;
+          }
+          const k = age / ttl;
+          p.mesh.scale.setScalar(1.0 + k * 3.0);
+          if (p.mesh.material) p.mesh.material.opacity = Math.max(0.0, 0.8 * (1.0 - k));
+          return true;
+        });
+      }
+
+      // Mark pulse animation (perception-only overlays).
+      for (const w of ['Cell', 'Human', 'Astro']) {
+        const m = state.perceptionByWorld[w];
+        for (const mesh of m.values()) {
+          const ring = mesh?.userData?.__pulseRing;
+          if (!ring) continue;
+          const born = mesh.userData.__born || (mesh.userData.__born = now);
+          const age = now - born;
+          const k = (age % 1400) / 1400;
+          ring.scale.setScalar(1.0 + k * 3.5);
+          if (ring.material) ring.material.opacity = Math.max(0.05, 0.5 * (1.0 - k));
+        }
+      }
+    }
+
+    // Hotkeys + docked panels (non-blocking UI controls)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        // Emergency “unobstructed scope” + close overlays.
+        if (state.uiFlags.immersive) setImmersive(false);
+        // Clear RSS lock/hover.
+        state.rss.lockId = null;
+        state.rss.hoverId = null;
+        // Clear TRACON lock/hover.
+        state.tracon.lockId = null;
+        state.tracon.hoverId = null;
+        ui.weatherInspector?.classList?.remove('visible');
+        ui.inspector?.classList?.remove('visible');
+        return;
+      }
+      if (e.key === '`') {
+        setPrimaryView('rss');
+        return;
+      }
+      if (e.key === '1') {
+        setPrimaryView('tracon');
+        return;
+      }
+      // World switching is keyboard-only in ATC mode (UI buttons hidden unless ?debug=1).
+      // Use Shift+{C,H,A} to avoid colliding with ATC controls.
+      if (e.shiftKey && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        if (e.key === 'C') { e.preventDefault(); setWorld('Cell'); return; }
+        if (e.key === 'H') { e.preventDefault(); setWorld('Human'); return; }
+        if (e.key === 'A') { e.preventDefault(); setWorld('Astro'); return; }
+      }
+      if (e.key === 'i' || e.key === 'I') {
+        setImmersive(!state.uiFlags.immersive);
+        return;
+      }
+      if (e.key === '0') {
+        // Global scope mode: Earth globe + worldwide zoom.
+        setPrimaryView('3d');
+        setGlobalMode(true);
+        applyDeclutterDefaultsForMode(atcModeKey());
+        fitToGlobalTrafficOrEarth();
+        return;
+      }
+      // Arrow keys: pan focal point (ATC controller-style). Shift = faster.
+      if (e.key.startsWith('Arrow')) {
+        e.preventDefault();
+        const dist = camera.position.distanceTo(controls.target);
+        const step = Math.max(20, Math.min(400, dist * 0.03));
+        const s = e.shiftKey ? 4.0 : 1.0;
+        if (e.key === 'ArrowLeft') nudgeFocal(-step, 0, s);
+        if (e.key === 'ArrowRight') nudgeFocal(+step, 0, s);
+        if (e.key === 'ArrowUp') nudgeFocal(0, +step, s);
+        if (e.key === 'ArrowDown') nudgeFocal(0, -step, s);
+        return;
+      }
+      // WASD: same as arrow keys (pan focal).
+      // Pan alternative: Alt+WASD (reserved so W/D can be toggles in the product layer).
+      if (e.altKey && ['w','a','s','d','W','A','S','D'].includes(e.key)) {
+        e.preventDefault();
+        const dist = camera.position.distanceTo(controls.target);
+        const step = Math.max(20, Math.min(400, dist * 0.03));
+        const s = e.shiftKey ? 4.0 : 1.0;
+        if (e.key.toLowerCase() === 'a') nudgeFocal(-step, 0, s);
+        if (e.key.toLowerCase() === 'd') nudgeFocal(+step, 0, s);
+        if (e.key.toLowerCase() === 'w') nudgeFocal(0, +step, s);
+        if (e.key.toLowerCase() === 's') nudgeFocal(0, -step, s);
+        return;
+      }
+      if (e.key === '?' || (e.key === '/' && e.shiftKey)) {
+        const help = document.getElementById('help');
+        if (help) help.classList.toggle('visible');
+        return;
+      }
+      if (e.key === 'q' || e.key === 'Q') {
+        yawAroundTarget(+0.10);
+        return;
+      }
+      if (e.key === 'e' || e.key === 'E') {
+        yawAroundTarget(-0.10);
+        return;
+      }
+      if (e.key === '+' || e.key === '=') {
+        zoomBy(-80);
+        return;
+      }
+      if (e.key === '-' || e.key === '_') {
+        zoomBy(+80);
+        return;
+      }
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        togglePanel(ui.providerPanel);
+        togglePanel(ui.statusPanel);
+      } else if (e.key.toLowerCase() === 's' && !e.shiftKey) {
+        state.uiFlags.streamsMode = !state.uiFlags.streamsMode;
+        // Streams mode declutter defaults.
+        if (state.uiFlags.streamsMode) {
+          state.uiFlags.showLabels = false;
+        }
+      } else if (e.key.toLowerCase() === 'v') {
+        togglePinnedFlag('showVectors', !state.uiFlags.showVectors, !!e.shiftKey);
+      } else if (e.key.toLowerCase() === 't') {
+        togglePinnedFlag('showTrails', !state.uiFlags.showTrails, !!e.shiftKey);
+      } else if (e.key.toLowerCase() === 'w') {
+        togglePinnedFlag('showWeather', !state.uiFlags.showWeather, !!e.shiftKey);
+        for (const [_, mesh] of state.entitiesByWorld.Cell.entries()) {
+          if (mesh?.userData?.type === 'atc_weather') mesh.visible = !!state.uiFlags.showWeather;
+        }
+      } else if (e.key.toLowerCase() === 'd') {
+        togglePinnedFlag('showDanger', !state.uiFlags.showDanger, !!e.shiftKey);
+        for (const [_, mesh] of state.entitiesByWorld.Cell.entries()) {
+          if (mesh?.userData?.type === 'hazard_curtain') mesh.visible = !!state.uiFlags.showDanger;
+        }
+      } else if (e.key.toLowerCase() === 'l') {
+        state.uiFlags.showLabels = !state.uiFlags.showLabels;
+        for (const [_, mesh] of state.entitiesByWorld.Cell.entries()) {
+          if (!mesh || !mesh.children) continue;
+          for (const ch of mesh.children) {
+            if (ch && ch.isCSS2DObject) ch.visible = state.uiFlags.showLabels;
+          }
+        }
+      } else if (e.key.toLowerCase() === 'f') {
+        state.cameraMode = 3;
+        setGlobalMode(false);
+        applyDeclutterDefaultsForMode(atcModeKey());
+        applyCameraMode();
+      } else if (e.key === '[') {
+        state.uiFlags.altBand = Math.max(0, (state.uiFlags.altBand || 0) - 1);
+      } else if (e.key === ']') {
+        state.uiFlags.altBand = Math.min(3, (state.uiFlags.altBand || 0) + 1);
+      } else if (e.key.toLowerCase() === 'x') {
+        // Flow tracers intentionally loop through history; keep off unless explicitly requested.
+        state.uiFlags.showFlowTracers = !state.uiFlags.showFlowTracers;
+      } else if (e.key === '1') {
+        state.cameraMode = 1;
+        setGlobalMode(false);
+        applyDeclutterDefaultsForMode(atcModeKey());
+        applyCameraMode();
+      } else if (e.key === '2') {
+        state.cameraMode = 2;
+        setGlobalMode(false);
+        applyDeclutterDefaultsForMode(atcModeKey());
+        applyCameraMode();
+      } else if (e.key === '3') {
+        setPrimaryView('3d');
+        state.cameraMode = 3;
+        setGlobalMode(false);
+        applyDeclutterDefaultsForMode(atcModeKey());
+        applyCameraMode();
+      } else if (e.key === 'PageUp') {
+        nudgeCameraAltitude(+40);
+      } else if (e.key === 'PageDown') {
+        nudgeCameraAltitude(-40);
+      } else if (e.key === 'r' || e.key === 'R') {
+        if (state.rss.enabled) {
+          state.rss.flip = !state.rss.flip;
+        } else if (state.tracon.enabled) {
+          // In TRACON, R cycles a few common ranges quickly.
+          const r = state.tracon.rangeNm;
+          state.tracon.rangeNm = (r <= 20) ? 40 : (r <= 40 ? 80 : 20);
+        } else {
+          nudgeCameraAltitude(+20);
+        }
+      } else if (e.key === 'f' || e.key === 'F') {
+        // Keep legacy F behavior (traffic fit) when no modifier; Alt+F = descend.
+        if (e.altKey) {
+          nudgeCameraAltitude(-20);
+        } else {
+          state.cameraMode = 3;
+          applyCameraMode();
+        }
+      } else if (e.altKey && e.key.toLowerCase() === 'd') {
+        togglePanel(ui.providerPanel);
+      } else if (e.key.toLowerCase() === 's') {
+        // 's' is streamsMode toggle already when lowercase; keep it, but SHIFT+S toggles status panel.
+        if (e.shiftKey) togglePanel(ui.statusPanel);
+      }
+    }, { passive: false });
+
+    // RSS interactions (hover + lock + scrub)
+    if (ui.rss) {
+      ui.rss.addEventListener('wheel', (e) => {
+        if (!state.rss.enabled) return;
+        e.preventDefault();
+        const delta = Math.sign(e.deltaY) * 2.0;
+        state.rss.timeOffsetSec = Math.max(-30, Math.min(30, state.rss.timeOffsetSec + delta));
+      }, { passive: false });
+
+      ui.rss.addEventListener('mousemove', (e) => {
+        if (!state.rss.enabled) return;
+        const ap = state.selectedAirport;
+        if (!ap || typeof ap.lat !== 'number' || typeof ap.lon !== 'number') return;
+        const rect = document.getElementById('canvas-container').getBoundingClientRect();
+        const w = Math.max(1, Math.floor(rect.width));
+        const h = Math.max(1, Math.floor(rect.height));
+        const pad = 22;
+        const spineY = Math.floor(h * 0.52);
+        const leftX = pad;
+        const rightX = w - pad;
+        const MAX_T = 180;
+        const timeToX = (t) => {
+          const tt = Math.max(0, Math.min(MAX_T, t));
+          const u = 1.0 - (tt / MAX_T);
+          return leftX + u * (rightX - leftX);
+        };
+        const yToPx = (y) => spineY - y * (Math.min(spineY - pad, (h - pad) - spineY) * 0.78);
+
+        // Recompute minimal inbound set + axis for hover picking.
+        const ac = [];
+        for (const m of (state.entitiesByWorld.Cell || new Map()).values()) {
+          if (!m?.userData || m.userData.type !== 'atc_aircraft') continue;
+          const lat = m.userData['gaiaos:lat'];
+          const lon = m.userData['gaiaos:lon'];
+          const gs = m.userData['gaiaos:ground_speed_mps'];
+          const trk = m.userData['gaiaos:track_deg'];
+          if (typeof lat !== 'number' || typeof lon !== 'number') continue;
+          if (typeof gs !== 'number' || !Number.isFinite(gs) || gs < 25) continue;
+          const distM = haversineM(lat, lon, ap.lat, ap.lon);
+          const distNm = distM / 1852.0;
+          if (distNm > state.declutter.aoiNmGlobal) continue;
+          let inbound = true;
+          if (typeof trk === 'number') {
+            const brg = bearingDeg(lat, lon, ap.lat, ap.lon);
+            inbound = angleDiffDeg(trk, brg) <= 70;
+          }
+          if (!inbound) continue;
+          const rel = localENMeters(ap.lat, ap.lon, lat, lon);
+          ac.push({ m, lat, lon, gs, east: rel.east, north: rel.north });
+        }
+        let ax = 1, ay = 0;
+        if (ac.length >= 3) {
+          let sx = 0, sy = 0, n = 0;
+          for (const a of ac) {
+            const r = Math.hypot(a.east, a.north);
+            if (r < 2000) continue;
+            sx += a.east / r;
+            sy += a.north / r;
+            n++;
+          }
+          if (n > 0) {
+            const r = Math.hypot(sx, sy);
+            if (r > 1e-6) { ax = sx / r; ay = sy / r; }
+          }
+        }
+        if (state.rss.flip) { ax = -ax; ay = -ay; }
+        const pxv = -ay, pyv = ax;
+        const spds = ac.map((a) => a.gs);
+        const medGs = median(spds) ?? 70.0;
+        const tanG = Math.tan((3.0 * Math.PI) / 180.0);
+        const crossMax = 3500, altMax = 600, spdMax = 35;
+        const energyY = (altErr, cross, spdErr) => {
+          const yAlt = Math.max(-1, Math.min(1, altErr / altMax));
+          const yCross = Math.max(-1, Math.min(1, cross / crossMax));
+          const ySpd = Math.max(-1, Math.min(1, spdErr / spdMax));
+          return (0.55 * yAlt) + (0.30 * yCross) + (0.15 * ySpd);
+        };
+
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        let best = null;
+        for (const a of ac) {
+          const along = Math.max(0, a.east * ax + a.north * ay);
+          const cross = a.east * pxv + a.north * pyv;
+          const tThresh = along / Math.max(30, a.gs);
+          const t = Math.max(0, tThresh - state.rss.timeOffsetSec);
+          const altm = a.m.userData?.['gaiaos:alt_m'];
+          const expectedAlt = tanG * along;
+          const altErr = (typeof altm === 'number' ? altm : 0) - expectedAlt;
+          const spdErr = a.gs - medGs;
+          const y = energyY(altErr, cross, spdErr);
+          const xpx = timeToX(t);
+          const ypx = yToPx(y);
+          const d2 = (xpx - mx) * (xpx - mx) + (ypx - my) * (ypx - my);
+          if (!best || d2 < best.d2) best = { id: String(a.m.userData.callsign || a.m.userData.path || ''), d2 };
+        }
+        state.rss.hoverId = (best && best.d2 < 14 * 14) ? best.id : null;
+      }, { passive: true });
+
+      ui.rss.addEventListener('click', (e) => {
+        if (!state.rss.enabled) return;
+        // Toggle lock on current hover.
+        if (state.rss.hoverId) state.rss.lockId = (state.rss.lockId === state.rss.hoverId ? null : state.rss.hoverId);
+        else state.rss.lockId = null;
+      }, { passive: true });
+    }
+
+    // TRACON interactions (hover + lock + range)
+    if (ui.tracon) {
+      ui.tracon.addEventListener('wheel', (e) => {
+        if (!state.tracon.enabled) return;
+        e.preventDefault();
+        const dir = Math.sign(e.deltaY);
+        const next = state.tracon.rangeNm * (dir > 0 ? 1.15 : 0.87);
+        state.tracon.rangeNm = Math.max(5, Math.min(160, Math.round(next)));
+        updateCounts();
+      }, { passive: false });
+
+      ui.tracon.addEventListener('mousemove', (e) => {
+        if (!state.tracon.enabled) return;
+        const ap = state.selectedAirport;
+        if (!ap || typeof ap.lat !== 'number' || typeof ap.lon !== 'number') return;
+        const rect = document.getElementById('canvas-container').getBoundingClientRect();
+        const w = Math.max(1, Math.floor(rect.width));
+        const h = Math.max(1, Math.floor(rect.height));
+        const cx = Math.floor(w * 0.52);
+        const cy = Math.floor(h * 0.56);
+        const rPx = Math.max(140, Math.min(Math.min(w, h) * 0.46, 520));
+        const rangeNm = Math.max(5, Math.min(160, state.tracon.rangeNm));
+        const mPerNm = 1852.0;
+        const mPerPx = (rangeNm * mPerNm) / rPx;
+        const mx = e.clientX - rect.left;
+        const my = e.clientY - rect.top;
+        let best = null;
+        for (const m of (state.entitiesByWorld.Cell || new Map()).values()) {
+          if (!m?.userData || m.userData.type !== 'atc_aircraft') continue;
+          const lat = m.userData['gaiaos:lat'];
+          const lon = m.userData['gaiaos:lon'];
+          if (typeof lat !== 'number' || typeof lon !== 'number') continue;
+          const dnm = haversineM(lat, lon, ap.lat, ap.lon) / mPerNm;
+          if (dnm > rangeNm) continue;
+          const en = localENMeters(ap.lat, ap.lon, lat, lon);
+          const x = cx + (en.east / mPerPx);
+          const y = cy - (en.north / mPerPx);
+          const d2 = (x - mx) * (x - mx) + (y - my) * (y - my);
+          if (!best || d2 < best.d2) best = { id: String(m.userData.callsign || m.userData.path || ''), d2 };
+        }
+        state.tracon.hoverId = (best && best.d2 < 16 * 16) ? best.id : null;
+      }, { passive: true });
+
+      ui.tracon.addEventListener('click', (e) => {
+        if (!state.tracon.enabled) return;
+        if (state.tracon.hoverId) state.tracon.lockId = (state.tracon.lockId === state.tracon.hoverId ? null : state.tracon.hoverId);
+        else state.tracon.lockId = null;
+      }, { passive: true });
+    }
+
+    window.addEventListener('resize', onResize);
+
+    function setWorld(w) {
+      if (!w) return;
+      state.currentWorld = w;
+      ui.currentWorld.textContent = w;
+      document.querySelectorAll('.world-btn').forEach(b => b.classList.toggle('active', b.dataset.world === w));
+      setWorldVisible(w);
+      if (w === 'Cell') {
+        ensureCellAtcAnchors();
+        ensureCorridorAnchors();
+      }
+      if (w === 'Human') {
+        // Human is an alternate projection of the same truth; frame the corridor instead of an empty grid.
+        ensureCorridorAnchors();
+      }
+      if (w === 'Astro') {
+        camera.position.set(0, 2000, 4000);
+        controls.target.set(0, 0, 0);
+        state.cameraDesired.pos = null;
+        state.cameraDesired.target = null;
+      }
+      updateCounts();
+      updateRevDisplay();
+      ui.weatherInspector.classList.remove('visible');
+      controls.update();
+    }
+
+    // Worlds (debug UI only; primary switching is keyboard shortcuts)
+    document.querySelectorAll('.world-btn').forEach(btn => {
+      btn.addEventListener('click', () => setWorld(btn.dataset.world));
+    });
+
+    // Actions
+    ui.focusBtn.addEventListener('click', () => {
+      if (!state.selectedEntity) return;
+      const p = state.selectedEntity.position;
+      controls.target.set(p.x, p.y, p.z);
+    });
+
+    ui.annotateBtn.addEventListener('click', async () => {
+      if (!state.selectedEntity) return;
+      const text = prompt("Annotation (stored as perception, not truth):");
+      if (!text) return;
+      const targetPath = state.selectedEntity.userData?.path || '';
+      const opId = crypto.randomUUID ? crypto.randomUUID() : String(Math.random());
+      const body = {
+        world: state.currentWorld,
+        provenance: { source: "browser_cell_ui", ts_ms: Date.now() },
+        ops: [
+          { op: "SetAttr", op_id: opId, path: targetPath, name: "gaiaos:annotation", valueType: "string", value: text }
+        ],
+      };
+      await fetch(apiUrl('/perception'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      await resync(state.currentWorld);
+    });
+
+    ui.markBtn.addEventListener('click', async () => {
+      const note = prompt("Perception-only note (not truth):");
+      if (!note) return;
+      const id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()));
+      const path = `/GaiaOS/Worlds/${state.currentWorld}/Perception/Marks/${id}`;
+      const p = controls.target;
+      const body = {
+        world: state.currentWorld,
+        provenance: { source: "ClientUICell", ui_session: "ui", operator: "operator", ts_ms: Date.now(), notTruth: true },
+        ops: [
+          { op: "UpsertPrim", op_id: (crypto.randomUUID ? crypto.randomUUID() : String(Math.random())), path, primType: "Xform" },
+          { op: "SetXform", op_id: (crypto.randomUUID ? crypto.randomUUID() : String(Math.random())), path, translate: [p.x, p.y, p.z], orient: [0,0,0,1], scale: [1,1,1] },
+          { op: "SetAttr", op_id: (crypto.randomUUID ? crypto.randomUUID() : String(Math.random())), path, name: "gaiaos:operatorNote", valueType: "string", value: note },
+        ],
+      };
+      await fetch(apiUrl('/perception'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      await resync(state.currentWorld);
+    });
+
+    // Cell switching (single UI can observe multiple TransportCells; CORS-enabled server-side)
+    ui.cellSelect.addEventListener('change', async () => {
+      const opt = ui.cellSelect.selectedOptions[0];
+      state.cellId = opt.value;
+      state.baseUrl = opt.dataset.baseUrl || "";
+      ui.currentCell.textContent = state.cellId;
+
+      // Reset state for new cell.
+      for (const w of ['Cell','Human','Astro']) {
+        for (const mesh of state.entitiesByWorld[w].values()) scene.remove(mesh);
+        state.entitiesByWorld[w].clear();
+      }
+      state.weatherStations.clear();
+      state.alerts.clear();
+      updateCounts();
+      setConnected(false);
+
+      if (state.ws) { try { state.ws.close(); } catch {} }
+      await loadCapabilities();
+      connectWebSocket();
+    });
+
+    ui.airportSelect.addEventListener('change', () => {
+      const icao = ui.airportSelect.value || '';
+      if (!icao) return;
+      const found = state.airports.find((x) => x.icao === icao);
+      if (found) selectAirport(found);
+    });
+
+    async function init() {
+      // Docked layout: collapsed by default so we never cover the airspace.
+      updateDockLayout();
+      ui.providerPanel?.querySelector('.dock-title')?.addEventListener('click', () => togglePanel(ui.providerPanel));
+      ui.statusPanel?.querySelector('.dock-title')?.addEventListener('click', () => togglePanel(ui.statusPanel));
+      // Hover peek on provider rail (expand on hover, collapse on leave).
+      if (ui.providerPanel) {
+        ui.providerPanel.addEventListener('mouseenter', () => {
+          if (ui.providerPanel.classList.contains('collapsed')) togglePanel(ui.providerPanel);
+        });
+        ui.providerPanel.addEventListener('mouseleave', () => {
+          if (!ui.providerPanel.classList.contains('collapsed')) togglePanel(ui.providerPanel);
+        });
+      }
+      await loadCells();
+      await loadAirports();
+      await loadCapabilities();
+      connectWebSocket();
+      animate();
+      // Initial world from query string (ATC-first: allow ?world=cell)
+      const wq = (new URLSearchParams(window.location.search).get('world') || '').toLowerCase();
+      if (wq === 'cell') state.currentWorld = 'Cell';
+      if (wq === 'human') state.currentWorld = 'Human';
+      if (wq === 'astro') state.currentWorld = 'Astro';
+
+      ui.currentWorld.textContent = state.currentWorld;
+      document.querySelectorAll('.world-btn').forEach(b => b.classList.toggle('active', b.dataset.world === state.currentWorld));
+      // Global ATC is the primary product view; local corridor/airport are camera presets.
+      setGlobalMode(true);
+      applyDeclutterDefaultsForMode(atcModeKey());
+      setWorldVisible(state.currentWorld);
+      if (state.currentWorld === 'Cell') {
+        ensureCellAtcAnchors();
+        ensureCorridorAnchors();
+        state.cameraMode = 0;
+      }
+      if (state.currentWorld === 'Human') {
+        // Human is a different projection of the same truth; start framed on the corridor so the flow is visible.
+        ensureCorridorAnchors();
+        state.cameraMode = 0;
+      }
+      updateCounts();
+      updateWsMsgs();
+    }
+
+    function normalizeId(id) {
+      return id.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+    }
+
+    // Initialize envelopes panel early (DOM-ready, no backend dependencies)
+    function initEnvelopesPanelEarly() {
+      const panel = document.getElementById('envelopes-panel');
+      const content = document.getElementById('envelopes-content');
+      
+      if (!panel || !content) {
+        console.error('[ENVELOPES] Panel elements not found');
+        if (panel) panel.innerHTML = '<div style="color:#ff3333;padding:10px;">ERROR: envelopes-content not found</div>';
+        return;
+      }
+      
+      try {
+        // Top 10 game_envelope items from backlog (static, no fetch)
+        const top10 = [
+          { id: 'G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_REQUEST', kind: 'game_envelope' },
+          { id: 'G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_COMMITMENT', kind: 'game_envelope' },
+          { id: 'G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_TRANSACTION', kind: 'game_envelope' },
+          { id: 'G_FTCL_UPDATE_FLEET_V1:FLEET_UPDATE_REPORT', kind: 'game_envelope' },
+          { id: 'G_FTCL_ROLLBACK_V1:ROLLBACK_REQUEST', kind: 'game_envelope' },
+          { id: 'G_FTCL_ROLLBACK_V1:ROLLBACK_COMMITMENT', kind: 'game_envelope' },
+          { id: 'G_FTCL_ROLLBACK_V1:ROLLBACK_TRANSACTION', kind: 'game_envelope' },
+          { id: 'G_FTCL_INVEST_001:INVESTMENT_CLAIM', kind: 'game_envelope' },
+          { id: 'G_FTCL_INVEST_001:INVESTMENT_COMMITMENT', kind: 'game_envelope' },
+          { id: 'G_FTCL_PROFIT_DIST:PROFIT_DISTRIBUTION_REQUEST', kind: 'game_envelope' }
+        ];
+
+        let html = '';
+        for (const item of top10) {
+          const normId = normalizeId(item.id);
+          html += `
+            <div class="envelope-row" data-testid="contract-${normId}">
+              <span class="envelope-row-label" data-testid="contract-${normId}-label">${item.id}</span>
+              <span class="envelope-row-kind" data-testid="contract-${normId}-kind">${item.kind}</span>
+              <span class="envelope-row-status" data-testid="contract-${normId}-status">UI_PRESENT</span>
+            </div>
+          `;
+        }
+        content.innerHTML = html;
+        
+        // Show panel by default
+        panel.classList.add('visible');
+        console.log('[ENVELOPES] Panel initialized with', top10.length, 'items');
+      } catch (err) {
+        console.error('[ENVELOPES] Init failed:', err);
+        content.innerHTML = '<div style="color:#ff3333;padding:10px;">ERROR: ' + err.message + '</div>';
+      }
+    }
+    
+    // Call early, on DOMContentLoaded (before full app init)
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initEnvelopesPanelEarly);
+    } else {
+      initEnvelopesPanelEarly();
+    }
+
+    init().catch((e) => {
+      console.error(e);
+      setConnected(false);
+    });
+
+    // Debug hooks (enabled only with ?debug=1)
+    const dbg = new URLSearchParams(window.location.search).get('debug') === '1';
+    if (dbg) {
+      window.__gaiaos_debug = {
+        dropWs: () => { try { state.ws?.close(); } catch {} },
+        setCameraPreset: (preset) => {
+          // Preserve Playwright contract while mapping to ATC v2 camera modes:
+          // - default => corridor
+          // - zoom => airport bubble
+          // - global => traffic fit
+          if (preset === 'default') state.cameraMode = 1;
+          if (preset === 'zoom') state.cameraMode = 2;
+          if (preset === 'global') state.cameraMode = 3;
+          applyCameraMode();
+        },
+      };
+    }
+  </script>
+</body>
+</html>
+
+

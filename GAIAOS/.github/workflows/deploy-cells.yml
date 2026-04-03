@@ -1,0 +1,143 @@
+name: Deploy to Cells
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - staging
+          - production
+      cells:
+        description: 'Cells to deploy (comma-separated or "all")'
+        required: true
+        default: 'all'
+        type: string
+
+env:
+  REGISTRY: ghcr.io
+  ORG: gaiaftcl
+
+jobs:
+  # ═══════════════════════════════════════════════════════════════════════════
+  # DEPLOY TO CELLS
+  # ═══════════════════════════════════════════════════════════════════════════
+  deploy:
+    name: Deploy to ${{ matrix.cell.id }}
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        cell:
+          - {id: hel1-01, ip: '77.42.85.60', role: 'gaia'}
+          - {id: hel1-02, ip: '135.181.88.134', role: 'franklin'}
+          - {id: hel1-03, ip: '77.42.32.156', role: 'fara'}
+          - {id: hel1-04, ip: '77.42.88.110', role: 'validator'}
+          - {id: hel1-05, ip: '37.27.7.9', role: 'witness'}
+    
+    steps:
+      - name: Check if cell should be deployed
+        id: check
+        run: |
+          CELLS="${{ inputs.cells }}"
+          CELL_ID="${{ matrix.cell.id }}"
+          
+          if [ "$CELLS" = "all" ] || echo "$CELLS" | grep -q "$CELL_ID"; then
+            echo "deploy=true" >> $GITHUB_OUTPUT
+          else
+            echo "deploy=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Checkout
+        if: steps.check.outputs.deploy == 'true'
+        uses: actions/checkout@v4
+      
+      - name: Deploy to ${{ matrix.cell.id }}
+        if: steps.check.outputs.deploy == 'true'
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ matrix.cell.ip }}
+          username: root
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          script_stop: true
+          script: |
+            set -e
+            
+            echo "═══════════════════════════════════════════════════════════════"
+            echo "  Deploying to ${{ matrix.cell.id }} (${{ matrix.cell.role }})"
+            echo "═══════════════════════════════════════════════════════════════"
+            
+            # Navigate to GAIAOS directory
+            cd /root/GAIAOS || mkdir -p /root/GAIAOS
+            
+            # Pull latest code
+            if [ -d .git ]; then
+              git fetch origin main
+              git reset --hard origin/main
+            else
+              git clone https://github.com/GaiaFTCL/gaia-ftcl.git .
+            fi
+            
+            # Login to GHCR
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            
+            # Pull latest images
+            docker compose -f docker-compose.gaiaftcl-cell.yml pull
+            
+            # Deploy with cell-specific environment
+            CELL_ID=${{ matrix.cell.id }} \
+            CELL_ROLE=${{ matrix.cell.role }} \
+            docker compose -f docker-compose.gaiaftcl-cell.yml up -d
+            
+            # Wait for services to start
+            sleep 10
+            
+            # Health check
+            echo ""
+            echo "Health checks:"
+            curl -sf http://localhost:8000/health && echo " ✓ Substrate" || echo " ✗ Substrate"
+            curl -sf http://localhost:8810/health && echo " ✓ Virtue" || echo " ✗ Virtue"
+            curl -sf http://localhost:8830/health && echo " ✓ MCP" || echo " ✗ MCP"
+            
+            echo ""
+            echo "═══════════════════════════════════════════════════════════════"
+            echo "  Deployment complete for ${{ matrix.cell.id }}"
+            echo "═══════════════════════════════════════════════════════════════"
+      
+      - name: Skip notification
+        if: steps.check.outputs.deploy == 'false'
+        run: echo "Skipping ${{ matrix.cell.id }} - not in deployment list"
+
+  # ═══════════════════════════════════════════════════════════════════════════
+  # POST-DEPLOYMENT VERIFICATION
+  # ═══════════════════════════════════════════════════════════════════════════
+  verify:
+    name: Verify Deployment
+    runs-on: ubuntu-latest
+    needs: [deploy]
+    if: always()
+    
+    steps:
+      - name: Check all cells
+        run: |
+          echo "## Deployment Verification" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Cell | IP | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|-----|--------|" >> $GITHUB_STEP_SUMMARY
+          
+          for cell in "hel1-01:77.42.85.60" "hel1-02:135.181.88.134" "hel1-03:77.42.32.156" "hel1-04:77.42.88.110" "hel1-05:37.27.7.9"; do
+            id=$(echo $cell | cut -d: -f1)
+            ip=$(echo $cell | cut -d: -f2)
+            
+            if curl -sf --max-time 5 http://$ip:8830/health > /dev/null 2>&1; then
+              echo "| $id | $ip | ✅ Healthy |" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "| $id | $ip | ⚠️ Unknown |" >> $GITHUB_STEP_SUMMARY
+            fi
+          done

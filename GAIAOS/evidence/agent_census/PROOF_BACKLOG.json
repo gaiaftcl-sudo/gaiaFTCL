@@ -1,0 +1,101 @@
+{
+  "count": 13,
+  "items": [
+    {
+      "agent_id": "720ba657-ff85-4528-b2f5-76bc3bbd5983",
+      "agent_name": "test_agent_001",
+      "missing_proofs": [
+        "HTTP_API_CALL",
+        "WEB_FETCH"
+      ]
+    },
+    {
+      "agent_id": "a0402430-e269-4d95-93ee-621eb27bcafd",
+      "agent_name": "blackhole_test_agent",
+      "missing_proofs": [
+        "CODE_RUN"
+      ]
+    },
+    {
+      "agent_id": "efae97e9-429b-4d48-9b67-67776598dfc2",
+      "agent_name": "cert_test_agent",
+      "missing_proofs": [
+        "WEB_FETCH"
+      ]
+    },
+    {
+      "agent_id": "2752f5c3-7930-4b54-880e-dc84c90ccf4a",
+      "agent_name": "cert_test_agent",
+      "missing_proofs": [
+        "WEB_FETCH"
+      ]
+    },
+    {
+      "agent_id": "001ef143-89b8-45bc-bf74-74ba1e415aad",
+      "agent_name": "cert_test_agent",
+      "missing_proofs": [
+        "WEB_FETCH"
+      ]
+    },
+    {
+      "agent_id": "37395390-006b-469c-9a61-4c27bcb011a3",
+      "agent_name": "cert_test_agent",
+      "missing_proofs": [
+        "WEB_FETCH"
+      ]
+    },
+    {
+      "agent_id": "03a16db0-59aa-4eb9-9ed1-eb0cf4db64c7",
+      "agent_name": "test_agent_001",
+      "missing_proofs": [
+        "HTTP_API_CALL",
+        "WEB_FETCH"
+      ]
+    },
+    {
+      "agent_id": "cdfb7a67-27a8-472c-a06e-fae2b49a8555",
+      "agent_name": "test_agent_001",
+      "missing_proofs": [
+        "CODE_RUN",
+        "HTTP_API_CALL",
+        "WEB_FETCH"
+      ]
+    },
+    {
+      "agent_id": "e00820de-129b-4c52-9827-7ba27baeb5ef",
+      "agent_name": "cert_test_agent",
+      "missing_proofs": [
+        "WEB_FETCH"
+      ]
+    },
+    {
+      "agent_id": "2ebdb769-7004-4729-b923-7acc8cf054b7",
+      "agent_name": "governance_violator",
+      "missing_proofs": [
+        "WEB_FETCH"
+      ]
+    },
+    {
+      "agent_id": "c3c5862f-8c0e-42fa-bf67-05b2730bddf2",
+      "agent_name": "cert_test_agent",
+      "missing_proofs": [
+        "WEB_FETCH"
+      ]
+    },
+    {
+      "agent_id": "8cc766fb-4816-4398-bd7a-9ebab7e71798",
+      "agent_name": "governance_violator",
+      "missing_proofs": [
+        "WEB_FETCH"
+      ]
+    },
+    {
+      "agent_id": "2125ecac-d184-422b-a17b-3cade679f01b",
+      "agent_name": "test_agent_001",
+      "missing_proofs": [
+        "HTTP_API_CALL",
+        "WEB_FETCH"
+      ]
+    }
+  ]
+}

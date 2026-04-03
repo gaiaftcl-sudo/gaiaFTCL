@@ -1,0 +1,25 @@
+{
+  "agent_id": "37395390-006b-469c-9a61-4c27bcb011a3",
+  "agent_name": "cert_test_agent",
+  "certificate_hash": "402d0ead3728295a860d30da67e12c75c57df6b7cdd4a53cacf1cdce005f7985",
+  "declared_capabilities_summary": {
+    "failed": 0,
+    "proven": 1,
+    "total_declared": 2,
+    "unproven": 1
+  },
+  "evidence_call_ids": {},
+  "expires_at": "2026-05-02T12:00:15.351036+00:00",
+  "hashes": {
+    "canonicals_hash": "557e849386c243bca00f79ae06453986919b996acb5df2180b86a66db05e00f5",
+    "reason_codes_hash": "9f3ff80258d4948d8d77877be5a7783a6afcfd40508b264b50673c568b306471",
+    "templates_hash": "fe5286ff0f84c8345b69f06d0bba9fdf6630a1ba10e2a8244abafa104d707ec0",
+    "topology_hash": "21fcd8b3fe093b80097bc6b03572fb69b7ffbf417b3d9267327b358415936afb"
+  },
+  "issued_at": "2026-02-01T12:00:15.351036+00:00",
+  "proven_capabilities": [
+    "CODE_RUN"
+  ],
+  "schema_version": 1,
+  "tier": "YELLOW"
+}

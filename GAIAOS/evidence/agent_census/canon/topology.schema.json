@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["topology_version", "generated_at", "agents", "coordination_edges", "projection_rules", "isolation_zones"],
+  "properties": {
+    "topology_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "agents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["agent_id", "tier"],
+        "properties": {
+          "agent_id": { "type": "string", "format": "uuid" },
+          "tier": { "type": "string", "enum": ["GREEN", "YELLOW", "RED", "BLACKHOLE"] },
+          "agent_name": { "type": "string" }
+        }
+      }
+    },
+    "coordination_edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from_agent_id", "to_agent_id", "allowed"],
+        "properties": {
+          "from_agent_id": { "type": "string" },
+          "to_agent_id": { "type": "string" },
+          "allowed": { "type": "boolean" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "projection_rules": {
+      "type": "object",
+      "properties": {
+        "GREEN": {
+          "type": "object",
+          "properties": {
+            "can_project": { "type": "boolean" },
+            "requires_witness": { "type": "boolean" }
+          }
+        },
+        "YELLOW": {
+          "type": "object",
+          "properties": {
+            "can_project": { "type": "boolean" },
+            "requires_witness": { "type": "boolean" }
+          }
+        },
+        "RED": {
+          "type": "object",
+          "properties": {
+            "can_project": { "type": "boolean" },
+            "requires_witness": { "type": "boolean" }
+          }
+        },
+        "BLACKHOLE": {
+          "type": "object",
+          "properties": {
+            "can_project": { "type": "boolean" },
+            "requires_witness": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "isolation_zones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["zone_id", "tier", "agent_ids"],
+        "properties": {
+          "zone_id": { "type": "string" },
+          "tier": { "type": "string", "enum": ["GREEN", "YELLOW", "RED", "BLACKHOLE"] },
+          "agent_ids": { "type": "array", "items": { "type": "string" } },
+          "restrictions": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

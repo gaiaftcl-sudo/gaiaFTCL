@@ -1,0 +1,157 @@
+services:
+  usd-transport-cell:
+    build: ./services/usd-transport-cell
+    profiles: ["single-cell", "multi-cell"]
+    ports:
+      - "${TRANSPORT_PORT:-8792}:8790"
+    volumes:
+      - "${USD_BASE_PATH:-./usd}:/usd:rw"
+    environment:
+      - PORT=8790
+      - CELL_ID=${CELL_ID:-browser_cell_01}
+      - USD_DIR=/usd
+      - ARANGO_URL=${ARANGO_URL:-http://arangodb:8529}
+      - ARANGO_DB=${ARANGO_DB:-gaiaos_substrate}
+      - ARANGO_USER=${ARANGO_USER:-gaiaos}
+      - ARANGO_PASSWORD=${ARANGO_PASSWORD:-gaiaos}
+      - POLL_HZ=${POLL_HZ:-30}
+
+      # Earth providers (capability-gated; disabled by default; never synthetic)
+      - ENABLE_NOAA_NWS=${ENABLE_NOAA_NWS:-0}
+      - ENABLE_AVIATION_WEATHER=${ENABLE_AVIATION_WEATHER:-0}
+      - METAR_STATIONS=${METAR_STATIONS:-}
+      - NWS_POINT_LAT=${NWS_POINT_LAT:-}
+      - NWS_POINT_LON=${NWS_POINT_LON:-}
+      - NWS_USER_AGENT=${NWS_USER_AGENT:-GaiaOS/1.0 (usd-transport-cell)}
+      - WEATHER_POLL_SEC=${WEATHER_POLL_SEC:-300}
+
+      # ATC providers (real network sources; never synthetic). Default source is airplanes_live (OpenSky often 429s without creds).
+      - ATC_ADSB_SOURCE=${ATC_ADSB_SOURCE:-airplanes_live}   # opensky | airplanes_live
+      - AIRPLANES_LIVE_BASE_URL=${AIRPLANES_LIVE_BASE_URL:-https://api.airplanes.live/v2}
+      - ATC_ADSB_FALLBACK_ON_429=${ATC_ADSB_FALLBACK_ON_429:-1}
+      - ATC_POLL_SEC=${ATC_POLL_SEC:-1.0}
+      - ATC_RADIUS_KM_DEFAULT=${ATC_RADIUS_KM_DEFAULT:-150}
+      - ATC_CORRIDOR_PRESET=${ATC_CORRIDOR_PRESET:-NE_FULL}
+      # Optional OpenSky credentials (improves limits when using opensky)
+      - OPENSKY_USER=${OPENSKY_USER:-}
+      - OPENSKY_PASS=${OPENSKY_PASS:-}
+
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    networks: [browser-cell-net]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8790/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "${TRANSPORT_CPU_LIMIT:-1.0}"
+          memory: "${TRANSPORT_MEM_LIMIT:-512m}"
+
+  usd-exporter:
+    build: ./services/usd-exporter
+    profiles: ["single-cell", "multi-cell"]
+    ports:
+      - "${EXPORTER_PORT:-8897}:8085"
+    volumes:
+      - "${USD_BASE_PATH:-./usd}:/usd:ro"
+      - "${PUBLIC_SCENES_PATH:-./public/scenes}:/scenes:rw"
+      - "${GLB_ASSETS_PATH:-./glb-assets}:/assets:ro"
+    environment:
+      - USD_ROOT=/usd/root.usda
+      - OUT_DIR=/scenes
+      - MODE=manifest
+      - EXPORT_RATE_HZ=${EXPORT_RATE_HZ:-1}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    depends_on:
+      - usd-transport-cell
+    networks: [browser-cell-net]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8085/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: "${EXPORTER_CPU_LIMIT:-0.5}"
+          memory: "${EXPORTER_MEM_LIMIT:-256m}"
+
+  nginx:
+    image: nginx:alpine
+    profiles: ["single-cell", "multi-cell"]
+    ports:
+      - "${UI_PORT:-8896}:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./web:/usr/share/nginx/html:ro
+      - ./public:/usr/share/nginx/public:ro
+      - "${GLB_ASSETS_PATH:-./glb-assets}:/usr/share/nginx/assets:ro"
+    depends_on:
+      - usd-transport-cell
+      - usd-exporter
+    networks: [browser-cell-net]
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "${NGINX_CPU_LIMIT:-0.25}"
+          memory: "${NGINX_MEM_LIMIT:-128m}"
+
+  arangodb:
+    image: arangodb/arangodb:3.11.8
+    profiles: ["single-cell"]
+    ports:
+      - "${ARANGO_PORT:-8529}:8529"
+    environment:
+      - ARANGO_ROOT_PASSWORD=${ARANGO_ROOT_PASSWORD:-changeme_in_production}
+    volumes:
+      - "${ARANGO_DATA_PATH:-./data/arangodb}:/var/lib/arangodb3:rw"
+      - "${ARANGO_APPS_PATH:-./data/arangodb-apps}:/var/lib/arangodb3-apps:rw"
+    networks: [browser-cell-net]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8529/_api/version"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    profiles: ["monitoring"]
+    ports:
+      - "${PROMETHEUS_PORT:-9091}:9090"
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - "${PROMETHEUS_DATA_PATH:-./data/prometheus}:/prometheus:rw"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks: [browser-cell-net]
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:11.4.0
+    profiles: ["monitoring"]
+    ports:
+      - "${GRAFANA_PORT:-3001}:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:-changeme_in_production}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - "${GRAFANA_DATA_PATH:-./data/grafana}:/var/lib/grafana:rw"
+    depends_on:
+      - prometheus
+    networks: [browser-cell-net]
+    restart: unless-stopped
+
+networks:
+  browser-cell-net:
+    driver: bridge
+
+

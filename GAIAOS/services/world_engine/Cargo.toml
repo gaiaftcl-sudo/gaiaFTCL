@@ -1,0 +1,24 @@
+[package]
+name = "world_engine"
+version = "0.1.0"
+edition = "2021"
+description = "GaiaOS World Engine - Real 4D physics and rendering substrate"
+
+[[bin]]
+name = "world-engine"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { version = "1.0", features = ["full"] }
+axum = "0.7"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+anyhow = "1.0"
+async-nats = "0.36"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.0", features = ["v4", "serde"] }
+
+# Consciousness layer
+gaiaos_introspection = { path = "../gaiaos_introspection" }

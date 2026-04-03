@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaiaftcl.com/schemas/digestset-1.0.json",
+  "title": "FTCL Digest Set",
+  "description": "Immutable, signed specification of all container images for a GaiaFTCL fleet deployment",
+  "type": "object",
+  "required": [
+    "version",
+    "digest_set_id",
+    "created_at",
+    "source_commit",
+    "constitution_hash",
+    "images",
+    "attestations",
+    "signatures",
+    "root_hash"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1.0.0",
+      "description": "Schema version"
+    },
+    "digest_set_id": {
+      "type": "string",
+      "pattern": "^FTCL_DIGESTSET_[0-9]{8}_[0-9]{3}$",
+      "description": "Unique identifier: FTCL_DIGESTSET_YYYYMMDD_NNN"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 creation timestamp"
+    },
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$",
+      "description": "Git commit hash that produced this build"
+    },
+    "constitution_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "Hash of the constitution documents at build time"
+    },
+    "images": {
+      "type": "object",
+      "description": "Map of service name to image specification",
+      "additionalProperties": {
+        "$ref": "#/$defs/image_spec"
+      },
+      "minProperties": 1
+    },
+    "attestations": {
+      "type": "object",
+      "required": [
+        "build_provenance",
+        "sbom_aggregate",
+        "constitution_binding"
+      ],
+      "properties": {
+        "build_provenance": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "Hash of aggregated SLSA provenance"
+        },
+        "sbom_aggregate": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "Hash of aggregated SBOMs"
+        },
+        "constitution_binding": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "Hash binding this digest set to constitution"
+        }
+      }
+    },
+    "signatures": {
+      "type": "object",
+      "description": "Required signatures for validity",
+      "required": [
+        "governance"
+      ],
+      "properties": {
+        "governance": {
+          "type": "string",
+          "description": "Signature from governance@gaiaftcl.com"
+        },
+        "franklin": {
+          "type": "string",
+          "description": "Signature from franklin@gaiaftcl.com (required for high-risk)"
+        }
+      }
+    },
+    "root_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "SHA256 hash of this entire document (excluding root_hash itself)"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "changelog": {
+          "type": "string"
+        },
+        "prior_digest_set": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "Root hash of the previous digest set"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "image_spec": {
+      "type": "object",
+      "required": [
+        "digest",
+        "sbom_hash",
+        "provenance_hash",
+        "build_time"
+      ],
+      "properties": {
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "Immutable image digest"
+        },
+        "sbom_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "Hash of SPDX/CycloneDX SBOM for this image"
+        },
+        "provenance_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "Hash of SLSA provenance attestation"
+        },
+        "build_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this image was built"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "description": "Image size in bytes"
+        },
+        "platform": {
+          "type": "string",
+          "default": "linux/amd64",
+          "description": "Target platform"
+        }
+      }
+    }
+  }
+}

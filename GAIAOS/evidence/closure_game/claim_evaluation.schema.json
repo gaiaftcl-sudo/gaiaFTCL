@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["domain_id", "claim_text", "claim_class"],
+  "properties": {
+    "domain_id": {
+      "type": "string"
+    },
+    "claim_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim_class": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

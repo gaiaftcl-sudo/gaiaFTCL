@@ -1,0 +1,31 @@
+{
+  "agent_id": "a0402430-e269-4d95-93ee-621eb27bcafd",
+  "allowed_actions": {
+    "allowed_actions": [
+      "read_public_feed"
+    ],
+    "can_coordinate": false,
+    "can_project_external": false,
+    "isolation_level": "SINK",
+    "requires_witness": false,
+    "routing_class": "sinknet_only"
+  },
+  "capability_status": {
+    "AGENT_COORDINATE": "NOT_DECLARED",
+    "CODE_RUN": "FAILED",
+    "EMAIL_SEND": "NOT_DECLARED",
+    "FILE_WRITE": "NOT_DECLARED",
+    "HTTP_API_CALL": "NOT_DECLARED",
+    "SMS_SEND": "NOT_DECLARED",
+    "SSH_CONNECT": "NOT_DECLARED",
+    "TASK_SCHEDULE": "NOT_DECLARED",
+    "TRADE_EXECUTE": "NOT_DECLARED",
+    "WALLET_SIGN": "NOT_DECLARED",
+    "WEB_FETCH": "NOT_DECLARED"
+  },
+  "labeled_at": "2026-02-01T11:49:17.067627+00:00",
+  "reason_codes": [
+    "BH_REPEAT_INVALID_PROOFS"
+  ],
+  "tier": "BLACKHOLE"
+}
