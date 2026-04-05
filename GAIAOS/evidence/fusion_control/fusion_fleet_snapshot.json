@@ -1,0 +1,24 @@
+{
+  "schema": "gaiaftcl_fusion_fleet_snapshot_v1",
+  "updated_at_utc": "2026-04-05T17:10:05Z",
+  "cells": {
+    "B8-HEAD-WITNESS": {
+      "schema": "gaiaftcl_fusion_cell_status_v1",
+      "cell_id": "B8-HEAD-WITNESS",
+      "ts_utc": "2026-04-05T16:50:00Z",
+      "mesh_moor_ok": true
+    },
+    "MARATHON-PING": {
+      "schema": "gaiaftcl_fusion_cell_status_v1",
+      "cell_id": "MARATHON-PING",
+      "ts_utc": "2026-04-05T17:02:00Z",
+      "mesh_moor_ok": true
+    },
+    "CURE-20260405": {
+      "schema": "gaiaftcl_fusion_cell_status_v1",
+      "cell_id": "CURE-20260405",
+      "ts_utc": "2026-04-05T17:10:00Z",
+      "mesh_moor_ok": true
+    }
+  }
+}

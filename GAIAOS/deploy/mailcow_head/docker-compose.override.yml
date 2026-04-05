@@ -1,0 +1,24 @@
+# IMPORTANT: lists REPLACE base volumes in this compose merge — include ALL nginx-mailcow mounts.
+services:
+  nginx-mailcow:
+    volumes:
+      - ./data/web:/web:ro,z
+      - ./data/conf/rspamd/dynmaps:/dynmaps:ro,z
+      - ./data/assets/ssl/:/etc/ssl/mail/:ro,z
+      - ./data/conf/nginx/:/etc/nginx/conf.d/:z
+      - ./data/conf/rspamd/meta_exporter:/meta_exporter:ro,z
+      - ./data/conf/dovecot/auth/mailcowauth.php:/mailcowauth/mailcowauth.php:z
+      - ./data/web/inc/functions.inc.php:/mailcowauth/functions.inc.php:z
+      - ./data/web/inc/functions.auth.inc.php:/mailcowauth/functions.auth.inc.php:z
+      - ./data/web/inc/sessions.inc.php:/mailcowauth/sessions.inc.php:z
+      - sogo-web-vol-1:/usr/lib/GNUstep/SOGo/
+      - /opt/gaia/ssl:/opt/gaia/ssl:ro
+      - /var/www/gaiaftcl/public/downloads:/var/www/gaiaftcl-downloads:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    networks:
+      - mailcow-network
+      - gaiaftcl_gaiaftcl
+
+networks:
+  gaiaftcl_gaiaftcl:
+    external: true
