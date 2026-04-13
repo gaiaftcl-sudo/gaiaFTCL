@@ -1,0 +1,22 @@
+{
+  "schema": "gaiaftcl_native_fusion_plant_adapters_v1",
+  "adapter_contract": "PlantAdapter",
+  "required_capabilities": [
+    "telemetry_stream_ingestion",
+    "control_write_intents",
+    "protection_interlocks",
+    "timing_state_synchronization",
+    "witness_emission"
+  ],
+  "kinds": [
+    "tokamak",
+    "stellarator",
+    "frc",
+    "spheromak",
+    "mirror",
+    "inertial",
+    "spherical_tokamak",
+    "z_pinch",
+    "mif"
+  ]
+}

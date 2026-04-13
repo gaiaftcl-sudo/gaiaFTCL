@@ -1,0 +1,10 @@
+[package]
+name = "vqbit-usd-parser"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+regex = "1.12"
+
+[dev-dependencies]
+tempfile = "3.27"

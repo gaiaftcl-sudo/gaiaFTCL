@@ -1,0 +1,47 @@
+[package]
+name = "gaia-metal-renderer"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+# Empty workspace declaration - this crate is not part of GAIAOS workspace
+
+[lib]
+name = "gaia_metal_renderer"
+crate-type = ["staticlib"]
+
+[dependencies]
+objc2 = "0.6"
+objc2-foundation = { version = "0.3", features = ["NSString", "NSError", "NSData", "NSGeometry"] }
+objc2-metal = { version = "0.3", features = [
+    "MTLDevice",
+    "MTLCommandQueue",
+    "MTLCommandBuffer",
+    "MTLCommandEncoder",
+    "MTLRenderCommandEncoder",
+    "MTLRenderPipeline",
+    "MTLRenderPass",
+    "MTLBuffer",
+    "MTLLibrary",
+    "MTLResource",
+    "MTLDrawable",
+    "MTLPixelFormat",
+    "MTLTexture",
+    "MTLDepthStencil",
+    "MTLVertexDescriptor",
+    "MTLTypes",
+] }
+objc2-quartz-core = "0.3"
+objc2-core-graphics = { version = "0.3", default-features = false }
+glam = "0.29"
+vqbit-usd-parser = { path = "./parser" }
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
+
+[build-dependencies]
+cbindgen = "0.27"

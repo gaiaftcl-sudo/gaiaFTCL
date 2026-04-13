@@ -1,0 +1,15 @@
+{
+  "schema": "gaiaftcl_usd_plant_timeline_v2",
+  "plant": "mif",
+  "usd_root": "plants/mif/root.usda",
+  "drive_variable": "system_clock",
+  "telemetry_inputs": ["I_p"],
+  "telemetry_min": 0.5,
+  "telemetry_max": 2.0,
+  "phases": [
+    { "id": "beginning", "start": 0.0, "end": 0.33 },
+    { "id": "middle", "start": 0.33, "end": 0.66 },
+    { "id": "end", "start": 0.66, "end": 1.0 }
+  ],
+  "time_code_end": 120.0
+}

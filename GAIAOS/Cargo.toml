@@ -1,0 +1,16 @@
+# Mycelium Protocol workspace — shared NATS language + Apex Anchor (Discord) + Local Cell (worker).
+[workspace]
+resolver = "2"
+members = [
+    "crates/mycelium-protocol",
+    "apps/apex-anchor",
+    "apps/local-cell",
+    "services/bitcoin_heartbeat",
+    "services/atc_physics_wasm",
+]
+exclude = [
+    "services/dns_authority",
+    "services/fusion_control_mac",
+    "services/gaiaos_ui_tester_mcp",
+    "services/gaiaos_mcp_server",
+]

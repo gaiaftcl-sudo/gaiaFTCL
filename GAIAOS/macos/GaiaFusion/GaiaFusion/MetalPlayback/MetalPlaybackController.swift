@@ -1,0 +1,123 @@
+import Foundation
+import Metal
+import MetalKit
+import simd
+import GaiaMetalRenderer
+
+/// Metal-present–gated Rust Metal playback controller (replaces OpenUSD)
+@MainActor
+final class MetalPlaybackController: ObservableObject {
+    @Published private(set) var plantKind: String = "tokamak"
+    @Published private(set) var engaged: Bool = false
+    @Published private(set) var framesPresented: UInt64 = 0
+    @Published private(set) var fps: Double = 0
+    @Published private(set) var stageLoaded: Bool = false
+    
+    /// Emits discrete plant-swap lifecycle states to WKWebView + gate logs.
+    var onPlantSwapLifecycle: (([String: Any]) -> Void)?
+    
+    /// SubGame Z: diagnostic prim evicted (quorum loss or cell4 host offline) — gate + DOM witness.
+    var onSubgameZDiagnosticEviction: (([String: Any]) -> Void)?
+    
+    /// Mesh `vQbit` sample for optional `vqbit_rate` timeline driver.
+    var vqbitSample: () -> Double = { 0 }
+    
+    private var rustRenderer: RustMetalProxyRenderer?
+    private var lastFrameTime: TimeInterval = 0
+    private var fpsAccumulator: Double = 0
+    private var fpsFrames: Int = 0
+    
+    init() {
+        self.plantKind = "tokamak"
+        self.stageLoaded = true
+    }
+    
+    func loadPlant(_ rawKind: String) {
+        plantKind = rawKind
+        loadPlantSync(rawKind)
+    }
+    
+    func loadPlantSync(_ kind: String) {
+        plantKind = kind
+        // Gap #8: Parse USD with explicit buffer allocation
+        guard let usdPath = Bundle.module.path(forResource: "plants/\(kind)/root", ofType: "usda") else {
+            print("USD file not found for plant: \(kind)")
+            stageLoaded = false
+            return
+        }
+        
+        let maxPrims = 256
+        let primsBuffer = UnsafeMutablePointer<vQbitPrimitive>.allocate(capacity: maxPrims)
+        defer { primsBuffer.deallocate() }
+        
+        let count = usdPath.withCString { pathPtr in
+            gaia_metal_parse_usd(pathPtr, primsBuffer, UInt(maxPrims))
+        }
+        
+        print("Loaded \(count) primitives from \(kind)")
+        
+        // Upload to renderer if available
+        if count > 0, let renderer = rustRenderer {
+            let prims = Array(UnsafeBufferPointer(start: primsBuffer, count: Int(count)))
+            renderer.uploadPrimitives(prims)
+        }
+        
+        stageLoaded = (count > 0)
+    }
+    
+    func setMetalRenderer(_ renderer: RustMetalProxyRenderer) {
+        self.rustRenderer = renderer
+    }
+    
+    func drawFrame(drawable: CAMetalDrawable, viewportSize: CGSize) {
+        guard let renderer = rustRenderer else { return }
+        
+        let now = CACurrentMediaTime()
+        if lastFrameTime > 0 {
+            let delta = now - lastFrameTime
+            fpsAccumulator += 1.0 / max(delta, 0.001)
+            fpsFrames += 1
+            if fpsFrames >= 30 {
+                fps = fpsAccumulator / Double(fpsFrames)
+                fpsAccumulator = 0
+                fpsFrames = 0
+            }
+        }
+        lastFrameTime = now
+        
+        renderer.renderFrame(width: UInt32(viewportSize.width), height: UInt32(viewportSize.height))
+        framesPresented += 1
+    }
+    
+    func engage() {
+        engaged = true
+    }
+    
+    func disengage() {
+        engaged = false
+    }
+    
+    func setEngaged(_ value: Bool) {
+        if value {
+            engage()
+        } else {
+            disengage()
+        }
+    }
+    
+    // Legacy methods for compatibility - no-ops for now
+    func applyMeshDiagnosticEviction(meshCells: [Any]) {}
+    func onSelectCell(cellID: String?, meshCells: [Any]) {}
+    func ingestTelemetryFromBridge(ip: Double, bt: Double, ne: Double) {}
+    func ingestEpistemicBoundary(ip: String, bt: String, ne: String, terminal: String) {}
+    
+    func jsonSnapshot() -> [String: Any] {
+        return [
+            "plant_kind": plantKind,
+            "engaged": engaged,
+            "frames_presented": framesPresented,
+            "fps": fps,
+            "stage_loaded": stageLoaded
+        ]
+    }
+}

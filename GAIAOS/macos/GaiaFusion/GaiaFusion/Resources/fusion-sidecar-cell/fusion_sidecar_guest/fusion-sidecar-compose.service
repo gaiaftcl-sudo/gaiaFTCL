@@ -1,0 +1,16 @@
+[Unit]
+Description=GaiaFTCL fusion sidecar MCP cell (docker compose)
+After=docker.service network-online.target
+Wants=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/gaiaos
+# Ensure virtiofs mount exists (optional if fstab handles it)
+ExecStartPre=/bin/bash -c 'test -f /opt/gaiaos/docker-compose.fusion-sidecar.yml'
+ExecStart=/usr/bin/docker compose -f /opt/gaiaos/docker-compose.fusion-sidecar.yml up -d --build
+ExecStop=/usr/bin/docker compose -f /opt/gaiaos/docker-compose.fusion-sidecar.yml down
+
+[Install]
+WantedBy=multi-user.target
