@@ -17,7 +17,9 @@ final class SoftwareQAProtocols: XCTestCase {
     }
     
     override func tearDown() async throws {
-        playbackController?.cleanup()
+        await MainActor.run {
+            playbackController?.cleanup()
+        }
         try await super.tearDown()
     }
     
