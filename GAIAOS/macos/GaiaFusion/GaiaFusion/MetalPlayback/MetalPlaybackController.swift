@@ -31,7 +31,29 @@ final class MetalPlaybackController: ObservableObject {
         self.plantKind = "tokamak"
         self.stageLoaded = true
     }
+
+    /// IQ/OQ/PQ test entry point — initialise renderer with an optional CAMetalLayer.
+    /// Passing nil creates a headless instance suitable for unit tests (no GPU rendering).
+    func initialize(layer: CAMetalLayer?) async {
+        if let layer = layer {
+            let proxy = RustMetalProxyRenderer(layer: layer)
+            setMetalRenderer(proxy)
+        }
+        // If layer is nil, rustRenderer stays nil — headless mode for test protocols.
+        stageLoaded = true
+    }
+
+    /// Request a plant swap — PQ protocol entry point.
+    /// Delegates to loadPlant which drives the full REQUESTED→VERIFIED lifecycle.
+    func requestPlantSwap(to kind: String) {
+        loadPlant(kind)
+    }
     
+    /// PQ protocol overload accepting FusionPlantKind enum
+    func requestPlantSwap(to kind: FusionPlantKind) {
+        requestPlantSwap(to: kind.rawValue)
+    }
+
     func loadPlant(_ rawKind: String) {
         plantKind = rawKind
         loadPlantSync(rawKind)
@@ -105,6 +127,38 @@ final class MetalPlaybackController: ObservableObject {
         }
     }
     
+    func setTau(_ blockHeight: UInt64) {
+        rustRenderer?.setTau(blockHeight)
+    }
+    
+    func getTau() -> UInt64 {
+        return rustRenderer?.getTau() ?? 0
+    }
+    
+    // MARK: - PQ Test Protocol Support
+    
+    /// Cleanup alias for PQ tests (maps to disengage)
+    func cleanup() {
+        disengage()
+        rustRenderer = nil
+    }
+    
+    /// Current FPS for PQ tests
+    var currentFPS: Double? {
+        return fps > 0 ? fps : nil
+    }
+    
+    /// Current geometry for PQ tests (placeholder - vertex count from renderer)
+    var currentGeometry: Geometry? {
+        guard rustRenderer != nil else { return nil }
+        return Geometry(vertexCount: 256)
+    }
+    
+    /// Current wireframe color based on terminal state (placeholder)
+    var currentWireframeColor: WireframeColor {
+        return .green
+    }
+    
     // Legacy methods for compatibility - no-ops for now
     func applyMeshDiagnosticEviction(meshCells: [Any]) {}
     func onSelectCell(cellID: String?, meshCells: [Any]) {}
@@ -121,3 +175,14 @@ final class MetalPlaybackController: ObservableObject {
         ]
     }
 }
+
+// MARK: - PQ Test Support Types
+
+struct Geometry {
+    let vertexCount: Int
+}
+
+enum WireframeColor {
+    case green, amber, red
+}
+

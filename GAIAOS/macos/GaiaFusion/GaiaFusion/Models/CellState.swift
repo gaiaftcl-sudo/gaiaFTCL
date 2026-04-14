@@ -15,7 +15,16 @@ public enum PlantType: String, Codable, CaseIterable, Sendable {
     case unknown = "unknown"
 }
 
+/// PQ test protocol alias
+public typealias FusionPlantKind = PlantType
+
 public extension PlantType {
+    /// Test protocol aliases for canonical naming
+    static var magneticMirror: PlantType { .mirror }
+    static var zpinch: PlantType { .zPinch }
+    static var icf: PlantType { .inertial }
+    static var thetaPinch: PlantType { .mif }
+    
     static func normalized(raw: String?) -> PlantType {
         PlantKindsCatalog.shared.canonical(raw)
     }

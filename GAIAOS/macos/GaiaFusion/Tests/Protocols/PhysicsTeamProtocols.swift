@@ -10,8 +10,8 @@ final class PhysicsTeamProtocols: XCTestCase {
     
     override func setUp() async throws {
         try await super.setUp()
-        gameState = OpenUSDLanguageGameState()
-        playbackController = MetalPlaybackController()
+        gameState = await MainActor.run { OpenUSDLanguageGameState() }
+        playbackController = await MainActor.run { MetalPlaybackController() }
         
         await playbackController.initialize(layer: nil)
     }
@@ -28,7 +28,7 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Acceptance: All telemetry within bounds for 60 seconds
     func testPQPHY001_TokamakPlasmaCurrent() async throws {
         let plantKind = FusionPlantKind.tokamak
-        gameState.requestPlantSwap(to: plantKind)
+        await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))
         XCTAssertEqual(gameState.currentActivePlant, plantKind, "Plant swap failed")
@@ -64,7 +64,7 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Acceptance: All telemetry within bounds for 60 seconds
     func testPQPHY002_StellatorMagneticField() async throws {
         let plantKind = FusionPlantKind.stellarator
-        gameState.requestPlantSwap(to: plantKind)
+        await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))
         XCTAssertEqual(gameState.currentActivePlant, plantKind, "Plant swap failed")
@@ -100,7 +100,7 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Acceptance: All telemetry within bounds for 60 seconds
     func testPQPHY003_ICFLaserEnergy() async throws {
         let plantKind = FusionPlantKind.icf
-        gameState.requestPlantSwap(to: plantKind)
+        await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))
         XCTAssertEqual(gameState.currentActivePlant, plantKind, "Plant swap failed")
@@ -136,7 +136,7 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Acceptance: All telemetry within bounds for 60 seconds
     func testPQPHY004_FRCElectronDensity() async throws {
         let plantKind = FusionPlantKind.frc
-        gameState.requestPlantSwap(to: plantKind)
+        await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))
         XCTAssertEqual(gameState.currentActivePlant, plantKind, "Plant swap failed")
@@ -172,7 +172,7 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Acceptance: All telemetry within bounds for 60 seconds
     func testPQPHY005_SpheromagHelicity() async throws {
         let plantKind = FusionPlantKind.spheromak
-        gameState.requestPlantSwap(to: plantKind)
+        await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))
         XCTAssertEqual(gameState.currentActivePlant, plantKind, "Plant swap failed")
@@ -208,7 +208,7 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Acceptance: All telemetry within bounds for 60 seconds
     func testPQPHY006_MirrorRatio() async throws {
         let plantKind = FusionPlantKind.magneticMirror
-        gameState.requestPlantSwap(to: plantKind)
+        await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))
         XCTAssertEqual(gameState.currentActivePlant, plantKind, "Plant swap failed")
@@ -244,7 +244,7 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Acceptance: All telemetry within bounds for 60 seconds
     func testPQPHY007_ZPinchCurrent() async throws {
         let plantKind = FusionPlantKind.zpinch
-        gameState.requestPlantSwap(to: plantKind)
+        await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))
         XCTAssertEqual(gameState.currentActivePlant, plantKind, "Plant swap failed")
@@ -280,7 +280,7 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Acceptance: All telemetry within bounds for 60 seconds
     func testPQPHY008_ThetaPinchField() async throws {
         let plantKind = FusionPlantKind.thetaPinch
-        gameState.requestPlantSwap(to: plantKind)
+        await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))
         XCTAssertEqual(gameState.currentActivePlant, plantKind, "Plant swap failed")

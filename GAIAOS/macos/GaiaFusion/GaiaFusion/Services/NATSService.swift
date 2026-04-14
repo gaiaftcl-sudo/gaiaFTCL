@@ -8,6 +8,44 @@ struct NATSCellEnvelope: Sendable {
 }
 
 actor NATSService {
+    /// Shared singleton — used by PQ test protocols and GaiaFusion app.
+    static let shared = NATSService()
+
+    /// Last Bitcoin block height received on `gaiaftcl.bitcoin.heartbeat`.
+    /// Updated by the bitcoin heartbeat subscription. nil = not yet received.
+    private(set) var lastBitcoinTau: UInt64? = nil
+    
+    /// Connection status for PQ tests
+    var isConnected: Bool {
+        return connection != nil
+    }
+    
+    /// Disconnect callback for PQ tests
+    var onDisconnect: (() -> Void)?
+
+    /// Connect to the local NATS server (nats://localhost:4222).
+    /// Subscribes to `gaiaftcl.bitcoin.heartbeat` and updates `lastBitcoinTau`.
+    /// Throws if NATS is unreachable (non-fatal in dev — mesh may not be running).
+    func connect() async throws {
+        let urlString = "nats://localhost:4222"
+        guard isURLReachable(urlString) else {
+            // Not an error in dev — bitcoin heartbeat service may be offline
+            return
+        }
+        let _ = await startCellStatusStream(
+            urlString: urlString,
+            subjects: ["gaiaftcl.bitcoin.heartbeat"]
+        ) { [weak self] envelope in
+            guard let json = try? JSONSerialization.jsonObject(with: envelope.payload) as? [String: Any],
+                  let blockHeight = json["block_height"] as? UInt64 else { return }
+            Task { await self?.updateTau(blockHeight) }
+        }
+    }
+
+    private func updateTau(_ blockHeight: UInt64) {
+        lastBitcoinTau = blockHeight
+    }
+
     private final class ProbeState: @unchecked Sendable {
         private var done = false
         private let continuation: CheckedContinuation<Bool, Never>
@@ -135,6 +173,14 @@ actor NATSService {
         readerTask = nil
         connection?.cancel()
         connection = nil
+        onDisconnect?()
+    }
+    
+    /// Simulate disconnect for PQ-SAF-007 testing
+    func simulateDisconnect() {
+        Task {
+            await stopCellStatusStream()
+        }
     }
 
     nonisolated func isURLReachable(_ raw: String) -> Bool {

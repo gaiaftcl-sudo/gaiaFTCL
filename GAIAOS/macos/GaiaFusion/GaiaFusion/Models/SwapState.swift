@@ -7,6 +7,7 @@ public enum SwapLifecycle: String, Codable {
     case committed = "committed"
     case verified = "verified"
     case failed = "failed"
+    case rollback = "rollback"
 }
 
 public struct SwapState: Identifiable, Codable, Equatable {
@@ -48,8 +49,13 @@ public struct SwapState: Identifiable, Codable, Equatable {
             lifecycle = .committed
         case .committed:
             lifecycle = .verified
-        case .verified, .failed:
+        case .verified, .failed, .rollback:
             break
         }
+    }
+    
+    /// Trigger rollback to previous plant state
+    public mutating func triggerRollback() {
+        lifecycle = .rollback
     }
 }

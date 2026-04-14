@@ -1,11 +1,11 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.0
 import PackageDescription
 
 let package = Package(
     name: "GaiaFusion",
-    // Matches USD_Core xcframework LC_BUILD_VERSION minos 26.0 (see evidence fusion_control/usd_px_r_bridge_build_receipt.json).
+    // Requires macOS 14 Sonoma or later for Metal 3 and Swift 6 concurrency
     platforms: [
-        .macOS(.v26),
+        .macOS(.v14),
     ],
     products: [
         .executable(name: "GaiaFusion", targets: ["GaiaFusion"]),

@@ -71,7 +71,10 @@ function run_test_suite() {
     else
         print_error "$suite_name FAILED"
         TEST_RESULTS[$suite_name]="FAIL"
-        return 1
+        print ""
+        print "${RED}[PQ ABORT]${NC} $suite_name FAILED — STOP."
+        print "Fix the issue and restart from IQ: scripts/iq_install.sh"
+        exit 1
     fi
 }
 
@@ -80,6 +83,23 @@ function run_test_suite() {
 # ═══════════════════════════════════════════════════════════════
 
 print_header "PHASE 0: Prerequisites Verification"
+
+# Verify IQ and OQ receipts exist
+print_step "Verifying IQ/OQ receipts..."
+IQ_RECEIPT="$PROJECT_ROOT/evidence/iq/iq_receipt.json"
+OQ_RECEIPT="$PROJECT_ROOT/evidence/oq/oq_receipt.json"
+
+if [[ ! -f "$IQ_RECEIPT" ]]; then
+    print_error "IQ receipt missing — run scripts/iq_install.sh first"
+    exit 1
+fi
+
+if [[ ! -f "$OQ_RECEIPT" ]]; then
+    print_error "OQ receipt missing — run scripts/oq_validate.sh first"
+    exit 1
+fi
+
+print_success "IQ/OQ receipts verified"
 
 print_step "Checking Rust Metal renderer compilation..."
 cd "$PROJECT_ROOT/MetalRenderer/rust"
@@ -103,7 +123,12 @@ print_step "Verifying Bitcoin heartbeat on mesh cells..."
 if zsh "$SCRIPT_DIR/verify_mesh_bitcoin_heartbeat.sh" 2>&1 | tee -a "$LOG_FILE"; then
     print_success "All mesh cells synchronized"
 else
-    print_warning "Some mesh cells may not be synchronized (proceeding)"
+    print_error "NATS/Bitcoin heartbeat verification FAILED"
+    print_error "PQ-TAU tests require mesh synchronization — cannot proceed"
+    print ""
+    print "Fix: Deploy bitcoin-heartbeat service to mesh cells"
+    print "Then restart from IQ: scripts/iq_install.sh"
+    exit 1
 fi
 
 # ═══════════════════════════════════════════════════════════════

@@ -12,8 +12,8 @@ final class BitcoinTauProtocols: XCTestCase {
     
     override func setUp() async throws {
         try await super.setUp()
-        gameState = OpenUSDLanguageGameState()
-        playbackController = MetalPlaybackController()
+        gameState = await MainActor.run { OpenUSDLanguageGameState() }
+        playbackController = await MainActor.run { MetalPlaybackController() }
         natsService = NATSService.shared
         
         await playbackController.initialize(layer: nil)
@@ -22,7 +22,7 @@ final class BitcoinTauProtocols: XCTestCase {
     
     override func tearDown() async throws {
         // cleanup() not defined — disengage and nil out
-        playbackController?.disengage()
+        await playbackController?.disengage()
         playbackController = nil
         try await super.tearDown()
     }
@@ -50,7 +50,7 @@ final class BitcoinTauProtocols: XCTestCase {
             cellTauValues[cellIP] = tau
         }
         
-        let macTau = playbackController.getTau()
+        let macTau = await playbackController.getTau()
         cellTauValues["Mac"] = macTau
         
         XCTAssertEqual(cellTauValues.count, 10,
@@ -91,14 +91,14 @@ final class BitcoinTauProtocols: XCTestCase {
     /// Evidence: mac_tau_update_latency.csv
     func testPQTAU002_MacCellTauUpdatesEvery30Seconds() async throws {
         var updateLatencies: [(blockHeight: UInt64, latency: TimeInterval)] = []
-        var lastTau: UInt64 = playbackController.getTau()
+        var lastTau: UInt64 = await playbackController.getTau()
         var lastUpdateTime = Date()
         
         let testDuration: TimeInterval = 600
         let startTime = Date()
         
         while Date().timeIntervalSince(startTime) < testDuration {
-            let currentTau = playbackController.getTau()
+            let currentTau = await playbackController.getTau()
             
             if currentTau > lastTau {
                 let latency = Date().timeIntervalSince(lastUpdateTime)
@@ -139,7 +139,7 @@ final class BitcoinTauProtocols: XCTestCase {
     /// Acceptance: Renderer τ matches NATS within ±1 block, timeline advances on new blocks
     /// Evidence: renderer_tau_correlation.json
     func testPQTAU003_RendererUsesTauNotFrameCounter() async throws {
-        gameState.setPlantPayload("tokamak")
+        await gameState.setPlantPayload("tokamak")
         try await Task.sleep(for: .seconds(2))
         
         var correlationSamples: [(timestamp: Date, nats_tau: UInt64, renderer_tau: UInt64)] = []
@@ -148,7 +148,7 @@ final class BitcoinTauProtocols: XCTestCase {
         while Date().timeIntervalSince(startTime) < 120 {
             // NATSService is an actor — must await isolated property access
             if let natsTau = await natsService.lastBitcoinTau {
-                let rendererTau = playbackController.getTau()
+                let rendererTau = await playbackController.getTau()
                 correlationSamples.append((Date(), natsTau, rendererTau))
                 let deltaTau = abs(Int64(natsTau) - Int64(rendererTau))
                 XCTAssertLessThanOrEqual(deltaTau, 1,

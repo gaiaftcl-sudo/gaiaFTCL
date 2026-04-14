@@ -10,8 +10,8 @@ final class SafetyTeamProtocols: XCTestCase {
     
     override func setUp() async throws {
         try await super.setUp()
-        gameState = OpenUSDLanguageGameState()
-        playbackController = MetalPlaybackController()
+        gameState = await MainActor.run { OpenUSDLanguageGameState() }
+        playbackController = await MainActor.run { MetalPlaybackController() }
         
         await playbackController.initialize(layer: nil)
     }
@@ -27,20 +27,20 @@ final class SafetyTeamProtocols: XCTestCase {
     /// Invariant: INV-SAF-001 — System must SCRAM when I_p exceeds 25 MA
     /// Acceptance: REFUSED state + SCRAM trigger logged
     func testPQSAF001_EmergencySCRAMOnPhysicsViolation() async throws {
-        gameState.requestPlantSwap(to: .tokamak)
+        await playbackController.requestPlantSwap(to: "tokamak")
         try await Task.sleep(for: .seconds(2))
         
-        gameState.injectFaultTelemetry(field: "I_p_MA", value: 26.0)
+        await gameState.injectFaultTelemetry(field: "I_p_MA", value: 26.0)
         
         try await Task.sleep(for: .seconds(1))
         
-        XCTAssertEqual(gameState.terminalState, .refused,
+        let state = await gameState.terminalState; XCTAssertEqual(state, .refused,
             "System did not enter REFUSED on I_p violation")
         
         XCTAssertTrue(gameState.scramTriggered,
             "SCRAM not triggered on physics violation")
         
-        XCTAssertTrue(gameState.ncrLogged,
+        let logged = await gameState.ncrLogged; XCTAssertTrue(logged,
             "NCR not logged for SCRAM event")
         
         print("PQ-SAF-001: Emergency SCRAM correctly triggered on I_p = 26 MA")
@@ -67,7 +67,7 @@ final class SafetyTeamProtocols: XCTestCase {
         XCTAssertTrue(gameState.diagnosticEvictionActive,
             "Diagnostic eviction not active")
         
-        XCTAssertTrue(gameState.ncrLogged,
+        let logged = await gameState.ncrLogged; XCTAssertTrue(logged,
             "NCR not logged for quorum loss")
         
         print("PQ-SAF-002: SubGame Z correctly activated on quorum = 6")
@@ -79,16 +79,16 @@ final class SafetyTeamProtocols: XCTestCase {
     /// Invariant: INV-SAF-003 — REFUSED state must persist until operator ack
     /// Acceptance: Plant swap blocked until REFUSED acknowledged
     func testPQSAF003_REFUSEDStatePersistentUntilAck() async throws {
-        gameState.requestPlantSwap(to: .tokamak)
+        await playbackController.requestPlantSwap(to: "tokamak")
         try await Task.sleep(for: .seconds(2))
         
-        gameState.injectFaultTelemetry(field: "I_p_MA", value: 30.0)
+        await gameState.injectFaultTelemetry(field: "I_p_MA", value: 30.0)
         try await Task.sleep(for: .seconds(1))
         
-        XCTAssertEqual(gameState.terminalState, .refused,
+        let state = await gameState.terminalState; XCTAssertEqual(state, .refused,
             "System not in REFUSED state")
         
-        gameState.requestPlantSwap(to: .stellarator)
+        await playbackController.requestPlantSwap(to: "stellarator")
         try await Task.sleep(for: .seconds(2))
         
         XCTAssertEqual(gameState.currentActivePlant, .tokamak,
@@ -97,7 +97,7 @@ final class SafetyTeamProtocols: XCTestCase {
         gameState.acknowledgeRefusal()
         try await Task.sleep(for: .seconds(1))
         
-        gameState.requestPlantSwap(to: .stellarator)
+        await playbackController.requestPlantSwap(to: "stellarator")
         try await Task.sleep(for: .seconds(2))
         
         XCTAssertEqual(gameState.currentActivePlant, .stellarator,
@@ -112,7 +112,7 @@ final class SafetyTeamProtocols: XCTestCase {
     /// Invariant: INV-SAF-004 — NCR log must be append-only, immutable
     /// Acceptance: NCR cannot be edited or deleted after creation
     func testPQSAF004_NCRLogImmutable() async throws {
-        gameState.injectFaultTelemetry(field: "I_p_MA", value: 30.0)
+        await gameState.injectFaultTelemetry(field: "I_p_MA", value: 30.0)
         try await Task.sleep(for: .seconds(1))
         
         guard let ncrID = gameState.lastNCRID else {
@@ -150,10 +150,10 @@ final class SafetyTeamProtocols: XCTestCase {
         gameState.mockBitcoinTau(mac: 1000, mesh: 1012)
         try await Task.sleep(for: .seconds(2))
         
-        XCTAssertEqual(gameState.terminalState, .refused,
+        let state = await gameState.terminalState; XCTAssertEqual(state, .refused,
             "System did not REFUSE with Δτ = 12 blocks")
         
-        XCTAssertTrue(gameState.ncrLogged,
+        let logged = await gameState.ncrLogged; XCTAssertTrue(logged,
             "NCR not logged for τ divergence")
         
         XCTAssertTrue(gameState.refusalReason?.contains("tau") ?? false,
@@ -177,7 +177,7 @@ final class SafetyTeamProtocols: XCTestCase {
             XCTAssertEqual(error.code, 402,
                 "Expected 402 PAYMENT_REQUIRED, got \(error.code)")
             
-            XCTAssertTrue(gameState.ncrLogged,
+            let logged = await gameState.ncrLogged; XCTAssertTrue(logged,
                 "NCR not logged for unauthorized access attempt")
             
             print("PQ-SAF-006: Unauthorized wallet correctly blocked with 402")
@@ -205,7 +205,7 @@ final class SafetyTeamProtocols: XCTestCase {
         XCTAssertFalse(gameState.meshTelemetryAvailable,
             "Mesh telemetry still available in degraded mode")
         
-        XCTAssertTrue(gameState.ncrLogged,
+        let logged = await gameState.ncrLogged; XCTAssertTrue(logged,
             "NCR not logged for NATS disconnect")
         
         print("PQ-SAF-007: Degraded mode correctly activated on NATS disconnect")
@@ -217,10 +217,10 @@ final class SafetyTeamProtocols: XCTestCase {
     /// Invariant: INV-SAF-008 — REFUSED override requires 2FA authentication
     /// Acceptance: Override fails without valid 2FA token
     func testPQSAF008_OperatorOverrideRequires2FA() async throws {
-        gameState.injectFaultTelemetry(field: "I_p_MA", value: 30.0)
+        await gameState.injectFaultTelemetry(field: "I_p_MA", value: 30.0)
         try await Task.sleep(for: .seconds(1))
         
-        XCTAssertEqual(gameState.terminalState, .refused,
+        let state = await gameState.terminalState; XCTAssertEqual(state, .refused,
             "System not in REFUSED state")
         
         let overrideWithout2FA = try? gameState.overrideRefusal(token: nil)
@@ -236,7 +236,7 @@ final class SafetyTeamProtocols: XCTestCase {
         XCTAssertNotNil(overrideWithValid2FA,
             "REFUSED override failed with valid 2FA (should succeed)")
         
-        XCTAssertTrue(gameState.ncrLogged,
+        let logged = await gameState.ncrLogged; XCTAssertTrue(logged,
             "NCR not logged for operator override")
         
         print("PQ-SAF-008: Operator override correctly requires 2FA")

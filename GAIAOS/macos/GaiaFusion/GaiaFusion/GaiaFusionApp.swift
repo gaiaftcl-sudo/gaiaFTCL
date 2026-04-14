@@ -1552,7 +1552,7 @@ final class AppCoordinator: ObservableObject {
         let fallbackSubjects = [
             "gaiaftcl.fusion.cell.status.v1",
             "gaiaftcl.fusion.mesh_mooring.v1",
-            "gaiaftcl.cell.id",
+            "gaiaftcl.bitcoin.heartbeat",
             "gaiaftcl.cell.id",
         ]
         let subjects = userSubjects.isEmpty ? fallbackSubjects : userSubjects
@@ -1814,6 +1814,16 @@ final class AppCoordinator: ObservableObject {
         lastIngestionTsMs = Int64(envelope.receivedAt.timeIntervalSince1970 * 1000)
         lastIngestionSubject = envelope.subject
         let payload = (try? JSONSerialization.jsonObject(with: envelope.payload) as? [String: Any]) ?? [:]
+        
+        // Bitcoin τ (tau) synchronization - GAP 1C
+        if envelope.subject == "gaiaftcl.bitcoin.heartbeat" {
+            if let blockHeight = payload["block_height"] as? UInt64 {
+                openUSDPlayback.setTau(blockHeight)
+            } else if let blockHeightInt = payload["block_height"] as? Int {
+                openUSDPlayback.setTau(UInt64(blockHeightInt))
+            }
+        }
+        
         meshManager.recordNATSCellStatus(
             subject: envelope.subject,
             payload: payload,

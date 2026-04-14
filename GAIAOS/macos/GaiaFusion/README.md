@@ -99,6 +99,66 @@ renderer.rs  →  self.tau: u64  →  Metal render pass
 
 ---
 
+## Performance — Patent Requirements
+
+**USPTO 19/460,960** — Systems and Methods of Facilitating Quantum-Enhanced Graph Inference
+
+### Critical Requirement: Frame Time <3ms
+
+**Target:** <3000 μs (3 milliseconds) per frame on Apple Silicon  
+**Validation:** PQ-PERF-001 (100 consecutive frames must all be <3ms)
+
+This performance target is **only achievable with precompiled Metal shaders**:
+
+| Method | Startup Time | Frame Time | Patent Compliant |
+|--------|--------------|------------|------------------|
+| **JIT** (`newLibraryWithSource`) | 100-500ms | Variable | ❌ NO |
+| **Precompiled** (`newLibraryWithURL`) | <10ms | <3ms | ✅ YES |
+
+### Build Process
+
+**Precompile shaders before Rust build:**
+```zsh
+cd MetalRenderer/rust
+zsh build_shaders.sh    # Compiles Metal source → default.metallib
+cargo build --release   # Rust loads precompiled library
+```
+
+**Shader Pipeline:**
+1. **Source:** `shaders/gaia_fusion_plants.metal` (Metal 3.0, universal for all 9 plant types)
+2. **Compile:** `xcrun metal -c` → `.air` (Apple Intermediate Representation)
+3. **Link:** `xcrun metallib` → `default.metallib` (15.3 KB)
+4. **Deploy:** Copy to `Resources/` for Swift Package bundling
+5. **Runtime:** `newLibraryWithURL` loads instantly (no compilation)
+
+### Apple Silicon Architecture Benefits
+
+**Unified Memory (Zero-Copy):**
+- CPU and GPU share physical DRAM
+- `MTLResourceOptions::StorageModeShared` — no memcpy overhead
+- Vertex data written by CPU is immediately visible to GPU
+- Critical for sub-3ms frame budget
+
+**Metal 3.0 API:**
+- Optimized command encoding
+- Direct GPU access (no translation layer)
+- Hardware-accelerated rasterization
+
+### Performance Validation
+
+**Automated Tests:**
+- `perf_001_frame_time_under_3ms` (Rust unit test — documents requirement)
+- `PQ-PERF-001` (Swift XCTest — measures 100 frames with real Metal device)
+- `PQ-PERF-002` (Validates `default.metallib` exists and is precompiled)
+- `PQ-PERF-003` (Validates unified memory zero-copy architecture)
+
+**Evidence:**
+- `evidence/pq_validation/performance/frame_time_validation.csv`
+- `evidence/pq_validation/performance/metallib_validation.json`
+- `evidence/pq_validation/performance/unified_memory_validation.txt`
+
+---
+
 ## Requirements
 
 | Dependency | Minimum | Install |

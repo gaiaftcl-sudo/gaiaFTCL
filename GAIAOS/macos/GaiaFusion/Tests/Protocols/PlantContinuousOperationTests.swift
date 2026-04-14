@@ -10,8 +10,9 @@ final class PlantContinuousOperationTests: XCTestCase {
     var openUSDState: OpenUSDLanguageGameState!
     
     override func setUp() async throws {
-        playbackController = MetalPlaybackController()
+        playbackController = await MainActor.run { MetalPlaybackController() }
         openUSDState = OpenUSDLanguageGameState()
+        await playbackController.initialize(layer: nil)
     }
     
     override func tearDown() async throws {

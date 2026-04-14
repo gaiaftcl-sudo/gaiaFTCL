@@ -10,8 +10,8 @@ final class ControlSystemsProtocols: XCTestCase {
     
     override func setUp() async throws {
         try await super.setUp()
-        gameState = OpenUSDLanguageGameState()
-        playbackController = MetalPlaybackController()
+        gameState = await MainActor.run { OpenUSDLanguageGameState() }
+        playbackController = await MainActor.run { MetalPlaybackController() }
         
         await playbackController.initialize(layer: nil)
     }
@@ -32,7 +32,7 @@ final class ControlSystemsProtocols: XCTestCase {
         
         for plant in plants {
             let startTime = Date()
-            gameState.requestPlantSwap(to: plant)
+            await playbackController.requestPlantSwap(to: plant)
             
             var committed = false
             while !committed && Date().timeIntervalSince(startTime) < 5.0 {
@@ -68,7 +68,7 @@ final class ControlSystemsProtocols: XCTestCase {
         var minFPS: Double = 60.0
         
         for plant in plants {
-            gameState.requestPlantSwap(to: plant)
+            await playbackController.requestPlantSwap(to: plant)
             
             var frameRates: [Double] = []
             let startTime = Date()
@@ -98,14 +98,14 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Invariant: INV-CSE-003 — System must enter REFUSED when telemetry violates physics
     /// Acceptance: REFUSED trigger on I_p > 25 MA for tokamak
     func testPQCSE003_REFUSEDStateOnInvalidTelemetry() async throws {
-        gameState.requestPlantSwap(to: .tokamak)
+        await playbackController.requestPlantSwap(to: "tokamak")
         try await Task.sleep(for: .seconds(2))
         
-        gameState.injectFaultTelemetry(field: "I_p_MA", value: 30.0)
+        await gameState.injectFaultTelemetry(field: "I_p_MA", value: 30.0)
         
         try await Task.sleep(for: .seconds(1))
         
-        XCTAssertEqual(gameState.terminalState, .refused,
+        let state = await gameState.terminalState; XCTAssertEqual(state, .refused,
             "System did not enter REFUSED on invalid I_p")
         
         XCTAssertTrue(gameState.refusalReason?.contains("I_p") ?? false,
@@ -128,7 +128,7 @@ final class ControlSystemsProtocols: XCTestCase {
         var vertexCounts: [FusionPlantKind: Int] = [:]
         
         for plant in plants {
-            gameState.requestPlantSwap(to: plant)
+            await playbackController.requestPlantSwap(to: plant)
             try await Task.sleep(for: .seconds(2))
             
             if let geometry = playbackController.currentGeometry {
@@ -156,7 +156,7 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Invariant: INV-CSE-005 — All telemetry must have valid epistemic classification
     /// Acceptance: I_p, B_T, n_e tagged [M], Q, tau_E tagged [I]
     func testPQCSE005_TelemetryEpistemicTags() async throws {
-        gameState.requestPlantSwap(to: .tokamak)
+        await playbackController.requestPlantSwap(to: "tokamak")
         try await Task.sleep(for: .seconds(2))
         
         let telemetry = gameState.currentPlantTelemetry ?? [:]
@@ -182,7 +182,7 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Invariant: INV-CSE-006 — Wireframe color must reflect terminal state
     /// Acceptance: CALORIE=green, CURE=amber, REFUSED=red
     func testPQCSE006_TerminalStateColors() async throws {
-        gameState.requestPlantSwap(to: .tokamak)
+        await playbackController.requestPlantSwap(to: "tokamak")
         try await Task.sleep(for: .seconds(2))
         
         gameState.setTerminalState(.calorie)
@@ -219,12 +219,12 @@ final class ControlSystemsProtocols: XCTestCase {
         var failureCount = 0
         
         for (fromIdx, fromPlant) in plants.enumerated() {
-            gameState.requestPlantSwap(to: fromPlant)
+            await playbackController.requestPlantSwap(to: fromPlant)
             try await Task.sleep(for: .seconds(2))
             XCTAssertEqual(gameState.currentActivePlant, fromPlant, "Initial plant swap failed")
             
             for (toIdx, toPlant) in plants.enumerated() {
-                gameState.requestPlantSwap(to: toPlant)
+                await playbackController.requestPlantSwap(to: toPlant)
                 
                 var swapResult = "PENDING"
                 let startTime = Date()
@@ -365,12 +365,12 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Invariant: INV-CSE-012 — Failed swap must rollback to previous plant
     /// Acceptance: Swap failure returns to last VERIFIED plant
     func testPQCSE012_PlantSwapRollback() async throws {
-        gameState.requestPlantSwap(to: .tokamak)
+        await playbackController.requestPlantSwap(to: "tokamak")
         try await Task.sleep(for: .seconds(2))
         XCTAssertEqual(gameState.currentActivePlant, .tokamak, "Initial swap failed")
         
-        gameState.injectSwapFailure(to: .stellarator)
-        gameState.requestPlantSwap(to: .stellarator)
+        gameState.injectSwapFailure(to: "stellarator")
+        await playbackController.requestPlantSwap(to: "stellarator")
         
         try await Task.sleep(for: .seconds(3))
         

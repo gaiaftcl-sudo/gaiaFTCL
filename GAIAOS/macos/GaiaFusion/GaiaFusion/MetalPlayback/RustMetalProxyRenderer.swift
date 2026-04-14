@@ -65,4 +65,24 @@ final class RustMetalProxyRenderer {
             }
         }
     }
+    
+    func setTau(_ blockHeight: UInt64) {
+        guard let ptr = rendererPtr else { return }
+        let result = gaia_metal_renderer_set_tau(ptr, blockHeight)
+        if result != 0 {
+            print("Failed to set tau: \(result)")
+        }
+    }
+    
+    func getTau() -> UInt64 {
+        guard let ptr = rendererPtr else { return 0 }
+        return gaia_metal_renderer_get_tau(ptr)
+    }
+    
+    /// Get last frame render time in microseconds
+    /// Patent requirement USPTO 19/460,960: <3000 μs with precompiled shaders
+    func getFrameTimeUs() -> UInt64 {
+        guard let ptr = rendererPtr else { return 0 }
+        return gaia_metal_renderer_get_frame_time_us(ptr)
+    }
 }

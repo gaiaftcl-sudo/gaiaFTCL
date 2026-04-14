@@ -37,4 +37,14 @@ int32_t gaia_metal_renderer_upload_primitives(struct MetalRenderer *renderer,
                                               const struct vQbitPrimitive *prims,
                                               uintptr_t count);
 
+int32_t gaia_metal_renderer_set_tau(struct MetalRenderer *renderer, uint64_t block_height);
+
+uint64_t gaia_metal_renderer_get_tau(struct MetalRenderer *renderer);
+
+/**
+ * Get last frame render time in microseconds
+ * Patent requirement USPTO 19/460,960: <3000 μs with precompiled shaders
+ */
+uint64_t gaia_metal_renderer_get_frame_time_us(struct MetalRenderer *renderer);
+
 #endif  /* GAIA_METAL_RENDERER_H */

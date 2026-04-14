@@ -161,3 +161,48 @@ pub extern "C" fn gaia_metal_renderer_upload_primitives(
     }));
     result.unwrap_or(-1)
 }
+
+#[no_mangle]
+pub extern "C" fn gaia_metal_renderer_set_tau(
+    renderer: *mut MetalRenderer,
+    block_height: u64
+) -> i32 {
+    let result = catch_unwind(AssertUnwindSafe(|| {
+        if renderer.is_null() {
+            return -1;
+        }
+        unsafe {
+            (*renderer).set_tau(block_height);
+        }
+        0
+    }));
+    result.unwrap_or(-1)
+}
+
+#[no_mangle]
+pub extern "C" fn gaia_metal_renderer_get_tau(
+    renderer: *mut MetalRenderer
+) -> u64 {
+    let result = catch_unwind(AssertUnwindSafe(|| {
+        if renderer.is_null() {
+            return 0;
+        }
+        unsafe { (*renderer).get_tau() }
+    }));
+    result.unwrap_or(0)
+}
+
+/// Get last frame render time in microseconds
+/// Patent requirement USPTO 19/460,960: <3000 μs with precompiled shaders
+#[no_mangle]
+pub extern "C" fn gaia_metal_renderer_get_frame_time_us(
+    renderer: *mut MetalRenderer
+) -> u64 {
+    let result = catch_unwind(AssertUnwindSafe(|| {
+        if renderer.is_null() {
+            return 0;
+        }
+        unsafe { (*renderer).get_frame_time_us() }
+    }));
+    result.unwrap_or(0)
+}

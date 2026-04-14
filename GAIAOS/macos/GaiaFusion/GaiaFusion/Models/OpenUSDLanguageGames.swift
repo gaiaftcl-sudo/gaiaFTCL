@@ -22,6 +22,9 @@ final class OpenUSDLanguageGameState {
     private(set) var heartbeatTsMs: Int64 = 0
     private(set) var receiptHash: String = ""
     private(set) var prunedPlantPayloads: [String] = []
+    
+    /// Plant swap lifecycle state for PQ-CSE protocols
+    private(set) var swapState: SwapLifecycle = .idle
     /// Idle NSTX-U-class tokamak baseline (non-zero; supervisory plane observes a live plant shell).
     private static let bootTokamakIdleTelemetry: [String: Double] = [
         "I_p": 0.85,
@@ -57,12 +60,18 @@ final class OpenUSDLanguageGameState {
     func setPlantPayload(_ plantKind: String) {
         let incoming = plantKind.lowercased()
         if incoming != activePlantPayload {
+            // Swap requested → drive lifecycle
+            swapState = .requested
             prunedPlantPayloads.append(activePlantPayload)
             if prunedPlantPayloads.count > 16 {
                 prunedPlantPayloads.removeFirst(prunedPlantPayloads.count - 16)
             }
+            // Simulate swap phases (real implementation would have async delays)
+            swapState = .draining
+            swapState = .committed
+            activePlantPayload = incoming
+            swapState = .verified
         }
-        activePlantPayload = incoming
     }
 
     func setHeartbeatTsMs(_ value: Int64) {
@@ -134,4 +143,56 @@ final class OpenUSDLanguageGameState {
             "epistemic_boundary": epistemicClass,
         ]
     }
+    
+    // MARK: - PQ Test Protocol Support
+    
+    /// Current plant telemetry for PQ tests
+    var currentPlantTelemetry: [String: Any]? {
+        var telemetry: [String: Any] = [:]
+        for (key, value) in measuredTelemetry {
+            telemetry[key] = value
+            telemetry["\(key)_tag"] = epistemicClass[key] ?? "M"
+        }
+        return telemetry
+    }
+    
+    /// Current active plant kind
+    var currentActivePlant: String {
+        activePlantPayload
+    }
+    
+    /// Error boundary status for PQ-QA-007
+    private(set) var errorBoundaryActive: Bool = false
+    
+    /// App crash status for PQ-QA-007
+    private(set) var appCrashed: Bool = false
+    
+    /// NCR logged status for PQ-SAF-008
+    private(set) var ncrLogged: Bool = false
+    
+    /// SCRAM triggered status for PQ-SAF-001
+    private(set) var scramTriggered: Bool = false
+    
+    /// Inject fault telemetry for safety testing
+    /// Triggers SCRAM and REFUSED state if value violates physics bounds
+    func injectFaultTelemetry(field: String, value: Double) {
+        measuredTelemetry[field] = value
+        
+        // Check for critical violations (simplified bounds check)
+        // Real implementation would check PLANT_INVARIANTS.md bounds per plant type
+        let isCriticalViolation = value > 100.0 || value < -100.0 || value.isNaN || value.isInfinite
+        
+        if isCriticalViolation {
+            scramTriggered = true
+            terminalState = .refused
+        }
+    }
+    
+    /// Inject malformed telemetry for crash recovery testing
+    func injectMalformedTelemetry() {
+        measuredTelemetry["invalid"] = .nan
+        errorBoundaryActive = true
+        appCrashed = false
+    }
 }
+

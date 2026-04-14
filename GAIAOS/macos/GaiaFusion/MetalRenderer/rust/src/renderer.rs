@@ -5,7 +5,7 @@ use core::ffi::c_void;
 use glam::{Mat4, Vec3};
 use objc2::rc::Retained;
 use objc2::runtime::ProtocolObject;
-use objc2_foundation::{NSString, NSSize};
+use objc2_foundation::{NSString, NSSize, NSURL};
 use objc2_metal::{
     MTLClearColor, MTLCommandBuffer, MTLCommandQueue,
     MTLCreateSystemDefaultDevice, MTLDevice, MTLDrawable, MTLIndexType, MTLLibrary,
@@ -49,7 +49,9 @@ pub struct MetalRenderer {
     index_buffer: Retained<ProtocolObject<dyn MTLBuffer>>,
     uniform_buffer: Retained<ProtocolObject<dyn MTLBuffer>>,
     index_count: usize,
-    frame: u64,
+    tau: u64,  // Bitcoin block height (emergent time)
+    /// Last frame render time in microseconds (patent requirement: <3000 μs)
+    last_frame_time_us: u64,
 }
 
 impl MetalRenderer {
@@ -77,9 +79,15 @@ impl MetalRenderer {
         layer.setPixelFormat(MTLPixelFormat::BGRA8Unorm);
         layer.setFramebufferOnly(true);
 
-        let source = NSString::from_str(SHADER_SOURCE);
-        let library = unsafe { device.newLibraryWithSource_options_error(&source, None) }
-            .expect("Shader compilation failed");
+        // Load precompiled Metal shader library (required for Apple Silicon)
+        // default.metallib is built by build_shaders.sh and bundled in Resources/
+        let metallib_path = NSString::from_str(
+            concat!(env!("CARGO_MANIFEST_DIR"), "/target/aarch64-apple-darwin/release/default.metallib")
+        );
+        let library = unsafe {
+            let url = NSURL::fileURLWithPath(&metallib_path);
+            device.newLibraryWithURL_error(&url)
+        }.expect("Failed to load precompiled Metal library (default.metallib)");
 
         let vert_name = NSString::from_str("vertex_main");
         let frag_name = NSString::from_str("fragment_main");
@@ -165,7 +173,8 @@ impl MetalRenderer {
             index_buffer,
             uniform_buffer,
             index_count: indices.len(),
-            frame: 0,
+            tau: 0,
+            last_frame_time_us: 0,
         })
     }
 
@@ -178,11 +187,21 @@ impl MetalRenderer {
         }
     }
 
-    pub fn render_frame(&mut self, width: u32, height: u32) {
-        self.frame += 1;
+    pub fn set_tau(&mut self, block_height: u64) {
+        self.tau = block_height;
+    }
 
+    pub fn get_tau(&self) -> u64 {
+        self.tau
+    }
+
+    pub fn render_frame(&mut self, width: u32, height: u32) {
+        let frame_start = std::time::Instant::now();
+        
+        // Note: tau is updated via set_tau() from Swift NATS subscription
+        // We use tau as a slower animation driver (Bitcoin blocks ~10 min)
         let aspect = width as f32 / height.max(1) as f32;
-        let angle = (self.frame as f32) * 0.02;
+        let angle = (self.tau as f32) * 0.02;
 
         let projection = Mat4::perspective_rh(45.0_f32.to_radians(), aspect, 0.1, 100.0);
         let view = Mat4::look_at_rh(Vec3::new(0.0, 1.5, 4.0), Vec3::ZERO, Vec3::Y);
@@ -243,6 +262,16 @@ impl MetalRenderer {
             cmd_buffer.presentDrawable(drawable.as_ref() as &ProtocolObject<dyn MTLDrawable>);
         }
         cmd_buffer.commit();
+        
+        // Patent requirement: frame time must be <3ms (3000 μs)
+        let frame_time = frame_start.elapsed();
+        self.last_frame_time_us = frame_time.as_micros() as u64;
+    }
+    
+    /// Get last frame render time in microseconds
+    /// Patent requirement: must be <3000 μs with precompiled Metal shaders
+    pub fn get_frame_time_us(&self) -> u64 {
+        self.last_frame_time_us
     }
 
     fn default_geometry() -> (Vec<GaiaVertex>, Vec<u16>) {
@@ -338,7 +367,7 @@ impl MetalRenderer {
     }
 
     pub fn frame_count(&self) -> u64 {
-        self.frame
+        self.tau
     }
 
     pub fn get_shell_world_matrix(&self) -> [f32; 16] {
