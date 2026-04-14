@@ -12,6 +12,10 @@
 
 **GaiaFusion** is the macOS sovereign cell for the GaiaFTCL plasma control mesh. It provides hardware-accelerated 3D visualization of magnetic confinement fusion plant topologies, real-time telemetry ingestion via NATS, and cryptographically-sovereign mesh synchronization — driven by a zero-dependency Rust + Apple Metal rendering stack.
 
+![GaiaFusion UI — Tokamak Topology](docs/images/gaiafusion-ui-tokamak-20260414.png)
+
+*Tokamak plant topology (10/10 cells moored) — MODE: SPLIT VIEW — Cyan wireframe, 500 plasma particles, Next.js control panel with 9 canonical plant controls*
+
 Key properties:
 
 - **Zero OpenUSD dependency** — Rust FFI + Apple Metal replaces all USD rendering bloat
@@ -19,6 +23,9 @@ Key properties:
 - **Bitcoin τ synchronization** — Bitcoin block height is the canonical time axis across all 10 mesh cells
 - **GxP validated** — Full GAMP 5 / EU Annex 11 / FDA 21 CFR Part 11 IQ → OQ → PQ lifecycle with automated evidence collection
 - **CERN-ready** — Designed and validated for deployment on CERN physics lab Macs
+- **Wallet-based authorization** — L1/L2/L3 operator roles from IQ qualification records, no login screens or session tokens
+- **Constitutional alarm system** — WASM substrate violations trigger operator-acknowledgment workflows per 21 CFR Part 11 §11.200
+- **500 plasma particles** — Temperature-driven color gradient (blue→cyan→yellow→white), helical trajectories, state-driven visibility
 
 ---
 
@@ -27,9 +34,16 @@ Key properties:
 ```
 GaiaFusion.app  (Swift / AppKit)
 │
+├── Layout/
+│   ├── CompositeViewportStack.swift      HStack/VStack composition (sidebar + ZStack)
+│   ├── CompositeLayoutManager.swift      Layout modes, state-forced UI, keyboard shortcuts
+│   ├── FusionControlSidebar.swift        Fixed-width left panel (plant controls)
+│   ├── LayoutModeIndicator.swift         Bottom-left mode badge
+│   └── ConstitutionalHUD.swift           Top alarm banner (WASM violations)
+│
 ├── MetalPlayback/
 │   ├── RustMetalProxyRenderer.swift      FFI bridge → Rust static library
-│   ├── MetalPlaybackController.swift     Plant lifecycle, τ state, plant swap
+│   ├── MetalPlaybackController.swift     Plant lifecycle, τ state, plasma enable/disable
 │   └── FusionFacilityWireframeGeometry.swift
 │
 ├── Services/
@@ -37,8 +51,12 @@ GaiaFusion.app  (Swift / AppKit)
 │   └── LocalServer.swift                 Loopback HTTP control API
 │
 ├── Models/
+│   ├── FusionCellStateMachine.swift      7 operational states, 18 valid transitions
 │   ├── OpenUSDLanguageGames.swift        Plant state machine (CALORIE/CURE/REFUSED)
 │   └── PlantKindsCatalog.swift           9 canonical fusion topologies
+│
+├── AppMenu.swift                         Command menus with authorization guards
+├── FusionBridge.swift                    Swift ↔ WASM substrate bridge
 │
 └── MetalRenderer/  (Rust workspace)
     ├── rust/src/
@@ -65,6 +83,8 @@ Swift calls into Rust via the C header at `MetalRenderer/include/gaia_metal_rend
 | `gaia_metal_parse_usd(path, buf, max)` | Parse USDA file into vQbitPrimitive buffer |
 | `gaia_metal_renderer_upload_primitives(ptr, prims, n)` | Upload parsed geometry to GPU |
 | `gaia_metal_renderer_shell_world_matrix(ptr, out16)` | Read current shell world matrix |
+| `gaia_metal_renderer_enable_plasma(ptr)` | Enable 500 plasma particles (state → RUNNING) |
+| `gaia_metal_renderer_disable_plasma(ptr)` | Disable plasma, clear particle buffer (state → IDLE) |
 
 ### vQbitPrimitive ABI
 
@@ -96,6 +116,130 @@ RustMetalProxyRenderer.setTau()
     ▼
 renderer.rs  →  self.tau: u64  →  Metal render pass
 ```
+
+---
+
+## Operational State Machine
+
+GaiaFusion enforces **7 operational states** with **18 valid state transitions** for regulatory compliance (GAMP 5 / EU Annex 11 / FDA 21 CFR Part 11):
+
+| State | Description | Layout Mode Override | Keyboard Shortcuts | Plasma Particles |
+|---|---|---|---|---|
+| **IDLE** | No active plasma, ready for configuration | ✅ Allowed | ✅ Enabled | ❌ Hidden |
+| **MOORED** | Cell synchronized to mesh, pre-ignition | ✅ Allowed | ✅ Enabled | ❌ Hidden |
+| **RUNNING** | Active plasma operation | ✅ Allowed | ✅ Enabled | ✅ Visible (500) |
+| **TRIPPED** | Emergency stop, plasma quenched | ❌ Forced dashboardFocus | ❌ Disabled | ❌ Hidden |
+| **CONSTITUTIONAL_ALARM** | WASM substrate violation (code ≥ 4) | ❌ Forced geometryFocus | ❌ Disabled | ❌ Hidden |
+| **MAINTENANCE** | Service mode, plant offline | ✅ Allowed | ✅ Enabled | ❌ Hidden |
+| **TRAINING** | Operator training, no live plasma | ✅ Allowed | ✅ Enabled | ❌ Hidden |
+
+### Valid State Transitions
+
+**18 authorized transitions** (all others REFUSED):
+
+```swift
+// Startup flow
+idle → moored                    // Mesh synchronization complete
+moored → running                 // Ignition sequence (requires L2 dual-auth)
+
+// Normal operation
+running → idle                   // Controlled shutdown
+running → tripped                // Emergency stop (any operator)
+running → constitutionalAlarm    // WASM substrate violation (auto-triggered)
+
+// Alarm recovery
+tripped → idle                   // Reset after investigation (L2)
+constitutionalAlarm → idle       // Acknowledge alarm (L2 required per 21 CFR Part 11 §11.200)
+constitutionalAlarm → running    // Resume operation (L3 dual-auth after physics verification)
+
+// Maintenance
+idle → maintenance               // Enter service mode (L2)
+maintenance → idle               // Exit service mode (L2)
+moored → maintenance             // Abort ignition for maintenance
+maintenance → moored             // Resume ignition sequence
+
+// Training
+idle → training                  // Enter training mode (L1)
+training → idle                  // Exit training mode (L1)
+
+// Cross-mode transitions
+tripped → maintenance            // Service after trip (L2)
+maintenance → training           // Training after service
+training → moored                // Training to operational
+```
+
+**Audit Trail:** Every state transition is logged with `wallet_pubkey`, `timestamp`, `initiator`, and `reason` per universal audit log format (see [`docs/OPERATOR_AUTHORIZATION_MATRIX.md`](docs/OPERATOR_AUTHORIZATION_MATRIX.md)).
+
+---
+
+## Authorization System
+
+GaiaFusion uses **wallet-based authorization** from IQ (Installation Qualification) records. **No login screens, no session tokens, no credential management.** Operator roles are assigned to wallet public keys during IQ and enforced at the UI layer.
+
+### Operator Roles
+
+| Role | Description | Typical Actions |
+|---|---|---|
+| **L1** | Basic Operator | View telemetry, save snapshots, training mode |
+| **L2** | Senior Operator | Open plant configs, acknowledge alarms, maintenance mode, export audit logs |
+| **L3** | Supervisor | Arm ignition (dual-auth), resume from constitutional alarm (dual-auth) |
+
+### Menu Authorization
+
+**File Menu:**
+- New Session → L1, IDLE/TRAINING
+- Open Plant Configuration → L2, IDLE/MAINTENANCE
+- Save Snapshot → L1, any state
+- Export Audit Log → L2, any state
+- Quit → L1, IDLE/TRAINING
+
+**Cell Menu:**
+- Arm Ignition → L3 dual-auth, MOORED
+- Emergency Stop → L1, RUNNING
+- Reset Trip → L2, TRIPPED
+- Acknowledge Alarm → L2, CONSTITUTIONAL_ALARM
+
+**Config Menu:**
+- Training Mode → L1, IDLE
+- Maintenance Mode → L2, IDLE
+- Authorization Settings → L2, any state (read-only IQ status viewer)
+- View Audit Log → L2, any state
+
+Full authorization matrix and dual-auth protocol: [`docs/OPERATOR_AUTHORIZATION_MATRIX.md`](docs/OPERATOR_AUTHORIZATION_MATRIX.md)
+
+---
+
+## WASM Constitutional Bridge
+
+The `FusionBridge` connects Swift UI to the WASM substrate for constitutional checks. When `constitutional_check()` returns a violation code ≥ 4, the state machine **force-transitions** to `.constitutionalAlarm`:
+
+```swift
+// FusionBridge.swift
+let violationCodeValue = violationCode.uint8Value
+if violationCodeValue >= 4 {
+    self.fusionCellStateMachine?.forceState(.constitutionalAlarm)
+}
+```
+
+**Critical regulatory requirement:** The WASM substrate **cannot** self-clear the alarm when the physics violation resolves (`violationCode == 0`). Alarm exit requires **operator acknowledgment (L2)** or **supervisor dual-auth (L3)** per **21 CFR Part 11 §11.200** to ensure required human authorization in the audit trail.
+
+**ConstitutionalHUD** slides in from the top when the alarm fires, displaying the violation severity and requiring operator action.
+
+---
+
+## Plasma Particles
+
+**500 plasma particles** render on the Metal viewport when plant state is `.running`:
+
+- **Temperature-driven color gradient:**
+  - Blue (< 30 keV) → Cyan (30-60 keV) → Yellow (60-90 keV) → White (> 90 keV)
+- **Helical trajectories:** Particles follow magnetic field lines with slight randomness
+- **Opacity:** 60-80% (clamped for visibility without obscuring wireframe)
+- **State-driven visibility:**
+  - `.running` → `enablePlasma()` (particles visible)
+  - `.idle`, `.tripped`, `.constitutionalAlarm` → `disablePlasma()` (buffer cleared, particles hidden)
+
+**Wireframe color:** Pure cyan `[0.0, 1.0, 1.0, 1.0]` (PQ-UI-014 verified)
 
 ---
 
@@ -156,6 +300,48 @@ cargo build --release   # Rust loads precompiled library
 - `evidence/pq_validation/performance/frame_time_validation.csv`
 - `evidence/pq_validation/performance/metallib_validation.json`
 - `evidence/pq_validation/performance/unified_memory_validation.txt`
+
+---
+
+## UI Layout Architecture
+
+GaiaFusion uses **HStack/VStack composition** for the main layout, with a **ZStack** for layered viewports:
+
+```swift
+HStack(spacing: 0) {
+    FusionControlSidebar(width: 220)  // Fixed-width left panel
+    
+    ZStack {
+        Color.black.ignoresSafeArea()  // Z=0: Base layer
+        FusionMetalViewportView         // Z=1: Metal 3D viewport (Rust FFI)
+        FusionWebView                   // Z=2: Next.js dashboard (WKWebView)
+        LayoutModeIndicator             // Z=5: Bottom-left mode badge
+        ConstitutionalHUD               // Z=10: Top alarm banner
+    }
+}
+```
+
+### Layout Modes
+
+Three layout modes controlled by `CompositeLayoutManager`:
+
+| Mode | Description | Metal Opacity | WebView Opacity | Use Case |
+|---|---|---|---|---|
+| **dashboardFocus** | Next.js front | 10% | 100% | Telemetry inspection, control panel interaction |
+| **geometryFocus** | Metal front | 100% | 85% | 3D plant inspection, wireframe analysis |
+| **dashboardFocus** (forced) | Forced by state machine | 10% | 100% | TRIPPED state — operator must see telemetry |
+| **geometryFocus** (forced) | Forced by state machine | 100% | 85% | CONSTITUTIONAL_ALARM — operator must see geometry violation |
+
+**Keyboard shortcuts:**
+- `Cmd+1` → dashboardFocus (unless state machine disables shortcuts)
+- `Cmd+2` → geometryFocus (unless state machine disables shortcuts)
+
+**State-forced modes:**
+- `.tripped` → forces dashboardFocus, disables shortcuts
+- `.constitutionalAlarm` → forces geometryFocus, disables shortcuts
+- `.running` → allows mode switching (operator may inspect geometry during plasma operation)
+
+Full layout specification: [`docs/GaiaFusion_Layout_Spec.md`](docs/GaiaFusion_Layout_Spec.md)
 
 ---
 

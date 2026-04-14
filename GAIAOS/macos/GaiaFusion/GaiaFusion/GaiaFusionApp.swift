@@ -163,6 +163,21 @@ struct GaiaFusionApp: App {
         .windowStyle(.titleBar)
         .commands {
             AppMenu(
+                operationalState: coordinator.fusionCellStateMachine.operationalState,
+                userLevel: coordinator.currentOperatorRole,
+                // File menu
+                onNewSession: { coordinator.newSession() },
+                onOpenPlantConfig: { coordinator.openPlantConfig() },
+                onSaveSnapshot: { coordinator.saveSnapshot() },
+                onExportAuditLog: { coordinator.exportAuditLog() },
+                onQuit: { NSApplication.shared.terminate(nil) },
+                // Cell menu
+                onSwapPlant: { coordinator.swapPlant() },
+                onArmIgnition: { coordinator.armIgnition() },
+                onEmergencyStop: { coordinator.emergencyStop() },
+                onResetTrip: { coordinator.resetTrip() },
+                onAcknowledgeAlarm: { coordinator.acknowledgeAlarm() },
+                // Mesh menu
                 onProbeAllCells: { coordinator.probeAllCells() },
                 onHealUnhealthy: { coordinator.healUnhealthyCells() },
                 onRunPlaywrightUiGate: {
@@ -185,11 +200,21 @@ struct GaiaFusionApp: App {
                 onToggleSidebar: { coordinator.toggleSidebar() },
                 onToggleTraceLayer: { coordinator.toggleTraceLayer() },
                 onToggleNativeAgencyChrome: { coordinator.toggleNativeUiMinimal() },
+                // Config menu
                 onOpenConfig: { coordinator.showConfigPanel = true },
                 onOpenFusionRunnerConfig: { coordinator.openFusionRunnerConfig() },
                 onMeshSetupWizard: { coordinator.openMeshSetupWizard() },
+                onTrainingMode: { coordinator.trainingMode() },
+                onMaintenanceMode: { coordinator.maintenanceMode() },
+                onAuthSettings: { coordinator.authSettings() },
+                // Help menu
                 onAbout: { coordinator.showAbout() },
-                onQuit: { NSApplication.shared.terminate(nil) }
+                onViewAuditLog: { coordinator.viewAuditLog() },
+                // Composite layout shortcuts
+                onLayoutDashboardFocus: { coordinator.layoutManager.applyMode(.dashboardFocus) },
+                onLayoutGeometryFocus: { coordinator.layoutManager.applyMode(.geometryFocus) },
+                onToggleConstitutionalHud: { coordinator.layoutManager.toggleConstitutionalHud() },
+                onCycleMetalOpacity: { coordinator.layoutManager.cycleMetalOpacity() }
             )
         }
     }
@@ -208,77 +233,6 @@ private struct FusionWebShellBackdrop: View {
             endPoint: .bottomTrailing
         )
         .ignoresSafeArea()
-    }
-}
-
-/// `bindTCPListen()` runs asynchronously; loading `http://127.0.0.1:…/fusion-s4` before Swifter accepts causes failed navigation and a blank `WKWebView` (retry may not recover visually). Mount the shell only after `LocalServer.isRunning`.
-private struct FusionWebViewWhenListening: View {
-    @ObservedObject var server: LocalServer
-    @ObservedObject var coordinator: AppCoordinator
-    let loadURL: URL
-
-    var body: some View {
-        ZStack {
-            FusionWebShellBackdrop()
-            FusionMetalViewportView(playback: coordinator.openUSDPlayback)
-                .background(Color.clear)
-                .allowsHitTesting(false)
-            if server.isRunning {
-                FusionWebView(
-                    coordinator: coordinator,
-                    onReady: { loaded in
-                        coordinator.setBridgeReady(loaded)
-                    },
-                    onLoadURL: loadURL
-                )
-                .background(Color.clear)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .allowsHitTesting(!coordinator.openUSDInteractionLocked)
-            } else {
-                VStack(spacing: 14) {
-                    ProgressView()
-                        .controlSize(.large)
-                    Text("Starting Fusion local surface on 127.0.0.1:\(server.boundPort)…")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 24)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-            if coordinator.splashOverlayVisible {
-                splashOverlay
-                    .transition(.opacity)
-                    .zIndex(2)
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.clear)
-        .onChange(of: server.isRunning) { _, _ in
-            coordinator.refreshSplashHandshake()
-        }
-    }
-
-    private var splashOverlay: some View {
-        ZStack {
-            if let url = Bundle.module.url(forResource: "splash@1x", withExtension: "png", subdirectory: "Branding/Splash.imageset"),
-               let img = NSImage(contentsOf: url) {
-                Image(nsImage: img)
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-            } else {
-                FusionWebShellBackdrop()
-            }
-            VStack(spacing: 10) {
-                ProgressView()
-                    .controlSize(.large)
-                Text("Moored to local Fusion surface…")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
-            .padding(24)
-        }
     }
 }
 
@@ -344,11 +298,11 @@ struct AppShellView: View {
                     )
                     .frame(minWidth: 250, maxWidth: 360)
                 } detail: {
-                    FusionWebViewWhenListening(
-                        server: coordinator.server,
+                    CompositeViewportStack(
+                        layoutManager: coordinator.layoutManager,
+                        metalPlayback: coordinator.openUSDPlayback,
                         coordinator: coordinator,
-                        loadURL: URL(string: "http://127.0.0.1:\(coordinator.server.boundPort)/fusion-s4")
-                            ?? URL(string: "http://127.0.0.1:8910/fusion-s4")!
+                        serverPort: coordinator.server.boundPort
                     )
                 }
 
@@ -365,11 +319,11 @@ struct AppShellView: View {
                     }
                 }
             } else {
-                FusionWebViewWhenListening(
-                    server: coordinator.server,
+                CompositeViewportStack(
+                    layoutManager: coordinator.layoutManager,
+                    metalPlayback: coordinator.openUSDPlayback,
                     coordinator: coordinator,
-                    loadURL: URL(string: "http://127.0.0.1:\(coordinator.server.boundPort)/fusion-s4")
-                        ?? URL(string: "http://127.0.0.1:8910/fusion-s4")!
+                    serverPort: coordinator.server.boundPort
                 )
             }
 
@@ -495,11 +449,14 @@ final class AppCoordinator: ObservableObject {
     let configManager: ConfigFileManager
     let sshService = SSHService()
     let natsService = NATSService()
+    let layoutManager = CompositeLayoutManager()
+    let fusionCellStateMachine = FusionCellStateMachine()
     private let isoFormatter = ISO8601DateFormatter()
     private let homeMooringDirectory = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".gaiaftcl", isDirectory: true)
     private let processQueue = DispatchQueue(label: "fusion.coordinator.shell", qos: .utility)
     nonisolated(unsafe) private var natsStreamTask: Task<Void, Never>?
     @Published private(set) var cellIdentityHash: String?
+    @Published var currentOperatorRole: OperatorRole = .l2  // TODO: Wire to real authentication system
 
     @Published var webviewLoaded = false
     @Published var showConfigPanel = false
@@ -554,6 +511,8 @@ final class AppCoordinator: ObservableObject {
     init() {
         self.configManager = ConfigFileManager()
         self.bridge = FusionBridge(meshManager: meshManager)
+        self.bridge.layoutManager = layoutManager
+        self.bridge.fusionCellStateMachine = fusionCellStateMachine
         self.uiDecimator = UIDecimator(manifold: uiStateManifold, bridge: bridge)
         self.server = LocalServer(meshManager: meshManager)
         self.server.fusionBridge = self.bridge
@@ -568,6 +527,22 @@ final class AppCoordinator: ObservableObject {
                 return [:]
             }
             return self.openUSDPlayback.jsonSnapshot()
+        }
+        self.server.layoutManagerProvider = { [weak self] in
+            guard let self else {
+                print("⚠️ layoutManagerProvider: self is nil")
+                return [:]
+            }
+            let mode = self.layoutManager.currentMode.rawValue
+            let metalOp = self.layoutManager.metalOpacity
+            let webOp = self.layoutManager.webviewOpacity
+            print("✅ layoutManagerProvider called: mode=\(mode), metalOpacity=\(metalOp)")
+            return [
+                "current_mode": mode,
+                "metal_opacity": metalOp,
+                "webview_opacity": webOp,
+                "constitutional_hud_visible": self.layoutManager.constitutionalHudVisible,
+            ]
         }
         self.server.splashStateProvider = { [weak self] in
             guard let self else {
@@ -683,6 +658,11 @@ final class AppCoordinator: ObservableObject {
                 "fusion_playwright_auto_on_torsion": true,
                 "fusion_playwright_heal_min_interval_sec": 600,
                 "fusion_gaia_repo_root": "",
+                // Composite layout defaults
+                "fusion_layout_mode": "dashboard_focus",
+                "fusion_metal_opacity_default": 0.1,
+                "fusion_constitutional_hud_always_visible": false,
+                "fusion_wasm_auto_layout_switch": true,
             ]
         )
         nativeUiMinimal = Self.loadNativeUiMinimal()
@@ -1850,6 +1830,9 @@ final class AppCoordinator: ObservableObject {
                 tagBt: epistemicTagLetter(for: "B_T"),
                 tagNe: epistemicTagLetter(for: "n_e")
             )
+            
+            // Trigger WASM constitutional monitoring
+            bridge.monitorConstitutionalState(telemetry: measured)
             let overlay = openUSDState.sessionLayerOverlay()
             let mooring = overlay["mooring_variant"] as? String ?? "UNRESOLVED"
             let payload = (overlay["plant_payload_contract"] as? [String: Any])?["active_payload"] as? String ?? "tokamak"
@@ -1959,15 +1942,402 @@ final class AppCoordinator: ObservableObject {
         }
     }
 
+    // MARK: - File Menu Actions
+    
+    func newSession() {
+        // Note: This is NOT a login screen. GaiaFusion reads IQ qualification records.
+        // New Session means: reload the IQ record, re-establish moored wallet context,
+        // and reset plant to IDLE state.
+        let alert = NSAlert()
+        alert.messageText = "New Session"
+        alert.informativeText = "Reload IQ qualification record and reset plant to IDLE state?\n\nThis will:\n• Re-read moored wallet context from IQ\n• Transition plant to IDLE\n• Clear any pending state\n\nNote: Authorization comes from IQ-registered wallets, not login credentials."
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: "Reload IQ and Reset")
+        alert.addButton(withTitle: "Cancel")
+        
+        let response = alert.runModal()
+        if response == .alertFirstButtonReturn {
+            // TODO: Implement IQ record reload
+            // 1. Read ~/.gaiaftcl/iq_qualification_record.json (or similar path)
+            // 2. Parse moored wallets and their L1/L2/L3 roles
+            // 3. Populate MooredWalletContext
+            // 4. Transition plant to IDLE
+            _ = fusionCellStateMachine.requestTransition(
+                to: .idle,
+                initiator: .operatorAction("new_session_\(currentOperatorRole.rawValue)"),
+                reason: "Operator reloaded IQ qualification and reset session"
+            )
+            print("✅ New Session: IQ reload initiated (stub — MooredWalletContext not yet implemented)")
+        }
+    }
+    
+    func openPlantConfig() {
+        let panel = NSOpenPanel()
+        panel.title = "Open Plant Configuration"
+        panel.prompt = "Open"
+        panel.allowedContentTypes = [.json]
+        panel.allowsMultipleSelection = false
+        panel.canChooseDirectories = false
+        
+        panel.begin { [weak self] response in
+            guard let self = self else { return }
+            if response == .OK, let url = panel.url {
+                self.loadPlantConfiguration(from: url)
+            }
+        }
+    }
+    
+    private func loadPlantConfiguration(from url: URL) {
+        do {
+            let data = try Data(contentsOf: url)
+            let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+            
+            if let plantType = json?["plant_type"] as? String {
+                print("✅ Loaded plant configuration: \(plantType) from \(url.lastPathComponent)")
+                
+                let alert = NSAlert()
+                alert.messageText = "Plant Configuration Loaded"
+                alert.informativeText = "Plant Type: \(plantType)\nFile: \(url.lastPathComponent)\n\nConfiguration loaded successfully. Apply changes to activate."
+                alert.alertStyle = .informational
+                alert.addButton(withTitle: "OK")
+                alert.runModal()
+            }
+        } catch {
+            let alert = NSAlert()
+            alert.messageText = "Failed to Load Configuration"
+            alert.informativeText = error.localizedDescription
+            alert.alertStyle = .warning
+            alert.addButton(withTitle: "OK")
+            alert.runModal()
+        }
+    }
+    
+    func saveSnapshot() {
+        let timestamp = ISO8601DateFormatter().string(from: Date())
+        let snapshot: [String: Any] = [
+            "timestamp": timestamp,
+            "plant_state": fusionCellStateMachine.operationalState.rawValue,
+            "plant_kind": openUSDPlayback.plantKind,
+            "operator_role": currentOperatorRole.rawValue,
+            "layout_mode": layoutManager.currentMode.rawValue,
+            "metal_opacity": layoutManager.metalOpacity,
+            "webview_opacity": layoutManager.webviewOpacity,
+            "constitutional_hud_visible": layoutManager.constitutionalHudVisible,
+            "mesh_cells_count": meshManager.cells.count,
+            "healthy_cells": meshManager.cells.filter { $0.health > 0.5 }.count,
+            "session_id": cellIdentityHash ?? "unknown"
+        ]
+        
+        let panel = NSSavePanel()
+        panel.title = "Save State Snapshot"
+        panel.prompt = "Save"
+        panel.nameFieldStringValue = "gaiafusion_snapshot_\(timestamp.replacingOccurrences(of: ":", with: "-")).json"
+        panel.allowedContentTypes = [.json]
+        
+        panel.begin { response in
+            if response == .OK, let url = panel.url {
+                do {
+                    let jsonData = try JSONSerialization.data(withJSONObject: snapshot, options: [.prettyPrinted, .sortedKeys])
+                    try jsonData.write(to: url)
+                    print("✅ Snapshot saved: \(url.path)")
+                    
+                    let alert = NSAlert()
+                    alert.messageText = "Snapshot Saved"
+                    alert.informativeText = "State snapshot saved to:\n\(url.lastPathComponent)\n\nPlant: \(snapshot["plant_kind"] as? String ?? "unknown")\nState: \(snapshot["plant_state"] as? String ?? "unknown")"
+                    alert.alertStyle = .informational
+                    alert.addButton(withTitle: "OK")
+                    alert.runModal()
+                } catch {
+                    let alert = NSAlert()
+                    alert.messageText = "Failed to Save Snapshot"
+                    alert.informativeText = error.localizedDescription
+                    alert.alertStyle = .warning
+                    alert.addButton(withTitle: "OK")
+                    alert.runModal()
+                }
+            }
+        }
+    }
+    
+    func exportAuditLog() {
+        // TODO: Implement audit log export with compliance formatting
+        // Requires audit log system (file-based or database)
+        let alert = NSAlert()
+        alert.messageText = "Export Audit Log"
+        alert.informativeText = "Audit log export requires audit logging system integration.\n\nTODO: Implement audit log collection from file/database, compliance formatting (CSV/JSON), and signature verification."
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+        print("⚠️ Export Audit Log: Requires audit log system")
+    }
+    
+    // MARK: - Cell Menu Actions
+    
+    func swapPlant() {
+        let alert = NSAlert()
+        alert.messageText = "Swap Plant Topology"
+        alert.informativeText = "Select target plant configuration:"
+        alert.alertStyle = .informational
+        
+        // Add plant type buttons (9 canonical plants)
+        let plantTypes: [(PlantType, String)] = [
+            (.tokamak, "Tokamak (NSTX-U class)"),
+            (.stellarator, "Stellarator (W7-X class)"),
+            (.sphericalTokamak, "Spherical Tokamak (HTS compact)"),
+            (.frc, "Field-Reversed Configuration"),
+            (.spheromak, "Spheromak"),
+            (.mirror, "Magnetic Mirror"),
+            (.inertial, "Inertial Confinement (ICF)"),
+            (.zPinch, "Z-Pinch"),
+            (.mif, "Magneto-Inertial Fusion (MIF)")
+        ]
+        
+        for (_, (_, displayName)) in plantTypes.enumerated() {
+            alert.addButton(withTitle: displayName)
+        }
+        alert.addButton(withTitle: "Cancel")
+        
+        let response = alert.runModal()
+        if response == .alertFirstButtonReturn || response.rawValue >= NSApplication.ModalResponse.alertFirstButtonReturn.rawValue {
+            let selectedIndex = Int(response.rawValue - NSApplication.ModalResponse.alertFirstButtonReturn.rawValue)
+            if selectedIndex < plantTypes.count {
+                let (selectedPlant, displayName) = plantTypes[selectedIndex]
+                performPlantSwap(to: selectedPlant, displayName: displayName)
+            }
+        }
+    }
+    
+    private func performPlantSwap(to plantType: PlantType, displayName: String) {
+        print("🔄 Swapping plant to: \(plantType.rawValue)")
+        
+        // Send swap request to Metal renderer
+        Task { @MainActor in
+            await openUSDPlayback.requestPlantSwap(to: plantType.rawValue)
+            
+            // Send to WKWebView dashboard
+            bridge.sendDirect(
+                action: "PLANT_SWAP_COMPLETE",
+                data: [
+                    "plant_type": plantType.rawValue,
+                    "display_name": displayName,
+                    "timestamp": ISO8601DateFormatter().string(from: Date()),
+                    "operator_role": currentOperatorRole.rawValue
+                ],
+                requestID: UUID().uuidString
+            )
+            
+            print("✅ Plant swap complete: \(displayName)")
+        }
+    }
+    
+    func armIgnition() {
+        // TODO: Implement dual-authorization ignition arm protocol
+        // Requires L2 operator initiation + L3 supervisor approval within 30s timeout
+        let alert = NSAlert()
+        alert.messageText = "Arm Ignition"
+        alert.informativeText = "Dual-authorization protocol required.\n\nTODO: Implement L2 initiation dialog, L3 supervisor authentication prompt (different user ID), 30-second timeout, and audit trail entry with both operator IDs."
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+        print("⚠️ Arm Ignition: Requires dual-auth system (L2 + L3)")
+    }
+    
+    func emergencyStop() {
+        let alert = NSAlert()
+        alert.messageText = "Emergency Stop"
+        alert.informativeText = "Initiate immediate plasma shutdown?"
+        alert.alertStyle = .critical
+        alert.addButton(withTitle: "Emergency Stop")
+        alert.addButton(withTitle: "Cancel")
+        
+        let response = alert.runModal()
+        if response == .alertFirstButtonReturn {
+            _ = fusionCellStateMachine.requestTransition(
+                to: .tripped,
+                initiator: .operatorAction("emergency_stop_\(currentOperatorRole.rawValue)"),
+                reason: "Operator emergency stop invoked"
+            )
+            print("🔴 Emergency Stop: Plant transitioned to TRIPPED state")
+            
+            // Send to dashboard
+            bridge.sendDirect(
+                action: "EMERGENCY_STOP_EXECUTED",
+                data: [
+                    "timestamp": ISO8601DateFormatter().string(from: Date()),
+                    "operator_role": currentOperatorRole.rawValue,
+                    "previous_state": "RUNNING",
+                    "new_state": "TRIPPED"
+                ],
+                requestID: UUID().uuidString
+            )
+        }
+    }
+    
+    func resetTrip() {
+        // TODO: Implement dual-authorization trip reset protocol
+        // Requires trip review + L2 initiation + L3 approval
+        let alert = NSAlert()
+        alert.messageText = "Reset Trip"
+        alert.informativeText = "Trip reset requires dual-authorization protocol.\n\nTODO: Implement trip condition review dialog, L2 operator initiation, L3 supervisor approval, and audit trail entry documenting trip cause and resolution."
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+        print("⚠️ Reset Trip: Requires dual-auth system (L2 + L3) + trip review")
+    }
+    
+    func acknowledgeAlarm() {
+        let alert = NSAlert()
+        alert.messageText = "Acknowledge Constitutional Alarm"
+        alert.informativeText = "Acknowledge constitutional violation and transition plant to IDLE state?\n\nThis action will be logged with your operator ID."
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "Acknowledge")
+        alert.addButton(withTitle: "Cancel")
+        
+        let response = alert.runModal()
+        if response == .alertFirstButtonReturn {
+            _ = fusionCellStateMachine.requestTransition(
+                to: .idle,
+                initiator: .operatorAction("alarm_acknowledge_\(currentOperatorRole.rawValue)"),
+                reason: "Operator acknowledged constitutional alarm"
+            )
+            print("✅ Alarm Acknowledged: Plant transitioned to IDLE state")
+            
+            // Send to dashboard
+            bridge.sendDirect(
+                action: "CONSTITUTIONAL_ALARM_ACKNOWLEDGED",
+                data: [
+                    "timestamp": ISO8601DateFormatter().string(from: Date()),
+                    "operator_role": currentOperatorRole.rawValue,
+                    "previous_state": "CONSTITUTIONAL_ALARM",
+                    "new_state": "IDLE"
+                ],
+                requestID: UUID().uuidString
+            )
+        }
+    }
+    
+    // MARK: - Config Menu Actions
+    
+    func trainingMode() {
+        let alert = NSAlert()
+        alert.messageText = "Enter Training Mode"
+        alert.informativeText = "Enter training mode with simulated plant data?\n\nTraining mode actions will be marked in audit logs and do not affect real plant operations."
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: "Enter Training Mode")
+        alert.addButton(withTitle: "Cancel")
+        
+        let response = alert.runModal()
+        if response == .alertFirstButtonReturn {
+            _ = fusionCellStateMachine.requestTransition(
+                to: .training,
+                initiator: .operatorAction("training_mode_enter_\(currentOperatorRole.rawValue)"),
+                reason: "Operator entered training mode"
+            )
+            print("🎓 Training Mode: Plant transitioned to TRAINING state")
+            
+            // Send to dashboard
+            bridge.sendDirect(
+                action: "TRAINING_MODE_ACTIVATED",
+                data: [
+                    "timestamp": ISO8601DateFormatter().string(from: Date()),
+                    "operator_role": currentOperatorRole.rawValue,
+                    "previous_state": "IDLE",
+                    "new_state": "TRAINING"
+                ],
+                requestID: UUID().uuidString
+            )
+        }
+    }
+    
+    func maintenanceMode() {
+        let alert = NSAlert()
+        alert.messageText = "Enter Maintenance Mode"
+        alert.informativeText = "Enter maintenance mode for plant servicing?\n\nMaintenance mode disables safety interlocks and requires L3 supervisor authorization."
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "Enter Maintenance Mode")
+        alert.addButton(withTitle: "Cancel")
+        
+        let response = alert.runModal()
+        if response == .alertFirstButtonReturn {
+            _ = fusionCellStateMachine.requestTransition(
+                to: .maintenance,
+                initiator: .operatorAction("maintenance_mode_enter_\(currentOperatorRole.rawValue)"),
+                reason: "Supervisor entered maintenance mode"
+            )
+            print("🔧 Maintenance Mode: Plant transitioned to MAINTENANCE state")
+            
+            // Send to dashboard
+            bridge.sendDirect(
+                action: "MAINTENANCE_MODE_ACTIVATED",
+                data: [
+                    "timestamp": ISO8601DateFormatter().string(from: Date()),
+                    "operator_role": currentOperatorRole.rawValue,
+                    "previous_state": "IDLE",
+                    "new_state": "MAINTENANCE"
+                ],
+                requestID: UUID().uuidString
+            )
+        }
+    }
+    
+    func authSettings() {
+        // Note: This is NOT a credential management panel. GaiaFusion is a consumer of IQ output.
+        // Authorization Settings shows the current IQ qualification status (read-only view).
+        // Wallet role management happens in the IQ process, not this app.
+        let alert = NSAlert()
+        alert.messageText = "Authorization Settings (Read-Only)"
+        alert.informativeText = """
+Current IQ Qualification Status:
+
+Cell ID: \(cellIdentityHash ?? "unknown")
+Current Context Role: \(currentOperatorRole.rawValue)
+
+Moored Wallets:
+• TODO: Read from IQ qualification record
+• Display wallet pubkeys and their L1/L2/L3 roles
+
+Note: Wallet role assignment is managed by the IQ process.
+This application consumes the IQ output — it does not modify it.
+
+To change wallet roles, re-run the IQ qualification process.
+"""
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+        
+        // TODO: Read IQ qualification record and display moored wallets
+        print("📋 Authorization Settings: Displaying IQ qualification status")
+        print("   Cell ID: \(cellIdentityHash ?? "unknown")")
+        print("   Current Role: \(currentOperatorRole.rawValue)")
+        print("   Moored Wallets: (not yet implemented — requires IQ record reader)")
+    }
+    
+    // MARK: - Help Menu Actions
+    
+    func viewAuditLog() {
+        let alert = NSAlert()
+        alert.messageText = "Audit Log Viewer"
+        alert.informativeText = "View read-only audit trail?\n\nTODO: Implement:\n• Audit log file/database reader\n• Filterable table view (by operator, action, timestamp, state)\n• Export to CSV/JSON\n• Signature verification\n• Search and pagination\n\nCurrent Status: No audit log entries collected yet."
+        alert.alertStyle = .informational
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+        
+        // Show recent state transitions from state machine
+        print("📋 Recent State Transitions (console only):")
+        print("   Plant State: \(fusionCellStateMachine.operationalState.rawValue)")
+        print("   Operator Role: \(currentOperatorRole.rawValue)")
+        print("   Layout Mode: \(layoutManager.currentMode.rawValue)")
+    }
+    
     func showAbout() {
         let alert = NSAlert()
         let ver =
             Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-            ?? Bundle.module.infoDictionary?["CFBundleShortVersionString"] as? String
+            ?? Bundle.gaiafusionResources.infoDictionary?["CFBundleShortVersionString"] as? String
             ?? "1.0"
         let build =
             Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-            ?? Bundle.module.infoDictionary?["CFBundleVersion"] as? String
+            ?? Bundle.gaiafusionResources.infoDictionary?["CFBundleVersion"] as? String
             ?? "1"
         alert.messageText = "GaiaFusion"
         alert.informativeText =

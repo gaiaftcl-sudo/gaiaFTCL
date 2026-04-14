@@ -79,6 +79,9 @@ final class FusionBridge: NSObject, ObservableObject, WKScriptMessageHandler {
 
     private var eversionPendingBatches: [PendingEversionBatch] = []
 
+    weak var layoutManager: CompositeLayoutManager?
+    weak var fusionCellStateMachine: FusionCellStateMachine?
+    
     init(meshManager: MeshStateManager) {
         self.meshManagerRef = meshManager
     }
@@ -1166,5 +1169,96 @@ final class FusionBridge: NSObject, ObservableObject, WKScriptMessageHandler {
                 }
             }
         }
+    }
+    
+    // ═══════════════════════════════════════════════════════════════
+    // WASM Constitutional Integration
+    // ═══════════════════════════════════════════════════════════════
+    
+    /// Call WASM constitutional_check via WKWebView and update layout
+    func checkConstitutional(i_p: Double, b_t: Double, n_e: Double, plantKind: UInt32 = 0) {
+        guard let webView = webViewRef else { return }
+        
+        let js = """
+        (async () => {
+            try {
+                const mod = await import('/api/fusion/wasm-substrate-bindgen.js');
+                const violationCode = mod.constitutional_check(\(i_p), \(b_t), \(n_e));
+                const terminalState = mod.compute_vqbit(0.5, 0.8, \(plantKind));
+                const residual = mod.compute_closure_residual(\(i_p), \(b_t), \(n_e), \(plantKind));
+                return {
+                    violation_code: violationCode,
+                    terminal_state: terminalState,
+                    closure_residual: residual,
+                    ts_ms: Date.now()
+                };
+            } catch (e) {
+                return {
+                    error: String(e),
+                    violation_code: 255,
+                    terminal_state: 2,
+                    closure_residual: 999.0
+                };
+            }
+        })();
+        """
+        
+        webView.evaluateJavaScript(js) { [weak self] result, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print("WASM constitutional check failed: \(error)")
+                return
+            }
+            
+            guard let dict = result as? [String: Any],
+                  let violationCode = dict["violation_code"] as? NSNumber,
+                  let terminalState = dict["terminal_state"] as? NSNumber,
+                  let residual = dict["closure_residual"] as? Double else {
+                print("Invalid WASM result format")
+                return
+            }
+            
+            // Update layout manager
+            self.layoutManager?.updateFromWasm(
+                violationCode: violationCode.uint8Value,
+                terminalState: terminalState.uint8Value,
+                closureResidual: residual
+            )
+            
+            // Wire to state machine (Phase 5): Force constitutional alarm on critical violations
+            // Note: Alarm exit requires operator acknowledgment (L2) per 21 CFR Part 11 §11.200
+            // WASM cannot self-clear the alarm — that would bypass required human authorization
+            let violationCodeValue = violationCode.uint8Value
+            if violationCodeValue >= 4 {
+                self.fusionCellStateMachine?.forceState(.constitutionalAlarm)
+            }
+            
+            // Send result to WKWebView for dashboard display
+            self.sendDirect(
+                action: "CONSTITUTIONAL_CHECK_RESULT",
+                data: [
+                    "violation_code": violationCode,
+                    "terminal_state": terminalState,
+                    "closure_residual": residual,
+                    "i_p": i_p,
+                    "b_t": b_t,
+                    "n_e": n_e,
+                ],
+                requestID: UUID().uuidString
+            )
+        }
+    }
+    
+    /// Periodic WASM constitutional monitoring (called from NATS telemetry updates)
+    func monitorConstitutionalState(telemetry: [String: Double]) {
+        let i_p = telemetry["I_p"] ?? 0.0
+        let b_t = telemetry["B_T"] ?? 0.0
+        let n_e = telemetry["n_e"] ?? 0.0
+        
+        // Only check if values are present and non-zero
+        guard i_p > 0 || b_t > 0 || n_e > 0 else { return }
+        
+        checkConstitutional(i_p: i_p, b_t: b_t, n_e: n_e)
     }
 }

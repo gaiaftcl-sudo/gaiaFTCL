@@ -206,3 +206,97 @@ pub extern "C" fn gaia_metal_renderer_get_frame_time_us(
     }));
     result.unwrap_or(0)
 }
+
+/// Switch to a different plant kind geometry
+/// plant_kind_id: 0=Tokamak, 1=Stellarator, 2=FRC, 3=Spheromak, 4=Mirror,
+///                5=Inertial, 6=SphericalTokamak, 7=ZPinch, 8=MIF
+/// Returns: 0 on success, -1 on invalid plant_kind_id, -2 on null renderer
+#[no_mangle]
+pub extern "C" fn gaia_metal_renderer_switch_plant(
+    renderer: *mut MetalRenderer,
+    plant_kind_id: u32
+) -> i32 {
+    let result = catch_unwind(AssertUnwindSafe(|| {
+        if renderer.is_null() {
+            return -2;
+        }
+        unsafe {
+            if (*renderer).switch_plant(plant_kind_id) {
+                0 // Success
+            } else {
+                -1 // Invalid plant_kind_id
+            }
+        }
+    }));
+    result.unwrap_or(-1)
+}
+
+/// Set base wireframe color (WASM constitutional state visualization)
+/// r, g, b, a: 0.0-1.0 color components
+/// Returns: 0 on success, -1 on null renderer
+#[no_mangle]
+pub extern "C" fn gaia_metal_renderer_set_base_color(
+    renderer: *mut MetalRenderer,
+    r: f32, g: f32, b: f32, a: f32
+) -> i32 {
+    let result = catch_unwind(AssertUnwindSafe(|| {
+        if renderer.is_null() {
+            return -1;
+        }
+        unsafe {
+            (*renderer).set_base_color([r, g, b, a]);
+            0
+        }
+    }));
+    result.unwrap_or(-1)
+}
+
+/// Set plasma state for volume rendering inside wireframe
+/// density: plasma density (particles/m³)
+/// temperature: plasma temperature (keV)
+/// magnetic_field: magnetic field strength (Tesla)
+/// opacity: plasma volume opacity 0.0-1.0
+/// Enable plasma particles (Phase 7: RUNNING/CONSTITUTIONAL_ALARM only)
+#[no_mangle]
+pub extern "C" fn gaia_metal_renderer_enable_plasma(renderer: *mut MetalRenderer) {
+    let _ = catch_unwind(AssertUnwindSafe(|| {
+        if !renderer.is_null() {
+            unsafe {
+                (*renderer).enable_plasma();
+            }
+        }
+    }));
+}
+
+/// Disable plasma particles and clear buffer (Phase 7: state exit)
+#[no_mangle]
+pub extern "C" fn gaia_metal_renderer_disable_plasma(renderer: *mut MetalRenderer) {
+    let _ = catch_unwind(AssertUnwindSafe(|| {
+        if !renderer.is_null() {
+            unsafe {
+                (*renderer).disable_plasma();
+            }
+        }
+    }));
+}
+
+/// Returns: 0 on success, -1 on null renderer
+#[no_mangle]
+pub extern "C" fn gaia_metal_renderer_set_plasma_state(
+    renderer: *mut MetalRenderer,
+    density: f32,
+    temperature: f32,
+    magnetic_field: f32,
+    opacity: f32
+) -> i32 {
+    let result = catch_unwind(AssertUnwindSafe(|| {
+        if renderer.is_null() {
+            return -1;
+        }
+        unsafe {
+            (*renderer).set_plasma_state(density, temperature, magnetic_field, opacity);
+            0
+        }
+    }));
+    result.unwrap_or(-1)
+}

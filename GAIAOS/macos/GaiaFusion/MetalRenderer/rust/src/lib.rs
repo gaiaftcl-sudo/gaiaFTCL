@@ -1,6 +1,7 @@
 pub mod ffi;
 pub mod renderer;
 pub mod shaders;
+pub mod plant_geometries;
 
 // Re-export for internal use
 pub use vqbit_usd_parser::vQbitPrimitive;
