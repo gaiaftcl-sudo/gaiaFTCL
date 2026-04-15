@@ -143,12 +143,12 @@ final class UIValidationProtocols: XCTestCase {
         // Note: Full WASM integration test requires WKWebView context
         // This test validates WASM binary exists and has correct size
         
-        let wasmPath = Bundle.gaiafusionResources.url(forResource: "gaiafusion_substrate", withExtension: "wasm")
+        let wasmPath = Bundle.main.url(forResource: "gaiafusion_substrate", withExtension: "wasm")
         XCTAssertNotNil(wasmPath, "WASM module not found in Resources")
         
         if let url = wasmPath {
             let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
-            let fileSize = attributes[.size] as? UInt64 ?? 0
+            let fileSize = attributes[FileAttributeKey.size] as? UInt64 ?? 0
             
             print("📊 PQ-UI-003: WASM Module Integration")
             print("   Path: \(url.path)")
@@ -160,7 +160,7 @@ final class UIValidationProtocols: XCTestCase {
         }
         
         // Verify JS bindgen exists
-        let jsPath = Bundle.gaiafusionResources.url(forResource: "gaiafusion_substrate_bindgen", withExtension: "js")
+        let jsPath = Bundle.main.url(forResource: "gaiafusion_substrate_bindgen", withExtension: "js")
         XCTAssertNotNil(jsPath, "WASM JS bindgen not found in Resources")
     }
     
@@ -396,15 +396,15 @@ final class UIValidationProtocols: XCTestCase {
         // Verify dashboard resources exist instead
         
         // Verify dashboard HTML exists
-        let htmlPath = Bundle.gaiafusionResources.url(forResource: "index", withExtension: "html", subdirectory: "fusion-web")
+        let htmlPath = Bundle.main.url(forResource: "index", withExtension: "html", subdirectory: "fusion-web")
         let htmlExists = htmlPath != nil || FileManager.default.fileExists(atPath: "GaiaFusion/Resources/fusion-web/index.html")
         
         print("📊 PQ-UI-010: WKWebView Responsiveness")
         print("   Dashboard HTML available: \(htmlExists ? "✅" : "⚠️")")
         
         // Validate WASM module and bindgen exist (required for dashboard)
-        let wasmExists = Bundle.gaiafusionResources.url(forResource: "gaiafusion_substrate", withExtension: "wasm") != nil
-        let bindgenExists = Bundle.gaiafusionResources.url(forResource: "gaiafusion_substrate_bindgen", withExtension: "js") != nil
+        let wasmExists = Bundle.main.url(forResource: "gaiafusion_substrate", withExtension: "wasm") != nil
+        let bindgenExists = Bundle.main.url(forResource: "gaiafusion_substrate_bindgen", withExtension: "js") != nil
         
         print("   WASM module available: \(wasmExists ? "✅" : "⚠️")")
         print("   JS bindgen available: \(bindgenExists ? "✅" : "⚠️")")
@@ -477,6 +477,7 @@ final class UIValidationProtocols: XCTestCase {
     // MARK: - Composite Layout Tests
     
     /// **PQ-UI-013:** Validate layout mode transitions and opacity control
+    @MainActor
     func test_PQ_UI_013_layout_mode_transitions() async throws {
         let layoutManager = CompositeLayoutManager()
         
@@ -497,6 +498,7 @@ final class UIValidationProtocols: XCTestCase {
     }
     
     /// **PQ-UI-014:** Validate WASM-driven layout updates and color pipeline
+    @MainActor
     func test_PQ_UI_014_wasm_constitutional_color_pipeline() async throws {
         let layoutManager = CompositeLayoutManager()
         UserDefaults.standard.set(true, forKey: "fusion_wasm_auto_layout_switch")
@@ -522,6 +524,7 @@ final class UIValidationProtocols: XCTestCase {
     }
     
     /// **PQ-UI-015:** Validate keyboard shortcuts and user interaction paths
+    @MainActor
     func test_PQ_UI_015_keyboard_shortcuts_and_interaction() throws {
         let layoutManager = CompositeLayoutManager()
         

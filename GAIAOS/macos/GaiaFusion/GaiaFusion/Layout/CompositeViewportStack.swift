@@ -125,7 +125,8 @@ struct CompositeViewportStack: View {
         .onChange(of: coordinator.server.isRunning) { _, _ in
             coordinator.refreshSplashHandshake()
         }
-        .onChange(of: coordinator.fusionCellStateMachine.operationalState) { _, newState in
+        .onChange(of: coordinator.fusionCellStateMachine.operationalState) {
+            let newState = coordinator.fusionCellStateMachine.operationalState
             withAnimation(.easeInOut(duration: 0.2)) {
                 layoutManager.applyForcedMode(for: newState)
             }
@@ -133,14 +134,8 @@ struct CompositeViewportStack: View {
             // Phase 7: Control plasma visibility based on plant state
             switch newState {
             case .running, .constitutionalAlarm:
-                // Enable plasma particles with default state
+                // Enable plasma particles
                 metalPlayback.enablePlasma()
-                metalPlayback.setPlasmaState(
-                    density: 1.0e20,
-                    temperature: 15.0,
-                    magneticField: 5.5,
-                    opacity: 0.7
-                )
             case .idle, .moored, .tripped, .maintenance, .training:
                 // Disable plasma and clear buffer
                 metalPlayback.disablePlasma()

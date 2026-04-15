@@ -1,0 +1,96 @@
+# Fusion sovereign sidecar — minimal C⁴ cell (runs inside the Mac app's Linux guest VM).
+# Build context: GAIAOS repository root.
+# Host Mac: FusionSidecarHost forwards 127.0.0.1:8803 → guest:8803 (see macos/FusionSidecarHost).
+#
+# Usage (inside guest, with repo mounted or copied to /opt/gaiaos):
+#   docker compose -f docker-compose.fusion-sidecar.yml up -d --build
+#
+# Includes ArangoDB + one-shot DB/collection bootstrap so /claims matches WAN mesh verify rules (not 5xx).
+
+name: fusion_sidecar
+
+services:
+  arangodb:
+    image: arangodb/arangodb:3.11
+    container_name: fusion-sidecar-arangodb
+    restart: unless-stopped
+    environment:
+      ARANGO_ROOT_PASSWORD: ${ARANGO_ROOT_PASSWORD:-gaiaftcl2026}
+    volumes:
+      - fusion_sidecar_arangodb:/var/lib/arangodb3
+    networks:
+      - fusion_sidecar
+    healthcheck:
+      # BusyBox wget cannot auth to /_api/version; arangosh is reliable inside official image.
+      test:
+        [
+          "CMD-SHELL",
+          "arangosh --server.endpoint tcp://127.0.0.1:8529 --server.password $$ARANGO_ROOT_PASSWORD --javascript.execute-string 'print(1)'",
+        ]
+      interval: 5s
+      timeout: 10s
+      retries: 24
+      start_period: 25s
+
+  fusion-sidecar-arango-init:
+    image: curlimages/curl:8.5.0
+    container_name: fusion-sidecar-arango-init
+    depends_on:
+      arangodb:
+        condition: service_healthy
+    networks:
+      - fusion_sidecar
+    volumes:
+      - ./scripts/fusion_sidecar_arango_bootstrap.sh:/bootstrap.sh:ro
+    environment:
+      ARANGO_HOST: arangodb
+      ARANGO_ROOT_PASSWORD: ${ARANGO_ROOT_PASSWORD:-gaiaftcl2026}
+    entrypoint: ["/bin/sh", "/bootstrap.sh"]
+    restart: "no"
+
+  fusion-sidecar-tester:
+    container_name: fusion-sidecar-tester
+    build:
+      context: ./services/gaiaos_ui_tester_mcp
+      dockerfile: Dockerfile
+    environment:
+      - MCP_PORT=8900
+      - RUST_LOG=info
+    expose:
+      - "8900"
+    networks:
+      - fusion_sidecar
+
+  fusion-sidecar-gateway:
+    container_name: fusion-sidecar-gateway
+    build:
+      context: .
+      dockerfile: services/fot_mcp_gateway/Dockerfile
+    depends_on:
+      fusion-sidecar-tester:
+        condition: service_started
+      arangodb:
+        condition: service_healthy
+      fusion-sidecar-arango-init:
+        condition: service_completed_successfully
+    environment:
+      - PYTHONUNBUFFERED=1
+      # Guest slice often has no NATS on localhost; full mesh omits this (live NATS).
+      - GATEWAY_SKIP_NATS=1
+      - ARANGO_URL=http://arangodb:8529
+      - ARANGO_DB=gaiaos
+      - ARANGO_USER=root
+      - ARANGO_PASSWORD=${ARANGO_ROOT_PASSWORD:-gaiaftcl2026}
+      - NATS_URL=nats://127.0.0.1:4222
+      - MCP_UI_TESTER_UPSTREAM=http://fusion-sidecar-tester:8900
+    ports:
+      - "8803:8803"
+    networks:
+      - fusion_sidecar
+
+networks:
+  fusion_sidecar:
+    name: fusion_sidecar
+
+volumes:
+  fusion_sidecar_arangodb:

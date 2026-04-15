@@ -1,6 +1,31 @@
 import XCTest
 @testable import GaiaFusion
 
+/// Mock NATS service for testing
+actor NATSService {
+    static let shared = NATSService()
+    private var connected = false
+    private(set) var lastBitcoinTau: Double? = nil
+    
+    var isConnected: Bool {
+        get async { connected }
+    }
+    
+    func connect() async throws {
+        connected = true
+    }
+    
+    nonisolated func simulateDisconnect() {
+        Task {
+            await setDisconnected()
+        }
+    }
+    
+    private func setDisconnected() {
+        connected = false
+    }
+}
+
 /// GFTCL-PQ-002: Safety Team Test Protocols (PQ-SAF-001 through PQ-SAF-008)
 /// GAMP 5 Performance Qualification - Safety Systems and NCR Triggers
 final class SafetyTeamProtocols: XCTestCase {
@@ -17,7 +42,11 @@ final class SafetyTeamProtocols: XCTestCase {
     }
     
     override func tearDown() async throws {
-        playbackController?.cleanup()
+        if let controller = playbackController {
+            await MainActor.run {
+                controller.cleanup()
+            }
+        }
         try await super.tearDown()
     }
     
@@ -26,6 +55,7 @@ final class SafetyTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-SAF-001
     /// Invariant: INV-SAF-001 — System must SCRAM when I_p exceeds 25 MA
     /// Acceptance: REFUSED state + SCRAM trigger logged
+    @MainActor
     func testPQSAF001_EmergencySCRAMOnPhysicsViolation() async throws {
         await playbackController.requestPlantSwap(to: "tokamak")
         try await Task.sleep(for: .seconds(2))
@@ -51,14 +81,15 @@ final class SafetyTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-SAF-002
     /// Invariant: INV-SAF-002 — Quorum < 8 must trigger SubGame Z
     /// Acceptance: SubGame Z active, all diagnostics evicted
+    @MainActor
     func testPQSAF002_MeshQuorumLossDiagnosticEviction() async throws {
-        gameState.mockMeshQuorum(value: 10)
+        gameState.setMockMeshQuorum(10)
         try await Task.sleep(for: .seconds(1))
         
         XCTAssertFalse(gameState.subGameZActive,
             "SubGame Z should not be active with healthy quorum")
         
-        gameState.mockMeshQuorum(value: 6)
+        gameState.setMockMeshQuorum(6)
         try await Task.sleep(for: .seconds(2))
         
         XCTAssertTrue(gameState.subGameZActive,
@@ -78,6 +109,7 @@ final class SafetyTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-SAF-003
     /// Invariant: INV-SAF-003 — REFUSED state must persist until operator ack
     /// Acceptance: Plant swap blocked until REFUSED acknowledged
+    @MainActor
     func testPQSAF003_REFUSEDStatePersistentUntilAck() async throws {
         await playbackController.requestPlantSwap(to: "tokamak")
         try await Task.sleep(for: .seconds(2))
@@ -91,7 +123,7 @@ final class SafetyTeamProtocols: XCTestCase {
         await playbackController.requestPlantSwap(to: "stellarator")
         try await Task.sleep(for: .seconds(2))
         
-        XCTAssertEqual(gameState.currentActivePlant, .tokamak,
+        XCTAssertEqual(gameState.currentActivePlant, "tokamak",
             "Plant swap succeeded while REFUSED (should be blocked)")
         
         gameState.acknowledgeRefusal()
@@ -100,7 +132,7 @@ final class SafetyTeamProtocols: XCTestCase {
         await playbackController.requestPlantSwap(to: "stellarator")
         try await Task.sleep(for: .seconds(2))
         
-        XCTAssertEqual(gameState.currentActivePlant, .stellarator,
+        XCTAssertEqual(gameState.currentActivePlant, "stellarator",
             "Plant swap failed after REFUSED acknowledgment")
         
         print("PQ-SAF-003: REFUSED state correctly persisted until operator ack")
@@ -111,6 +143,7 @@ final class SafetyTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-SAF-004
     /// Invariant: INV-SAF-004 — NCR log must be append-only, immutable
     /// Acceptance: NCR cannot be edited or deleted after creation
+    @MainActor
     func testPQSAF004_NCRLogImmutable() async throws {
         await gameState.injectFaultTelemetry(field: "I_p_MA", value: 30.0)
         try await Task.sleep(for: .seconds(1))
@@ -129,7 +162,7 @@ final class SafetyTeamProtocols: XCTestCase {
         XCTAssertNil(deleteResult, "NCR delete succeeded (should be immutable)")
         
         let currentNCR = try gameState.getNCR(id: ncrID)
-        XCTAssertEqual(originalNCR, currentNCR,
+        XCTAssertTrue(NSDictionary(dictionary: originalNCR).isEqual(to: currentNCR),
             "NCR was modified (should be immutable)")
         
         print("PQ-SAF-004: NCR log correctly immutable (append-only)")
@@ -140,6 +173,7 @@ final class SafetyTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-SAF-005
     /// Invariant: INV-SAF-005 — Mac cell τ divergence > 10 blocks triggers REFUSED
     /// Acceptance: REFUSED when |τ_mac - τ_mesh| > 10
+    @MainActor
     func testPQSAF005_BitcoinTauDivergenceREFUSED() async throws {
         gameState.mockBitcoinTau(mac: 1000, mesh: 1000)
         try await Task.sleep(for: .seconds(1))
@@ -167,6 +201,7 @@ final class SafetyTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-SAF-006
     /// Invariant: INV-SAF-006 — Unauthorized wallet must be blocked at gateway
     /// Acceptance: 402 PAYMENT_REQUIRED for unauthorized wallet
+    @MainActor
     func testPQSAF006_WalletGateUnauthorizedAccessBlocked() async throws {
         let unauthorizedWallet = "bc1q_malicious_test_address"
         
@@ -189,6 +224,7 @@ final class SafetyTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-SAF-007
     /// Invariant: INV-SAF-007 — NATS disconnect must trigger degraded mode
     /// Acceptance: Degraded mode active, mesh telemetry unavailable
+    @MainActor
     func testPQSAF007_NATSConnectionLossDegradedMode() async throws {
         let natsService = NATSService.shared
         try await natsService.connect()
@@ -216,6 +252,7 @@ final class SafetyTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-SAF-008
     /// Invariant: INV-SAF-008 — REFUSED override requires 2FA authentication
     /// Acceptance: Override fails without valid 2FA token
+    @MainActor
     func testPQSAF008_OperatorOverrideRequires2FA() async throws {
         await gameState.injectFaultTelemetry(field: "I_p_MA", value: 30.0)
         try await Task.sleep(for: .seconds(1))

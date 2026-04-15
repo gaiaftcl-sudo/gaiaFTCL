@@ -85,6 +85,7 @@ enum StateTransitionInitiator {
     case operatorAction(String)  // operator ID
     case automatic
     case wasm
+    case test  // Test harness transitions
 }
 
 /// State machine for fusion cell operational states
@@ -211,6 +212,8 @@ final class FusionCellStateMachine: ObservableObject {
             return "automatic"
         case .wasm:
             return "wasm_substrate"
+        case .test:
+            return "test_harness"
         }
     }
 }

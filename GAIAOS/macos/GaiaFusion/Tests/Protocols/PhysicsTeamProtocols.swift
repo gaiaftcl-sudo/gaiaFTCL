@@ -17,7 +17,11 @@ final class PhysicsTeamProtocols: XCTestCase {
     }
     
     override func tearDown() async throws {
-        playbackController?.cleanup()
+        if let controller = playbackController {
+            await MainActor.run {
+                controller.cleanup()
+            }
+        }
         try await super.tearDown()
     }
     
@@ -26,8 +30,9 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-PHY-001
     /// Invariant: INV-PHY-001 — Tokamak I_p must be 1–25 MA
     /// Acceptance: All telemetry within bounds for 60 seconds
+    @MainActor
     func testPQPHY001_TokamakPlasmaCurrent() async throws {
-        let plantKind = FusionPlantKind.tokamak
+        let plantKind = "tokamak"
         await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))
@@ -62,8 +67,9 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-PHY-002
     /// Invariant: INV-PHY-002 — Stellarator B_T must be 1–10 T
     /// Acceptance: All telemetry within bounds for 60 seconds
+    @MainActor
     func testPQPHY002_StellatorMagneticField() async throws {
-        let plantKind = FusionPlantKind.stellarator
+        let plantKind = "stellarator"
         await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))
@@ -98,8 +104,9 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-PHY-003
     /// Invariant: INV-PHY-003 — ICF E_laser must be 0.1–5 MJ
     /// Acceptance: All telemetry within bounds for 60 seconds
+    @MainActor
     func testPQPHY003_ICFLaserEnergy() async throws {
-        let plantKind = FusionPlantKind.icf
+        let plantKind = "icf"
         await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))
@@ -134,8 +141,9 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-PHY-004
     /// Invariant: INV-PHY-004 — FRC n_e must be 1e18–1e21 m^-3
     /// Acceptance: All telemetry within bounds for 60 seconds
+    @MainActor
     func testPQPHY004_FRCElectronDensity() async throws {
-        let plantKind = FusionPlantKind.frc
+        let plantKind = "frc"
         await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))
@@ -170,8 +178,9 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-PHY-005
     /// Invariant: INV-PHY-005 — Spheromak K_mag must be 10–200 Wb^2
     /// Acceptance: All telemetry within bounds for 60 seconds
+    @MainActor
     func testPQPHY005_SpheromagHelicity() async throws {
-        let plantKind = FusionPlantKind.spheromak
+        let plantKind = "spheromak"
         await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))
@@ -206,8 +215,9 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-PHY-006
     /// Invariant: INV-PHY-006 — Mirror R_mirror must be 2–20
     /// Acceptance: All telemetry within bounds for 60 seconds
+    @MainActor
     func testPQPHY006_MirrorRatio() async throws {
-        let plantKind = FusionPlantKind.magneticMirror
+        let plantKind = "magneticMirror"
         await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))
@@ -242,8 +252,9 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-PHY-007
     /// Invariant: INV-PHY-007 — Z-pinch I_pinch must be 1–50 MA
     /// Acceptance: All telemetry within bounds for 60 seconds
+    @MainActor
     func testPQPHY007_ZPinchCurrent() async throws {
-        let plantKind = FusionPlantKind.zpinch
+        let plantKind = "zpinch"
         await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))
@@ -278,8 +289,9 @@ final class PhysicsTeamProtocols: XCTestCase {
     /// Test Protocol ID: PQ-PHY-008
     /// Invariant: INV-PHY-008 — Theta-pinch B_theta must be 1–15 T
     /// Acceptance: All telemetry within bounds for 60 seconds
+    @MainActor
     func testPQPHY008_ThetaPinchField() async throws {
-        let plantKind = FusionPlantKind.thetaPinch
+        let plantKind = "thetaPinch"
         await playbackController.requestPlantSwap(to: plantKind)
         
         try await Task.sleep(for: .seconds(2))

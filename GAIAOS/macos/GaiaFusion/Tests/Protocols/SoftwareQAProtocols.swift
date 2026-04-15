@@ -3,6 +3,7 @@ import XCTest
 
 /// GFTCL-PQ-002: Software QA Test Protocols (PQ-QA-001 through PQ-QA-010)
 /// GAMP 5 Performance Qualification - Automated Software Quality Tests
+@MainActor
 final class SoftwareQAProtocols: XCTestCase {
     
     var gameState: OpenUSDLanguageGameState!
@@ -213,6 +214,7 @@ final class SoftwareQAProtocols: XCTestCase {
     /// Test Protocol ID: PQ-QA-008
     /// Invariant: INV-QA-008 — Telemetry must update at ≥50 Hz
     /// Acceptance: Average update rate ≥50 Hz for 60 seconds
+    @MainActor
     func testPQQA008_TelemetryUpdateRate() async throws {
         await playbackController.requestPlantSwap(to: "tokamak")
         try await Task.sleep(for: .seconds(2))
@@ -240,6 +242,7 @@ final class SoftwareQAProtocols: XCTestCase {
     /// Test Protocol ID: PQ-QA-009
     /// Invariant: INV-QA-009 — App must run continuously for 24 hours
     /// Acceptance: No crashes, FPS >55, memory stable
+    @MainActor
     func testPQQA009_ContinuousOperation24Hours() async throws {
         throw XCTSkip("24-hour continuous test disabled for automated runs")
         
@@ -271,6 +274,7 @@ final class SoftwareQAProtocols: XCTestCase {
     /// Test Protocol ID: PQ-QA-010
     /// Invariant: INV-QA-010 — App build must be traceable to git commit
     /// Acceptance: Git SHA embedded in app metadata
+    @MainActor
     func testPQQA010_GitCommitSHATraceable() async throws {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/usr/bin/git")

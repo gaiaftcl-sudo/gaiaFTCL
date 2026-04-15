@@ -93,6 +93,8 @@ final class LocalServer: ObservableObject {
     var mcpCommsProvider: (() -> [String: Any])?
     /// Fire-and-forget async: publish one NATS presence snapshot (wired from `AppCoordinator`).
     var mcpPresencePingHandler: (() async -> Void)?
+    /// Layout manager state snapshot for UI mode, opacity, constitutional HUD visibility.
+    var layoutManagerProvider: (() -> [String: Any])?
 
     init(meshManager: MeshStateManager) {
         self.meshManager = meshManager
@@ -276,6 +278,10 @@ final class LocalServer: ObservableObject {
                     "schema": "gaiaftcl_openusd_playback_v1",
                     "note": "openUSDPlaybackProvider not wired",
                 ]
+                let layoutManager = self.layoutManagerProvider?() ?? [
+                    "schema": "gaiaftcl_layout_manager_v1",
+                    "note": "layoutManagerProvider not wired",
+                ]
                 let payload: [String: Any] = [
                     "status": "ok",
                     "pid": ProcessInfo.processInfo.processIdentifier,
@@ -303,6 +309,7 @@ final class LocalServer: ObservableObject {
                     "cell_stack": cellStack,
                     "usd_px": usdPx,
                     "openusd_playback": openusdPlayback,
+                    "layout_manager": layoutManager,
                     "mcp_cell": self.mcpCommsProvider?() ?? [
                         "schema": "gaiaftcl_mcp_cell_comms_v1",
                         "note": "mcpCommsProvider not wired",

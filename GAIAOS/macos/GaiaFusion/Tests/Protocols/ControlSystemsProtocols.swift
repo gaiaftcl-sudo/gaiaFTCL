@@ -17,7 +17,11 @@ final class ControlSystemsProtocols: XCTestCase {
     }
     
     override func tearDown() async throws {
-        playbackController?.cleanup()
+        if let controller = playbackController {
+            await MainActor.run {
+                controller.cleanup()
+            }
+        }
         try await super.tearDown()
     }
     
@@ -26,6 +30,7 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Test Protocol ID: PQ-CSE-001
     /// Invariant: INV-CSE-001 — Plant swap from REQUESTED to COMMITTED must complete in < 2s
     /// Acceptance: 10 consecutive swaps all < 2s
+    @MainActor
     func testPQCSE001_PlantSwapLatency() async throws {
         let plants: [FusionPlantKind] = [.tokamak, .stellarator, .icf, .frc, .spheromak]
         var latencies: [TimeInterval] = []
@@ -63,6 +68,7 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Test Protocol ID: PQ-CSE-002
     /// Invariant: INV-CSE-002 — Frame rate must stay ≥55 FPS during plant swap
     /// Acceptance: No frame drops below 55 FPS during 5 swaps
+    @MainActor
     func testPQCSE002_NoFrameDropsDuringSwap() async throws {
         let plants: [FusionPlantKind] = [.tokamak, .stellarator, .icf]
         var minFPS: Double = 60.0
@@ -97,6 +103,7 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Test Protocol ID: PQ-CSE-003
     /// Invariant: INV-CSE-003 — System must enter REFUSED when telemetry violates physics
     /// Acceptance: REFUSED trigger on I_p > 25 MA for tokamak
+    @MainActor
     func testPQCSE003_REFUSEDStateOnInvalidTelemetry() async throws {
         await playbackController.requestPlantSwap(to: "tokamak")
         try await Task.sleep(for: .seconds(2))
@@ -119,6 +126,7 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Test Protocol ID: PQ-CSE-004
     /// Invariant: INV-CSE-004 — Each plant topology must have >100 vertices
     /// Acceptance: All 9 plants render with vertex count > 100
+    @MainActor
     func testPQCSE004_GeometryVertexCounts() async throws {
         let plants: [FusionPlantKind] = [
             .tokamak, .stellarator, .icf, .frc, .spheromak,
@@ -155,6 +163,7 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Test Protocol ID: PQ-CSE-005
     /// Invariant: INV-CSE-005 — All telemetry must have valid epistemic classification
     /// Acceptance: I_p, B_T, n_e tagged [M], Q, tau_E tagged [I]
+    @MainActor
     func testPQCSE005_TelemetryEpistemicTags() async throws {
         await playbackController.requestPlantSwap(to: "tokamak")
         try await Task.sleep(for: .seconds(2))
@@ -181,6 +190,7 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Test Protocol ID: PQ-CSE-006
     /// Invariant: INV-CSE-006 — Wireframe color must reflect terminal state
     /// Acceptance: CALORIE=green, CURE=amber, REFUSED=red
+    @MainActor
     func testPQCSE006_TerminalStateColors() async throws {
         await playbackController.requestPlantSwap(to: "tokamak")
         try await Task.sleep(for: .seconds(2))
@@ -208,7 +218,8 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Test Protocol ID: PQ-CSE-007
     /// Invariant: INV-CSE-007 — All 81 plant-to-plant swaps must succeed
     /// Acceptance: 9×9 matrix, all swaps VERIFIED, 0 REFUSED
-    func testPQCSE007_81SwapPermutationMatrix() async throws {
+    @MainActor
+    func testPQCSE007_81SwapPermutationMatrix() async throws{
         let plants: [FusionPlantKind] = [
             .tokamak, .stellarator, .icf, .frc, .spheromak,
             .magneticMirror, .zpinch, .thetaPinch, .polywell
@@ -221,7 +232,7 @@ final class ControlSystemsProtocols: XCTestCase {
         for (fromIdx, fromPlant) in plants.enumerated() {
             await playbackController.requestPlantSwap(to: fromPlant)
             try await Task.sleep(for: .seconds(2))
-            XCTAssertEqual(gameState.currentActivePlant, fromPlant, "Initial plant swap failed")
+            XCTAssertEqual(gameState.currentActivePlant, fromPlant.rawValue, "Initial plant swap failed")
             
             for (toIdx, toPlant) in plants.enumerated() {
                 await playbackController.requestPlantSwap(to: toPlant)
@@ -234,7 +245,7 @@ final class ControlSystemsProtocols: XCTestCase {
                         swapResult = "VERIFIED"
                         successCount += 1
                         break
-                    } else if gameState.swapState == .refused {
+                    } else if gameState.swapState == .failed || gameState.swapState == .rollback {
                         swapResult = "REFUSED"
                         failureCount += 1
                         break
@@ -271,17 +282,17 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Test Protocol ID: PQ-CSE-008
     /// Invariant: INV-CSE-008 — Mesh quorum must be ≥8/10 cells
     /// Acceptance: Quorum ≥8 for 60 seconds
+    @MainActor
     func testPQCSE008_MeshQuorumStatus() async throws {
         let startTime = Date()
         var quorumSamples: [Int] = []
         
         while Date().timeIntervalSince(startTime) < 60 {
-            if let quorum = gameState.meshQuorum {
-                quorumSamples.append(quorum)
-                
-                XCTAssertGreaterThanOrEqual(quorum, 8,
-                    "Mesh quorum dropped to \(quorum)/10 (need ≥8)")
-            }
+            let quorum = gameState.meshQuorum
+            quorumSamples.append(quorum)
+            
+            XCTAssertGreaterThanOrEqual(quorum, 8,
+                "Mesh quorum dropped to \(quorum)/10 (need ≥8)")
             try await Task.sleep(for: .milliseconds(500))
         }
         
@@ -298,14 +309,15 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Test Protocol ID: PQ-CSE-009
     /// Invariant: INV-CSE-009 — SubGame Z activates when quorum < 8
     /// Acceptance: Mock quorum drop triggers diagnostic eviction
+    @MainActor
     func testPQCSE009_SubGameZDiagnosticEviction() async throws {
-        gameState.mockMeshQuorum(value: 10)
+        gameState.setMockMeshQuorum(10)
         try await Task.sleep(for: .seconds(1))
         
         XCTAssertFalse(gameState.subGameZActive,
             "SubGame Z should not be active with quorum=10")
         
-        gameState.mockMeshQuorum(value: 7)
+        gameState.setMockMeshQuorum(7)
         try await Task.sleep(for: .seconds(2))
         
         XCTAssertTrue(gameState.subGameZActive,
@@ -322,6 +334,7 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Test Protocol ID: PQ-CSE-010
     /// Invariant: INV-CSE-010 — Only authorized wallet can access MCP gateway
     /// Acceptance: Founder wallet authorized, unknown wallet rejected
+    @MainActor
     func testPQCSE010_WalletGateAuthorization() async throws {
         let founderWallet = "bc1q_founder_test_address"
         let unknownWallet = "bc1q_unknown_test_address"
@@ -340,6 +353,7 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Test Protocol ID: PQ-CSE-011
     /// Invariant: INV-CSE-011 — NATS fusion.mesh_mooring.v1 heartbeat every 30s
     /// Acceptance: Heartbeat received within 45s
+    @MainActor
     func testPQCSE011_NATSMeshMooringHeartbeat() async throws {
         let startTime = Date()
         var heartbeatReceived = false
@@ -364,17 +378,18 @@ final class ControlSystemsProtocols: XCTestCase {
     /// Test Protocol ID: PQ-CSE-012
     /// Invariant: INV-CSE-012 — Failed swap must rollback to previous plant
     /// Acceptance: Swap failure returns to last VERIFIED plant
+    @MainActor
     func testPQCSE012_PlantSwapRollback() async throws {
         await playbackController.requestPlantSwap(to: "tokamak")
         try await Task.sleep(for: .seconds(2))
-        XCTAssertEqual(gameState.currentActivePlant, .tokamak, "Initial swap failed")
+        XCTAssertEqual(gameState.currentActivePlant, "tokamak", "Initial swap failed")
         
         gameState.injectSwapFailure(to: "stellarator")
         await playbackController.requestPlantSwap(to: "stellarator")
         
         try await Task.sleep(for: .seconds(3))
         
-        XCTAssertEqual(gameState.currentActivePlant, .tokamak,
+        XCTAssertEqual(gameState.currentActivePlant, "tokamak",
             "Failed swap did not rollback to previous plant (tokamak)")
         
         XCTAssertEqual(gameState.swapState, .rollback,

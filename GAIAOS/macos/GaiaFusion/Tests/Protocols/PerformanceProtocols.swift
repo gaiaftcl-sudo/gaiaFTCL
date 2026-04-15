@@ -45,9 +45,9 @@ final class PerformanceProtocols: XCTestCase {
         for frameNum in 0..<targetFrames {
             playbackController.renderNextFrame(width: 1920, height: 1080)
             
-            // Get frame time from Rust renderer
-            if let rustRenderer = playbackController.rustRenderer {
-                let frameTimeUs = rustRenderer.getFrameTimeUs()
+            // Get frame time from playback controller
+            let frameTimeUs = playbackController.getFrameTimeUs()
+            if frameTimeUs > 0 {
                 frameTimes.append(frameTimeUs)
                 
                 // Hard requirement: every frame must be <3ms
@@ -63,6 +63,11 @@ final class PerformanceProtocols: XCTestCase {
         }
         
         // Calculate statistics
+        guard frameTimes.count > 0 else {
+            XCTFail("No frame times recorded - renderer may not be initialized")
+            return
+        }
+        
         let avgFrameTime = frameTimes.reduce(0, +) / UInt64(frameTimes.count)
         let maxFrameTime = frameTimes.max() ?? 0
         let minFrameTime = frameTimes.min() ?? 0

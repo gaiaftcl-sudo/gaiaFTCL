@@ -112,10 +112,18 @@ struct GaiaFusionApp: App {
     @StateObject private var coordinator: AppCoordinator
 
     init() {
+        // Start startup profiling immediately
+        StartupProfiler.shared.start()
+        
         SingleMacCellLock.enforceSingleGUIInstanceOrExit()
+        StartupProfiler.shared.checkpoint("single_instance_check")
+        
         NSApplication.shared.setActivationPolicy(.regular)
         NSApplication.shared.activate(ignoringOtherApps: true)
+        StartupProfiler.shared.checkpoint("app_activation")
+        
         _coordinator = StateObject(wrappedValue: AppCoordinator())
+        StartupProfiler.shared.checkpoint("coordinator_init")
     }
 
     var body: some Scene {
@@ -126,11 +134,17 @@ struct GaiaFusionApp: App {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.clear)
                 .onAppear {
+                    StartupProfiler.shared.checkpoint("window_appear")
+                    
                     coordinator.probeAllCells()
+                    StartupProfiler.shared.checkpoint("cells_probed")
+                    
                     FusionMainWindowTitleSync.apply(coordinator.windowTitle)
                     NSApplication.shared.activate(ignoringOtherApps: true)
                     FusionMainWindowTransparency.applyToMainWindow()
                     FusionMainWindowPresentation.maximizeToVisibleScreen()
+                    StartupProfiler.shared.checkpoint("window_configured")
+                    
                     DispatchQueue.main.async {
                         if let mainWindow = NSApp.mainWindow {
                             mainWindow.makeKeyAndOrderFront(nil)
@@ -138,6 +152,12 @@ struct GaiaFusionApp: App {
                             FusionMainWindowTitleSync.apply(coordinator.windowTitle)
                             FusionMainWindowTransparency.applyToMainWindow()
                             FusionMainWindowPresentation.maximizeToVisibleScreen()
+                        }
+                        StartupProfiler.shared.checkpoint("window_ready")
+                        
+                        // Mark complete after a brief delay to ensure Metal/WebView have rendered
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            StartupProfiler.shared.complete()
                         }
                     }
                 }
@@ -2331,14 +2351,8 @@ To change wallet roles, re-run the IQ qualification process.
     
     func showAbout() {
         let alert = NSAlert()
-        let ver =
-            Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-            ?? Bundle.gaiafusionResources.infoDictionary?["CFBundleShortVersionString"] as? String
-            ?? "1.0"
-        let build =
-            Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-            ?? Bundle.gaiafusionResources.infoDictionary?["CFBundleVersion"] as? String
-            ?? "1"
+        let ver = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
         alert.messageText = "GaiaFusion"
         alert.informativeText =
             "GaiaFTCL Fusion Mac Host — FortressAI Research Institute\nVersion \(ver) (\(build))\nNative Metal + OpenUSD viewport behind the fusion-s4 WebView."
