@@ -1,63 +1,70 @@
-# Mac Qualification — No Bash/Zsh Scripts
+# Mac Qualification — Use Canonical Bash Scripts
 
 ## Hard Rule
 
-**All Mac qualification workflows must be Swift executables.** No bash, no zsh, no `.sh` scripts.
+**Mac qualification uses `scripts/gamp5_*.sh` (bash)** — these are the canonical baseline.
 
-## Rationale
+**EXCEPTION: scripts/gamp5_iq.sh, scripts/gamp5_oq.sh, scripts/gamp5_pq.sh**
+are the canonical IQ/OQ/PQ baseline. Do not delete or rewrite them.
 
-- **Consistency:** One language (Swift) for all Mac operations
-- **Type safety:** Bash has no type system; Swift catches errors at compile time
-- **Maintainability:** Swift code is refactorable; bash scripts drift
-- **Metal integration:** PQ requires Metal API → already Swift → keep everything Swift
-- **No drift:** Bash scripts proliferate and become inconsistent
+These scripts are production-ready with:
+- macOS dialogs for cell selection
+- Wallet management (secp256k1 from hardware UUID)
+- License acceptance dialogs
+- Toolchain verification (macOS ≥13, Metal GPU, Swift, Rust, OpenSSL, Python)
+- Old data cleanup (wallet backup to `~/.fot8d_backup_YYYYMMDD/`)
+- Receipt chaining (OQ verifies IQ receipt, PQ verifies OQ receipt)
+- `--cell` flag for Cursor automation
 
-## What This Means
+## Architecture
 
-### IQ (Installation Qualification)
-- **NOT** `iq_install.sh` (bash)
-- **YES** Swift executable that:
-  - Checks staticlibs exist (`FileManager`)
-  - Checks headers exist
-  - Runs `swift build` via `Process()`
-  - Writes JSON receipt
+```
+scripts/
+├── gamp5_iq.sh   ← IQ (bash, 437 lines, dialogs, wallet gen)
+├── gamp5_oq.sh   ← OQ (bash, 327 lines, build + tests)
+└── gamp5_pq.sh   ← PQ (bash, 395 lines, calls TestRobot)
 
-### OQ (Operational Qualification)
-- **NOT** `oq_validate.sh` (bash)
-- **YES** Swift executable that:
-  - Runs `swift test --filter` via `Process()`
-  - Parses test output
-  - Writes JSON receipt
+GAIAOS/macos/
+├── GaiaFusion/   ← MacFusion app
+├── MacHealth/    ← MacHealth app
+└── TestRobot/    ← PQ Metal GPU tests (Swift)
+```
 
-### PQ (Performance Qualification)
-- **YES** Swift executable (TestRobot)
-- Already correct — Metal API requires Swift
+## Correct Flow
 
-### Master Orchestrator
-- **NOT** `run_full_qualification.sh` (bash)
-- **YES** Swift executable that:
-  - Calls IQ executable
-  - Calls OQ executable
-  - Calls PQ executable (TestRobot)
-  - Writes unified receipt
+```zsh
+# IQ — bash (asks dialogs / use --cell flag for automation)
+zsh scripts/gamp5_iq.sh --cell both
 
-## Implementation
+# OQ — bash (non-UI, build + fast tests + Rust GxP)
+zsh scripts/gamp5_oq.sh --cell both
 
-All Mac qualification tools live in `GAIAOS/macos/` as Swift packages:
-- `GAIAOS/macos/GaiaFusion/` — MacFusion app
-- `GAIAOS/macos/MacHealth/` — MacHealth app
-- `GAIAOS/macos/TestRobot/` — PQ orchestrator (Metal GPU tests)
-- `GAIAOS/macos/QualificationRunner/` — Master orchestrator (IQ→OQ→PQ all apps)
+# PQ — bash (calls TestRobot for Metal offscreen render)
+zsh scripts/gamp5_pq.sh --cell both
+```
 
-Each is a Swift Package Manager package with `Package.swift` and `Sources/`.
+**TestRobot** (Swift) is called BY `gamp5_pq.sh` — it handles Metal offscreen render, pixel hash, FFI stress, unified `TESTROBOT_RECEIPT.json`.
 
-## Exception
+## What NOT to Do
 
-**Deploy scripts** on **remote mesh cells** (Hetzner/Netcup) may use bash because:
+**DO NOT:**
+- Create Swift executables for IQ/OQ/PQ (MacFusionQualification, MacHealthQualification, QualificationRunner)
+- Rewrite scripts/gamp5_*.sh in Swift
+- Create separate qualification paths
+
+**The bash scripts are the baseline. Use them.**
+
+## Exception for Other Scripts
+
+**Deploy scripts on remote mesh cells (Hetzner/Netcup)** may use bash:
 - SSH remote execution
-- No Swift toolchain guaranteed on mesh nodes
-- Deploy is not qualification
+- No Swift toolchain on mesh nodes
+- Deploy ≠ qualification
 
-**On Mac:** Swift only. No exceptions.
+**Build infrastructure scripts** (e.g. `build_rust.sh`, `build_shaders.sh`) are allowed:
+- Build process, not qualification
+- May be called from CI/CD
+
+**On Mac qualification:** Use `scripts/gamp5_*.sh` (bash) for IQ/OQ/PQ. TestRobot (Swift) for Metal PQ only.
 
 Norwich — S⁴ serves C⁴.

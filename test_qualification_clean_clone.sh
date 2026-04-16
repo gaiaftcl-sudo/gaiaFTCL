@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # ═══════════════════════════════════════════════════════════════
-# Test Mac Qualification — Clean Clone
-# Creates test folder, clones repo, runs full IQ/OQ/PQ
+# Test Mac Qualification — Clean Clone (Using Canonical Bash Scripts)
+# Creates test folder, clones repo, runs IQ/OQ/PQ via scripts/gamp5_*.sh
 # Patents: USPTO 19/460,960 | USPTO 19/096,071 — © 2026 Richard Gillespie
 # ═══════════════════════════════════════════════════════════════
 
@@ -25,7 +25,7 @@ banner "Mac Qualification — Clean Clone Test"
 # ═══════════════════════════════════════════════════════════════
 
 TEST_DIR="${HOME}/FoT8D_qualification_test_$(date +%Y%m%d_%H%M%S)"
-banner "Step 1/7: Create test directory"
+banner "Step 1/6: Create test directory"
 mkdir -p "${TEST_DIR}" || fail "Failed to create test directory"
 cd "${TEST_DIR}"
 ok "Test directory: ${TEST_DIR}"
@@ -34,7 +34,7 @@ ok "Test directory: ${TEST_DIR}"
 # 2. Clone repository
 # ═══════════════════════════════════════════════════════════════
 
-banner "Step 2/7: Clone repository"
+banner "Step 2/6: Clone repository"
 REPO_PATH="$(cd ~/Documents/FoT8D && pwd)"
 echo -e "  Cloning from: ${REPO_PATH}"
 git clone "${REPO_PATH}" FoT8D || fail "Git clone failed"
@@ -43,80 +43,56 @@ git checkout feat/mac-qualification-swift-only || fail "Branch checkout failed"
 ok "Repository cloned"
 
 # ═══════════════════════════════════════════════════════════════
-# 3. Build MacFusion app
+# 3. Build TestRobot (Swift - PQ only)
 # ═══════════════════════════════════════════════════════════════
 
-banner "Step 3/7: Build MacFusion"
-cd GAIAOS/macos/GaiaFusion
-swift build --product GaiaFusion 2>&1 | tail -3
-[[ -f .build/debug/GaiaFusion ]] || fail "MacFusion executable missing"
-ok "MacFusion built"
-cd "${TEST_DIR}/FoT8D"
-
-# ═══════════════════════════════════════════════════════════════
-# 4. Build MacHealth app
-# ═══════════════════════════════════════════════════════════════
-
-banner "Step 4/7: Build MacHealth"
-cd GAIAOS/macos/MacHealth
-swift build --product MacHealth 2>&1 | tail -3
-[[ -f .build/debug/MacHealth ]] || fail "MacHealth executable missing"
-ok "MacHealth built"
-cd "${TEST_DIR}/FoT8D"
-
-# ═══════════════════════════════════════════════════════════════
-# 5. Build qualification executables
-# ═══════════════════════════════════════════════════════════════
-
-banner "Step 5/7: Build qualification executables"
-
-echo "  Building MacFusionQualification..."
-cd GAIAOS/macos/MacFusionQualification
+banner "Step 3/6: Build TestRobot"
+cd GAIAOS/macos/TestRobot
 swift build 2>&1 | tail -3
-[[ -f .build/debug/MacFusionQualification ]] || fail "MacFusionQualification missing"
-ok "MacFusionQualification built"
-
-echo "  Building MacHealthQualification..."
-cd ../MacHealthQualification
-swift build 2>&1 | tail -3
-[[ -f .build/debug/MacHealthQualification ]] || fail "MacHealthQualification missing"
-ok "MacHealthQualification built"
-
-echo "  Building TestRobot..."
-cd ../TestRobot
-swift build 2>&1 | tail -3
-[[ -f .build/debug/TestRobot ]] || fail "TestRobot missing"
+[[ -f .build/debug/TestRobot ]] || fail "TestRobot executable missing"
 ok "TestRobot built"
-
-echo "  Building QualificationRunner..."
-cd ../QualificationRunner
-swift build 2>&1 | tail -3
-[[ -f .build/debug/QualificationRunner ]] || fail "QualificationRunner missing"
-ok "QualificationRunner built"
-
 cd "${TEST_DIR}/FoT8D"
 
 # ═══════════════════════════════════════════════════════════════
-# 6. Run full qualification
+# 4. Run IQ (Installation Qualification) — bash
 # ═══════════════════════════════════════════════════════════════
 
-banner "Step 6/7: Run qualification (IQ/OQ/PQ + TestRobot)"
-GAIAOS/macos/QualificationRunner/.build/debug/QualificationRunner || fail "Qualification failed"
-ok "All qualification complete"
+banner "Step 4/6: IQ (Installation Qualification)"
+echo "  Running: scripts/gamp5_iq.sh --cell both"
+zsh scripts/gamp5_iq.sh --cell both || fail "IQ failed"
+ok "IQ: PASS (both cells)"
 
 # ═══════════════════════════════════════════════════════════════
-# 7. Verify receipts
+# 5. Run OQ (Operational Qualification) — bash
 # ═══════════════════════════════════════════════════════════════
 
-banner "Step 7/7: Verify receipts"
+banner "Step 5/6: OQ (Operational Qualification)"
+echo "  Running: scripts/gamp5_oq.sh --cell both"
+zsh scripts/gamp5_oq.sh --cell both || fail "OQ failed"
+ok "OQ: PASS (both cells)"
+
+# ═══════════════════════════════════════════════════════════════
+# 6. Run PQ (Performance Qualification) — bash + TestRobot
+# ═══════════════════════════════════════════════════════════════
+
+banner "Step 6/6: PQ (Performance Qualification)"
+echo "  Running: scripts/gamp5_pq.sh --cell both"
+zsh scripts/gamp5_pq.sh --cell both || fail "PQ failed"
+ok "PQ: PASS (both cells + TestRobot)"
+
+# ═══════════════════════════════════════════════════════════════
+# Verify receipts
+# ═══════════════════════════════════════════════════════════════
+
+banner "Verifying All Receipts"
 
 RECEIPTS=(
-    "GAIAOS/macos/GaiaFusion/evidence/iq/macfusion_iq_receipt.json"
-    "GAIAOS/macos/GaiaFusion/evidence/oq/macfusion_oq_receipt.json"
-    "GAIAOS/macos/GaiaFusion/evidence/pq/macfusion_pq_receipt.json"
-    "GAIAOS/macos/MacHealth/evidence/iq/machealth_iq_receipt.json"
-    "GAIAOS/macos/MacHealth/evidence/oq/machealth_oq_receipt.json"
-    "GAIAOS/macos/MacHealth/evidence/pq/machealth_pq_receipt.json"
+    "GAIAOS/macos/GaiaFusion/evidence/iq/iq_receipt.json"
+    "GAIAOS/macos/GaiaFusion/evidence/oq/oq_receipt.json"
+    "GAIAOS/macos/GaiaFusion/evidence/pq/pq_receipt.json"
+    "GAIAOS/macos/MacHealth/evidence/iq/iq_receipt.json"
+    "GAIAOS/macos/MacHealth/evidence/oq/oq_receipt.json"
+    "GAIAOS/macos/MacHealth/evidence/pq/pq_receipt.json"
     "evidence/TESTROBOT_RECEIPT.json"
 )
 
@@ -135,9 +111,9 @@ done
 banner "STATE: CALORIE — Clean Clone Test PASS"
 
 echo -e ""
-echo -e "${GRN}  ✅ MacFusion: IQ/OQ/PQ verified${NC}"
-echo -e "${GRN}  ✅ MacHealth: IQ/OQ/PQ verified${NC}"
-echo -e "${GRN}  ✅ TestRobot: Live test verified${NC}"
+echo -e "${GRN}  ✅ IQ: PASS (scripts/gamp5_iq.sh)${NC}"
+echo -e "${GRN}  ✅ OQ: PASS (scripts/gamp5_oq.sh)${NC}"
+echo -e "${GRN}  ✅ PQ: PASS (scripts/gamp5_pq.sh + TestRobot)${NC}"
 echo -e "${GRN}  ✅ All receipts: Present and valid (7/7)${NC}"
 echo -e ""
 echo -e "  Test directory: ${TEST_DIR}"
