@@ -1,0 +1,16 @@
+[package]
+name        = "biologit-md-engine"
+version     = "0.1.0"
+edition     = "2021"
+description = "GaiaHealth MD simulation substrate + BioState FFI bridge for Swift"
+license     = "LicenseRef-GaiaHealth-Source-Available"
+
+[lib]
+crate-type = ["staticlib", "rlib"]
+
+[dependencies]
+serde      = { workspace = true }
+serde_json = { workspace = true }
+sha2       = { workspace = true }
+hex        = { workspace = true }
+thiserror  = { workspace = true }

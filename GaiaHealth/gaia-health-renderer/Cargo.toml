@@ -1,0 +1,23 @@
+[package]
+name        = "gaia-health-renderer"
+version     = "0.1.0"
+edition     = "2021"
+description = "GaiaHealth Metal molecular renderer — M/I/A epistemic coloring, FFI bridge for Swift"
+license     = "LicenseRef-GaiaHealth-Source-Available"
+
+[lib]
+crate-type = ["staticlib", "rlib"]
+
+[dependencies]
+# objc2-metal and objc2-app-kit are macOS-only; Cursor/Xcode resolves these
+# on the host Mac. Linux CI uses --cfg test_only to skip Metal imports.
+serde      = { workspace = true }
+serde_json = { workspace = true }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+objc2-metal       = { version = "0.3", features = ["MTLDevice", "MTLCommandQueue", "MTLBuffer", "MTLRenderPipeline", "MTLRenderCommandEncoder", "MTLTexture", "MTLLibrary", "MTLCommandEncoder", "MTLCommandBuffer", "MTLRenderPass", "MTLDrawable", "MTLPixelFormat", "MTLResource", "MTLVertexDescriptor", "MTLTypes"] }
+objc2-quartz-core = { version = "0.3", features = ["CAMetalLayer"] }
+objc2              = "0.6"
+objc2-foundation  = { version = "0.3", features = ["NSString", "NSError"] }
+raw-window-handle = "0.6"
+raw-window-metal  = "1"

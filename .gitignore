@@ -1,0 +1,60 @@
+# OS files
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Cursor/IDE
+.cursor/
+
+# Build artifacts
+target/
+*.so
+*.dylib
+
+# Dependencies
+node_modules/
+
+# Data directories
+data/
+backups/
+logs/
+
+# Secrets
+.env
+*.pem
+*.key
+
+# Large model files
+*.gguf
+*.bin
+*.safetensors
+models/*/model.*
+
+# AGI binaries (local builds)
+.agi_binaries/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+node_modules
+
+# GaiaHealth — sovereign wallet (zero-PII but private entropy must not be committed)
+.gaiahealth/
+GaiaHealth/evidence/
+GaiaHealth/swift_testrobit/*.a
+GaiaHealth/wasm_constitutional/pkg/
+
+# GAIAFTCL — existing wallet pattern
+.gaiaftcl/
+GAIAFTCL/evidence/
+.build/
+*.a

@@ -1,0 +1,9 @@
+[package]
+name        = "wallet-core"
+version     = "0.1.0"
+edition     = "2021"
+description = "Zero-PII sovereign wallet primitives shared between GaiaFTCL and GaiaHealth cells"
+
+[dependencies]
+sha2 = "0.10"
+hex  = "0.4"
