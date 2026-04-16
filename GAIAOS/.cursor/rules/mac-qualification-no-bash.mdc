@@ -1,0 +1,63 @@
+# Mac Qualification — No Bash/Zsh Scripts
+
+## Hard Rule
+
+**All Mac qualification workflows must be Swift executables.** No bash, no zsh, no `.sh` scripts.
+
+## Rationale
+
+- **Consistency:** One language (Swift) for all Mac operations
+- **Type safety:** Bash has no type system; Swift catches errors at compile time
+- **Maintainability:** Swift code is refactorable; bash scripts drift
+- **Metal integration:** PQ requires Metal API → already Swift → keep everything Swift
+- **No drift:** Bash scripts proliferate and become inconsistent
+
+## What This Means
+
+### IQ (Installation Qualification)
+- **NOT** `iq_install.sh` (bash)
+- **YES** Swift executable that:
+  - Checks staticlibs exist (`FileManager`)
+  - Checks headers exist
+  - Runs `swift build` via `Process()`
+  - Writes JSON receipt
+
+### OQ (Operational Qualification)
+- **NOT** `oq_validate.sh` (bash)
+- **YES** Swift executable that:
+  - Runs `swift test --filter` via `Process()`
+  - Parses test output
+  - Writes JSON receipt
+
+### PQ (Performance Qualification)
+- **YES** Swift executable (TestRobot)
+- Already correct — Metal API requires Swift
+
+### Master Orchestrator
+- **NOT** `run_full_qualification.sh` (bash)
+- **YES** Swift executable that:
+  - Calls IQ executable
+  - Calls OQ executable
+  - Calls PQ executable (TestRobot)
+  - Writes unified receipt
+
+## Implementation
+
+All Mac qualification tools live in `GAIAOS/macos/` as Swift packages:
+- `GAIAOS/macos/GaiaFusion/` — MacFusion app
+- `GAIAOS/macos/MacHealth/` — MacHealth app
+- `GAIAOS/macos/TestRobot/` — PQ orchestrator (Metal GPU tests)
+- `GAIAOS/macos/QualificationRunner/` — Master orchestrator (IQ→OQ→PQ all apps)
+
+Each is a Swift Package Manager package with `Package.swift` and `Sources/`.
+
+## Exception
+
+**Deploy scripts** on **remote mesh cells** (Hetzner/Netcup) may use bash because:
+- SSH remote execution
+- No Swift toolchain guaranteed on mesh nodes
+- Deploy is not qualification
+
+**On Mac:** Swift only. No exceptions.
+
+Norwich — S⁴ serves C⁴.
