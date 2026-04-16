@@ -56,6 +56,15 @@ codegen-units = 1
 strip = true
 panic = "abort"
 
+# ── Staticlib target — Swift FFI surface ─────────────────────────────────────
+# Produces: target/release/libgaia_metal_renderer.a
+# Swift TestRobit links against this lib for TauState FFI access.
+# The lib.rs (src/lib.rs) exports TauState + gaia_metal_renderer_* C functions.
+[lib]
+name = "gaia_metal_renderer"
+crate-type = ["staticlib"]
+path = "src/lib.rs"
+
 [[bin]]
 name = "gaia-metal-renderer"
 path = "src/main.rs"
