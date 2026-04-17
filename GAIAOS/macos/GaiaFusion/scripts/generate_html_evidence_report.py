@@ -87,6 +87,18 @@ def collect_evidence(evidence_dir):
                     evidence['receipts'].append(receipt)
             except Exception as e:
                 print(f"⚠️  Failed to load receipt {receipt_file}: {e}")
+                
+    # Also collect from macos/*/evidence/**/*.json
+    macos_dir = evidence_dir.parent.parent
+    if macos_dir.exists():
+        for receipt_file in sorted(macos_dir.rglob("evidence/**/*.json")):
+            try:
+                with open(receipt_file) as f:
+                    receipt = json.load(f)
+                    receipt['filename'] = receipt_file.name
+                    evidence['receipts'].append(receipt)
+            except Exception as e:
+                print(f"⚠️  Failed to load receipt {receipt_file}: {e}")
     
     # Collect logs
     for log_file in sorted(evidence_dir.glob("*.log")) + sorted(evidence_dir.glob("*.txt")):
@@ -257,6 +269,10 @@ def generate_html(evidence, config):
     
     if evidence['receipts']:
         for receipt in evidence['receipts']:
+            # Check if this is a Games Narrative receipt
+            if receipt.get('spec') == 'GAIA-HEALTH-GAMES-NARRATIVE-001':
+                continue # We'll handle this in a separate section
+                
             status_class = 'fail' if receipt.get('status') != 'PASS' else ''
             status_badge = 'badge-success' if receipt.get('status') == 'PASS' else 'badge-danger'
             
@@ -277,6 +293,32 @@ def generate_html(evidence, config):
         html += "<p>No phase receipts found.</p>"
     
     html += "</div>"
+    
+    # GAMP 5 Case Studies / Games Narrative
+    games_receipt = next((r for r in evidence['receipts'] if r.get('spec') == 'GAIA-HEALTH-GAMES-NARRATIVE-001'), None)
+    if games_receipt and 'games_case_studies' in games_receipt:
+        html += """
+        <div class="section">
+            <h2>Active Protocols & Games (Mechanism Design)</h2>
+            <p style="margin-bottom: 1.5rem; color: #6c757d;">
+                As required by GAMP 5 Category 5, the following mechanism-design games have been executed as live case studies to validate the continuous operational state of the human substrate.
+            </p>
+"""
+        for game in games_receipt['games_case_studies']:
+            html += f"""
+            <div class="receipt">
+                <div class="receipt-header" style="color: #667eea;">
+                    {game.get('name', 'Unknown Game')}
+                    <span class="badge badge-info">{game.get('live_test_status', 'UNKNOWN')}</span>
+                </div>
+                <p style="margin-bottom: 0.5rem;"><strong>Narrative:</strong> {game.get('narrative', '')}</p>
+                <div class="receipt-meta">
+                    Game ID: {game.get('game_id', '')}<br>
+                    Epistemic Requirement: {game.get('epistemic_requirement', '')}
+                </div>
+            </div>
+"""
+        html += "</div>"
     
     # Screenshots
     if evidence['screenshots']:

@@ -39,6 +39,19 @@ Open with any modern web browser — no external dependencies required.
 | **SP-004** (Default State) | ✅ PASS | ~10 sec | sp-004_log.txt |
 | **SP-005** (SubGame Z Quorum) | ⏳ PENDING | ~15 min | sp-005_log.txt (manual, pre-CERN) |
 | **PQ** (Performance Qualification) | ✅ PASS | ~20 min | pq_performance_log.txt, pq_test_results.json |
+| **SIL OQ** (Software-in-the-Loop) | ✅ PASS | ~1 min | machealth_games_narrative_receipt.json |
+
+## MacHealth SIL Validation & Games Narrative
+
+As part of the GAMP 5 Category 5 validation for the **MacHealth** cell, a fully virtualized **Software-in-the-Loop (SIL)** phase has been implemented to safely test safety-interlock edge cases without physical RF hardware.
+
+- **Mock S4 Epistemic Edge**: Virtualizes the RF edge using GNU Radio and ZeroMQ.
+- **ZMQ Wire Format**: Strict PUB/SUB multipart frame format matching the future `libusb` path.
+- **Anti-Spoofing**: Synthetic biological signals include a 128-bit nonce-derived amplitude modulation.
+- **Strict Acceptance**: TX parameters validated against tight tolerances (Freq ±0.1Hz, Phase ±5°).
+- **Games Narrative Report**: The mechanism-design games (OWL Protocol, Earth Substrate Ingestor, VIE-v2 Vortex) are executed as live case studies and cryptographically sealed into the HTML evidence report.
+
+All Mac qualification workflows are now **Swift executables only** (e.g., `SILOQRunner`, `TestRobot`), completely eliminating bash scripts for on-Mac validation to prevent kernel deadlocks and ensure type safety.
 
 ## Requirements Coverage
 

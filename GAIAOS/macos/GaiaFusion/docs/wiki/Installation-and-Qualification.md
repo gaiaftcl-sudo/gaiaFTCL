@@ -51,7 +51,9 @@ test_nats_user = "your-ssh-user"
 ### 3. Run Installation Qualification (IQ)
 
 ```bash
-bash scripts/run_iq_validation.sh
+# Mac Qualification is now Swift-only to prevent kernel deadlocks
+cd macos/CleanCloneTest
+swift run
 ```
 
 This verifies:
@@ -60,7 +62,21 @@ This verifies:
 - Metal shaders compile
 - Configuration files are valid
 
-Evidence generated: `evidence/iq_install_log.txt`, `evidence/iq_verification.json`
+Evidence generated: `evidence/iq/macfusion_iq_receipt.json`, `evidence/iq/machealth_iq_receipt.json`
+
+### 4. Run Software-in-the-Loop (SIL) OQ
+
+For the MacHealth cell, GAMP 5 Category 5 requires a virtualized RF edge to safely test safety interlocks.
+
+```bash
+cd macos/SILOQRunner
+swift run
+```
+
+This executes:
+- ZMQ Wire Format validation
+- Telemetry Schema Binding
+- Games Narrative Report generation
 
 ## Validation Modes
 
