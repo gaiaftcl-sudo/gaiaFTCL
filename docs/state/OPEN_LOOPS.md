@@ -1,1 +1,1 @@
-- [CALORIE] Mac Cell CI workflow created.
+- [CALORIE] GitHub Secrets and Variables for Xcode Cloud Dispatcher configured.
