@@ -1,0 +1,67 @@
+name: Mac Cell CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'GAIAOS/macos/GaiaFusion/**'
+      - '.github/workflows/mac-cell-ci.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'GAIAOS/macos/GaiaFusion/**'
+
+jobs:
+  build-and-test-mac:
+    name: Build & Test macOS App
+    runs-on: macos-14
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode 15.4
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
+
+      - name: Install Rust toolchain (aarch64-apple-darwin)
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.85.0
+          targets: aarch64-apple-darwin
+          components: rustfmt, clippy
+
+      - name: Cache Rust dependencies
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "GAIAOS/macos/GaiaFusion/MetalRenderer"
+
+      - name: Cache Xcode DerivedData
+        uses: actions/cache@v4
+        with:
+          path: ~/Library/Developer/Xcode/DerivedData
+          key: ${{ runner.os }}-xcode-deriveddata-${{ hashFiles('GAIAOS/macos/GaiaFusion/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-xcode-deriveddata-
+
+      - name: Build Rust Metal Renderer (FFI)
+        working-directory: GAIAOS/macos/GaiaFusion/MetalRenderer
+        run: |
+          cargo build --release --target aarch64-apple-darwin
+          mkdir -p lib
+          cp target/aarch64-apple-darwin/release/libgaia_metal_renderer.a lib/
+
+      - name: Build Swift Package (GaiaFusion)
+        working-directory: GAIAOS/macos/GaiaFusion
+        run: |
+          xcodebuild build \
+            -scheme GaiaFusion \
+            -destination 'platform=macOS,arch=arm64' \
+            -derivedDataPath ~/Library/Developer/Xcode/DerivedData
+
+      - name: Run Swift Tests (TestRobit / OQ)
+        working-directory: GAIAOS/macos/GaiaFusion
+        run: |
+          xcodebuild test \
+            -scheme GaiaFusion \
+            -destination 'platform=macOS,arch=arm64' \
+            -derivedDataPath ~/Library/Developer/Xcode/DerivedData

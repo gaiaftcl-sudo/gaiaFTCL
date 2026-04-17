@@ -1,1 +1,1 @@
-- [CALORIE] Xcode Cloud Dispatcher workflow created.
+- [CALORIE] Mac Cell CI workflow created.

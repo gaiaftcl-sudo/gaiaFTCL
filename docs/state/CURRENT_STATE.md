@@ -9,6 +9,7 @@
 - `gaiaftcl-sudo` SSH key registered in GitHub for authentication.
 - S⁴C⁴ hash migration completed for `cell_identity.json`. `identityHashProvider` now deterministically fuses S4 topological anchor and C4 cryptographic anchor.
 - Xcode Cloud Dispatcher workflow and runbook implemented.
+- Mac Cell CI workflow implemented for macOS-only, aarch64-apple-darwin Rust FFI architecture.
 
 ## BLOCKED
 - None.
