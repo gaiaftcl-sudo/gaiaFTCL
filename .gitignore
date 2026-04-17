@@ -1,5 +1,6 @@
 # OS files
 .DS_Store
+**/.DS_Store
 *.swp
 *.swo
 *~
@@ -9,8 +10,14 @@
 
 # Build artifacts
 target/
+/target
+**/target/
 *.so
 *.dylib
+*.a
+swift_testrobit/libgaia_metal_renderer.a
+swift_testrobit/.build/
+.build/
 
 # Dependencies
 node_modules/
@@ -36,6 +43,7 @@ models/*/model.*
 
 # Temporary files
 tmp/
+/tmp/
 temp/
 *.tmp
 
@@ -44,8 +52,6 @@ __pycache__/
 *.pyc
 .venv/
 venv/
-
-node_modules
 
 # GaiaHealth — sovereign wallet (zero-PII but private entropy must not be committed)
 .gaiahealth/
@@ -56,5 +62,14 @@ GaiaHealth/wasm_constitutional/pkg/
 # GAIAFTCL — existing wallet pattern
 .gaiaftcl/
 GAIAFTCL/evidence/
-.build/
-*.a
+
+# Runtime evidence (generated each run)
+evidence/*.actual.json
+evidence/full_cycle_receipt.json
+evidence/oq_receipt.json
+evidence/iq_receipt.json
+evidence/testrobit_receipt.json
+evidence/vqbit_test_receipt.json
+
+# Finder duplicates (already deleted, ensure they stay gone)
+*\ 2.*

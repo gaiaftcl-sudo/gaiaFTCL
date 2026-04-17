@@ -1,0 +1,6 @@
+[workspace]
+resolver = "2"
+members = [
+    "rust_fusion_usd_parser",
+    "gaia-metal-renderer",
+]
