@@ -5,10 +5,10 @@
 - Wiki stubbed.
 - Git hooks, Cursor rules, and docs skeleton installed.
 - `gaitfc[l]` typo fully corrected across Swift files.
+- Git commit signing configured using existing `id_ed25519` SSH key.
 
 ## BLOCKED
-- Git commit signing setup (SSH vs GPG) pending human confirmation.
 - `cell_identity.json` returning `"unverified"` pending S⁴C⁴ hash migration human gate.
 
 ## Next Receipt
-- Await human unblock on signing to commit the new repository discipline files.
+- Await human unblock on S⁴C⁴ hash migration.
