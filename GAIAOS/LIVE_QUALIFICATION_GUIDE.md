@@ -6,19 +6,28 @@ This guide provides the exact steps to execute the human-in-the-loop (HITL) qual
 
 ## Step 1: Installation Qualification (IQ)
 
-The IQ phase verifies that the CLI and its dependencies are correctly installed and can generate the necessary cryptographic identities (wallet and cell).
+The IQ phase verifies that the CLI and its dependencies are correctly installed and can generate the necessary cryptographic identities (wallet and cell). As part of the sovereign installation, you will clone the repository into a fresh, timestamped directory.
 
-1. **Open your terminal and navigate to the `GAIAOS` directory:**
+1. **Open your terminal and clone the repository:**
    ```bash
-   cd /Users/richardgillespie/Documents/FoT8D/GAIAOS
+   cd ~/Documents
+   export TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+   export RELEASE_DIR="FoT8D_Release_${TIMESTAMP}"
+   git clone -b release/phi-scaling-gamp5 https://github.com/gaiaftcl-sudo/gaiaFTCL.git $RELEASE_DIR
+   cd $RELEASE_DIR/GAIAOS
    ```
 
-2. **Execute the IQ command:**
+2. **Build the CLI:**
+   ```bash
+   swift build -c release
+   ```
+
+3. **Execute the IQ command:**
    ```bash
    .build/release/gaiaftcl gate run --iq
    ```
 
-3. **What to expect:**
+4. **What to expect:**
    - You will see a prominent `HUMAN VERIFICATION REQUIRED` banner.
    - The script will pause and ask: `Press [Enter] to confirm and proceed...`
    - **Action:** Press `Enter`.
