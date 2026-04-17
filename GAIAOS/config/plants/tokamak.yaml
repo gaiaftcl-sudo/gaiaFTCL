@@ -1,0 +1,50 @@
+schema_version: 1
+signed_by: "rick@fieldoftruth.example"
+signature: "<detached SSH signature over JCS canonical form, namespace fot-plant-config>"
+plant_id: "tokamak.fusion_control"
+display_name: "Tokamak Fusion Control"
+engine:
+  command: "/usr/local/bin/fusion_control"
+  args_template: ["--mode", "soak", "--duration", "{duration_s}"]
+telemetry:
+  tick:
+    sampling_rate_hz: 1000.0
+    publish_rate_hz: 10.0
+    aggregation: "mean"
+    max_state_transition_hz_per_channel:
+      plasma_temperature_ev: 100.0
+      frame_budget_ms: 100.0
+    nyquist_factor: 10.0
+  event:
+    declared_types:
+      - "run.started"
+      - "run.ended"
+      - "thermal_throttle_triggered"
+      - "quorum_lost"
+    max_expected_rate_hz: 5.0
+    overflow_policy: "refuse_run"
+host_requirements:
+  min_metal_family: "Apple9"
+  min_unified_memory_gb: 64
+  requires_sep: true
+validation_params:
+  - name: "target_q_value"
+    type: "float"
+    min: 0.0
+    max: 10.0
+    unit: "dimensionless"
+  - name: "plasma_temperature_ev"
+    type: "float"
+    min: 1000.0
+    max: 200000000.0
+    unit: "eV"
+  - name: "frame_budget_ms"
+    type: "float"
+    min: 0.5
+    max: 16.6
+    unit: "ms"
+physical_invariants:
+  - "energy_conservation"
+  - "momentum_conservation"
+  - "no_nan_in_state"
+  - "die_temp_c_below_100"

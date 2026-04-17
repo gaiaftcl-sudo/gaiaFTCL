@@ -1,0 +1,174 @@
+{
+  "generated_utc": "20260326T200438Z",
+  "gateway": "http://127.0.0.1:18803",
+  "lab_files": [
+    "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md",
+    "LAB_PROTOCOLS_INV3_AML_FDA_REGULATORY_PACKAGE.md",
+    "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md"
+  ],
+  "counts_by_type": {
+    "protein": 7,
+    "small_molecule": 7
+  },
+  "total_entities": 14,
+  "entities": [
+    {
+      "id": "ALZ-001",
+      "id_field": "peptide_id",
+      "type": "protein",
+      "smiles": null,
+      "sequence": "PWKSDAIGAVFLRLAYE",
+      "composition": null,
+      "sources": [
+        "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md"
+      ]
+    },
+    {
+      "id": "ALZ-002",
+      "id_field": "peptide_id",
+      "type": "protein",
+      "smiles": null,
+      "sequence": "GPGAAVEDAIYSWRFKL",
+      "composition": null,
+      "sources": [
+        "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md"
+      ]
+    },
+    {
+      "id": "ALZ-003",
+      "id_field": "peptide_id",
+      "type": "protein",
+      "smiles": null,
+      "sequence": null,
+      "composition": null,
+      "sources": [
+        "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md"
+      ]
+    },
+    {
+      "id": "ALZ-004",
+      "id_field": "peptide_id",
+      "type": "protein",
+      "smiles": null,
+      "sequence": null,
+      "composition": null,
+      "sources": [
+        "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md"
+      ]
+    },
+    {
+      "id": "ALZ-005",
+      "id_field": "peptide_id",
+      "type": "protein",
+      "smiles": null,
+      "sequence": null,
+      "composition": null,
+      "sources": [
+        "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md"
+      ]
+    },
+    {
+      "id": "ALZ-CHEM",
+      "id_field": "compound_id",
+      "type": "small_molecule",
+      "smiles": null,
+      "sequence": null,
+      "composition": null,
+      "sources": [
+        "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md"
+      ]
+    },
+    {
+      "id": "AML-CHEM-001",
+      "id_field": "compound_id",
+      "type": "small_molecule",
+      "smiles": "C(F)C1=C2C=C(C=CC2=NN1)C3=CC(=CN=C3)OCC(C)C",
+      "sequence": null,
+      "composition": null,
+      "sources": [
+        "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md",
+        "LAB_PROTOCOLS_INV3_AML_FDA_REGULATORY_PACKAGE.md",
+        "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md"
+      ]
+    },
+    {
+      "id": "LEUK-005",
+      "id_field": "peptide_id",
+      "type": "protein",
+      "smiles": null,
+      "sequence": "FYNCGLKIKYKPAVWAPAGKPFFPGFWYEKPKRPLCSATLIPGGKHQWYRAFKDVLVGMRYKRIRTR",
+      "composition": null,
+      "sources": [
+        "LAB_PROTOCOLS_INV3_AML_FDA_REGULATORY_PACKAGE.md",
+        "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md"
+      ]
+    },
+    {
+      "id": "MEN-CHEM-001",
+      "id_field": "compound_id",
+      "type": "small_molecule",
+      "smiles": null,
+      "sequence": null,
+      "composition": null,
+      "sources": [
+        "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md"
+      ]
+    },
+    {
+      "id": "MEN-CHEM-002",
+      "id_field": "compound_id",
+      "type": "small_molecule",
+      "smiles": null,
+      "sequence": null,
+      "composition": null,
+      "sources": [
+        "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md"
+      ]
+    },
+    {
+      "id": "MEN-CHEM-003",
+      "id_field": "compound_id",
+      "type": "small_molecule",
+      "smiles": null,
+      "sequence": null,
+      "composition": null,
+      "sources": [
+        "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md"
+      ]
+    },
+    {
+      "id": "MEN-CHEM-004",
+      "id_field": "compound_id",
+      "type": "small_molecule",
+      "smiles": null,
+      "sequence": null,
+      "composition": null,
+      "sources": [
+        "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md"
+      ]
+    },
+    {
+      "id": "MEN-CHEM-005",
+      "id_field": "compound_id",
+      "type": "small_molecule",
+      "smiles": null,
+      "sequence": null,
+      "composition": null,
+      "sources": [
+        "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md"
+      ]
+    },
+    {
+      "id": "MENING-PROT-001",
+      "id_field": "peptide_id",
+      "type": "protein",
+      "smiles": null,
+      "sequence": null,
+      "composition": null,
+      "sources": [
+        "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md"
+      ]
+    }
+  ]
+}

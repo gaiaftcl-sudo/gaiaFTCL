@@ -1,0 +1,73 @@
+{
+  "schema": "gaiaftcl_fusion_mac_app_gate_receipt_v6",
+  "invariant_id": "gaiaftcl_fusion_mac_app_gate_v6",
+  "terminal": "REFUSED",
+  "ts_utc": "2026-04-12T23:22:39.283142+00:00",
+  "run_id": "20260412T231922.427639+0000",
+  "witness": {
+    "composite_assets": {
+      "skipped": true,
+      "pre_existing_artifacts": {
+        "default_metallib": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion/GaiaFusion/Resources/default.metallib",
+        "default_metallib_bytes": 13042,
+        "fusion_web_index_html": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion/GaiaFusion/Resources/fusion-web/index.html",
+        "fusion_web_index_bytes": 23750,
+        "fusion_web_substrate_html": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion/GaiaFusion/Resources/fusion-web/substrate.html",
+        "fusion_web_substrate_bytes": 8079,
+        "fusion_web_next_static_dir": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion/GaiaFusion/Resources/fusion-web/_next/static",
+        "gaiafusion_substrate_wasm": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion/GaiaFusion/Resources/gaiafusion_substrate.wasm",
+        "gaiafusion_substrate_wasm_bytes": 137470,
+        "gaiafusion_substrate_bindgen_js": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion/GaiaFusion/Resources/gaiafusion_substrate_bindgen.js",
+        "gaiafusion_substrate_bindgen_js_bytes": 16141,
+        "fusion_sidecar_compose_yml": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion/GaiaFusion/Resources/fusion-sidecar-cell/docker-compose.fusion-sidecar.yml",
+        "fusion_sidecar_compose_bytes": 2898,
+        "plant_adapters_json": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion/GaiaFusion/Resources/spec/native_fusion/plant_adapters.json",
+        "plant_adapters_bytes": 442,
+        "ok": true
+      }
+    },
+    "build": {
+      "xcodebuild": {
+        "skipped": true,
+        "reason": "default SwiftPM-only gate (set GAIAFUSION_GATE_USE_XCODE=1 for xcodebuild)"
+      },
+      "swift_build": {
+        "command": "swift build --configuration debug",
+        "rc": 0,
+        "tail": "  65 |     /// Set in `prepareHTTPStack()` before `bindTCPListen()` runs concurrently.\n  66 |     nonisolated(unsafe) private var pendingBindPort: UInt16 = 8910\n[75/84] Compiling GaiaFusion McpLoopbackCommsServer.swift\n/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion/GaiaFusion/LocalServer.swift:64:5: warning: 'nonisolated(unsafe)' is unnecessary for a constant with 'Sendable' type 'HTTPServingState', consider removing it\n  62 |     private let server = HttpServer()\n  63 |     /// Thread-safe port/mode mirror \u2014 Swifter reads this from background sockets without touching `@MainActor` storage.\n  64 |     nonisolated(unsafe) private let httpServingState = HTTPServingState()\n     |     `- warning: 'nonisolated(unsafe)' is unnecessary for a constant with 'Sendable' type 'HTTPServingState', consider removing it\n  65 |     /// Set in `prepareHTTPStack()` before `bindTCPListen()` runs concurrently.\n  66 |     nonisolated(unsafe) private var pendingBindPort: UInt16 = 8910\n[76/84] Compiling GaiaFusion PlantKindsCatalog.swift\n[77/84] Compiling GaiaFusion ProjectionState.swift\n[78/84] Compiling GaiaFusion SwapState.swift\n[79/84] Compiling GaiaFusion FusionUiTorsion.swift\n[80/84] Compiling GaiaFusion FusionWebView.swift\n[81/84] Compiling GaiaFusion GaiaFusionApp.swift\n[81/84] Write Objects.LinkFileList\n[82/84] Linking GaiaFusion\n[83/84] Applying GaiaFusion\nBuild complete! (53.17s)"
+      },
+      "swiftpm_gate_rpath_patch": {
+        "show_bin_path_rc": 0,
+        "binary": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion/.build/arm64-apple-macosx/debug/GaiaFusion",
+        "install_name_tool": {
+          "rpath": "@executable_path/../Frameworks",
+          "rc": 0,
+          "note": "injected",
+          "raw_rc": 0,
+          "tail": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/install_name_tool: warning: changes being made to the file will invalidate the code signature in: /Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion/.build/arm64-apple-macosx/debug/GaiaFusion\n"
+        }
+      }
+    },
+    "run_mode": "started_by_gate_skip_playwright",
+    "replaced_pids": [],
+    "started_pid": 82481,
+    "binary": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion/.build/arm64-apple-macosx/debug/GaiaFusion",
+    "fusion_ui_port": 60008,
+    "FUSION_UI_PORT": "60008",
+    "child_stdout_log": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/gaiafusion_gate_20260412T231922.427639+0000_stdout.log",
+    "child_stderr_log": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/gaiafusion_gate_20260412T231922.427639+0000_stderr.log",
+    "loopback_listen_ok": false,
+    "loopback_listen_elapsed_sec": 90.062,
+    "loopback_listen_diag": "timeout_no_tcp_accept",
+    "loopback_listen_timeout_sec": 90.0,
+    "reason": "loopback_tcp_never_bound",
+    "detail": "timeout_no_tcp_accept",
+    "child_process_exit_code": null,
+    "child_log_witness": {
+      "stdout_log": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/gaiafusion_gate_20260412T231922.427639+0000_stdout.log",
+      "stderr_log": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/gaiafusion_gate_20260412T231922.427639+0000_stderr.log",
+      "stdout_tail": "",
+      "stderr_tail": ""
+    }
+  }
+}

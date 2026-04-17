@@ -1,0 +1,20 @@
+{
+  "gate": "surfaceParityInputGate",
+  "ok": true,
+  "terminal": "CALORIE",
+  "blocker": null,
+  "witness": {
+    "parity_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/parity/SURFACE_PARITY_WITNESS.json",
+    "schema": "surface_parity_witness_v1",
+    "parity_kind": "discord_mesh_games_pipeline",
+    "divergence_count": 0,
+    "terminal": "CALORIE",
+    "games_total": 13,
+    "games_live": 13,
+    "missing_live_games": [],
+    "source": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/PLAYWRIGHT_MESH_GAME_CAPTURE.json",
+    "parity_mode": "pipeline_discord_mesh_games",
+    "independent_parity_artifact": true
+  },
+  "ts_utc": "2026-04-07T18:26:21.270392+00:00"
+}

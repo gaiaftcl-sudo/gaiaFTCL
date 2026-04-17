@@ -1,0 +1,71 @@
+{
+  "ledger_id": "great_owl_medic_closed_loop",
+  "currency": "TT",
+  "pricing_ref": ".cursorrules TOKEN ECONOMY (2026-02-24)",
+  "payment_enforcement_note": "Gateway may not debit wallet until token_economy fully wired; costs below are SCHEDULED per published rates unless wallet_transactions proves otherwise.",
+  "while_not_done_condition": "SETTLED on Medic Great Owl requires: (1) discovery rows ingested to substrate, (2) INV_MEN_002 assay-tier receipt OR explicit HYPOTHESIS lock, (3) closure receipt residual_entropy 0.0 from tester MCP, (4) /ask or reflection returns substantive Franklin essay on goal — not game-state scaffold only.",
+  "goal_progress": {
+    "percent_estimate": 35,
+    "rationale": "Repo + contracts + handoff claims done; substantive dialog + closure receipt + DB rows + assay world not done"
+  },
+  "cumulative_scheduled_tt": 45.0,
+  "interactions": [
+    {
+      "id": "int-001",
+      "when_utc": "2026-03-19T20:00:00Z",
+      "channel": "POST /ingest",
+      "description": "Great Owl package claim (closed_loop participant)",
+      "claim_id": "claim-1773950816400",
+      "cost_class": "Discovery Query",
+      "scheduled_tt": 5.0,
+      "qfot_note": "n/a — not computed this session",
+      "outcome": "ingested"
+    },
+    {
+      "id": "int-002",
+      "when_utc": "2026-03-19T20:09:00Z",
+      "channel": "POST /ingest",
+      "description": "MEDIC_HANDOFF full markdown to GaiaFTCL",
+      "claim_id": "claim-1773950940394",
+      "cost_class": "Complex Analysis",
+      "scheduled_tt": 10.0,
+      "outcome": "ingested"
+    },
+    {
+      "id": "int-003",
+      "when_utc": "2026-03-19T20:09:00Z",
+      "channel": "POST /ask",
+      "description": "Clarity ask — two paragraphs understanding + substrate clarification",
+      "cost_class": "Discovery Query",
+      "scheduled_tt": 5.0,
+      "outcome": "partial — game-state scaffold only, not substantive answer",
+      "entropy_value": "low — did not reduce ambiguity"
+    },
+    {
+      "id": "int-004",
+      "when_utc": "2026-03-19T20:10:00Z",
+      "channel": "agent_session",
+      "description": "Ledger + GREAT_OWL_WHILE_NOT_DONE_STATUS.md (first cut)",
+      "cost_class": "Code Generation",
+      "scheduled_tt": 15.0,
+      "outcome": "repo artifacts"
+    },
+    {
+      "id": "int-005",
+      "when_utc": "2026-02-18T20:15:00Z",
+      "channel": "user_turn_assistant_reply",
+      "description": "While-not-done loop: where we are, what we did, left to do, full goal status, cost tracking",
+      "cost_class": "Complex Analysis",
+      "scheduled_tt": 10.0,
+      "outcome": "GREAT_OWL_WHILE_NOT_DONE_STATUS.md + ledger append"
+    }
+  ],
+  "remaining_work": [
+    "Run gaiaos_ui_tester_mcp; execute scripts/great_owl_closure_mcp.sh → receipt residual_entropy 0.0",
+    "Repair /ask path: NATS + franklin_reflection + substrate-generative so Medic queries get prose not envelope list",
+    "Ingest discovery batch documents (6) via MCP with routing to G_MEDIC_MENING_HARDWARE_L0 or approved handler",
+    "Record wallet_transactions hashes if token economy debits — replace SCHEDULED with VERIFIED",
+    "Wet lab / assay tier — INV_MEN_002 — outside repo; envelope when receipts exist"
+  ],
+  "where_we_are_now": "Handoff is in mcp_claims; Franklin has not yet returned quality clarity; closure game receipt not generated; discovery batch not in discovered_* collections via MCP."
+}

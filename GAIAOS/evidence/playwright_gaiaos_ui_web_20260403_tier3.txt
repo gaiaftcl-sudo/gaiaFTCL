@@ -1,0 +1,11 @@
+# Tier 3 — Playwright (2026-04-03)
+# Command: cd services/gaiaos_ui_web && npx playwright test tests/test_constitutional_door.spec.ts
+# Server: reuseExistingServer true — npm run start on :3000
+
+Running 2 tests using 1 worker
+  ✓ Constitutional Door › anonymous MCP call returns 400 (33ms)
+  ✘ Constitutional Door › authenticated call with wallet succeeds — Expected 200, Received 500
+
+1 failed, 1 passed
+
+Receipt: Same shape as prior session — authenticated path needs full MCP/gateway stack on MCP_BASE_URL; not a false green.

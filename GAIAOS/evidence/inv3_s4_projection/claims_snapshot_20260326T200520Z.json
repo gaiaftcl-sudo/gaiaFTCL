@@ -1,0 +1,30 @@
+{
+  "mcp_claims_hits": [],
+  "c4_aml_molecule": {
+    "_key": "cancer_candidate_9084",
+    "_id": "discovered_molecules/cancer_candidate_9084",
+    "_rev": "_lDEFo0W---",
+    "molecule_id": "cancer_candidate_9084",
+    "name": "AML-CHEM-001",
+    "smiles": "C(F)C1=C2C=C(C=CC2=NN1)C3=CC(=CN=C3)OCC(C)C",
+    "class": "Pyridazine-based Kinase Inhibitor",
+    "fot_score": 0.553,
+    "toxicity": 0,
+    "drug_likeness": 1,
+    "binding_affinity_nm": 19.5,
+    "mechanism": "Multi-kinase inhibition targeting oncogenic signaling",
+    "license": "CC0 1.0 Universal Public Domain",
+    "ingested_at": "2026-02-12T11:06:11.686Z"
+  },
+  "c4_leuk_protein": {
+    "_key": "leuk_005_canonical_anchor",
+    "_id": "discovered_proteins/leuk_005_canonical_anchor",
+    "_rev": "_lQt-Vsu---",
+    "protein_id": "LEUK-005",
+    "name": "LEUK-005 (lab protocol anchor)",
+    "sequence": "FYNCGLKIKYKPAVWAPAGKPFFPGFWYEKPKRPLCSATLIPGGKHQWYRAFKDVLVGMRYKRIRTR",
+    "source": "inv3_recursive_repair",
+    "canonical_anchor_status": "canonical_anchor",
+    "inv3_recursive_repair": true
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "schema": "gaiaftcl_gaiafusion_release_smoke_v2",
+  "ts_utc": "2026-04-10T18:17:17Z",
+  "terminal": "REFUSED",
+  "step": "usd_probe_cli",
+  "rc": 137,
+  "usd_probe_output": ""
+}

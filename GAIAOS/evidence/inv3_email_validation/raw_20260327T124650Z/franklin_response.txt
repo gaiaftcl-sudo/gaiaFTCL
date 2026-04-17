@@ -1,0 +1,5 @@
+Inbound research mail (substrate recent_claims):
+MAIL claim_1774615617.53853: from=janowitz@cshl.edu room=owl_protocol subject=RE: Owl Protocol — INV3 AML maternal parity cohort preview=Rick ��� yes we have maternal parity data in our TNBC cohort. We also have inv(3) AML patient records that include birth order information. LEUK-005 binding affinity data attached. AML-CHEM-001 IC50 results coming next week.
+Tobias
+
+Metrics: 175,789 claims, 417,740 envelopes. (NATS/generative path skipped.)

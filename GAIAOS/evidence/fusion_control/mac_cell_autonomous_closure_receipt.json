@@ -1,0 +1,37 @@
+{
+  "schema": "gaiaftcl_mac_cell_autonomous_closure_v1",
+  "ts_utc": "2026-04-09T21:10:44Z",
+  "terminal": "PARTIAL",
+  "phases": {
+    "fleet_witness": {
+      "script": "scripts/witness_mac_cell_fleet_health.sh",
+      "receipt": "evidence/fusion_control/mac_cell_fleet_health_witness.json",
+      "rc": 0,
+      "skipped": false
+    },
+    "substrate_ingest": {
+      "script": "scripts/witness_mac_vqbit_substrate_ingest.sh",
+      "receipt": "evidence/fusion_control/mac_vqbit_substrate_ingest_receipt.json",
+      "rc": 2,
+      "terminal": "REFUSED"
+    },
+    "release_smoke": {
+      "script": "scripts/run_gaiafusion_release_smoke.sh",
+      "receipt": "evidence/fusion_control/gaiafusion_release_smoke_receipt.json",
+      "rc": 0,
+      "skipped": false,
+      "swift_xctest_executed": 21
+    }
+  },
+  "autonomy": {
+    "without_operator_for_executable_spine": false,
+    "operator_required": [
+      "Provide GAIAFTCL_GATEWAY_URL + GAIAFTCL_INTERNAL_KEY on this Mac for substrate ingest, or accept PARTIAL local-only vQbit.",
+      "Fleet HTTP codes not all 2xx from this network path \u2014 fix routing/firewall or accept PARTIAL mesh witness."
+    ],
+    "meaning": "Executable spine = fleet witness + ingest (if creds) + Swift smoke. Empty operator_required and terminal CURE means the limb adds no manual steps beyond sovereign secrets already on disk."
+  },
+  "blockers": [
+    "substrate_ingest: set GAIAFTCL_GATEWAY_URL and GAIAFTCL_INTERNAL_KEY for universal_ingest seal"
+  ]
+}

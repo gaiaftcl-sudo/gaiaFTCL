@@ -1,0 +1,13 @@
+
+---------------------------- GaiaFusion terminated -----------------------------
+GaiaFusion crashed. FATAL ERROR: Failed to find the plugInfo.json file that declares the plugin for ArDefaultResolver.
+Check the plugin search path configuration and run with TF_DEBUG=PLUG_INFO_SEARCH to debug.
+Plugin search paths:
+    /Users/richardgillespie/Documents/FoT8D/GAIAOS/dist/GaiaFusion.app/Contents/Frameworks/USD_Core.framework/Versions/A/usd
+    /Users/richardgillespie/Documents/FoT8D/GAIAOS/dist/GaiaFusion.app/Contents/Frameworks/USD_Core.framework/Versions/plugin/usd
+Plugin debug info:
+    Plug will search for plug infos under '/Users/richardgillespie/Documents/FoT8D/GAIAOS/dist/GaiaFusion.app/Contents/Frameworks/USD_Core.framework/Versions/A/'
+
+in operator() at line 293 of /Users/richardgillespie/Documents/FoT8D/GAIAOS/Internal/Frameworks/.usd_build/OpenUSD/pxr/base/plug/registry.cpp
+writing crash report to [ MacBook-Pro.home:/var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T//st_GaiaFusion.92077 ] ... done.
+--------------------------------------------------------------------------------

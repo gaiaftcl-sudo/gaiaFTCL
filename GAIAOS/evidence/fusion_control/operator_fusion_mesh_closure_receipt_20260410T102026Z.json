@@ -1,0 +1,7 @@
+{
+  "schema": "gaiaftcl_operator_fusion_mesh_closure_v1",
+  "ts_utc": "2026-04-10T10:20:26Z",
+  "terminal": "REFUSED",
+  "reason": "phase5 fusion_ui_self_heal_loop",
+  "log": "evidence/fusion_control/operator_fusion_mesh_closure_20260410T102026Z.log"
+}

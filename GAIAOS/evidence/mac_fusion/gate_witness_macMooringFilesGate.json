@@ -1,0 +1,34 @@
+{
+  "gate": "macMooringFilesGate",
+  "ok": true,
+  "terminal": "CALORIE",
+  "blocker": null,
+  "witness": {
+    "files": {
+      "cell_identity": {
+        "path": "/Users/richardgillespie/.gaiaftcl/cell_identity.json",
+        "present": true,
+        "mtime_utc": "2026-04-07T11:27:52.411076+00:00",
+        "age_sec": 25080.574412107468,
+        "json_valid": true
+      },
+      "mount_receipt": {
+        "path": "/Users/richardgillespie/.gaiaftcl/mount_receipt.json",
+        "present": true,
+        "mtime_utc": "2026-04-07T11:27:52.430098+00:00",
+        "age_sec": 25080.555389642715,
+        "json_valid": true
+      },
+      "fusion_mesh_mooring_state": {
+        "path": "/Users/richardgillespie/.gaiaftcl/fusion_mesh_mooring_state.json",
+        "present": true,
+        "mtime_utc": "2026-04-07T11:27:56.007222+00:00",
+        "age_sec": 25076.97826576233,
+        "json_valid": true
+      }
+    },
+    "all_present": true,
+    "max_age_sec": 86400
+  },
+  "ts_utc": "2026-04-07T18:25:52.986254+00:00"
+}

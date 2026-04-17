@@ -1,0 +1,15 @@
+{
+  "schema": "fusion_dashboard_dom_shot_v1",
+  "url": "http://127.0.0.1:8910/fusion-s4",
+  "title": "Fusion control console — GaiaFTCL",
+  "fusion_main_count": 1,
+  "fusion_status_ribbon_count": 1,
+  "fusion_mesh_discord_panel_count": 1,
+  "fusion_production_panel_count": 1,
+  "fusion_mesh_fleet_embed_count": 1,
+  "h1_count": 1,
+  "h2_count": 4,
+  "section_count": 17,
+  "nav_count": 1,
+  "body_text_chars": 1471
+}

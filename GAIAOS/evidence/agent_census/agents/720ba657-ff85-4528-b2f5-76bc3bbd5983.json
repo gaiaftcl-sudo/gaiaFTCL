@@ -1,0 +1,29 @@
+{
+  "agent_id": "720ba657-ff85-4528-b2f5-76bc3bbd5983",
+  "agent_name": "test_agent_001",
+  "agrees_to_witness_gate": true,
+  "capability_proofs": {
+    "CODE_RUN": {
+      "proof_id": "9c98b42f-8b36-4fad-b163-ce0924dfd45e",
+      "verdict": "PROVEN",
+      "verified_at": "2026-02-01T12:09:04.108811+00:00"
+    }
+  },
+  "declared_capabilities": {
+    "AGENT_COORDINATE": false,
+    "CODE_RUN": true,
+    "EMAIL_SEND": false,
+    "FILE_WRITE": false,
+    "HTTP_API_CALL": true,
+    "SMS_SEND": false,
+    "SSH_CONNECT": false,
+    "TASK_SCHEDULE": false,
+    "TRADE_EXECUTE": false,
+    "WALLET_SIGN": false,
+    "WEB_FETCH": true
+  },
+  "last_activity": "2026-02-01T12:09:04.108813+00:00",
+  "operator_contact": "test@gaiaftcl.com",
+  "registered_at": "2026-02-01T12:09:03.981837+00:00",
+  "runtime_type": "local"
+}

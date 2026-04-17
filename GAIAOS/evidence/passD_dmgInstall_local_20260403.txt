@@ -1,0 +1,10 @@
+# Pass D — /dmgInstall local manifest (2026-04-03)
+# Preconditions: `cd services/gaiaos_ui_web && PORT=3000 npm run start` (production build).
+
+$ curl -sS -D - -o /dev/null --max-time 15 http://127.0.0.1:3000/dmgInstall
+HTTP/1.1 404 Not Found
+content-type: application/json
+
+Receipt: No public/downloads/GaiaFTCL-latest.dmg in workspace — route returns JSON 404 (expected until build_gaiaftcl_facade_dmg.sh artifact is placed).
+
+Display geometry (4K / Simulator): UI tests use Playwright Desktop Chrome viewport; not a substrate claim — tooling note only.

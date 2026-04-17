@@ -1,0 +1,40 @@
+{
+  "schema": "gaiaftcl_release_validation_matrix_v1",
+  "status": "PENDING_FOUNDER_REVIEW",
+  "no_release_documentation_emitted": true,
+  "git_operations": "none_per_instruction",
+  "generated_at_utc": "2026-04-05T17:20:00Z",
+  "summary": "All automated checks in this matrix passed; release sign-off is withheld until Cell-Operator reviews.",
+  "cells_wallet_gate_8803": {
+    "77.42.85.60_hel1_01_head": {"hostname": "gaiaftcl-hcloud-hel1-01", "health": "ok", "upstream": "fot-mcp-gateway-mesh:8803"},
+    "135.181.88.134_hel1_02": {"hostname": "gaiaftcl-hcloud-hel1-02", "health": "ok", "upstream": "gaiaftcl-mcp-gateway:8830"},
+    "77.42.32.156_hel1_03": {"hostname": "gaiaftcl-hcloud-hel1-03", "health": "ok", "upstream": "gaiaftcl-mcp-gateway:8830"},
+    "77.42.88.110_hel1_04": {"hostname": "gaiaftcl-hcloud-hel1-04", "health": "ok", "upstream": "gaiaftcl-mcp-gateway:8830"},
+    "37.27.7.9_hel1_05": {"hostname": "gaiaftcl-hcloud-hel1-05", "health": "ok", "upstream": "gaiaftcl-mcp-gateway:8830"},
+    "37.120.187.247_netcup": {"hostname": "gaiaftcl-cell02", "health": "ok", "upstream": "fot-mcp-gateway-mesh:8803"},
+    "152.53.91.220_netcup": {"hostname": "netcup-cell01", "health": "ok", "upstream": "fot-mcp-gateway-mesh:8803"},
+    "152.53.88.141_netcup": {"hostname": "netcup-cell04", "health": "ok", "upstream": "gaiaftcl-mcp-gateway:8830"},
+    "37.120.187.174_netcup": {"hostname": "netcup-cell03", "health": "ok", "upstream": "gaiaftcl-mcp-gateway:8830"}
+  },
+  "head_distribution_mailcow": {
+    "nginx_t": "successful",
+    "dmg_gaiaftcl_com_latest_resolve_local": "HTTP_2_200",
+    "fusion_fleet_subscriber": "Up",
+    "nats_validation_row": "VALIDATION-SWEEP-HEAD published"
+  },
+  "laptop_fusion_battery": {
+    "command": "GAIA_ROOT=<checkout> npm run test:fusion:all",
+    "exit_code": 0,
+    "preflight_mcp_tier": "13_pass_0_fail",
+    "discord_tier_a_scripts": "15_pass_0_fail",
+    "vitest_fusion": "19_passed",
+    "playwright_fusion": "13_passed_1_skipped_matrix",
+    "discord_playwright_gaiaftcl": "1_passed",
+    "discord_playwright_fom": "1_passed",
+    "note_local_8803": "localhost tunnel absent; mesh head fallback used for gateway preflight"
+  },
+  "artifacts_to_review": [
+    "evidence/fusion_control/fusion_fleet_snapshot.json",
+    "evidence/fusion_control/RELEASE_VALIDATION_MATRIX_PENDING_REVIEW.json"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "closure": "fusion_mac_app_production",
+  "terminal_state": "MEETS",
+  "timestamp": "2026-04-09T11:55:06Z",
+  "games": {
+    "game_1": "MEETS",
+    "game_2": "MEETS",
+    "game_3": "MEETS",
+    "game_4": "MEETS",
+    "game_5": "MEETS"
+  },
+  "verification": {
+    "xcodebuild_exit": 0,
+    "playwright_terminal": "CURE",
+    "swapWithDefaults_grep": 0,
+    "hardcoded_real_virtual_grep": 0
+  },
+  "receipts": [
+    "evidence/fusion_control/game_1_receipt.json",
+    "evidence/fusion_control/game_2_receipt.json",
+    "evidence/fusion_control/game_3_receipt.json",
+    "evidence/fusion_control/game_4_receipt.json",
+    "evidence/fusion_control/playwright_watch/playwright_watch_last_witness.json"
+  ]
+}

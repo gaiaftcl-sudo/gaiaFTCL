@@ -1,0 +1,67 @@
+{
+  "schema": "gaiaftcl_mac_cell_fleet_health_witness_v1",
+  "ts_utc": "2026-04-09T21:10:44Z",
+  "terminal": "PARTIAL",
+  "fleet": [
+    {
+      "cell_id": "gaiaftcl-hcloud-hel1-01",
+      "ipv4": "77.42.85.60",
+      "http_code": 200,
+      "url": "http://77.42.85.60:8803/health"
+    },
+    {
+      "cell_id": "gaiaftcl-hcloud-hel1-02",
+      "ipv4": "135.181.88.134",
+      "http_code": 200,
+      "url": "http://135.181.88.134:8803/health"
+    },
+    {
+      "cell_id": "gaiaftcl-hcloud-hel1-03",
+      "ipv4": "77.42.32.156",
+      "http_code": 200,
+      "url": "http://77.42.32.156:8803/health"
+    },
+    {
+      "cell_id": "gaiaftcl-hcloud-hel1-04",
+      "ipv4": "77.42.88.110",
+      "http_code": 200,
+      "url": "http://77.42.88.110:8803/health"
+    },
+    {
+      "cell_id": "gaiaftcl-hcloud-hel1-05",
+      "ipv4": "37.27.7.9",
+      "http_code": 200,
+      "url": "http://37.27.7.9:8803/health"
+    },
+    {
+      "cell_id": "gaiaftcl-netcup-nbg1-01",
+      "ipv4": "37.120.187.247",
+      "http_code": 200,
+      "url": "http://37.120.187.247:8803/health"
+    },
+    {
+      "cell_id": "gaiaftcl-netcup-nbg1-02",
+      "ipv4": "152.53.91.220",
+      "http_code": 200,
+      "url": "http://152.53.91.220:8803/health"
+    },
+    {
+      "cell_id": "gaiaftcl-netcup-nbg1-03",
+      "ipv4": "152.53.88.141",
+      "http_code": 200,
+      "url": "http://152.53.88.141:8803/health"
+    },
+    {
+      "cell_id": "gaiaftcl-netcup-nbg1-04",
+      "ipv4": "37.120.187.174",
+      "http_code": 200,
+      "url": "http://37.120.187.174:8803/health"
+    }
+  ],
+  "mac_leaf": {
+    "cell_id": "gaiaftcl-mac-fusion-leaf",
+    "http_code": 404,
+    "url": "http://127.0.0.1:8910/api/fusion/health"
+  },
+  "note": "PARTIAL until fleet codes are 2xx from your network; Mac leaf needs GaiaFusion listening on FUSION_UI_PORT."
+}

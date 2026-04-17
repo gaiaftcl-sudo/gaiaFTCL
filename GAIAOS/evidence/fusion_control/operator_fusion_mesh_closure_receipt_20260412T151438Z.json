@@ -1,0 +1,7 @@
+{
+  "schema": "gaiaftcl_operator_fusion_mesh_closure_v1",
+  "ts_utc": "2026-04-12T15:14:38Z",
+  "terminal": "REFUSED",
+  "reason": "phase4 mac cell probe fail: health:mac_full_cell:127.0.0.1:8803:000",
+  "log": "evidence/fusion_control/operator_fusion_mesh_closure_20260412T151438Z.log"
+}

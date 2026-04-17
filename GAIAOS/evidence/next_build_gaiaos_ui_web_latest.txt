@@ -1,0 +1,7 @@
+# Receipt: Next.js production build (rolling)
+# Command: cd services/gaiaos_ui_web && npm run build
+
+Exit: 0
+Last route table tail included /dmgInstall, /closure-proof, /moor, /sovereign-mesh.
+
+Regenerate after UI changes; this file is not a substitute for CI.

@@ -1,0 +1,6 @@
+{"schema": "gaiaftcl_native_rust_fusion_invariant_heartbeat_v1", "event": "session_start", "elapsed_ms": 0, "ts_utc": "2026-04-08T19:41:53.359807+00:00", "base_run_id": "20260408T194153Z", "heartbeat_path": "evidence/native_fusion/MAC_FUSION_SUB_HEARTBEAT_20260408T194153Z.jsonl"}
+{"schema": "gaiaftcl_native_rust_fusion_invariant_heartbeat_v1", "event": "pass_start", "elapsed_ms": 0, "ts_utc": "2026-04-08T19:41:53.360047+00:00", "pass_run_id": "20260408T194153Z_L0001"}
+{"schema": "gaiaftcl_native_rust_fusion_invariant_heartbeat_v1", "event": "gate_done", "elapsed_ms": 2716, "ts_utc": "2026-04-08T19:41:56.075977+00:00", "gate": "invariantToolboxGate", "phase": "before_preflight", "ok": true}
+{"schema": "gaiaftcl_native_rust_fusion_invariant_heartbeat_v1", "event": "mesh_heal", "elapsed_ms": 4745, "ts_utc": "2026-04-08T19:41:58.104895+00:00", "mesh_round": 1, "nine_ok": true, "healthy_count": 9, "unhealthy": []}
+{"schema": "gaiaftcl_native_rust_fusion_invariant_heartbeat_v1", "event": "gate_done", "elapsed_ms": 4747, "ts_utc": "2026-04-08T19:41:58.106572+00:00", "gate": "nineCellMeshGreenGate", "phase": "before_preflight", "ok": true}
+{"schema": "gaiaftcl_native_rust_fusion_invariant_heartbeat_v1", "event": "preflight_done", "elapsed_ms": 15214, "ts_utc": "2026-04-08T19:42:08.574367+00:00", "ok": true, "failed_gate": null, "policy_refusal": false}

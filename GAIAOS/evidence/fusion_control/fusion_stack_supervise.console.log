@@ -1,0 +1,35 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GaiaFTCL — fusion stack supervisor (foreground)
+ GAIA_ROOT=/Users/richardgillespie/Documents/FoT8D/GAIAOS
+ profile=local  UI_PORT=8910
+ Stop: UI button → POST /api/fusion/stack-stop | or: touch /Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/FUSION_STACK_STOP_REQUESTED
+       Terminal: Ctrl+C or SIGTERM
+ This process does not exit when regression warns — only on UI/child failure/stop.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+▶ Regression: test_fusion_mesh_mooring_stack.sh
+PASS bash_n fusion_turbo_ide.sh
+PASS bash_n fusion_cell_long_run_runner.sh
+PASS bash_n best_control_test_ever.sh
+PASS bash_n fusion_mesh_mooring_heartbeat.sh
+PASS bash_n mcp_bridge_torax
+PASS bash_n mcp_bridge_marte2
+PASS projection_payment
+PASS payment_proj_fn
+PASS mooring_status
+PASS torax_refused
+PASS marte2_refused
+PASS jsonl_merge
+PASS degraded_shape
+PASS heartbeat_refused_no_setup
+PASS best_control
+--- PASSED=15 FAILED=0 ---
+▶ Starting long-run cell loop…
+   pid=65691
+▶ Starting Next.js S4 UI on :8910 (foreground child; logs also /Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/fusion_s4_ui_dev.log)
+   next_pid=65728
+▶ Open http://127.0.0.1:8910/fusion-s4 (browser)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ RUNNING — supervisor blocked until stop or Next.js exit
+ UI: http://127.0.0.1:8910/fusion-s4
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[supervisor] Next.js exited (code=0) — shutting down stack

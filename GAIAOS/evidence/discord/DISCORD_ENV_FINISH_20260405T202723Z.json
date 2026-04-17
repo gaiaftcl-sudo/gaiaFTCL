@@ -1,0 +1,29 @@
+{
+  "witness_ts_utc": "20260405T202723Z",
+  "head": "gaiaftcl-hcloud-hel1-01",
+  "actions_completed": [
+    "rsync GAIAOS \u2192 /opt/gaia/GAIAOS",
+    "discord_forest_merge_on_head.sh",
+    "crystal_remote_deploy.sh (exit 0)",
+    "playwright devportal list-apps \u2192 discovered_portal_apps.json (2 applications)",
+    "generate_discord_manifest_from_discovered.py \u2192 1 manifest row (DISCORD_APP_BOT_TOKEN)"
+  ],
+  "portal_inventory": {
+    "application_count": 2,
+    "names": [
+      "GaiaFTCL",
+      "GaiaFTCL Membrane"
+    ],
+    "full_forest_required_distinct_bots": 24,
+    "DISCORD_FOREST_FULL_DEPLOY": "remains disabled \u2014 validate_discord_forest_full_deploy.py exit 1 (23 empty DISCORD_BOT_TOKEN_*)"
+  },
+  "dom_capture": {
+    "GaiaFTCL_app_token": "not re-scraped \u2014 bot page had no visible token in DOM within test timeout (Reset Token required for visible copy)",
+    "spec_fix": "discord_devportal_dom_capture.spec.ts test.setTimeout(POLL_MS + 120_000)"
+  },
+  "head_lane_operational": [
+    "gaiaftcl-discord-membrane",
+    "discord-frontier-mother"
+  ],
+  "next_substrate_closure": "Create 22 additional Discord applications (or adopt membrane-only routing) so each forest/domain service has a unique bot token; then DISCORD_FOREST_FULL_DEPLOY=1 after validate passes."
+}

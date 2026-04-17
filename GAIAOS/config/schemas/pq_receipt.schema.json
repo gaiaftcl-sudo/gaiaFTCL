@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PQ Receipt Contract",
+  "description": "Fleet Quorum Semantics and Operator Identity. MUST be signed by the operator using namespace 'fot-pq-receipt' over the JCS canonical form.",
+  "type": "object",
+  "required": [
+    "receipt_id",
+    "timestamp_utc",
+    "operator_id",
+    "operator_signature",
+    "plant",
+    "requested_values",
+    "fleet",
+    "fleet_results",
+    "artifact",
+    "terminal_state"
+  ],
+  "properties": {
+    "receipt_id": { "type": "string" },
+    "timestamp_utc": { "type": "string", "format": "date-time" },
+    "operator_id": { "type": "string" },
+    "operator_signature": { "type": "string", "description": "SSH signature over the JCS canonical form of this receipt (minus this field), namespace 'fot-pq-receipt'." },
+    "plant": {
+      "type": "object",
+      "required": ["plant_id", "config_hash", "config_version"],
+      "properties": {
+        "plant_id": { "type": "string" },
+        "config_hash": { "type": "string", "description": "Cryptographic binding to the exact plant YAML dispatched." },
+        "config_version": { "type": "integer" }
+      }
+    },
+    "requested_values": {
+      "type": "object",
+      "description": "The parameters clamped against the plant config validation_params."
+    },
+    "fleet": {
+      "type": "object",
+      "required": ["participating_cells", "quorum", "per_cell_timeout_s"],
+      "properties": {
+        "participating_cells": { "type": "array", "items": { "type": "string" } },
+        "quorum": {
+          "type": "object",
+          "required": ["required", "of"],
+          "properties": {
+            "required": { "type": "integer" },
+            "of": { "type": "integer" }
+          }
+        },
+        "per_cell_timeout_s": { "type": "integer" }
+      }
+    },
+    "fleet_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["cell_id", "terminal_state", "parent_hash", "oq_hash", "run_id", "reason", "evidence_hash", "received_at_utc"],
+        "properties": {
+          "cell_id": { "type": "string" },
+          "terminal_state": { "type": "string", "enum": ["CALORIE", "REFUSED", "TIMEOUT"] },
+          "parent_hash": { "type": "string", "description": "IQ hash of the cell." },
+          "oq_hash": { "type": "string" },
+          "run_id": { "type": "string", "format": "uuid" },
+          "reason": { "type": "string" },
+          "evidence_hash": { "type": "string" },
+          "received_at_utc": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["dmg_path", "dmg_hash", "signature"],
+      "properties": {
+        "dmg_path": { "type": "string" },
+        "dmg_hash": { "type": "string" },
+        "signature": { "type": "string", "description": "Ad-Hoc or Notary signature info." }
+      }
+    },
+    "terminal_state": {
+      "type": "string",
+      "enum": ["CALORIE", "REFUSED"]
+    }
+  }
+}

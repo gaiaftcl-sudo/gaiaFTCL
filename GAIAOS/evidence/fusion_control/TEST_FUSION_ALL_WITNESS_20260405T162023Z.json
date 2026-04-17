@@ -1,0 +1,19 @@
+{
+  "schema": "gaiaftcl_test_fusion_all_witness_v1",
+  "generated_at_utc": "2026-04-05T16:20:23Z",
+  "git_sha_short": "5729f829de92",
+  "exit_code": 0,
+  "command": "cd services/gaiaos_ui_web && GAIA_ROOT=<checkout> npm run test:fusion:all",
+  "gaia_root_note": "Absolute GAIAOS root required; see markdown witness for path used.",
+  "stages": {
+    "preflight_mcp_gateway": { "status": "ok", "detail": "fallback http://77.42.85.60:8803/health" },
+    "test_fusion_discord_tier_a": { "passed": 13, "failed": 0 },
+    "test_fusion_mesh_mooring_stack": { "passed": 15, "failed": 0 },
+    "vitest_fusion": { "test_files": 4, "tests": 19 },
+    "playwright_fusion": { "passed": 13, "skipped": 1, "skipped_reason": "FUSION_MATRIX_E2E not set" },
+    "playwright_discord_gaiaftcl": { "passed": 1, "spec": "discord_membrane_tier_b.spec.ts" },
+    "playwright_discord_fom": { "passed": 1, "spec": "discord_membrane_tier_b.spec.ts" }
+  },
+  "markdown_witness": "evidence/fusion_control/TEST_FUSION_ALL_WITNESS_20260405T162023Z.md",
+  "fof_ref": "docs/specs/FIELD_OF_FIELDS_AGENT_MOORING_PROTOCOL.md"
+}

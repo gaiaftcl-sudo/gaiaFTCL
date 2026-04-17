@@ -1,0 +1,51 @@
+{
+  "schema": "gaiaftcl_ops_hour_plan_receipt_v1",
+  "window_label": "planned_60m_executed_as_fast_as_possible",
+  "started_at_utc": "2026-04-05T17:15:07Z",
+  "ended_at_utc": "2026-04-05T17:16:28Z",
+  "git_touched": false,
+  "plan_slots_minutes": [
+    "0-12 head mailcow nginx + DMG + mail LE + fusion subscriber + wallet-gate + NATS pub ping",
+    "12-28 mesh preflight MCP + mesh mooring stack + hel1-02 hel1-05 wallet-gate",
+    "28-48 npm run test:fusion:all",
+    "48-56 nine-cell wallet-gate curl 127.0.0.1:8803/health via SSH",
+    "56-60 NATS HOUR-PLAN publish + scp fusion_fleet_snapshot.json + this receipt"
+  ],
+  "results": {
+    "head_77_42_85_60": {
+      "nginx_t": "ok",
+      "dmg_resolve_local_https": "HTTP_200_178273",
+      "mail_cert_issuer": "Lets_Encrypt_R13",
+      "fusion_fleet_subscriber": "Up",
+      "wallet_gate_health_local": "ok_upstream_fot_mcp_gateway_mesh",
+      "nats_publish_test_hour_ping": "ok",
+      "nats_server_info": "refused_no_system_priv_expected"
+    },
+    "preflight_mcp_gateway_localhost": "fallback_head_77_42_85_60_8803_ok",
+    "mesh_mooring_stack_sh": "PASSED_15_FAILED_0",
+    "test_fusion_all": {
+      "exit_code": 0,
+      "preflight_tier": "13_0",
+      "discord_tier_a": "15_0",
+      "vitest": "19_passed",
+      "playwright_fusion": "13_passed_1_skipped",
+      "discord_e2e_gaiaftcl": "1_passed",
+      "discord_e2e_fom": "1_passed"
+    },
+    "nine_cells_wallet_gate_health": {
+      "77.42.85.60": "head_checked_separately_ok",
+      "135.181.88.134_hel1_02": "ok",
+      "37.27.7.9_hel1_05": "ok",
+      "77.42.32.156_hel1_03": "ok",
+      "77.42.88.110_hel1_04": "ok",
+      "37.120.187.247_netcup": "ok",
+      "152.53.91.220_netcup": "ok",
+      "152.53.88.141_netcup": "ok",
+      "37.120.187.174_netcup": "ok"
+    },
+    "fleet_snapshot": {
+      "nats_publish_row": "HOUR-PLAN-20260405",
+      "local_file_updated": "evidence/fusion_control/fusion_fleet_snapshot.json"
+    }
+  }
+}

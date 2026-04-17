@@ -1,0 +1,7 @@
+{
+  "schema": "gaiaftcl_fusion_mooring_state_v1",
+  "last_mesh_ok_utc": "2026-04-05T13:43:36Z",
+  "last_nats_subject": "gaiaftcl.fusion.mesh_mooring.v1",
+  "wallet": "0x91f6e41B4425326e42590191c50Db819C587D866",
+  "cell_id": "8D03A380-8E8D-4870-AD43-69BB08B96F75"
+}

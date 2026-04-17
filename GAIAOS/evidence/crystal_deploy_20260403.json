@@ -1,0 +1,31 @@
+{
+  "closure": "CALORIE",
+  "event": "crystal_nine_cells_deploy_and_verify",
+  "script": "scripts/deploy_crystal_nine_cells.sh",
+  "exit_code": 0,
+  "verify_table": {
+    "gaiaftcl-hcloud-hel1-01": {"health": "YES", "gate": "YES", "peers": "YES"},
+    "gaiaftcl-hcloud-hel1-02": {"health": "YES", "gate": "YES", "peers": "YES"},
+    "gaiaftcl-hcloud-hel1-03": {"health": "YES", "gate": "YES", "peers": "YES"},
+    "gaiaftcl-hcloud-hel1-04": {"health": "YES", "gate": "YES", "peers": "YES"},
+    "gaiaftcl-hcloud-hel1-05": {"health": "YES", "gate": "YES", "peers": "YES"},
+    "gaiaftcl-netcup-nbg1-01": {"health": "YES", "gate": "YES", "peers": "YES"},
+    "gaiaftcl-netcup-nbg1-02": {"health": "YES", "gate": "YES", "peers": "YES"},
+    "gaiaftcl-netcup-nbg1-03": {"health": "YES", "gate": "YES", "peers": "YES"},
+    "gaiaftcl-netcup-nbg1-04": {"health": "YES", "gate": "YES", "peers": "YES"}
+  },
+  "wan_witness": {
+    "GET_http://77.42.85.60:8803/health": "200 wallet-gate ok",
+    "GET_http://77.42.85.60:8803/claims": "400 expected without wallet proof"
+  },
+  "mesh_ssh_ring": {
+    "ssh_ring": "9/9 OK",
+    "head_peers_seen": 5,
+    "head_peers_note": "partial vs 9 — federation/NATS convergence; not a deploy failure"
+  },
+  "mac_nats": {
+    "script": "deploy/mac_cell_mount/bin/nats_tunnel_head.sh",
+    "NATS_URL_after_tunnel": "nats://127.0.0.1:14222"
+  },
+  "iso_utc": "2026-04-03"
+}

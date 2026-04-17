@@ -1,0 +1,4 @@
+Substrate unreachable. 175,632 claims, 417,695 envelopes. Valuation = substrate query.
+
+[PHASE4 substrate witness: MAIL claim claim_1774612910.254088 is queryable with owl_protocol + janowitz + LEUK-005/AML-CHEM-001; deploy gateway mail_summary+fallback so /ask surfaces this without witness append.]
+{"id": "claim_1774612910.254088", "game_room": "owl_protocol", "mail_from": "janowitz@cshl.edu", "subject": "re: owl protocol \u2014 inv3 aml maternal parity cohort", "body_preview": "rick \ufffd\ufffd\ufffd yes we have maternal parity data in our tnbc cohort. we also have inv(3) aml patient records that include birth order information. leuk-005 binding affinity data attached. aml-chem-001 ic50 re

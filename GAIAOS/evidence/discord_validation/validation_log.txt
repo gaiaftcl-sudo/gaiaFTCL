@@ -1,0 +1,105 @@
+2026-03-31 08:38:03,818 - INFO - ╔════════════════════════════════════════════════════════════╗
+2026-03-31 08:38:03,818 - INFO - ║   INTELLIGENT DISCORD VALIDATOR - OBSERVE FIRST           ║
+2026-03-31 08:38:03,818 - INFO - ║   Read state → Understand → Decide → Act → Validate       ║
+2026-03-31 08:38:03,818 - INFO - ╚════════════════════════════════════════════════════════════╝
+2026-03-31 08:38:05,320 - INFO - 🔐 Logging into Discord...
+2026-03-31 08:38:07,978 - INFO - 📸 Login Page - Before Credentials
+2026-03-31 08:38:07,978 - INFO -    Saved: ./evidence/discord_validation/20260331_083807_01_login_page.png
+2026-03-31 08:38:10,778 - INFO - 📸 Login Page - Credentials Entered
+2026-03-31 08:38:10,778 - INFO -    Saved: ./evidence/discord_validation/20260331_083810_02_credentials_entered.png
+2026-03-31 08:38:16,802 - INFO - 👁️  Reading page state: After login submit
+2026-03-31 08:38:16,804 - INFO -    URL: https://discord.com/channels/@me
+2026-03-31 08:38:16,804 - INFO -    Title: Discord | Friends
+2026-03-31 08:38:16,807 - INFO -    Visible text length: 822 chars
+2026-03-31 08:38:16,807 - INFO -    Status: Discord App
+2026-03-31 08:38:16,887 - INFO - 📸 After Login Complete
+2026-03-31 08:38:16,888 - INFO -    Saved: ./evidence/discord_validation/20260331_083816_04_after_login.png
+2026-03-31 08:38:16,888 - INFO - ✅ Login successful
+2026-03-31 08:38:16,888 - INFO - 
+============================================================
+2026-03-31 08:38:16,888 - INFO - PHASE 1: Developer Portal Observation
+2026-03-31 08:38:16,888 - INFO - ============================================================
+2026-03-31 08:38:16,888 - INFO - 🔍 Observing Developer Portal...
+2026-03-31 08:38:21,385 - INFO - 👁️  Reading page state: Developer Portal
+2026-03-31 08:38:21,390 - INFO -    URL: https://discord.com/developers/applications
+2026-03-31 08:38:21,390 - INFO -    Title: My Applications | Discord Developer Portal
+2026-03-31 08:38:21,401 - INFO -    Visible text length: 226 chars
+2026-03-31 08:38:21,401 - INFO -    Status: Developer Portal
+2026-03-31 08:38:21,522 - INFO - 📸 Developer Portal - Initial View
+2026-03-31 08:38:21,522 - INFO -    Saved: ./evidence/discord_validation/20260331_083821_developer_portal_overview.png
+2026-03-31 08:38:21,529 - INFO -    Found 16 potential application elements
+2026-03-31 08:38:21,544 - INFO -    Existing applications:
+2026-03-31 08:38:21,544 - INFO -      - Small
+Large
+2026-03-31 08:38:21,544 - INFO -      - Small
+2026-03-31 08:38:21,544 - INFO -      - Large
+2026-03-31 08:38:21,544 - INFO -      - GaiaFTCL
+GaiaFTCL Membrane
+2026-03-31 08:38:21,544 - INFO -      - GaiaFTCL
+2026-03-31 08:38:21,544 - INFO -      - GaiaFTCL
+2026-03-31 08:38:21,544 - INFO -      - GaiaFTCL
+2026-03-31 08:38:21,544 - INFO -      - GaiaFTCL
+2026-03-31 08:38:21,544 - INFO -      - GaiaFTCL
+2026-03-31 08:38:21,544 - INFO - 
+============================================================
+2026-03-31 08:38:21,544 - INFO - PHASE 2: Discord Server Observation
+2026-03-31 08:38:21,544 - INFO - ============================================================
+2026-03-31 08:38:21,544 - INFO - 🔍 Observing Discord Server...
+2026-03-31 08:38:27,801 - INFO - 👁️  Reading page state: Discord Server 1487775674356990064
+2026-03-31 08:38:27,803 - INFO -    URL: https://discord.com/channels/1487775674356990064
+2026-03-31 08:38:27,803 - INFO -    Title: Discord | #general | GaiaFTCL's Server
+2026-03-31 08:38:27,812 - INFO -    Visible text length: 4112 chars
+2026-03-31 08:38:27,812 - INFO -    Status: Discord App
+2026-03-31 08:38:28,024 - INFO - 📸 Discord Server - Initial View
+2026-03-31 08:38:28,024 - INFO -    Saved: ./evidence/discord_validation/20260331_083827_discord_server_overview.png
+2026-03-31 08:38:28,027 - INFO -    Found 9 potential channel elements
+2026-03-31 08:38:28,068 - INFO -    Visible channels:
+2026-03-31 08:38:28,069 - INFO -      - Text
+general
+Invite to Channel
+Edit Channel
+2026-03-31 08:38:28,069 - INFO -      - Voice Channels
+2026-03-31 08:38:28,069 - INFO -      - Text Channels
+2026-03-31 08:38:28,069 - INFO -      - Message #general
+﻿
+
+Send GIF
+2026-03-31 08:38:28,069 - INFO -    ✅ Found 0/13 expected channels
+2026-03-31 08:38:28,069 - INFO -    ❌ Missing channels: quantum-closure, biology-cures, chemistry-lab, neuro-clinical, medical, atc-ops, robotics, nuclear-fusion, crypto-risk, law, logistics, telecom, climate
+2026-03-31 08:38:28,069 - INFO - 
+============================================================
+2026-03-31 08:38:28,069 - INFO - PHASE 3: Server Members Observation
+2026-03-31 08:38:28,069 - INFO - ============================================================
+2026-03-31 08:38:28,069 - INFO - 🔍 Observing Server Members (Bots)...
+2026-03-31 08:38:34,072 - WARNING -    Could not read members: Page.click: Timeout 5000ms exceeded.
+Call log:
+  - waiting for locator("[aria-label*=\"Members\"], [class*=\"membersWrap\"]")
+  -     - locator resolved to <div role="button" tabindex="-1" aria-label="Members" class="focusTarget__54e4b" id="members-1487775674356990064" data-list-item-id="channels___members-1487775674356990064"></div>
+  -   - attempting click action
+  -     2 × waiting for element to be visible, enabled and stable
+  -       - element is not visible
+  -     - retrying click action
+  -     - waiting 20ms
+  -     2 × waiting for element to be visible, enabled and stable
+  -       - element is not visible
+  -     - retrying click action
+  -       - waiting 100ms
+  -     10 × waiting for element to be visible, enabled and stable
+  -        - element is not visible
+  -      - retrying click action
+  -        - waiting 500ms
+
+2026-03-31 08:38:37,449 - INFO - 📸 Final Discord Server State
+2026-03-31 08:38:37,449 - INFO -    Saved: ./evidence/discord_validation/20260331_083837_99_final_state.png
+2026-03-31 08:38:37,544 - INFO - 
+============================================================
+2026-03-31 08:38:37,544 - INFO - VALIDATION COMPLETE
+2026-03-31 08:38:37,544 - INFO - ============================================================
+2026-03-31 08:38:37,544 - INFO - 📄 Report: ./evidence/discord_validation/validation_report.json
+2026-03-31 08:38:37,544 - INFO - 📸 Screenshots: ./evidence/discord_validation/
+2026-03-31 08:38:37,544 - INFO - 
+📊 SUMMARY:
+2026-03-31 08:38:37,544 - INFO -   Applications in Dev Portal: 16
+2026-03-31 08:38:37,544 - INFO -   Channels in Server: 4
+2026-03-31 08:38:37,544 - INFO -   Expected Channels Found: 0/13
+2026-03-31 08:38:37,544 - INFO -   Bots in Server: unknown

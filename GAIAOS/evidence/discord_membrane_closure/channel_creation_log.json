@@ -1,0 +1,22 @@
+{
+  "created_at": "2026-03-31T15:41:34.620206",
+  "guild_id": "1487775674356990064",
+  "created": [],
+  "skipped": [],
+  "failed": [
+    "quantum-closure",
+    "biology-cures",
+    "chemistry-lab",
+    "neuro-clinical",
+    "medical",
+    "atc-ops",
+    "robotics",
+    "nuclear-fusion",
+    "crypto-risk",
+    "law",
+    "logistics",
+    "telecom",
+    "climate"
+  ],
+  "entropy_state": "H>0"
+}

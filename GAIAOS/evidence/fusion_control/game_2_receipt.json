@@ -1,0 +1,21 @@
+{
+  "game": "game_2_native_swap_picker",
+  "terminal_state": "MEETS",
+  "timestamp": "2026-04-09T11:55:06Z",
+  "verification": {
+    "xcodebuild_exit": 0,
+    "swapWithDefaults_grep_count": 0,
+    "playwright_watchdog": "CURE"
+  },
+  "files_changed": [
+    "macos/GaiaFusion/GaiaFusion/Views/PlantKindPicker.swift",
+    "macos/GaiaFusion/GaiaFusion/GaiaFusionApp.swift",
+    "macos/GaiaFusion/GaiaFusion/Inspector/CellDetailTab.swift",
+    "macos/GaiaFusion/GaiaFusion/Inspector/InspectorPanel.swift"
+  ],
+  "assertions": [
+    "Inspector shows Input/Output pickers with 6 canonical kinds",
+    "Sidebar/menu swap reads coordinator.selectedSwapInput/Output",
+    "Zero results for rg swapWithDefaults"
+  ]
+}

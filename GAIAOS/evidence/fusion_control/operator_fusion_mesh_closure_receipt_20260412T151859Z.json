@@ -1,0 +1,7 @@
+{
+  "schema": "gaiaftcl_operator_fusion_mesh_closure_v1",
+  "ts_utc": "2026-04-12T15:18:59Z",
+  "terminal": "REFUSED",
+  "reason": "phase4 mac loopback did not converge: http://127.0.0.1:8803/health last_http=000 (set GAIAFUSION_OPERATOR_APP_PATH or install GaiaFusion)",
+  "log": "evidence/fusion_control/operator_fusion_mesh_closure_20260412T151859Z.log"
+}

@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Telemetry Contract",
+  "description": "Universal Plant Output. MUST be published to fot.plants.{plant_id}.{cell_id}.telemetry. \n\nSIGNING COMPOSITION ORDER:\n1. Transducers sign their measurements first. Their signatures become part of the immutable payload in `transducer_signatures`.\n2. The cell computes `cell_signature` over the JCS (RFC 8785) form of the ENTIRE telemetry message (including transducer_signatures), minus the cell_signature field itself. Namespace is 'fot-telemetry-cell'.\n3. Verification order on the PQ side: verify cell_signature first (integrity envelope), then verify each transducer_signature for authenticity of the underlying measurement.\n\nEVENT VOCABULARY CROSS-REFERENCE CONTRACT:\nPQ and OQ MUST refuse any event whose `event_type` isn't in the dispatched plant config's `telemetry.event.declared_types` vocabulary. This runtime guard prevents plants from silently introducing event types that bypass validators.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "message_family",
+    "plant_id",
+    "cell_id",
+    "run_id",
+    "timestamp_utc",
+    "wallclock_ns",
+    "parent_hash",
+    "cell_signature",
+    "cell_public_key_fingerprint"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "message_family": { "type": "string", "enum": ["telemetry.tick", "telemetry.event"] },
+    "plant_id": { "type": "string" },
+    "cell_id": { "type": "string" },
+    "run_id": { "type": "string", "format": "uuid" },
+    "timestamp_utc": { "type": "string", "format": "date-time" },
+    "wallclock_ns": { "type": "integer" },
+    "parent_hash": { "type": "string", "description": "The IQ hash of the emitting cell." },
+    "cell_signature": { "type": "string", "description": "SSH signature over the JCS canonical form of this message (minus this field), namespace 'fot-telemetry-cell'." },
+    "cell_public_key_fingerprint": { "type": "string" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "message_family": { "const": "telemetry.tick" } } },
+      "then": {
+        "required": ["state", "measurement_provenance", "transducers", "transducer_signatures", "invariants", "performance", "health"],
+        "properties": {
+          "state": { "type": "object", "description": "Plant-specific measurements." },
+          "measurement_provenance": {
+            "type": "object",
+            "description": "Binds each state field to a specific transducer_idx.",
+            "additionalProperties": {
+              "type": "object",
+              "required": ["transducer_idx", "sample_lag_us"],
+              "properties": {
+                "transducer_idx": { "type": "integer" },
+                "sample_lag_us": { "type": "integer" }
+              }
+            }
+          },
+          "transducers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["idx", "sensor_serial", "firmware_hash", "calibration_epoch_utc", "calibration_expires_utc", "cert_fingerprint"],
+              "properties": {
+                "idx": { "type": "integer" },
+                "sensor_serial": { "type": "string" },
+                "firmware_hash": { "type": "string" },
+                "calibration_epoch_utc": { "type": "string", "format": "date-time" },
+                "calibration_expires_utc": { "type": "string", "format": "date-time" },
+                "cert_fingerprint": { "type": "string" }
+              }
+            }
+          },
+          "transducer_signatures": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["transducer_idx", "covers_fields", "signature"],
+              "properties": {
+                "transducer_idx": { "type": "integer" },
+                "covers_fields": { "type": "array", "items": { "type": "string" } },
+                "signature": { "type": "string", "description": "SSH signature over the JCS form of the covered fields and timestamp, namespace 'fot-transducer'." }
+              }
+            }
+          },
+          "invariants": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "required": ["held"],
+              "properties": {
+                "held": { "type": "boolean" },
+                "residual": { "type": "number", "description": "Optional residual value for the invariant." }
+              }
+            }
+          },
+          "performance": {
+            "type": "object",
+            "required": ["frame_time_us_p50", "frame_time_us_p99", "package_power_mw_peak", "gpu_power_mw_peak"],
+            "properties": {
+              "frame_time_us_p50": { "type": "integer" },
+              "frame_time_us_p99": { "type": "integer" },
+              "package_power_mw_peak": { "type": "integer" },
+              "gpu_power_mw_peak": { "type": "integer" }
+            }
+          },
+          "health": {
+            "type": "object",
+            "required": ["nan_count", "restart_count", "thermal_throttle_events"],
+            "properties": {
+              "nan_count": { "type": "integer" },
+              "restart_count": { "type": "integer" },
+              "thermal_throttle_events": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "message_family": { "const": "telemetry.event" } } },
+      "then": {
+        "required": ["event_id", "event_type", "severity", "occurred_at_utc"],
+        "properties": {
+          "event_id": { "type": "string", "format": "uuid" },
+          "event_type": { "type": "string", "description": "Enum value from the plant's declared event vocabulary. MUST be validated against the config cross-reference." },
+          "severity": { "type": "string", "enum": ["info", "warning", "error", "fatal"] },
+          "occurred_at_utc": { "type": "string", "format": "date-time" },
+          "causal_parent_event_id": { "type": "string", "format": "uuid", "description": "Optional. Builds event causality chains." },
+          "details": { "type": "object", "description": "Optional event-specific details." }
+        }
+      }
+    }
+  ]
+}

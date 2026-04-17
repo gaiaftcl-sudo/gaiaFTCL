@@ -1,0 +1,27 @@
+{
+  "schema": "gaiaftcl_nine_cell_mesh_witness_v1",
+  "invariant_id": "gaiaftcl_native_rust_fusion_invariant_v1",
+  "ts_utc": "2026-04-08T22:42:36.886612+00:00",
+  "mesh_green": true,
+  "nine_of_nine": true,
+  "heal_summary": {
+    "mesh_green": true,
+    "heal_rounds": [
+      {
+        "round": 1,
+        "phase": "probe",
+        "probe_rc": 0,
+        "healthy_count": 9,
+        "unhealthy": []
+      }
+    ],
+    "final": {
+      "healthy_count": 9,
+      "unhealthy": [],
+      "failed_ips": [],
+      "nine_ok": true,
+      "probe_rc": 0
+    }
+  },
+  "probe_script": "scripts/invariant_mesh_green_probe.sh"
+}

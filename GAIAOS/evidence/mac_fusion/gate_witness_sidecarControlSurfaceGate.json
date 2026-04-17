@@ -1,0 +1,19 @@
+{
+  "gate": "sidecarControlSurfaceGate",
+  "ok": true,
+  "terminal": "CALORIE",
+  "blocker": null,
+  "witness": {
+    "content_view_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/FusionSidecarHost/FusionSidecarHost/ContentView.swift",
+    "app_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/FusionSidecarHost/FusionSidecarHost/FusionSidecarHostApp.swift",
+    "has_webkit_surface": true,
+    "has_local_surface_url": true,
+    "has_discord_push_hook": false,
+    "discord_intentionally_disabled": true,
+    "has_playwright_onboarding_hook": true,
+    "has_glass_effect": true,
+    "has_dynamic_blue_theme": true,
+    "has_fusion_menu_actions": true
+  },
+  "ts_utc": "2026-04-07T18:25:52.984030+00:00"
+}

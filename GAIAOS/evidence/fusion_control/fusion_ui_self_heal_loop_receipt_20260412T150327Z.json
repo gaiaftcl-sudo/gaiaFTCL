@@ -1,0 +1,196 @@
+{
+  "schema": "gaiaftcl_fusion_ui_self_heal_loop_receipt_v1",
+  "ts_utc": "2026-04-12T15:06:17.673308+00:00",
+  "terminal": "REFUSED",
+  "reason": "max_cycles_exhausted",
+  "cycles_attempted": 1,
+  "max_cycles": 1,
+  "ui_port": 8910,
+  "heal_mode": "full",
+  "relax_mac_gateway": true,
+  "skip_mcp": false,
+  "conversation_wallet": "0xgaiaftcl_internal_feed_readonly",
+  "jsonl": "evidence/fusion_control/fusion_ui_self_heal_loop_20260412T150327Z.jsonl",
+  "last_cycle": {
+    "ts_utc": "2026-04-12T15:03:27.905891+00:00",
+    "cycle": 1,
+    "ui_port": 8910,
+    "heal_mode": "full",
+    "mcp_conversation": {
+      "ok": false,
+      "http_code": 0,
+      "request": {
+        "name": "closure_game_report_v1",
+        "params": {
+          "ui_contract": "gaiaftcl_fusion_blank_screen_contract_v1",
+          "ui_failures": [
+            "pre_diagnostic_mcp_first"
+          ],
+          "ui_port": 8910,
+          "ui_component_audit": {},
+          "operator_prompt": "What do you believe you are showing in the local fusion UI right now? If splash/mooring, propose exact repair action.",
+          "requested_action": "diagnose_and_propose_fix_patch"
+        }
+      },
+      "error": "<urlopen error [Errno 61] Connection refused>"
+    },
+    "contract": {
+      "schema": "gaiaftcl_fusion_blank_screen_contract_v1",
+      "pass": false,
+      "fail_ids": [
+        "fusion_health_contract",
+        "self_probe_dom_contract",
+        "substrate_html_contract",
+        "substrate_raw_routing_contract",
+        "fusion_html_contract"
+      ],
+      "ui_component_audit": {
+        "schema": "gaiaftcl_fusion_ui_component_audit_result_v1",
+        "spec_schema": "gaiaftcl_fusion_ui_component_audit_v1",
+        "spec_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/spec/native_fusion/fusion_ui_component_audit.json",
+        "present_markers": [],
+        "missing_markers": [
+          "fusion-active-composite",
+          "fusion-topology-view",
+          "fusion-projection-panel",
+          "fusion-cell-grid",
+          "fusion-plant-controls",
+          "fusion-swap-panel",
+          "fusion-viewport-heartbeat"
+        ],
+        "blocked_hits": [],
+        "splash_detected": false,
+        "active_surface_ok": false
+      },
+      "checks": [
+        {
+          "id": "fusion_health_contract",
+          "pass": false,
+          "http_code": 0,
+          "reason": "fusion_health_contract_failed",
+          "hint": "run_fusion_mac_app_gate.py --port <ui_port> to restore runtime witness",
+          "sample": "<urlopen error [Errno 61] Connection refused>"
+        },
+        {
+          "id": "self_probe_dom_contract",
+          "pass": false,
+          "http_code": 0,
+          "reason": "self_probe_dom_contract_failed",
+          "hint": "restart GaiaFusion and ensure WKWebView bridge is loaded",
+          "sample": "<urlopen error [Errno 61] Connection refused>"
+        },
+        {
+          "id": "substrate_html_contract",
+          "pass": false,
+          "http_code": 0,
+          "reason": "substrate_html_contract_failed",
+          "hint": "rebuild composite assets and verify fusion-web mirror includes substrate route",
+          "sample": "<urlopen error [Errno 61] Connection refused>"
+        },
+        {
+          "id": "substrate_raw_routing_contract",
+          "pass": false,
+          "http_code": 0,
+          "reason": "substrate_raw_routing_contract_failed",
+          "hint": "must serve substrate-raw.html (not fusion-s4 index) to avoid iframe recursion; see LocalServer / fusion-web",
+          "sample": "<urlopen error [Errno 61] Connection refused>"
+        },
+        {
+          "id": "operator_surface_armed_contract",
+          "pass": true,
+          "http_code": 0,
+          "reason": "",
+          "hint": "when WKWebView is loaded, s4-projection must arm control_matrix.trace_active (webview gate, not only SwiftUI trace chrome)",
+          "sample": {
+            "webview_loaded": false,
+            "trace_active": false,
+            "bridge": "<urlopen error [Errno 61] Connection refused>"
+          }
+        },
+        {
+          "id": "fusion_html_contract",
+          "pass": false,
+          "http_code": 0,
+          "reason": "fusion_html_contract_failed",
+          "hint": "ensure fusion-s4 UI and /api/fusion/s4-projection are both healthy; runtime splash/active state is enforced by Playwright gate",
+          "sample": {
+            "fusion_html_head": "<urlopen error [Errno 61] Connection refused>",
+            "projection_http_code": 0,
+            "projection_sample": "<urlopen error [Errno 61] Connection refused>",
+            "component_audit": {
+              "schema": "gaiaftcl_fusion_ui_component_audit_result_v1",
+              "spec_schema": "gaiaftcl_fusion_ui_component_audit_v1",
+              "spec_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/spec/native_fusion/fusion_ui_component_audit.json",
+              "present_markers": [],
+              "missing_markers": [
+                "fusion-active-composite",
+                "fusion-topology-view",
+                "fusion-projection-panel",
+                "fusion-cell-grid",
+                "fusion-plant-controls",
+                "fusion-swap-panel",
+                "fusion-viewport-heartbeat"
+              ],
+              "blocked_hits": [],
+              "splash_detected": false,
+              "active_surface_ok": false
+            }
+          }
+        },
+        {
+          "id": "mac_gateway_health_contract",
+          "pass": true,
+          "http_code": 0,
+          "reason": "",
+          "hint": "restart fusion sidecar stack (docker-compose.fusion-sidecar.yml) or set FUSION_UI_SELF_HEAL_RELAX_MAC_GATEWAY=1 when Docker/MCP runs in FusionSidecar guest only",
+          "gateway_reachable": false,
+          "relaxed_skip": true,
+          "sample": "<urlopen error [Errno 61] Connection refused>"
+        }
+      ]
+    },
+    "mcp_turn_receipt": "evidence/fusion_control/fusion_ui_self_heal_mcp_turn_cycle1_20260412T150327Z.json",
+    "failure_signature": "fusion_health_contract,self_probe_dom_contract,substrate_html_contract,substrate_raw_routing_contract,fusion_html_contract|mcp:0",
+    "healing": [
+      {
+        "step": "soft_reprobe",
+        "command": "bash scripts/gaiafusion_internal_cli.sh 8910",
+        "rc": 1,
+        "stdout_tail": "REFUSED: http://127.0.0.1:8910 not reachable \u2014 launch GaiaFusion or set FUSION_UI_PORT",
+        "ok": false
+      },
+      {
+        "step": "restart_sidecar",
+        "command": "docker info (preflight)",
+        "ok": true,
+        "rc": 0,
+        "stdout_tail": "SKIP restart_sidecar: host docker daemon not reachable. s/docker-offload: no such file or directory\nWARNING: Plugin \"/Users/richardgillespie/.docker/cli-plugins/docker-sandbox\" is not valid: failed to fetch metadata: fork/exec /Users/richardgillespie/.docker/cli-plugins/docker-sandbox: no such file or directory\nWARNING: Plugin \"/Users/richardgillespie/.docker/cli-plugins/docker-sbom\" is not valid: failed to fetch metadata: fork/exec /Users/richardgillespie/.docker/cli-plugins/docker-sbom: no such file or directory\nWARNING: Plugin \"/Users/richardgillespie/.docker/cli-plugins/docker-scout\" is not valid: failed to fetch metadata: fork/exec /Users/richardgillespie/.docker/cli-plugins/docker-scout: no such file or directory\nCannot connect to the Docker daemon at unix:///Users/richardgillespie/.orbstack/run/docker.sock. Is the docker daemon running?\n"
+      },
+      {
+        "step": "rebuild_wasm",
+        "command": "bash scripts/build_gaiafusion_wasm_pack.sh",
+        "rc": 0,
+        "stdout_tail": "[build_gaiafusion_wasm_pack] CALORIE: gaiafusion_substrate.wasm + gaiafusion_substrate_bindgen.js (  137470 +    16141 bytes)",
+        "ok": true
+      },
+      {
+        "step": "rebuild_composite",
+        "command": "bash scripts/build_gaiafusion_composite_assets.sh",
+        "rc": 0,
+        "stdout_tail": " \u2713 tests/unit/fusionS4GlobalChallenge.test.ts (1 test) 2ms\n \u2713 tests/unit/dmgSignedUrl.test.ts (7 tests) 3ms\n\n Test Files  8 passed (8)\n      Tests  39 passed (39)\n   Start at  11:03:46\n   Duration  256ms (transform 209ms, setup 0ms, collect 343ms, tests 29ms, environment 1ms, prepare 368ms)\n\n[build_gaiafusion_composite_assets] next build (standalone)\n\n> gaiaos_ui_web@0.1.0 build\n> next build\n\n\u25b2 Next.js 16.1.1 (Turbopack)\n- Environments: .env\n\n  Creating an optimized production build ...\n\u2713 Compiled successfully in 3.3s\n  Running TypeScript ...\n  Collecting page data using 15 workers ...\n  Generating static pages using 15 workers (0/41) ...\n  Generating static pages using 15 workers (10/41) \n  Generating static pages using 15 workers (20/41) \n  Generating static pages using 15 workers (30/41) \n\u2713 Generating static pages using 15 workers (41/41) in 217.6ms\n  Finalizing page optimization ...\n\nRoute (app)\n\u250c \u0192 /\n\u251c \u25cb /_not-found\n\u251c \u0192 /api/analytics/download\n\u251c \u0192 /api/echo/nonce\n\u251c \u0192 /api/entropy/[...path]\n\u251c \u0192 /api/evidence/[callId]\n\u251c \u0192 /api/fusion/challenge-ledger\n\u251c \u0192 /api/fusion/fleet-digest\n\u251c \u0192 /api/fusion/fleet-usd\n\u251c \u0192 /api/fusion/gate1-register-options\n\u251c \u0192 /api/fusion/global-challenge-digest\n\u251c \u0192 /api/fusion/mesh-operator-spine\n\u251c \u0192 /api/fusion/s4-projection\n\u251c \u0192 /api/fusion/soak-summary\n\u251c \u0192 /api/fusion/stack-stop\n\u251c \u0192 /api/graph/neighborhood\n\u251c \u0192 /api/graph/path\n\u251c \u0192 /api/graph/stats\n\u251c \u0192 /api/mcp/execute\n\u251c \u0192 /api/mcp/feed\n\u251c \u0192 /api/mcp/receipts\n\u251c \u0192 /api/moor/eligibility\n\u251c \u0192 /api/moor/oath\n\u251c \u0192 /api/moor/pq-receipt\n\u251c \u0192 /api/moor/register\n\u251c \u0192 /api/moor/stake\n\u251c \u0192 /api/moor/status\n\u251c \u0192 /api/observations\n\u251c \u0192 /api/reflection\n\u251c \u0192 /api/sovereign-mesh\n\u251c \u0192 /api/sovereign-mesh/game-room\n\u251c \u0192 /api/sovereign-mesh/materials-domain\n\u251c \u0192 /api/substrate/claims\n\u251c \u0192 /api/substrate/envelope-close\n\u251c \u0192 /api/substrate/envelopes/recent\n\u251c \u0192 /api/substrate/health\n\u251c \u0192 /api/substrate/project\n\u251c \u0192 /api/substrate/query\n\u251c \u0192 /api/substrate/state\n\u251c \u0192 /api/substrate/universal-ingest\n\u251c \u0192 /api/tiles\n\u251c \u0192 /api/turbulence/[...path]\n\u251c \u0192 /api/validations\n\u251c \u0192 /api/version\n\u251c \u0192 /astro\n\u251c \u25cb /atc/turbulence\n\u251c \u0192 /atmosphere\n\u251c \u0192 /biosphere\n\u251c \u25cb /closure-game\n\u251c \u0192 /closure-proof\n\u251c \u0192 /dmgInstall\n\u251c \u25cb /domain-tubes\n\u251c \u25cb /entropy/aviation\n\u251c \u25cb /fusion-fleet\n\u251c \u25cb /fusion-s4\n\u251c \u0192 /games\n\u251c \u25cb /gate1\n\u251c \u0192 /molecular\n\u251c \u25cb /moor\n\u251c \u0192 /ocean\n\u251c \u25cb /sovereign-mesh\n\u251c \u25cb /substrate\n\u251c \u25cb /substrate-console\n\u2514 \u25cb /substrate-raw\n\n\n\u25cb  (Static)   prerendered as static content\n\u0192  (Dynamic)  server-rendered on demand\n\n[build_gaiafusion_composite_assets] refreshed fusion-sidecar-cell resources (MCP cell compose + guest hints)\n[build_gaiafusion_composite_assets] refreshed spec/native_fusion/plant_adapters.json (GF-REQ-MAC-CELL / GF-REQ-SWAP)\n[build_gaiafusion_composite_assets] ephemeral Next standalone on 127.0.0.1:52598 (pack fusion-web)\n\u25b2 Next.js 16.1.1\n- Local:         http://127.0.0.1:52598\n- Network:       http://127.0.0.1:52598\n\n\u2713 Starting...\n\u2713 Ready in 56ms\n[build_gaiafusion_composite_assets] CALORIE: /Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion/GaiaFusion/Resources/fusion-web (index.html + substrate + _next/static + public)\ntotal 128\ndrwxr-xr-x  12 richardgillespie  staff    384 Apr 12 11:04 .\ndrwxr-xr-x  11 richardgillespie  staff    352 Apr 12 11:04 ..\ndrwxr-xr-x   3 richardgillespie  staff     96 Apr 12 11:04 _next\ndrwxr-xr-x   2 richardgillespie  staff     64 Apr 12 11:04 downloads\n-rw-r--r--   1 richardgillespie  staff    391 Apr 12 11:04 file.svg\n-rw-r--r--   1 richardgillespie  staff   1035 Apr 12 11:04 globe.svg\n-rw-r--r--   1 richardgillespie  staff  23750 Apr 12 11:04 index.html\n-rw-r--r--   1 richardgillespie  staff   1375 Apr 12 11:04 next.svg\n-rw-r--r--   1 richardgillespie  staff   8195 Apr 12 11:04 substrate-raw.html\n-rw-r--r--   1 richardgillespie  staff   8079 Apr 12 11:04 substrate.html\n-rw-r--r--   1 richardgillespie  staff    128 Apr 12 11:04 vercel.svg\n-rw-r--r--   1 richardgillespie  staff    385 Apr 12 11:04 window.svg",
+        "ok": true
+      },
+      {
+        "step": "restart_app_gate",
+        "command": "python3 scripts/run_fusion_mac_app_gate.py --root /Users/richardgillespie/Documents/FoT8D/GAIAOS --skip-composite-assets",
+        "rc": 1,
+        "stdout_tail": "[C4] Host Mac arm64 (non-CI): clearing GAIAFUSION_SKIP_* / USD probe SIGKILL workarounds (set GAIAFUSION_ALLOW_SKIP_ON_HOST=1 to retain).\n[C4] Cleared GAIAFUSION_GATE_SKIP_SWIFT_BUILD / GAIAFUSION_GATE_APP_BUNDLE (set GAIAFUSION_ALLOW_STALE_GATE_BUNDLE=1 to use a packaged .app).\n/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/fusion_mac_app_gate_receipt.json\nBLOCKED: loopback_tcp_never_bound",
+        "ok": false
+      }
+    ]
+  },
+  "failure_signatures": {
+    "fusion_health_contract,self_probe_dom_contract,substrate_html_contract,substrate_raw_routing_contract,fusion_html_contract|mcp:0": 1
+  },
+  "ui_component_audit_spec_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/spec/native_fusion/fusion_ui_component_audit.json"
+}

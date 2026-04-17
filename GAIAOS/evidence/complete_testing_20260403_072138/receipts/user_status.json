@@ -1,0 +1,20 @@
+{
+  "wallet": {
+    "_key": "user-uum8d",
+    "_id": "wallet_balances/user-uum8d",
+    "_rev": "_lTKRIgW---",
+    "balance": 100,
+    "created_at": "2026-04-03T07:21:01.839022"
+  },
+  "profile": {
+    "_key": "user-uum8d",
+    "_id": "user_profiles/user-uum8d",
+    "_rev": "_lTKRIYi---",
+    "username": "uum8d",
+    "email": "uum8d@gaiaftcl.com",
+    "onboarding_completed": false,
+    "discord_id": null,
+    "created_at": "2026-04-03T07:21:01.579356"
+  },
+  "timestamp": "2026-04-03T07:21:39.214347"
+}

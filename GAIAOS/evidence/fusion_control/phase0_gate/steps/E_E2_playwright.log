@@ -1,0 +1,24 @@
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts
+
+
+Running 14 tests using 1 worker
+
+  -   1 [chromium] › tests/fusion/fusion_matrix_e2e.spec.ts:4:7 › Fusion matrix API (slow) › runMatrix=1 with minimal cycles when FUSION_MATRIX_E2E=1
+  ✓   2 [chromium] › tests/fusion/fusion_s4_console.spec.ts:15:7 › Fusion S4 console › GET /api/fusion/s4-projection contract (78ms)
+  ✓   3 [chromium] › tests/fusion/fusion_s4_console.spec.ts:131:7 › Fusion S4 console › GET /api/fusion/mesh-operator-spine contract (18ms)
+  ✓   4 [chromium] › tests/fusion/fusion_s4_console.spec.ts:139:7 › Fusion S4 console › GET /api/fusion/soak-summary contract (37ms)
+  ✓   5 [chromium] › tests/fusion/fusion_s4_console.spec.ts:161:7 › Fusion S4 console › GET /api/fusion/challenge-ledger read contract (15ms)
+  ✓   6 [chromium] › tests/fusion/fusion_s4_console.spec.ts:169:7 › Fusion S4 console › POST /api/fusion/challenge-ledger registers team (secret) (17ms)
+  ✓   7 [chromium] › tests/fusion/fusion_s4_console.spec.ts:191:7 › Fusion S4 console › GET /api/fusion/global-challenge-digest (18ms)
+  ✓   8 [chromium] › tests/fusion/fusion_s4_console.spec.ts:201:7 › Fusion S4 console › GET /api/fusion/soak-summary markdown export (61ms)
+  ✓   9 [chromium] › tests/fusion/fusion_s4_console.spec.ts:210:7 › Fusion S4 console › /fusion-s4 UI panels (1.3s)
+  ✓  10 [chromium] › tests/fusion/fusion_s4_console.spec.ts:230:7 › Fusion S4 console › Soak table lists four JSONL tracks (602ms)
+  ✓  11 [chromium] › tests/fusion/fusion_s4_doc.spec.ts:11:7 › Fusion S4 documentation capture › full-page screenshot @fusion-doc (911ms)
+  ✓  12 [chromium] › tests/fusion/gate1_page.spec.ts:7:7 › GATE1 page › gate1 page loads and shows custody copy (260ms)
+  ✓  13 [chromium] › tests/fusion/gate1_page.spec.ts:13:7 › GATE1 page › gate1-register-options GET returns JSON (10ms)
+  ✓  14 [chromium] › tests/fusion/gate1_page.spec.ts:21:7 › GATE1 page › gate1-register-options POST is 403 until GATE1_LIFT=1 (9ms)
+
+  1 skipped
+  13 passed (5.4s)

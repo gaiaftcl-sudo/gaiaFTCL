@@ -1,0 +1,427 @@
+{
+  "timestamp": "2026-03-31T13:25:22.327434",
+  "channels_tested": 14,
+  "games_active": 14,
+  "game_rooms": {
+    "quantum-closure": {
+      "status": "ACTIVE",
+      "channel_id": "1488572003567800451",
+      "domain": "quantum",
+      "d8_weight": 0.92,
+      "game_type": "Quantum Closure Game",
+      "message_id": "1488590042640416909",
+      "total_messages": 5,
+      "game_messages": 2,
+      "recent_activity": [
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:25:22.831000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:17:07.572000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "\ud83e\uddea **Validation Test**\n**Domain**: Quantum\n**D8 Weight**: 0.92\n**Status**: Functional \u2705",
+          "embeds": 0,
+          "timestamp": "2026-03-31T17:12:06.946000+00:00"
+        }
+      ]
+    },
+    "biology-cures": {
+      "status": "ACTIVE",
+      "channel_id": "1488583620686905508",
+      "domain": "biology",
+      "d8_weight": 0.88,
+      "game_type": "Cure Discovery Game",
+      "message_id": "1488590046842982433",
+      "total_messages": 4,
+      "game_messages": 2,
+      "recent_activity": [
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:25:23.833000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:17:07.893000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "\ud83e\uddea **Validation Test**\n**Domain**: Biology\n**D8 Weight**: 0.88\n**Status**: Functional \u2705",
+          "embeds": 0,
+          "timestamp": "2026-03-31T17:12:07.271000+00:00"
+        }
+      ]
+    },
+    "chemistry-lab": {
+      "status": "ACTIVE",
+      "channel_id": "1488583622725210153",
+      "domain": "chemistry",
+      "d8_weight": 0.88,
+      "game_type": "Molecular Synthesis Game",
+      "message_id": "1488590050479313046",
+      "total_messages": 4,
+      "game_messages": 2,
+      "recent_activity": [
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:25:24.700000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:17:08.167000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "\ud83e\uddea **Validation Test**\n**Domain**: Chemistry\n**D8 Weight**: 0.85\n**Status**: Functional \u2705",
+          "embeds": 0,
+          "timestamp": "2026-03-31T17:12:07.409000+00:00"
+        }
+      ]
+    },
+    "neuro-clinical": {
+      "status": "ACTIVE",
+      "channel_id": "1488583623496958126",
+      "domain": "neuroscience",
+      "d8_weight": 0.9,
+      "game_type": "Neural Network Game",
+      "message_id": "1488590053247815728",
+      "total_messages": 4,
+      "game_messages": 2,
+      "recent_activity": [
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:25:25.360000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:17:08.360000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "\ud83e\uddea **Validation Test**\n**Domain**: Neuroscience\n**D8 Weight**: 0.89\n**Status**: Functional \u2705",
+          "embeds": 0,
+          "timestamp": "2026-03-31T17:12:07.728000+00:00"
+        }
+      ]
+    },
+    "medical": {
+      "status": "ACTIVE",
+      "channel_id": "1488583625304707172",
+      "domain": "medical",
+      "d8_weight": 0.89,
+      "game_type": "Diagnosis Game",
+      "message_id": "1488590055613272094",
+      "total_messages": 4,
+      "game_messages": 2,
+      "recent_activity": [
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:25:25.924000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:17:08.914000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "\ud83e\uddea **Validation Test**\n**Domain**: Medical\n**D8 Weight**: 0.87\n**Status**: Functional \u2705",
+          "embeds": 0,
+          "timestamp": "2026-03-31T17:12:07.975000+00:00"
+        }
+      ]
+    },
+    "atc-ops": {
+      "status": "ACTIVE",
+      "channel_id": "1488583626613461204",
+      "domain": "air-traffic-control",
+      "d8_weight": 0.91,
+      "game_type": "Air Traffic Control Game",
+      "message_id": "1488590057500839946",
+      "total_messages": 4,
+      "game_messages": 2,
+      "recent_activity": [
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:25:26.374000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:17:09.249000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "\ud83e\uddea **Validation Test**\n**Domain**: Atc\n**D8 Weight**: 0.91\n**Status**: Functional \u2705",
+          "embeds": 0,
+          "timestamp": "2026-03-31T17:12:08.194000+00:00"
+        }
+      ]
+    },
+    "robotics": {
+      "status": "ACTIVE",
+      "channel_id": "1488583627456385075",
+      "domain": "robotics",
+      "d8_weight": 0.87,
+      "game_type": "Robot Control Game",
+      "message_id": "1488590059337945258",
+      "total_messages": 4,
+      "game_messages": 2,
+      "recent_activity": [
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:25:26.812000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:17:09.605000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "\ud83e\uddea **Validation Test**\n**Domain**: Robotics\n**D8 Weight**: 0.86\n**Status**: Functional \u2705",
+          "embeds": 0,
+          "timestamp": "2026-03-31T17:12:08.408000+00:00"
+        }
+      ]
+    },
+    "nuclear-fusion": {
+      "status": "ACTIVE",
+      "channel_id": "1488583628920328252",
+      "domain": "energy",
+      "d8_weight": 0.9,
+      "game_type": "Fusion Reactor Game",
+      "message_id": "1488590062089146612",
+      "total_messages": 4,
+      "game_messages": 2,
+      "recent_activity": [
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:25:27.468000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:17:10.028000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "\ud83e\uddea **Validation Test**\n**Domain**: Energy\n**D8 Weight**: 0.9\n**Status**: Functional \u2705",
+          "embeds": 0,
+          "timestamp": "2026-03-31T17:12:08.712000+00:00"
+        }
+      ]
+    },
+    "crypto-risk": {
+      "status": "ACTIVE",
+      "channel_id": "1488583629910180051",
+      "domain": "finance",
+      "d8_weight": 0.86,
+      "game_type": "Risk Management Game",
+      "message_id": "1488590064194683122",
+      "total_messages": 4,
+      "game_messages": 2,
+      "recent_activity": [
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:25:27.970000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:17:10.328000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "\ud83e\uddea **Validation Test**\n**Domain**: Crypto\n**D8 Weight**: 0.84\n**Status**: Functional \u2705",
+          "embeds": 0,
+          "timestamp": "2026-03-31T17:12:08.951000+00:00"
+        }
+      ]
+    },
+    "law": {
+      "status": "ACTIVE",
+      "channel_id": "1488583631369797804",
+      "domain": "law",
+      "d8_weight": 0.88,
+      "game_type": "Legal Reasoning Game",
+      "message_id": "1488590066468130886",
+      "total_messages": 4,
+      "game_messages": 2,
+      "recent_activity": [
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:25:28.512000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:17:10.635000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "\ud83e\uddea **Validation Test**\n**Domain**: Law\n**D8 Weight**: 0.83\n**Status**: Functional \u2705",
+          "embeds": 0,
+          "timestamp": "2026-03-31T17:12:09.180000+00:00"
+        }
+      ]
+    },
+    "logistics": {
+      "status": "ACTIVE",
+      "channel_id": "1488583632615637002",
+      "domain": "logistics",
+      "d8_weight": 0.85,
+      "game_type": "Supply Chain Game",
+      "message_id": "1488590067931938860",
+      "total_messages": 4,
+      "game_messages": 2,
+      "recent_activity": [
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:25:28.861000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:17:10.902000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "\ud83e\uddea **Validation Test**\n**Domain**: Logistics\n**D8 Weight**: 0.85\n**Status**: Functional \u2705",
+          "embeds": 0,
+          "timestamp": "2026-03-31T17:12:09.394000+00:00"
+        }
+      ]
+    },
+    "telecom": {
+      "status": "ACTIVE",
+      "channel_id": "1488583634284839114",
+      "domain": "telecom",
+      "d8_weight": 0.87,
+      "game_type": "Network Optimization Game",
+      "message_id": "1488590070565834915",
+      "total_messages": 4,
+      "game_messages": 2,
+      "recent_activity": [
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:25:29.489000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:17:11.110000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "\ud83e\uddea **Validation Test**\n**Domain**: Telecom\n**D8 Weight**: 0.87\n**Status**: Functional \u2705",
+          "embeds": 0,
+          "timestamp": "2026-03-31T17:12:09.595000+00:00"
+        }
+      ]
+    },
+    "climate": {
+      "status": "ACTIVE",
+      "channel_id": "1488583635828478025",
+      "domain": "climate",
+      "d8_weight": 0.88,
+      "game_type": "Climate Modeling Game",
+      "message_id": "1488590073216635192",
+      "total_messages": 4,
+      "game_messages": 2,
+      "recent_activity": [
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:25:30.121000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:17:11.218000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "\ud83e\uddea **Validation Test**\n**Domain**: Climate\n**D8 Weight**: 0.88\n**Status**: Functional \u2705",
+          "embeds": 0,
+          "timestamp": "2026-03-31T17:12:09.871000+00:00"
+        }
+      ]
+    },
+    "sports-vortex": {
+      "status": "ACTIVE",
+      "channel_id": "1488586701407387778",
+      "domain": "sports",
+      "d8_weight": 0.85,
+      "game_type": "Sports Betting Game",
+      "message_id": "1488590075305529465",
+      "total_messages": 5,
+      "game_messages": 2,
+      "recent_activity": [
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:25:30.619000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:17:15.335000+00:00"
+        },
+        {
+          "author": "GaiaFTCL",
+          "content": "",
+          "embeds": 1,
+          "timestamp": "2026-03-31T17:17:11.523000+00:00"
+        }
+      ]
+    }
+  }
+}

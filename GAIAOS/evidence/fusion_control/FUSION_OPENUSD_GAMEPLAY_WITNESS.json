@@ -1,0 +1,16 @@
+{
+  "schema": "gaiaftcl_openusd_gameplay_witness_v1",
+  "ts_utc": "2026-04-10T15:22:45.677Z",
+  "url": "/fusion-s4",
+  "ui_actions": [
+    "set_cycles_128",
+    "run_virtual_matrix"
+  ],
+  "receipt_cycles_text": "128",
+  "openusd_overlay": {
+    "route": "/api/fusion/fleet-usd",
+    "sha256": "b52a058a042eced83ce69912611c0ffac7f577db8f75b3576878a5c9e5b78bfe",
+    "bytes": 2133
+  },
+  "terminal": "CALORIE"
+}

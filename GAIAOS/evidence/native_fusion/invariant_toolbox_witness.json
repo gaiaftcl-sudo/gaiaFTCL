@@ -1,0 +1,144 @@
+{
+  "schema": "gaiaftcl_invariant_toolbox_witness_v1",
+  "invariant_id": "gaiaftcl_native_rust_fusion_invariant_v1",
+  "ts_utc": "2026-04-08T22:42:34.813843+00:00",
+  "description": "Single source of truth for CLIs the native fusion invariant and nine-cell deploy scripts rely on. invariantToolboxGate probes PATH + argv first; failures REFUSE before builds. Witness: evidence/native_fusion/invariant_toolbox_witness.json.",
+  "tools": [
+    {
+      "id": "bash",
+      "optional": false,
+      "on_path": true,
+      "resolved_path": "/bin/bash",
+      "probe_rc": 0,
+      "probe_ok": true,
+      "probe_tail": "GNU bash, version 3.2.57(1)-release (arm64-apple-darwin25)\nCopyright (C) 2007 Free Software Foundation, Inc."
+    },
+    {
+      "id": "curl",
+      "optional": false,
+      "on_path": true,
+      "resolved_path": "/usr/bin/curl",
+      "probe_rc": 0,
+      "probe_ok": true,
+      "probe_tail": "curl 8.7.1 (x86_64-apple-darwin25.0) libcurl/8.7.1 (SecureTransport) LibreSSL/3.3.6 zlib/1.2.12 nghttp2/1.68.0\nRelease-Date: 2024-03-27\nProtocols: dict file ftp ftps gopher gophers http https imap imaps ipfs ipns ldap ldaps mqtt pop3 pop3s rtsp smb smbs smtp smtps telnet tftp\nFeatures: alt-svc AsynchDNS GSS-API HSTS HTTP2 HTTPS-proxy IPv6 Kerberos Largefile libz MultiSSL NTLM SPNEGO SSL threadsafe UnixSockets"
+    },
+    {
+      "id": "jq",
+      "optional": false,
+      "on_path": true,
+      "resolved_path": "/usr/bin/jq",
+      "probe_rc": 0,
+      "probe_ok": true,
+      "probe_tail": "jq-1.7.1-apple"
+    },
+    {
+      "id": "python3",
+      "optional": false,
+      "on_path": true,
+      "resolved_path": "/usr/bin/python3",
+      "probe_rc": 0,
+      "probe_ok": true,
+      "probe_tail": "Python 3.9.6"
+    },
+    {
+      "id": "git",
+      "optional": false,
+      "on_path": true,
+      "resolved_path": "/usr/bin/git",
+      "probe_rc": 0,
+      "probe_ok": true,
+      "probe_tail": "git version 2.50.1 (Apple Git-155)"
+    },
+    {
+      "id": "cargo",
+      "optional": false,
+      "on_path": true,
+      "resolved_path": "/opt/homebrew/bin/cargo",
+      "probe_rc": 0,
+      "probe_ok": true,
+      "probe_tail": "cargo 1.88.0 (Homebrew)"
+    },
+    {
+      "id": "swift",
+      "optional": false,
+      "on_path": true,
+      "resolved_path": "/usr/bin/swift",
+      "probe_rc": 0,
+      "probe_ok": true,
+      "probe_tail": "swift-driver version: 1.148.6 Apple Swift version 6.3 (swiftlang-6.3.0.123.5 clang-2100.0.123.102)\nTarget: arm64-apple-macosx26.0"
+    },
+    {
+      "id": "npm",
+      "optional": false,
+      "on_path": true,
+      "resolved_path": "/Users/richardgillespie/.nvm/versions/node/v20.20.2/bin/npm",
+      "probe_rc": 0,
+      "probe_ok": true,
+      "probe_tail": "10.8.2"
+    },
+    {
+      "id": "docker",
+      "optional": false,
+      "on_path": true,
+      "resolved_path": "/Users/richardgillespie/.rd/bin/docker",
+      "probe_rc": 0,
+      "probe_ok": true,
+      "probe_tail": "gaiaos_browser_cell-grafana-1\ngaiaos-usd-transport-cell\ngaiaos-usd-exporter\ngaiaos-spatial-gateway\ngaiaos-llm-router"
+    },
+    {
+      "id": "ssh",
+      "optional": false,
+      "on_path": true,
+      "resolved_path": "/usr/bin/ssh",
+      "probe_rc": 0,
+      "probe_ok": true,
+      "probe_tail": "OpenSSH_10.2p1, LibreSSL 3.3.6"
+    },
+    {
+      "id": "scp",
+      "optional": false,
+      "on_path": true,
+      "resolved_path": "/bin/bash",
+      "probe_rc": 0,
+      "probe_ok": true,
+      "probe_tail": ""
+    },
+    {
+      "id": "rsync",
+      "optional": false,
+      "on_path": true,
+      "resolved_path": "/usr/bin/rsync",
+      "probe_rc": 0,
+      "probe_ok": true,
+      "probe_tail": "openrsync: protocol version 29\nrsync version 2.6.9 compatible"
+    },
+    {
+      "id": "tar",
+      "optional": false,
+      "on_path": true,
+      "resolved_path": "/bin/bash",
+      "probe_rc": 0,
+      "probe_ok": true,
+      "probe_tail": ""
+    },
+    {
+      "id": "hcloud",
+      "optional": false,
+      "on_path": true,
+      "resolved_path": "/opt/homebrew/bin/hcloud",
+      "probe_rc": 0,
+      "probe_ok": true,
+      "probe_tail": "hcloud v1.62.0"
+    },
+    {
+      "id": "openssl",
+      "optional": true,
+      "on_path": true,
+      "resolved_path": "/usr/bin/openssl",
+      "probe_rc": 0,
+      "probe_ok": true,
+      "probe_tail": "LibreSSL 3.3.6"
+    }
+  ],
+  "required_failures": []
+}

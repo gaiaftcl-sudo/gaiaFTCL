@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Plant Config Schema",
+  "description": "Defines the physical and computational requirements for a Mac Cell fleet plant. MUST be signed by the plant author using namespace 'fot-plant-config'.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "signed_by",
+    "signature",
+    "plant_id",
+    "display_name",
+    "engine",
+    "telemetry",
+    "host_requirements",
+    "validation_params",
+    "physical_invariants"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "signed_by": { "type": "string" },
+    "signature": { "type": "string", "description": "SSH signature over the JCS canonical form of this config (minus signature field), namespace 'fot-plant-config'." },
+    "plant_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "engine": {
+      "type": "object",
+      "required": ["command", "args_template"],
+      "properties": {
+        "command": { "type": "string" },
+        "args_template": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "telemetry": {
+      "type": "object",
+      "required": ["tick", "event"],
+      "properties": {
+        "tick": {
+          "type": "object",
+          "required": ["sampling_rate_hz", "publish_rate_hz", "aggregation", "max_state_transition_hz_per_channel"],
+          "properties": {
+            "sampling_rate_hz": { "type": "number", "description": "On-transducer sample rate. Must satisfy sampling_rate_hz >= nyquist_factor * max_state_transition_hz." },
+            "publish_rate_hz": { "type": "number", "description": "Rate of NATS telemetry messages. Can be <= sampling_rate_hz if aggregation is declared." },
+            "aggregation": { "type": "string", "enum": ["none", "peak", "mean", "p99", "custom"], "default": "none" },
+            "max_state_transition_hz_per_channel": {
+              "type": "object",
+              "additionalProperties": { "type": "number" }
+            },
+            "nyquist_factor": {
+              "type": "number",
+              "minimum": 2.0,
+              "default": 10.0,
+              "description": "sampling_rate_hz must be >= nyquist_factor * max_state_transition_hz_per_channel. Floor is 2.0 (Shannon); operational recommendation is 10.0 for HIL overhead."
+            }
+          }
+        },
+        "event": {
+          "type": "object",
+          "required": ["declared_types"],
+          "properties": {
+            "declared_types": {
+              "type": "array",
+              "items": { "type": "string" },
+              "contains": { "const": "run.started" },
+              "contains": { "const": "run.ended" },
+              "description": "Vocabulary of allowed events. MUST include run.started and run.ended."
+            },
+            "max_expected_rate_hz": { "type": "number", "description": "Upper bound on event rate. Cells use this to size local event buffers." },
+            "overflow_policy": { "type": "string", "enum": ["drop_oldest", "drop_newest", "refuse_run"], "default": "refuse_run" }
+          }
+        }
+      }
+    },
+    "host_requirements": {
+      "type": "object",
+      "properties": {
+        "min_metal_family": { "type": "string", "default": "Apple9" },
+        "min_unified_memory_gb": { "type": "number" },
+        "requires_sep": { "type": "boolean" }
+      }
+    },
+    "validation_params": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "min", "max", "unit"],
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string", "enum": ["float", "integer"] },
+          "min": { "type": "number" },
+          "max": { "type": "number" },
+          "unit": { "type": "string" }
+        }
+      }
+    },
+    "physical_invariants": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

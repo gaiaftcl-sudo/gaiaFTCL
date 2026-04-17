@@ -1,0 +1,13 @@
+{
+  "gate": "outerRebuildRedeployGate",
+  "ok": true,
+  "terminal": "CALORIE",
+  "blocker": null,
+  "witness": {
+    "build_rc": 0,
+    "build_tail": "\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u2705 BUILD COMPLETE\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\nDMG: /Users/richardgillespie/Documents/FoT8D/GAIAOS/dist/GaiaFTCL-1.0.0.dmg\nDMG (GaiaFusion): /Users/richardgillespie/Documents/FoT8D/GAIAOS/dist/GaiaFusion.dmg\nSize: 1.0M\nChecksum: 6e5d3f573a8eb9770275f9caca7cd3117b5177a2b717dc36e8755b792e306e61\nVersion: 1.0.0\n\nMesh deploy (nine cells): bash scripts/deploy_dmg_to_mesh.sh",
+    "deploy_rc": 0,
+    "deploy_tail": "\u2705 152.53.88.141 complete\n\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\ud83d\udce1 Deploying to 37.120.187.174\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n  Transferring DMG...\n  Verifying...\n-rw-r--r-- 1 root root 1001K Apr  7 20:23 /var/www/gaiaftcl/public/downloads/GaiaFTCL-1.0.0.dmg\n\u2705 37.120.187.174 complete\n\n\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u2705 DMG DEPLOYED TO ALL 9 CELLS\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\nDownload URLs:\n  https://gaiaftcl.com/downloads/GaiaFTCL-1.0.0.dmg\n  https://gaiaftcl.com/downloads/GaiaFTCL-latest.dmg\n  https://gaiaftcl.com/dmgInstall\n"
+  },
+  "ts_utc": "2026-04-07T18:25:17.667726+00:00"
+}

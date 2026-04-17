@@ -1,0 +1,89 @@
+📤 Deploying GaiaFTCL DMG to mesh
+Version: 1.0.0
+DMG: GaiaFTCL-1.0.0.dmg
+
+🔐 Checksum: 359bf0ee5322310fd9301c10bce263085e46fc7951d3075e95d0904c09ebd2c8
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 Deploying to 77.42.85.60
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Transferring DMG...
+  Verifying...
+-rw-r--r-- 1 root root 175K Apr  3 19:25 /var/www/gaiaftcl/public/downloads/GaiaFTCL-1.0.0.dmg
+✅ 77.42.85.60 complete
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 Deploying to 135.181.88.134
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Transferring DMG...
+  Verifying...
+-rw-r--r-- 1 root root 175K Apr  3 19:25 /var/www/gaiaftcl/public/downloads/GaiaFTCL-1.0.0.dmg
+✅ 135.181.88.134 complete
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 Deploying to 77.42.32.156
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Transferring DMG...
+  Verifying...
+-rw-r--r-- 1 root root 175K Apr  3 19:25 /var/www/gaiaftcl/public/downloads/GaiaFTCL-1.0.0.dmg
+✅ 77.42.32.156 complete
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 Deploying to 77.42.88.110
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Transferring DMG...
+  Verifying...
+-rw-r--r-- 1 root root 175K Apr  3 19:25 /var/www/gaiaftcl/public/downloads/GaiaFTCL-1.0.0.dmg
+✅ 77.42.88.110 complete
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 Deploying to 37.27.7.9
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Transferring DMG...
+  Verifying...
+-rw-r--r-- 1 root root 175K Apr  3 19:26 /var/www/gaiaftcl/public/downloads/GaiaFTCL-1.0.0.dmg
+✅ 37.27.7.9 complete
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 Deploying to 37.120.187.247
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Transferring DMG...
+  Verifying...
+-rw-r--r-- 1 root root 175K Apr  3 21:25 /var/www/gaiaftcl/public/downloads/GaiaFTCL-1.0.0.dmg
+✅ 37.120.187.247 complete
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 Deploying to 152.53.91.220
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Transferring DMG...
+  Verifying...
+-rw-r--r-- 1 root root 175K Apr  3 21:26 /var/www/gaiaftcl/public/downloads/GaiaFTCL-1.0.0.dmg
+✅ 152.53.91.220 complete
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 Deploying to 152.53.88.141
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Transferring DMG...
+  Verifying...
+-rw-r--r-- 1 root root 175K Apr  3 21:27 /var/www/gaiaftcl/public/downloads/GaiaFTCL-1.0.0.dmg
+✅ 152.53.88.141 complete
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 Deploying to 37.120.187.174
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Transferring DMG...
+  Verifying...
+-rw-r--r-- 1 root root 175K Apr  3 21:26 /var/www/gaiaftcl/public/downloads/GaiaFTCL-1.0.0.dmg
+✅ 37.120.187.174 complete
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ DMG DEPLOYED TO ALL 9 CELLS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Download URLs:
+  https://gaiaftcl.com/downloads/GaiaFTCL-1.0.0.dmg
+  https://gaiaftcl.com/downloads/GaiaFTCL-latest.dmg
+  https://gaiaftcl.com/dmgInstall
+
+Next: Update homepage download button

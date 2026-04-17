@@ -1,0 +1,67 @@
+{
+  "schema": "gaiaftcl_gaiafusion_verification_delivery_manifest_v1",
+  "document_id": "GAIAFTCL-GF-VDC-001",
+  "title": "GaiaFusion verification delivery manifest",
+  "scope_note": "Engineering quality record; not a regulatory certificate. See GAIAFUSION_VERIFICATION_DELIVERY_CLOSURE.md.",
+  "standards_alignment_informative": [
+    "OECD GLP principles (traceability, raw data, QA oversight concepts)",
+    "IEEE 829 (test documentation structure)",
+    "IEEE 730 (software quality assurance)",
+    "IEEE 1012 (V&V process concepts)",
+    "Defense-style configuration identification and verification cross-reference (generic)"
+  ],
+  "repository_root_relative": "GAIAOS",
+  "git_head_witness": "14dc08e40ed4856c4acfb5e307ab7adeb2a7039c",
+  "git_head_note": "Captured at manifest authoring; re-run git rev-parse at release time and update.",
+  "primary_scripts": [
+    "scripts/verify_gaiafusion_working_app.sh",
+    "scripts/run_fusion_mac_app_gate.py",
+    "scripts/run_gaiafusion_release_smoke.sh",
+    "scripts/gaiafusion_internal_cli.sh",
+    "scripts/verify_gaiafusion_internal_surface_suite.sh",
+    "scripts/build_gaiafusion_composite_assets.sh",
+    "scripts/invariant_mesh_green_probe.sh",
+    "scripts/verify_fusion_sidecar_bundle.sh",
+    "scripts/verify_plant_adapters_contract.sh",
+    "scripts/mcp_mac_cell_probe.py",
+    "scripts/fusion_sidecar_arango_bootstrap.sh",
+    "scripts/fusion_sidecar_stack_smoke.sh"
+  ],
+  "primary_receipts": [
+    "evidence/fusion_control/fusion_mac_app_gate_receipt.json",
+    "evidence/fusion_control/gaiafusion_working_app_verify_receipt.json",
+    "evidence/fusion_control/gaiafusion_release_smoke_receipt.json"
+  ],
+  "http_control_plane_endpoints": [
+    "GET /api/fusion/health",
+    "GET /api/fusion/self-probe",
+    "GET /api/fusion/bridge-status",
+    "GET /api/sovereign-mesh",
+    "GET /api/fusion/wasm-substrate"
+  ],
+  "mesh_verification": {
+    "gateway_port": 8803,
+    "paths": ["/health", "/claims?limit=1"],
+    "compose_reference": "docker-compose.cell.yml",
+    "mac_full_cell": {
+      "default_host": "127.0.0.1",
+      "compose_reference": "docker-compose.fusion-sidecar.yml",
+      "bundle_path_glob": "macos/GaiaFusion/GaiaFusion/Resources/fusion-sidecar-cell/docker-compose.fusion-sidecar.yml",
+      "verify_script_phase": "verify_gaiafusion_working_app.sh mac_cell before WAN mesh",
+      "skip_env": "GAIAFUSION_SKIP_MAC_CELL_MCP=1",
+      "internal_surface_suite_skip_env": "GAIAFUSION_INTERNAL_SUITE_SKIP_MAC_CELL=1",
+      "ports_doc": "deploy/mac_cell_mount/MAC_FUSION_MESH_CELL_PORTS.md"
+    }
+  },
+  "rtm_registry_path": "evidence/fusion_control/GAIAFUSION_RTM_GF_REQ_REGISTRY.md",
+  "heal_runbook_path": "docs/GAIAFUSION_MESH_MAC_CELL_HEAL_RUNBOOK.md",
+  "playwright_ui_rtm_path": "evidence/fusion_control/GAIAFUSION_PLAYWRIGHT_UI_RTM.md",
+  "production_plan_games_path": "evidence/fusion_control/GAIAFUSION_PRODUCTION_PLAN_GAMES.md",
+  "wasm_s4c4_projection_path": "evidence/fusion_control/GAIAFUSION_WASM_S4C4_PROJECTION.md",
+  "unit_tests_package": "macos/GaiaFusion/Tests/LocalServerAPITests.swift",
+  "terminal_states": ["CURE", "REFUSED", "SKIPPED", "BLOCKED"],
+  "substrate_source_of_truth_hub": "docs/SUBSTRATE_SOURCE_OF_TRUTH.md",
+  "closure_md_path": "evidence/fusion_control/GAIAFUSION_VERIFICATION_DELIVERY_CLOSURE.md",
+  "plant_adapters_contract": "spec/native_fusion/plant_adapters.json",
+  "release_smoke_preflight_env": "GAIAFUSION_RELEASE_PREFLIGHT_SIDECAR_BUNDLE=1"
+}

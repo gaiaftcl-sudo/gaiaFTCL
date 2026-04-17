@@ -1,0 +1,39 @@
+{
+  "gate": "fusionMacVisualGate",
+  "ok": true,
+  "terminal": "CALORIE",
+  "blocker": null,
+  "witness": {
+    "png_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/fusion_dashboard_witness.png",
+    "png_size_bytes": 1419794,
+    "dom_snapshot_html_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/fusion_dashboard_dom_snapshot.html",
+    "dom_snapshot_json_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/fusion_dashboard_dom_snapshot.json",
+    "dom_snapshot_bytes": 142890,
+    "s4_projection_witness_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/fusion_s4_projection_witness.json",
+    "s4_projection_schema": "gaiaftcl_fusion_s4_projection_ui_v1",
+    "s4_projection_configurable": true,
+    "s4_projection_control_matrix_ok": true,
+    "s4_projection_long_run_ok": true,
+    "fusion_s4_route_http_ok": true,
+    "fusion_s4_route_http_code": "200",
+    "fusion_fleet_route_http_ok": true,
+    "fusion_fleet_route_http_code": "200",
+    "mesh_digest_api_ok": true,
+    "global_challenge_digest_api_ok": true,
+    "dom_route_ok": true,
+    "dom_anchor_ok": true,
+    "operator_requirements_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/spec/mac_fusion_operator_requirements.json",
+    "operator_requirements_ok": true,
+    "operator_player_class": "advanced_fusion_plant_phd_researcher_and_technician",
+    "operator_personas": [
+      "fusion_research_phd",
+      "fusion_plant_technician"
+    ],
+    "operator_required_fields_missing": [],
+    "operator_games_missing": [],
+    "operator_games_ok": true,
+    "required_anchor_matched": true,
+    "test_pass_line": " CALORIE: fusion operator surface checks passed"
+  },
+  "ts_utc": "2026-04-07T18:26:15.957591+00:00"
+}

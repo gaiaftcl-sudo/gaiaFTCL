@@ -1,0 +1,124 @@
+{
+  "ts_utc": "2026-04-08T12:23:39.318377",
+  "terminal": "CURE",
+  "total": 23,
+  "passed": 23,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "app_process_running",
+      "ok": true,
+      "detail": "13447"
+    },
+    {
+      "name": "menu_bar_File",
+      "ok": true,
+      "detail": "items=['Apple', 'GaiaFusion', 'File', 'Edit', 'View', 'File', 'Mesh', 'Cell', 'View', 'Config', 'Help', 'Window', 'Help']"
+    },
+    {
+      "name": "menu_bar_Mesh",
+      "ok": true,
+      "detail": "items=['Apple', 'GaiaFusion', 'File', 'Edit', 'View', 'File', 'Mesh', 'Cell', 'View', 'Config', 'Help', 'Window', 'Help']"
+    },
+    {
+      "name": "menu_bar_Cell",
+      "ok": true,
+      "detail": "items=['Apple', 'GaiaFusion', 'File', 'Edit', 'View', 'File', 'Mesh', 'Cell', 'View', 'Config', 'Help', 'Window', 'Help']"
+    },
+    {
+      "name": "menu_bar_Config",
+      "ok": true,
+      "detail": "items=['Apple', 'GaiaFusion', 'File', 'Edit', 'View', 'File', 'Mesh', 'Cell', 'View', 'Config', 'Help', 'Window', 'Help']"
+    },
+    {
+      "name": "menu_bar_Help",
+      "ok": true,
+      "detail": "items=['Apple', 'GaiaFusion', 'File', 'Edit', 'View', 'File', 'Mesh', 'Cell', 'View', 'Config', 'Help', 'Window', 'Help']"
+    },
+    {
+      "name": "http_/fusion-s4",
+      "ok": true,
+      "detail": "http=200 body_prefix=<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport"
+    },
+    {
+      "name": "page_contains_fusion-cell-grid",
+      "ok": true,
+      "detail": "present=True"
+    },
+    {
+      "name": "page_contains_fusion-plant-controls",
+      "ok": true,
+      "detail": "present=True"
+    },
+    {
+      "name": "page_contains_fusion-swap-panel",
+      "ok": true,
+      "detail": "present=True"
+    },
+    {
+      "name": "page_contains_fusion-topology-view",
+      "ok": true,
+      "detail": "present=True"
+    },
+    {
+      "name": "page_contains_fusion-projection-panel",
+      "ok": true,
+      "detail": "present=True"
+    },
+    {
+      "name": "page_contains_fusion-metrics-view",
+      "ok": true,
+      "detail": "present=True"
+    },
+    {
+      "name": "api_/fusion_health",
+      "ok": true,
+      "detail": "http=200 body_prefix={\"mode\":\"dev_proxy\",\"pid\":13447,\"status\":\"ok\",\"uptime_sec\":571.50909996032715}"
+    },
+    {
+      "name": "api_/fusion_s4_projection",
+      "ok": true,
+      "detail": "http=200 body_prefix={\"control_matrix\":{\"nats_connected\":true,\"swap_ready\":true,\"v_qbit_delta\":1},\"flow_catalog_s4\":{\"pro"
+    },
+    {
+      "name": "api_/fusion_cells",
+      "ok": true,
+      "detail": "http=200 body_prefix=[{\"active\":true,\"health\":1,\"id\":\"gaiaftcl-hcloud-hel1-01\",\"input\":\"unknown\",\"ipv4\":\"77.42.85.60\",\"na"
+    },
+    {
+      "name": "api_/fusion_bridge_status",
+      "ok": true,
+      "detail": "http=200 body_prefix={\"connected\":true,\"webview_loaded\":false}"
+    },
+    {
+      "name": "page_or_bundle_contains_fusionBridge",
+      "ok": true,
+      "detail": "found=True"
+    },
+    {
+      "name": "page_or_bundle_contains_fusionReceive",
+      "ok": true,
+      "detail": "found=True"
+    },
+    {
+      "name": "menu_items_Mesh",
+      "ok": true,
+      "detail": "items=['Probe All Cells', 'Heal Unhealthy'], missing=[]"
+    },
+    {
+      "name": "menu_items_Cell",
+      "ok": true,
+      "detail": "items=['Topology View', 'Projection View', 'Metrics View', 'Grid View', 'Swap Selected', 'Cell Detail', 'Swap History'], missing=[]"
+    },
+    {
+      "name": "menu_items_Config",
+      "ok": true,
+      "detail": "items=['Preferences\u2026'], missing=[]"
+    },
+    {
+      "name": "menu_items_Help",
+      "ok": true,
+      "detail": "items=['About GaiaFusion'], missing=[]"
+    }
+  ]
+}

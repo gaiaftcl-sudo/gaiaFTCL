@@ -1,0 +1,66 @@
+{
+  "schema": "c4_mesh_self_moor_v1",
+  "ts_utc": "2026-04-07T22:19:33.120800+00:00",
+  "mooring_mode": "mesh_http",
+  "mesh_probe_deadline_sec": 15.0,
+  "nine_cells_ok": true,
+  "mesh_mooring_closed": true,
+  "terminal": "CALORIE",
+  "cells": [
+    {
+      "cell": "gaiaftcl-hcloud-hel1-01",
+      "ip": "77.42.85.60",
+      "health_http": 200,
+      "ok": true
+    },
+    {
+      "cell": "gaiaftcl-hcloud-hel1-02",
+      "ip": "135.181.88.134",
+      "health_http": 200,
+      "ok": true
+    },
+    {
+      "cell": "gaiaftcl-hcloud-hel1-03",
+      "ip": "77.42.32.156",
+      "health_http": 200,
+      "ok": true
+    },
+    {
+      "cell": "gaiaftcl-hcloud-hel1-04",
+      "ip": "77.42.88.110",
+      "health_http": 200,
+      "ok": true
+    },
+    {
+      "cell": "gaiaftcl-hcloud-hel1-05",
+      "ip": "37.27.7.9",
+      "health_http": 200,
+      "ok": true
+    },
+    {
+      "cell": "gaiaftcl-netcup-nbg1-01",
+      "ip": "37.120.187.247",
+      "health_http": 200,
+      "ok": true
+    },
+    {
+      "cell": "gaiaftcl-netcup-nbg1-02",
+      "ip": "152.53.91.220",
+      "health_http": 200,
+      "ok": true
+    },
+    {
+      "cell": "gaiaftcl-netcup-nbg1-03",
+      "ip": "152.53.88.141",
+      "health_http": 200,
+      "ok": true
+    },
+    {
+      "cell": "gaiaftcl-netcup-nbg1-04",
+      "ip": "37.120.187.174",
+      "health_http": 200,
+      "ok": true
+    }
+  ],
+  "note": "Nine-cell mesh witness via HTTP /health on :8803 — independent of Discord Earth-feed 11/11."
+}

@@ -1,0 +1,8 @@
+{
+  "schema": "discord_application_metadata_witness_v1",
+  "ts_utc": "2026-04-07T16:58:17.433634+00:00",
+  "terminal": "SKIPPED",
+  "reason": "no_bot_token_in_env",
+  "discord_embedded_activity_eligible": null,
+  "require_embedded_flags_env": false
+}

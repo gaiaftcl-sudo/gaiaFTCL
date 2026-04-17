@@ -1,0 +1,6 @@
+Playwright (Pass D subset) — gaiaos_ui_web
+Command: PLAYWRIGHT_BASE_URL=http://127.0.0.1:3000 npx playwright test tests/test_constitutional_door.spec.ts
+Environment: next start -p 3000 (local)
+Result: 1 passed (anonymous MCP 400), 1 failed (authenticated expected 200, received 500 — upstream/gateway not configured in local run)
+Exit code: 1
+Receipt: honest local UI surface; full green requires mesh-backed routes.

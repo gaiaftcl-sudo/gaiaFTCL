@@ -1,0 +1,22 @@
+{
+  "receipt_id": "GFTCL-OQ-PHYSICS-20260417T181056Z",
+  "parent_hash": "e6995960828f197615fdcb5379922ccf74e7d707fa4f8af655eaa4e64a7f85ae",
+  "terminal_state": "REFUSED",
+  "reason": "Metal standard version is below 3.1",
+  "physics_gate": {
+    "latency_ms": 30,
+    "packet_loss_pct": 2.0,
+    "quorum_status": "Failed",
+    "peak_die_temp_c": 0,
+    "peak_gpu_watt": 0
+  },
+  "metal_patent_gate": {
+    "source_grep": "Checked",
+    "linker_gate": "Checked",
+    "runtime_trace": "Checked",
+    "p99_gpu_ns": 0,
+    "metal_target_triple": "Unknown"
+  },
+  "timestamp_utc": "2026-04-17T18:11:26Z",
+  "evidence_hash": "b1f0ff019d047caa2c9cc4f410e1e6f6cdbcab8f28657da4883d7b31059616f6"
+}

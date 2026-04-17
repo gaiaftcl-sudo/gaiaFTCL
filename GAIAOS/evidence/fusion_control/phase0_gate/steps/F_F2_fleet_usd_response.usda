@@ -1,0 +1,26 @@
+#usda 1.0
+(
+  doc = """GaiaFTCL Fusion fleet overlay — generated from fusion_fleet_snapshot.json"""
+  defaultPrim = "FusionFleet"
+  metersPerUnit = 1
+  upAxis = "Y"
+)
+def Xform "FusionFleet" (
+  customData = {
+    string gaiaftcl_schema = "gaiaftcl_fusion_fleet_overlay_v1"
+    string updated_at_utc = "2026-04-05T16:29:55Z"
+    string source_path = "evidence/fusion_control/fusion_fleet_snapshot.json"
+  }
+)
+{
+  def Xform "Cell_8D03A380_8E8D_4870_AD43_69BB08B96F75" (
+  customData = {
+    string cell_id = "8D03A380-8E8D-4870-AD43-69BB08B96F75"
+    string ts_utc = "2026-04-05T16:29:54Z"
+    bool mesh_moor_ok = true
+    bool long_run_running = false
+    string git_sha = "5729f82"
+    string signals_tail_hash = "fea1b30cd9a8aa86f20e088efe6b21104eee2568ad070a0c2db72c19f3174e55"
+  }
+) {}
+}

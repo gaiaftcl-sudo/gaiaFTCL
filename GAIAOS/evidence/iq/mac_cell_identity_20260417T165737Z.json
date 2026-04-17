@@ -1,0 +1,21 @@
+{
+  "receipt_id": "GFTCL-IQ-HWLOCK-20260417T165737Z",
+  "terminal_state": "CALORIE",
+  "reason": "",
+  "hardware": {
+    "chip_brand": "Apple M4 Max",
+    "soc_id": "|",
+    "memory_bytes": "137438953472",
+    "serial_number": "FT66DPX63X",
+    "platform_uuid": "",
+    "secure_boot": "Unknown"
+  },
+  "toolchain": {
+    "xcode_select_path": "/Applications/Xcode.app/Contents/Developer",
+    "swift_version": "6.3",
+    "clang_version": "21.0.0",
+    "macos_sdk_version": "26.4"
+  },
+  "timestamp_utc": "2026-04-17T16:57:39Z",
+  "evidence_hash": "ce27bac0e74cfe7615886e326080a257d5e61a2f0236c7f728f158a57d200b66"
+}

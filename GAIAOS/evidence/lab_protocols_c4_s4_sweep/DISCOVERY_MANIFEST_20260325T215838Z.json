@@ -1,0 +1,109 @@
+{
+  "generated_utc": "20260325T215838Z",
+  "lab_files": [
+    "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md",
+    "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md"
+  ],
+  "entities": {
+    "ALZ-001": {
+      "smiles": null,
+      "sequence": "PWKSDAIGAVFLRLAYE",
+      "sources": [
+        "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md"
+      ]
+    },
+    "ALZ-002": {
+      "smiles": null,
+      "sequence": "GPGAAVEDAIYSWRFKL",
+      "sources": [
+        "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md"
+      ]
+    },
+    "ALZ-003": {
+      "smiles": null,
+      "sequence": null,
+      "sources": [
+        "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md"
+      ]
+    },
+    "ALZ-004": {
+      "smiles": null,
+      "sequence": null,
+      "sources": [
+        "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md"
+      ]
+    },
+    "ALZ-005": {
+      "smiles": null,
+      "sequence": null,
+      "sources": [
+        "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md"
+      ]
+    },
+    "ALZ-CHEM": {
+      "smiles": null,
+      "sequence": null,
+      "sources": [
+        "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md"
+      ]
+    },
+    "AML-CHEM-001": {
+      "smiles": "C(F)C1=C2C=C(C=CC2=NN1)C3=CC(=CN=C3)OCC(C)C",
+      "sequence": null,
+      "sources": [
+        "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md",
+        "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md"
+      ]
+    },
+    "LEUK-005": {
+      "smiles": null,
+      "sequence": "FYNCGLKIKYKPAVWAPAGKPFFPGFWYEKPKRPLCSATLIPGGKHQWYRAFKDVLVGMRYKRIRTR",
+      "sources": [
+        "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md"
+      ]
+    },
+    "MEN-CHEM-001": {
+      "smiles": null,
+      "sequence": null,
+      "sources": [
+        "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md"
+      ]
+    },
+    "MEN-CHEM-002": {
+      "smiles": null,
+      "sequence": null,
+      "sources": [
+        "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md"
+      ]
+    },
+    "MEN-CHEM-003": {
+      "smiles": null,
+      "sequence": null,
+      "sources": [
+        "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md"
+      ]
+    },
+    "MEN-CHEM-004": {
+      "smiles": null,
+      "sequence": null,
+      "sources": [
+        "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md"
+      ]
+    },
+    "MEN-CHEM-005": {
+      "smiles": null,
+      "sequence": null,
+      "sources": [
+        "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md"
+      ]
+    },
+    "MENING-PROT-001": {
+      "smiles": null,
+      "sequence": null,
+      "sources": [
+        "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md"
+      ]
+    }
+  }
+}

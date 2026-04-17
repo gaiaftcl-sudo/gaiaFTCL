@@ -1,0 +1,119 @@
+{
+  "ts_utc": "2026-04-08T12:19:08.714199",
+  "total": 22,
+  "passed": 20,
+  "failed": 2,
+  "terminal": "PARTIAL",
+  "checks": [
+    {
+      "name": "app_process_running",
+      "ok": true,
+      "detail": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion/.build/release/GaiaFusion"
+    },
+    {
+      "name": "app_window_title",
+      "ok": true,
+      "detail": "GaiaFusion \u2014 MOORED \u2014 0/9 cells"
+    },
+    {
+      "name": "app_window_size",
+      "ok": true,
+      "detail": "1200x840"
+    },
+    {
+      "name": "app_menu_bar_items_present",
+      "ok": true,
+      "detail": "244:248: syntax error: Expected end of line, etc. but found \u201celse\u201d. (-2741)"
+    },
+    {
+      "name": "http_/fusion-s4",
+      "ok": true,
+      "detail": "http=200 body_prefix=<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-s"
+    },
+    {
+      "name": "http_/api/fusion/health",
+      "ok": true,
+      "detail": "http=200 body_prefix={\"mode\":\"dev_proxy\",\"pid\":13447,\"status\":\"ok\",\"uptime_sec\":300.92844295501709}"
+    },
+    {
+      "name": "http_/api/fusion/s4-projection",
+      "ok": true,
+      "detail": "http=200 body_prefix={\"control_matrix\":{\"nats_connected\":true,\"swap_ready\":true,\"v_qbit_delta\":1},\"flow_catalog_s4\":{\"production_systems\":[\"f"
+    },
+    {
+      "name": "http_/api/fusion/cells",
+      "ok": true,
+      "detail": "http=200 body_prefix=[{\"active\":true,\"health\":1,\"id\":\"gaiaftcl-hcloud-hel1-01\",\"input\":\"unknown\",\"ipv4\":\"77.42.85.60\",\"name\":\"gaiaftcl-hcloud"
+    },
+    {
+      "name": "http_/api/fusion/bridge-status",
+      "ok": true,
+      "detail": "http=200 body_prefix={\"connected\":true,\"webview_loaded\":false}"
+    },
+    {
+      "name": "page_contains_fusion-cell-grid",
+      "ok": true,
+      "detail": "present=True"
+    },
+    {
+      "name": "page_contains_fusion-plant-controls",
+      "ok": true,
+      "detail": "present=True"
+    },
+    {
+      "name": "page_contains_fusion-swap-panel",
+      "ok": true,
+      "detail": "present=True"
+    },
+    {
+      "name": "page_contains_fusion-topology-view",
+      "ok": true,
+      "detail": "present=True"
+    },
+    {
+      "name": "page_contains_fusion-projection-panel",
+      "ok": true,
+      "detail": "present=True"
+    },
+    {
+      "name": "page_contains_fusion-metrics-view",
+      "ok": true,
+      "detail": "present=True"
+    },
+    {
+      "name": "page_contains_fusionBridge",
+      "ok": false,
+      "detail": "present=False"
+    },
+    {
+      "name": "page_contains_fusionReceive",
+      "ok": false,
+      "detail": "present=False"
+    },
+    {
+      "name": "menu_bar_File",
+      "ok": true,
+      "detail": "true"
+    },
+    {
+      "name": "menu_bar_Mesh",
+      "ok": true,
+      "detail": "true"
+    },
+    {
+      "name": "menu_bar_Cell",
+      "ok": true,
+      "detail": "true"
+    },
+    {
+      "name": "menu_bar_Config",
+      "ok": true,
+      "detail": "true"
+    },
+    {
+      "name": "menu_bar_Help",
+      "ok": true,
+      "detail": "true"
+    }
+  ]
+}

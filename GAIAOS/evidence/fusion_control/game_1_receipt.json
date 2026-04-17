@@ -1,0 +1,23 @@
+{
+  "game": "game_1_unify_plant_vocabulary",
+  "terminal_state": "MEETS",
+  "timestamp": "2026-04-09T11:55:06Z",
+  "verification": {
+    "xcodebuild_exit": 0,
+    "playwright_watchdog": "CURE",
+    "watchdog_witness": "evidence/fusion_control/playwright_watch/playwright_watch_last_witness.json"
+  },
+  "files_changed": [
+    "macos/GaiaFusion/GaiaFusion/Models/PlantKindsCatalog.swift",
+    "macos/GaiaFusion/GaiaFusion/Models/CellState.swift",
+    "macos/GaiaFusion/GaiaFusion/MeshStateManager.swift",
+    "macos/GaiaFusion/GaiaFusion/FusionBridge.swift",
+    "macos/GaiaFusion/GaiaFusion/GaiaFusionApp.swift"
+  ],
+  "assertions": [
+    "PlantKindsCatalog.legacyAliases: virtual->tokamak, real->tokamak",
+    "hybrid resolves to nil (REFUSED)",
+    "unknown resolves to nil (REFUSED)",
+    "No hardcoded real/virtual in swap payloads"
+  ]
+}

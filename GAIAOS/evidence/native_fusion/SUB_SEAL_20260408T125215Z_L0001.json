@@ -1,0 +1,70 @@
+{
+  "schema": "gaiaftcl_native_fusion_sub_seal_v1",
+  "invariant_id": "gaiaftcl_native_rust_fusion_invariant_v1",
+  "run_id": "20260408T125215Z_L0001",
+  "terminal": "CURE",
+  "ts_utc": "2026-04-08T12:58:57.130341+00:00",
+  "contract_path": "spec/native_rust_fusion_invariant_contract.json",
+  "contract_sha256": "1f6563d715a7f87b0b5b933a0342a7eaa647dd5b3fb3826852bf60282662b8bd",
+  "contract_schema": "gaiaftcl_native_rust_fusion_invariant_contract_v1",
+  "witness_bundle_sha256": "f5555fc4473cd8edb237d41916014b91d3e3c34174e8e2164302ed99d005e923",
+  "witness_bundle_files": [
+    {
+      "file": "commissioning_stage_witness.json",
+      "bytes": 111,
+      "sha256": "f06414772acb8c1f4a8b16b9eeb48bab0f5b5175222609a854c45c6a1b64da4a"
+    },
+    {
+      "file": "facility_middleware_witness.json",
+      "bytes": 104,
+      "sha256": "03464db0a3649d80a395ecce7dfa503d0b7993178644ee8bfab5b230ecaa899e"
+    },
+    {
+      "file": "fat_stage_witness.json",
+      "bytes": 91,
+      "sha256": "03460bfe02c7762bb4d626f57dcda9df66ff20170ccba2116a1148d65cd8bd86"
+    },
+    {
+      "file": "functional_safety_witness.json",
+      "bytes": 102,
+      "sha256": "03949dfa2d1defdb65ebbb64ba7014ff2d0eb0259d9ad6719f4acfc9f58aebda"
+    },
+    {
+      "file": "iso25010_quality_witness.json",
+      "bytes": 102,
+      "sha256": "d84811d415b1c6732d4350b11ea2d77340a6df905926542ed124f4b0d6daa125"
+    },
+    {
+      "file": "long_soak_stage_witness.json",
+      "bytes": 98,
+      "sha256": "3394d547b4f4526264e568276473c60adc374d2226aeb40d5b0c2fa435453677"
+    },
+    {
+      "file": "plant_hot_swap_witness.json",
+      "bytes": 168,
+      "sha256": "baa8533a88c36443831469949b18e958e8a91df2ecafd45e57c7b0fe47690419"
+    },
+    {
+      "file": "protection_interlock_witness.json",
+      "bytes": 108,
+      "sha256": "20741f8956ed6de154739a8a50b484a9a328a1732c1eee27dbe49cd0a4a9fd60"
+    },
+    {
+      "file": "sat_stage_witness.json",
+      "bytes": 91,
+      "sha256": "531e57ba832840258d7dda509b03afeb16ffd09b579498b89e6eb7d2e1f2d9c1"
+    }
+  ],
+  "anti_entropy": {
+    "s4_projection": {
+      "http_rc": 0,
+      "closure_ok": true,
+      "url": "http://127.0.0.1:8910/api/fusion/s4-projection"
+    },
+    "sovereign_mesh": {
+      "http_rc": 0,
+      "closure_ok": true,
+      "url": "http://127.0.0.1:8910/api/sovereign-mesh"
+    }
+  }
+}

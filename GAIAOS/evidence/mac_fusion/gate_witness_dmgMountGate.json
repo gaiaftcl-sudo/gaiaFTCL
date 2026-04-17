@@ -1,0 +1,15 @@
+{
+  "gate": "dmgMountGate",
+  "ok": true,
+  "terminal": "CALORIE",
+  "blocker": null,
+  "witness": {
+    "mountpoint": "/Volumes/GaiaFusion",
+    "df_line": "/dev/disk39s1    13Mi   2.1Mi    10Mi    17%     101  105k    0%   /Volumes/GaiaFusion",
+    "fusion_sidecar_host_app_present": true,
+    "fusion_control_app_present": true,
+    "elapsed_ms": 84.4944159999983,
+    "mount_script_output_tail": "CALORIE: already mounted: /Volumes/GaiaFusion\n/dev/disk39s1         13Mi   2.1Mi    10Mi    17%     101  105k    0%   /Volumes/GaiaFusion"
+  },
+  "ts_utc": "2026-04-07T18:22:00.863425+00:00"
+}

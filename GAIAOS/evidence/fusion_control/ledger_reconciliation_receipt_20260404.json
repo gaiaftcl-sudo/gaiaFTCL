@@ -1,0 +1,9 @@
+{
+  "schema": "gaiaftcl_fusion_ledger_reconciliation_v1",
+  "ts_utc": "2026-04-04T16:46:27Z",
+  "action": "appended overnight_signals.jsonl into long_run_signals.jsonl; removed overnight_signals.jsonl",
+  "long_run_lines_before": 651158,
+  "overnight_lines_appended": 2102,
+  "long_run_lines_after": 653260,
+  "note": "Canonical S4 ledger path remains evidence/fusion_control/long_run_signals.jsonl per FUSION_OPERATOR_SURFACE.md"
+}

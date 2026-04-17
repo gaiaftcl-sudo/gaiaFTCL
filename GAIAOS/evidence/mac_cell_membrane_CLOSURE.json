@@ -1,0 +1,19 @@
+{
+  "closure": "CALORIE",
+  "what": "Mac cell Discord-membrane mount protocol versioned in-repo + wired into sovereign facade DMG build",
+  "artifacts": [
+    "deploy/mac_cell_mount/README_MEMBRANE.md",
+    "deploy/mac_cell_mount/bin/cell_onboard.sh",
+    "deploy/mac_cell_mount/bin/gaia_mount",
+    "deploy/mac_cell_mount/bin/gaia_measured_record.sh",
+    "deploy/mac_cell_mount/bin/measured_status.sh",
+    "deploy/mac_cell_mount/bin/mcp_proxy",
+    "deploy/mac_cell_mount/spring/local_bridge.example.json",
+    "deploy/mac_cell_mount/spring/anchor.jwt.sample",
+    "deploy/mac_cell_mount/spring/model_spec.gguf.README.txt",
+    "scripts/build_gaiaftcl_facade_dmg.sh"
+  ],
+  "witness": "bash -n on all bin/*.sh exit 0; chmod +x applied",
+  "c4_note": "anchor.jwt on disk is honest JSON until a real issuer returns a JWT; ledger Measured requires substrate witness",
+  "iso_generated": "2026-04-03T00:00:00Z"
+}

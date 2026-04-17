@@ -1,0 +1,33 @@
+{
+  "action_taken": "AUTO_DETECTED",
+  "agent_id": "bf0180b5-d1f8-4336-835d-5321684d5b34",
+  "detected_at": "2026-02-01T12:09:05.628857+00:00",
+  "evidence": {
+    "detector_rule_id": "GOV_PROMPT_INJECTION",
+    "detector_version": "1.0.0",
+    "excerpt_hash": "c76febd521ae7fab0e97e2c041921eb7268158a6e01765acaa25c428b653ac1d",
+    "excerpt_length": 102,
+    "pattern_matches": [
+      {
+        "matches": [
+          "ignore previous",
+          "disregard"
+        ],
+        "type": "keyword_match"
+      },
+      {
+        "matches": [
+          "ignore previous instructions",
+          "disregard all",
+          "instead do this"
+        ],
+        "type": "phrase_match"
+      }
+    ],
+    "platform": "test_fixture",
+    "source_id": "msg_201",
+    "total_matches": 5
+  },
+  "reason_code": "BH_PROMPT_INJECTION_ROUTING",
+  "severity": "critical"
+}

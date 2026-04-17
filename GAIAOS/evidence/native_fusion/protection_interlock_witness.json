@@ -1,0 +1,5 @@
+{
+  "schema": "gaiaftcl_protection_interlock_witness_v1",
+  "terminal": "CALORIE",
+  "interlock_ok": true
+}

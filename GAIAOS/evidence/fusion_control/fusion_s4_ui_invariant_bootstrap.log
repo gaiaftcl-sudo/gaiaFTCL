@@ -1,0 +1,18 @@
+
+> gaiaos_ui_web@0.1.0 dev:fusion
+> sh -c 'exec next dev -p "${FUSION_UI_PORT:-8910}"'
+
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:8910
+- Network:       http://192.168.0.78:8910
+- Environments: .env
+
+✓ Starting...
+✓ Ready in 8.9s
+ GET /api/fusion/s4-projection 200 in 340ms (compile: 304ms, render: 35ms)
+ GET /api/fusion/s4-projection 200 in 18ms (compile: 3ms, render: 15ms)
+ GET /api/sovereign-mesh 200 in 374ms (compile: 46ms, render: 328ms)
+ GET /api/fusion/s4-projection 200 in 17ms (compile: 1444µs, render: 16ms)
+ GET /api/sovereign-mesh 200 in 104ms (compile: 1800µs, render: 102ms)
+ GET /api/fusion/s4-projection 200 in 20ms (compile: 1966µs, render: 18ms)
+[?25h

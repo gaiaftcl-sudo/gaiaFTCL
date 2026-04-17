@@ -1,0 +1,31 @@
+{
+  "schema": "gaiaftcl_operator_fusion_mesh_closure_v1",
+  "ts_utc": "2026-04-10T09:37:14Z",
+  "terminal": "CALORIE",
+  "closure_kind": "fusion_mesh_full",
+  "phases": {
+    "plant_adapters": true,
+    "fusion_sidecar_bundle": true,
+    "mesh_green_probe": true,
+    "mac_cell_probe": "CURE",
+    "self_heal_loop": "see_loop_receipt",
+    "gaiafusion_working_app": true
+  },
+  "mac_cell_detail": {
+    "rows": [
+      {
+        "cell": "mac_full_cell",
+        "ip": "127.0.0.1",
+        "port": 8803,
+        "health_http": "200",
+        "claims_http": "200"
+      }
+    ],
+    "fail": null
+  },
+  "self_heal_loop_receipt": "evidence/fusion_control/fusion_ui_self_heal_loop_receipt_20260410T093717Z.json",
+  "self_heal_loop_terminal": "CALORIE",
+  "working_app_verify_receipt": "evidence/fusion_control/gaiafusion_working_app_verify_receipt.json",
+  "working_app_ts_utc": "2026-04-10T09:37:45Z",
+  "log": "evidence/fusion_control/operator_fusion_mesh_closure_20260410T093714Z.log"
+}

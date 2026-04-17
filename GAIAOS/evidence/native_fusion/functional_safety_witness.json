@@ -1,0 +1,5 @@
+{
+  "schema": "gaiaftcl_functional_safety_witness_v1",
+  "terminal": "CALORIE",
+  "safety_ok": true
+}

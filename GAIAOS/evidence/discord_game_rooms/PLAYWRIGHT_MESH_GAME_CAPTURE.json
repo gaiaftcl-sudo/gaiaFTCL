@@ -1,0 +1,421 @@
+{
+  "run_id": "discord-mesh-games-2026-04-07T17-23-15-196Z",
+  "ts_utc": "2026-04-07T17:23:15.196Z",
+  "driver": "playwright",
+  "games": {
+    "atc": {
+      "live_captured": true,
+      "evidence": "https://discord.com/channels/1487775674356990064/1488583626613461204",
+      "last_run_ts_utc": "2026-04-07T17:12:22.606Z",
+      "required_playwright_spec": "services/gaiaos_ui_web/tests/discord/discord_mesh_games_capture.spec.ts",
+      "note": "",
+      "ui_interactions": {
+        "status_invoked": true,
+        "dashboard_invoked": true,
+        "dashboard_link_detected": true,
+        "dashboard_link_open_attempted": true,
+        "dashboard_link_opened_in_playwright": true,
+        "dashboard_link_opened_url": "http://gaiaftcl.com:9006/",
+        "dashboard_link_open_error": "page.goto: net::ERR_CONNECTION_REFUSED at http://gaiaftcl.com:9006/\nCall log:\n\u001b[2m  - navigating to \"http://gaiaftcl.com:9006/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+        "iframe_or_embed_detected": true,
+        "activity_url_detected": false,
+        "discord_surface_proof_detected": true,
+        "screenshot_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_atc_05_final.png",
+        "screenshot_paths": [
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_atc_00_enter.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_atc_01_status.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_atc_02_dashboard.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_atc_03_surface_proof.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_atc_04_scrolled.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_atc_x_fusion_fleet.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_atc_x_mesh_status.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_atc_05_final.png"
+        ]
+      }
+    },
+    "biology-cures": {
+      "live_captured": true,
+      "evidence": "https://discord.com/channels/1487775674356990064/1488583620686905508",
+      "last_run_ts_utc": "2026-04-07T17:12:38.007Z",
+      "required_playwright_spec": "services/gaiaos_ui_web/tests/discord/discord_mesh_games_capture.spec.ts",
+      "note": "",
+      "ui_interactions": {
+        "status_invoked": true,
+        "dashboard_invoked": true,
+        "dashboard_link_detected": false,
+        "dashboard_link_open_attempted": true,
+        "dashboard_link_opened_in_playwright": true,
+        "dashboard_link_opened_url": "https://support.discord.com",
+        "dashboard_link_open_error": null,
+        "iframe_or_embed_detected": true,
+        "activity_url_detected": false,
+        "discord_surface_proof_detected": true,
+        "screenshot_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_biology-cures_05_final.png",
+        "screenshot_paths": [
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_biology-cures_00_enter.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_biology-cures_01_status.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_biology-cures_02_dashboard.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_biology-cures_03_surface_proof.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_biology-cures_04_scrolled.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_biology-cures_05_final.png"
+        ]
+      }
+    },
+    "crypto-risk": {
+      "live_captured": true,
+      "evidence": "https://discord.com/channels/1487775674356990064/1488583629910180051",
+      "last_run_ts_utc": "2026-04-07T17:12:50.201Z",
+      "required_playwright_spec": "services/gaiaos_ui_web/tests/discord/discord_mesh_games_capture.spec.ts",
+      "note": "",
+      "ui_interactions": {
+        "status_invoked": true,
+        "dashboard_invoked": true,
+        "dashboard_link_detected": true,
+        "dashboard_link_open_attempted": true,
+        "dashboard_link_opened_in_playwright": true,
+        "dashboard_link_opened_url": "http://gaiaftcl.com:9006/",
+        "dashboard_link_open_error": "page.goto: net::ERR_CONNECTION_REFUSED at http://gaiaftcl.com:9006/\nCall log:\n\u001b[2m  - navigating to \"http://gaiaftcl.com:9006/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+        "iframe_or_embed_detected": true,
+        "activity_url_detected": false,
+        "discord_surface_proof_detected": true,
+        "screenshot_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_crypto-risk_05_final.png",
+        "screenshot_paths": [
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_crypto-risk_00_enter.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_crypto-risk_01_status.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_crypto-risk_02_dashboard.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_crypto-risk_03_surface_proof.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_crypto-risk_04_scrolled.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_crypto-risk_05_final.png"
+        ]
+      }
+    },
+    "nuclear-fusion": {
+      "live_captured": true,
+      "evidence": "https://discord.com/channels/1487775674356990064/1488583628920328252",
+      "last_run_ts_utc": "2026-04-07T17:13:06.977Z",
+      "required_playwright_spec": "services/gaiaos_ui_web/tests/discord/discord_mesh_games_capture.spec.ts",
+      "note": "",
+      "ui_interactions": {
+        "status_invoked": true,
+        "dashboard_invoked": true,
+        "dashboard_link_detected": true,
+        "dashboard_link_open_attempted": true,
+        "dashboard_link_opened_in_playwright": true,
+        "dashboard_link_opened_url": "http://gaiaftcl.com:9006/",
+        "dashboard_link_open_error": "page.goto: net::ERR_CONNECTION_REFUSED at http://gaiaftcl.com:9006/\nCall log:\n\u001b[2m  - navigating to \"http://gaiaftcl.com:9006/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+        "iframe_or_embed_detected": true,
+        "activity_url_detected": false,
+        "discord_surface_proof_detected": true,
+        "screenshot_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_nuclear-fusion_05_final.png",
+        "screenshot_paths": [
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_nuclear-fusion_00_enter.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_nuclear-fusion_01_status.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_nuclear-fusion_02_dashboard.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_nuclear-fusion_03_surface_proof.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_nuclear-fusion_04_scrolled.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_nuclear-fusion_05_final.png"
+        ]
+      }
+    },
+    "token-economics": {
+      "live_captured": false,
+      "evidence": "https://discord.com/channels/1487775674356990064",
+      "last_run_ts_utc": "2026-04-07T17:13:57.744Z",
+      "required_playwright_spec": "services/gaiaos_ui_web/tests/discord/discord_mesh_games_capture.spec.ts",
+      "note": "playwright_capture_failed: channel_lookup_failed:token-economics",
+      "ui_interactions": {
+        "status_invoked": false,
+        "dashboard_invoked": false,
+        "dashboard_link_detected": false,
+        "dashboard_link_open_attempted": false,
+        "dashboard_link_opened_in_playwright": false,
+        "dashboard_link_opened_url": null,
+        "dashboard_link_open_error": null,
+        "iframe_or_embed_detected": false,
+        "activity_url_detected": false,
+        "discord_surface_proof_detected": false,
+        "screenshot_path": null,
+        "screenshot_paths": []
+      }
+    },
+    "logistics-chain": {
+      "live_captured": true,
+      "evidence": "https://discord.com/channels/1487775674356990064/1488583632615637002",
+      "last_run_ts_utc": "2026-04-07T17:15:31.782Z",
+      "required_playwright_spec": "services/gaiaos_ui_web/tests/discord/discord_mesh_games_capture.spec.ts",
+      "note": "",
+      "ui_interactions": {
+        "status_invoked": true,
+        "dashboard_invoked": true,
+        "dashboard_link_detected": true,
+        "dashboard_link_open_attempted": true,
+        "dashboard_link_opened_in_playwright": true,
+        "dashboard_link_opened_url": "http://gaiaftcl.com:9006/",
+        "dashboard_link_open_error": "page.goto: net::ERR_CONNECTION_REFUSED at http://gaiaftcl.com:9006/\nCall log:\n\u001b[2m  - navigating to \"http://gaiaftcl.com:9006/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+        "iframe_or_embed_detected": true,
+        "activity_url_detected": false,
+        "discord_surface_proof_detected": true,
+        "screenshot_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_logistics-chain_05_final.png",
+        "screenshot_paths": [
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_logistics-chain_00_enter.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_logistics-chain_01_status.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_logistics-chain_02_dashboard.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_logistics-chain_03_surface_proof.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_logistics-chain_04_scrolled.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_logistics-chain_05_final.png"
+        ]
+      }
+    },
+    "quantum-closure": {
+      "live_captured": true,
+      "evidence": "https://discord.com/channels/1487775674356990064/1488572003567800451",
+      "last_run_ts_utc": "2026-04-07T17:19:28.997Z",
+      "required_playwright_spec": "services/gaiaos_ui_web/tests/discord/discord_mesh_games_capture.spec.ts",
+      "note": "",
+      "ui_interactions": {
+        "status_invoked": true,
+        "dashboard_invoked": true,
+        "dashboard_link_detected": true,
+        "dashboard_link_open_attempted": true,
+        "dashboard_link_opened_in_playwright": true,
+        "dashboard_link_opened_url": "http://gaiaftcl.com:9006/",
+        "dashboard_link_open_error": "page.goto: net::ERR_CONNECTION_REFUSED at http://gaiaftcl.com:9006/\nCall log:\n\u001b[2m  - navigating to \"http://gaiaftcl.com:9006/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+        "iframe_or_embed_detected": true,
+        "activity_url_detected": false,
+        "discord_surface_proof_detected": true,
+        "screenshot_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_05_final.png",
+        "screenshot_paths": [
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_00_enter.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_01_status.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_02_dashboard.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_03_surface_proof.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_04_scrolled.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_01.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_02.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_03.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_04.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_05.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_06.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_07.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_08.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_09.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_10.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_11.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_12.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_13.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_14.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_15.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_16.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_17.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_18.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_qa_19.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_quantum-closure_05_final.png"
+        ]
+      }
+    },
+    "robotics-ops": {
+      "live_captured": true,
+      "evidence": "https://discord.com/channels/1487775674356990064/1488583627456385075",
+      "last_run_ts_utc": "2026-04-07T17:19:55.230Z",
+      "required_playwright_spec": "services/gaiaos_ui_web/tests/discord/discord_mesh_games_capture.spec.ts",
+      "note": "",
+      "ui_interactions": {
+        "status_invoked": true,
+        "dashboard_invoked": true,
+        "dashboard_link_detected": true,
+        "dashboard_link_open_attempted": true,
+        "dashboard_link_opened_in_playwright": true,
+        "dashboard_link_opened_url": "http://gaiaftcl.com:9006/",
+        "dashboard_link_open_error": "page.goto: net::ERR_CONNECTION_REFUSED at http://gaiaftcl.com:9006/\nCall log:\n\u001b[2m  - navigating to \"http://gaiaftcl.com:9006/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+        "iframe_or_embed_detected": true,
+        "activity_url_detected": false,
+        "discord_surface_proof_detected": true,
+        "screenshot_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_robotics-ops_05_final.png",
+        "screenshot_paths": [
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_robotics-ops_00_enter.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_robotics-ops_01_status.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_robotics-ops_02_dashboard.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_robotics-ops_03_surface_proof.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_robotics-ops_04_scrolled.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_robotics-ops_05_final.png"
+        ]
+      }
+    },
+    "telecom-mesh": {
+      "live_captured": true,
+      "evidence": "https://discord.com/channels/1487775674356990064/1488583634284839114",
+      "last_run_ts_utc": "2026-04-07T17:20:14.730Z",
+      "required_playwright_spec": "services/gaiaos_ui_web/tests/discord/discord_mesh_games_capture.spec.ts",
+      "note": "",
+      "ui_interactions": {
+        "status_invoked": true,
+        "dashboard_invoked": true,
+        "dashboard_link_detected": true,
+        "dashboard_link_open_attempted": true,
+        "dashboard_link_opened_in_playwright": true,
+        "dashboard_link_opened_url": "http://gaiaftcl.com:9006/",
+        "dashboard_link_open_error": "page.goto: net::ERR_CONNECTION_REFUSED at http://gaiaftcl.com:9006/\nCall log:\n\u001b[2m  - navigating to \"http://gaiaftcl.com:9006/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+        "iframe_or_embed_detected": true,
+        "activity_url_detected": false,
+        "discord_surface_proof_detected": true,
+        "screenshot_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_telecom-mesh_05_final.png",
+        "screenshot_paths": [
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_telecom-mesh_00_enter.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_telecom-mesh_01_status.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_telecom-mesh_02_dashboard.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_telecom-mesh_03_surface_proof.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_telecom-mesh_04_scrolled.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_telecom-mesh_05_final.png"
+        ]
+      }
+    },
+    "med": {
+      "live_captured": true,
+      "evidence": "https://discord.com/channels/1487775674356990064/1488583625304707172",
+      "last_run_ts_utc": "2026-04-07T17:20:54.646Z",
+      "required_playwright_spec": "services/gaiaos_ui_web/tests/discord/discord_mesh_games_capture.spec.ts",
+      "note": "",
+      "ui_interactions": {
+        "status_invoked": true,
+        "dashboard_invoked": true,
+        "dashboard_link_detected": true,
+        "dashboard_link_open_attempted": true,
+        "dashboard_link_opened_in_playwright": true,
+        "dashboard_link_opened_url": "http://gaiaftcl.com:9006/",
+        "dashboard_link_open_error": "page.goto: net::ERR_CONNECTION_REFUSED at http://gaiaftcl.com:9006/\nCall log:\n\u001b[2m  - navigating to \"http://gaiaftcl.com:9006/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+        "iframe_or_embed_detected": true,
+        "activity_url_detected": false,
+        "discord_surface_proof_detected": true,
+        "screenshot_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_med_05_final.png",
+        "screenshot_paths": [
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_med_00_enter.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_med_01_status.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_med_02_dashboard.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_med_03_surface_proof.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_med_04_scrolled.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_med_05_final.png"
+        ]
+      }
+    },
+    "law": {
+      "live_captured": true,
+      "evidence": "https://discord.com/channels/1487775674356990064/1488583631369797804",
+      "last_run_ts_utc": "2026-04-07T17:21:36.968Z",
+      "required_playwright_spec": "services/gaiaos_ui_web/tests/discord/discord_mesh_games_capture.spec.ts",
+      "note": "",
+      "ui_interactions": {
+        "status_invoked": true,
+        "dashboard_invoked": true,
+        "dashboard_link_detected": true,
+        "dashboard_link_open_attempted": true,
+        "dashboard_link_opened_in_playwright": true,
+        "dashboard_link_opened_url": "http://gaiaftcl.com:9006/",
+        "dashboard_link_open_error": "page.goto: net::ERR_CONNECTION_REFUSED at http://gaiaftcl.com:9006/\nCall log:\n\u001b[2m  - navigating to \"http://gaiaftcl.com:9006/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+        "iframe_or_embed_detected": true,
+        "activity_url_detected": false,
+        "discord_surface_proof_detected": true,
+        "screenshot_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_law_05_final.png",
+        "screenshot_paths": [
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_law_00_enter.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_law_01_status.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_law_02_dashboard.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_law_03_surface_proof.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_law_04_scrolled.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_law_05_final.png"
+        ]
+      }
+    },
+    "climate-accounting": {
+      "live_captured": true,
+      "evidence": "https://discord.com/channels/1487775674356990064/1488583635828478025",
+      "last_run_ts_utc": "2026-04-07T17:22:35.479Z",
+      "required_playwright_spec": "services/gaiaos_ui_web/tests/discord/discord_mesh_games_capture.spec.ts",
+      "note": "",
+      "ui_interactions": {
+        "status_invoked": true,
+        "dashboard_invoked": true,
+        "dashboard_link_detected": true,
+        "dashboard_link_open_attempted": true,
+        "dashboard_link_opened_in_playwright": true,
+        "dashboard_link_opened_url": "http://gaiaftcl.com:9006/",
+        "dashboard_link_open_error": "page.goto: net::ERR_CONNECTION_REFUSED at http://gaiaftcl.com:9006/\nCall log:\n\u001b[2m  - navigating to \"http://gaiaftcl.com:9006/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+        "iframe_or_embed_detected": true,
+        "activity_url_detected": false,
+        "discord_surface_proof_detected": true,
+        "screenshot_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_climate-accounting_05_final.png",
+        "screenshot_paths": [
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_climate-accounting_00_enter.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_climate-accounting_01_status.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_climate-accounting_02_dashboard.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_climate-accounting_03_surface_proof.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_climate-accounting_04_scrolled.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_climate-accounting_05_final.png"
+        ]
+      }
+    },
+    "neuro-clinical": {
+      "live_captured": true,
+      "evidence": "https://discord.com/channels/1487775674356990064/1488583623496958126",
+      "last_run_ts_utc": "2026-04-07T17:22:56.053Z",
+      "required_playwright_spec": "services/gaiaos_ui_web/tests/discord/discord_mesh_games_capture.spec.ts",
+      "note": "",
+      "ui_interactions": {
+        "status_invoked": true,
+        "dashboard_invoked": true,
+        "dashboard_link_detected": true,
+        "dashboard_link_open_attempted": true,
+        "dashboard_link_opened_in_playwright": true,
+        "dashboard_link_opened_url": "http://gaiaftcl.com:9006/",
+        "dashboard_link_open_error": "page.goto: net::ERR_CONNECTION_REFUSED at http://gaiaftcl.com:9006/\nCall log:\n\u001b[2m  - navigating to \"http://gaiaftcl.com:9006/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+        "iframe_or_embed_detected": true,
+        "activity_url_detected": false,
+        "discord_surface_proof_detected": true,
+        "screenshot_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_neuro-clinical_05_final.png",
+        "screenshot_paths": [
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_neuro-clinical_00_enter.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_neuro-clinical_01_status.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_neuro-clinical_02_dashboard.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_neuro-clinical_03_surface_proof.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_neuro-clinical_04_scrolled.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_neuro-clinical_05_final.png"
+        ]
+      }
+    },
+    "sports-vortex": {
+      "live_captured": true,
+      "evidence": "https://discord.com/channels/1487775674356990064/1488586701407387778",
+      "last_run_ts_utc": "2026-04-07T17:23:15.195Z",
+      "required_playwright_spec": "services/gaiaos_ui_web/tests/discord/discord_mesh_games_capture.spec.ts",
+      "note": "",
+      "ui_interactions": {
+        "status_invoked": true,
+        "dashboard_invoked": true,
+        "dashboard_link_detected": true,
+        "dashboard_link_open_attempted": true,
+        "dashboard_link_opened_in_playwright": true,
+        "dashboard_link_opened_url": "http://gaiaftcl.com:9006/",
+        "dashboard_link_open_error": "page.goto: net::ERR_CONNECTION_REFUSED at http://gaiaftcl.com:9006/\nCall log:\n\u001b[2m  - navigating to \"http://gaiaftcl.com:9006/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+        "iframe_or_embed_detected": true,
+        "activity_url_detected": false,
+        "discord_surface_proof_detected": true,
+        "screenshot_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_sports-vortex_05_final.png",
+        "screenshot_paths": [
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_sports-vortex_00_enter.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_sports-vortex_01_status.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_sports-vortex_02_dashboard.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_sports-vortex_03_surface_proof.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_sports-vortex_04_scrolled.png",
+          "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/screenshots/mesh_game_sports-vortex_05_final.png"
+        ]
+      }
+    }
+  },
+  "global_ui_interactions": {
+    "fusion_fleet_invoked": true,
+    "mesh_status_invoked": true,
+    "local_mesh_view_url": "http://localhost:8910/sovereign-mesh",
+    "local_fusion_fleet_url": "http://localhost:8910/fusion-fleet",
+    "local_mesh_view_ok": true,
+    "local_fusion_fleet_ok": true
+  }
+}

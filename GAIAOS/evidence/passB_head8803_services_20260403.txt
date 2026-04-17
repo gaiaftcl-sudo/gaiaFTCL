@@ -1,0 +1,20 @@
+# Pass B — substrate / gateway witness (2026-04-03T19:10Z UTC)
+# Limb: curl only; Arango WAN blocked (8529 not reachable from session).
+
+$ curl -sS --max-time 8 http://77.42.85.60:8803/health
+{"status":"healthy","service":"franklin-guardian","role":"Constitutional Oversight Engine"}
+
+$ curl -sS --max-time 8 http://135.181.88.134:8803/health
+{"status":"ok","service":"gaiaftcl-wallet-gate","upstream":"http://gaiaftcl-mcp-gateway:8830"}
+
+$ curl -sS -D - -o /dev/null --max-time 10 http://77.42.85.60:8803/vqbit/torsion
+HTTP/1.1 404 Not Found
+content-length: 0
+
+Interpretation: hel1-01:8803 is Franklin, not fot_mcp_gateway — /vqbit/torsion is not on that bind. Probes must name service from /health JSON (see docs/SUBSTRATE_SOURCE_OF_TRUTH.md §2).
+
+$ curl -sS --max-time 12 http://135.181.88.134:8803/vqbit/torsion
+{"error":"missing_wallet_proof","detail":"Provide X-Gaiaftcl-Internal-Key or wallet headers..."}
+HTTP 400
+
+Interpretation: hel1-02:8803 is wallet gate; route exists upstream but requires wallet proof or internal key — not a silent 404.

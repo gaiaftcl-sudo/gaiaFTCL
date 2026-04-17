@@ -1,0 +1,34 @@
+=== run_operator_fusion_mesh_closure ts=2026-04-12T15:14:38Z GAIA_ROOT=/Users/richardgillespie/Documents/FoT8D/GAIAOS ===
+OPERATOR_CLOSURE_SKIP_WORKING_APP=0 OPERATOR_CLOSURE_SKIP_MAC_PROBE=0 OPERATOR_CLOSURE_SKIP_SELF_HEAL_LOOP=0
+## phase 1 plant_adapters
+CALORIE: plant_adapters OK — spec/native_fusion/plant_adapters.json kinds=9
+## phase 2 fusion_sidecar_bundle
+━━ Fusion sidecar bundle verify (GAIA_ROOT=/Users/richardgillespie/Documents/FoT8D/GAIAOS) ━━
+OK  compose file present
+OK  README_CELL_STACK canonical
+OK  arango bootstrap script
+OK  fusion_sidecar_stack_smoke script
+OK  mcp_mac_cell_probe script
+OK  docker compose config
+OK  guest mount script bash -n
+OK  SUBSTRATE_SOURCE_OF_TRUTH index
+OK  doc exists deploy/mac_cell_mount/fusion_sidecar_guest/README.md
+OK  doc exists deploy/mac_cell_mount/FUSION_SIDECAR_HOST_APP.md
+OK  doc exists deploy/mac_cell_mount/FUSION_SIDECAR_GUEST_IMAGE.md
+OK  doc exists evidence/fusion_control/FUSION_SIDECAR_FIELD_OF_FIELDS.md
+OK  doc exists evidence/fusion_control/FUSION_SIDECAR_ACTIVE_PLAN.md
+SKIP xcodebuild (set VERIFY_FUSION_SIDECAR_XCODE=1 to enable)
+CALORIE: fusion sidecar bundle checks passed
+## phase 3 invariant_mesh_green_probe (nine-cell)
+OK	gaiaftcl-hcloud-hel1-01	77.42.85.60	8803	/health	200
+OK	gaiaftcl-hcloud-hel1-02	135.181.88.134	8803	/health	200
+OK	gaiaftcl-hcloud-hel1-03	77.42.32.156	8803	/health	200
+OK	gaiaftcl-hcloud-hel1-04	77.42.88.110	8803	/health	200
+OK	gaiaftcl-hcloud-hel1-05	37.27.7.9	8803	/health	200
+OK	gaiaftcl-netcup-nbg1-01	37.120.187.247	8803	/health	200
+OK	gaiaftcl-netcup-nbg1-02	152.53.91.220	8803	/health	200
+OK	gaiaftcl-netcup-nbg1-03	152.53.88.141	8803	/health	200
+OK	gaiaftcl-netcup-nbg1-04	37.120.187.174	8803	/health	200
+# summary ok=9 fail=0 need_ok=9
+## phase 4 mcp_mac_cell_probe (127.0.0.1:8803)
+REFUSED: phase4 mac cell probe fail: health:mac_full_cell:127.0.0.1:8803:000

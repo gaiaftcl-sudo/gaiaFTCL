@@ -1,0 +1,161 @@
+{
+  "gateway": "http://77.42.85.60:8803",
+  "gateway_ok": true,
+  "rows": [
+    {
+      "entity": "ALZ-001",
+      "kind": "protein",
+      "s4_smiles": null,
+      "s4_sequence": "PWKSDAIGAVFLRLAYE",
+      "c4_collection": "discovered_proteins",
+      "c4_key": null,
+      "c4_sequence": null,
+      "status": "UNKNOWN",
+      "detail": "No C4 protein row; ingest or align protein_id before SETTLED projection"
+    },
+    {
+      "entity": "ALZ-002",
+      "kind": "protein",
+      "s4_smiles": null,
+      "s4_sequence": "GPGAAVEDAIYSWRFKL",
+      "c4_collection": "discovered_proteins",
+      "c4_key": null,
+      "c4_sequence": null,
+      "status": "UNKNOWN",
+      "detail": "No C4 protein row; ingest or align protein_id before SETTLED projection"
+    },
+    {
+      "entity": "ALZ-003",
+      "kind": "protein",
+      "s4_smiles": null,
+      "s4_sequence": null,
+      "c4_collection": "discovered_proteins",
+      "c4_key": null,
+      "c4_sequence": null,
+      "status": "UNKNOWN",
+      "detail": "No C4 protein row; ingest or align protein_id before SETTLED projection"
+    },
+    {
+      "entity": "ALZ-004",
+      "kind": "protein",
+      "s4_smiles": null,
+      "s4_sequence": null,
+      "c4_collection": "discovered_proteins",
+      "c4_key": null,
+      "c4_sequence": null,
+      "status": "UNKNOWN",
+      "detail": "No C4 protein row; ingest or align protein_id before SETTLED projection"
+    },
+    {
+      "entity": "ALZ-005",
+      "kind": "protein",
+      "s4_smiles": null,
+      "s4_sequence": null,
+      "c4_collection": "discovered_proteins",
+      "c4_key": null,
+      "c4_sequence": null,
+      "status": "UNKNOWN",
+      "detail": "No C4 protein row; ingest or align protein_id before SETTLED projection"
+    },
+    {
+      "entity": "ALZ-CHEM",
+      "kind": "molecule",
+      "s4_smiles": null,
+      "s4_sequence": null,
+      "c4_collection": "discovered_molecules",
+      "c4_key": null,
+      "c4_smiles": null,
+      "status": "UNKNOWN",
+      "detail": "No C4 molecule/compound row; flag for ingest"
+    },
+    {
+      "entity": "AML-CHEM-001",
+      "kind": "molecule",
+      "s4_smiles": "C(F)C1=C2C=C(C=CC2=NN1)C3=CC(=CN=C3)OCC(C)C",
+      "s4_sequence": null,
+      "c4_collection": "discovered_molecules",
+      "c4_key": "cancer_candidate_9084",
+      "c4_smiles": "C(F)C1=C2C=C(C=CC2=NN1)C3=CC(=CN=C3)OCC(C)C",
+      "status": "MATCH"
+    },
+    {
+      "entity": "LEUK-005",
+      "kind": "protein",
+      "s4_smiles": null,
+      "s4_sequence": "FYNCGLKIKYKPAVWAPAGKPFFPGFWYEKPKRPLCSATLIPGGKHQWYRAFKDVLVGMRYKRIRTR",
+      "c4_collection": "discovered_proteins",
+      "c4_key": null,
+      "c4_sequence": null,
+      "status": "UNKNOWN",
+      "detail": "No C4 protein row; ingest or align protein_id before SETTLED projection"
+    },
+    {
+      "entity": "MEN-CHEM-001",
+      "kind": "molecule",
+      "s4_smiles": null,
+      "s4_sequence": null,
+      "c4_collection": "discovered_molecules",
+      "c4_key": null,
+      "c4_smiles": null,
+      "status": "UNKNOWN",
+      "detail": "No C4 molecule/compound row; flag for ingest"
+    },
+    {
+      "entity": "MEN-CHEM-002",
+      "kind": "molecule",
+      "s4_smiles": null,
+      "s4_sequence": null,
+      "c4_collection": "discovered_molecules",
+      "c4_key": null,
+      "c4_smiles": null,
+      "status": "UNKNOWN",
+      "detail": "No C4 molecule/compound row; flag for ingest"
+    },
+    {
+      "entity": "MEN-CHEM-003",
+      "kind": "molecule",
+      "s4_smiles": null,
+      "s4_sequence": null,
+      "c4_collection": "discovered_molecules",
+      "c4_key": null,
+      "c4_smiles": null,
+      "status": "UNKNOWN",
+      "detail": "No C4 molecule/compound row; flag for ingest"
+    },
+    {
+      "entity": "MEN-CHEM-004",
+      "kind": "molecule",
+      "s4_smiles": null,
+      "s4_sequence": null,
+      "c4_collection": "discovered_molecules",
+      "c4_key": null,
+      "c4_smiles": null,
+      "status": "UNKNOWN",
+      "detail": "No C4 molecule/compound row; flag for ingest"
+    },
+    {
+      "entity": "MEN-CHEM-005",
+      "kind": "molecule",
+      "s4_smiles": null,
+      "s4_sequence": null,
+      "c4_collection": "discovered_molecules",
+      "c4_key": null,
+      "c4_smiles": null,
+      "status": "UNKNOWN",
+      "detail": "No C4 molecule/compound row; flag for ingest"
+    },
+    {
+      "entity": "MENING-PROT-001",
+      "kind": "protein",
+      "s4_smiles": null,
+      "s4_sequence": null,
+      "c4_collection": "discovered_proteins",
+      "c4_key": null,
+      "c4_sequence": null,
+      "status": "UNKNOWN",
+      "detail": "No C4 protein row; ingest or align protein_id before SETTLED projection"
+    }
+  ],
+  "corrections": [],
+  "ingest_self_heal": []
+}

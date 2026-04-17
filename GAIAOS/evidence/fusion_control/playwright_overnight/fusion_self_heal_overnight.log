@@ -1,0 +1,416 @@
+2026-04-08T19:08:00-04:00 [START] cycle=1/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.7s)
+
+  1 passed (3.0s)
+2026-04-08T19:08:04-04:00 [END] cycle=1 exit=0
+2026-04-08T19:08:04-04:00 [SLEEP] cycle=1 complete; resting 15m
+2026-04-08T19:23:04-04:00 [START] cycle=2/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.5s)
+2026-04-08T19:23:08-04:00 [END] cycle=2 exit=0
+2026-04-08T19:23:08-04:00 [SLEEP] cycle=2 complete; resting 15m
+2026-04-08T19:38:08-04:00 [START] cycle=3/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.7s)
+2026-04-08T19:38:11-04:00 [END] cycle=3 exit=0
+2026-04-08T19:38:11-04:00 [SLEEP] cycle=3 complete; resting 15m
+2026-04-08T19:53:11-04:00 [START] cycle=4/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.5s)
+2026-04-08T19:53:15-04:00 [END] cycle=4 exit=0
+2026-04-08T19:53:15-04:00 [SLEEP] cycle=4 complete; resting 15m
+2026-04-08T20:08:15-04:00 [START] cycle=5/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.6s)
+2026-04-08T20:08:18-04:00 [END] cycle=5 exit=0
+2026-04-08T20:08:18-04:00 [SLEEP] cycle=5 complete; resting 15m
+2026-04-08T20:23:18-04:00 [START] cycle=6/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (3.0s)
+2026-04-08T20:23:22-04:00 [END] cycle=6 exit=0
+2026-04-08T20:23:22-04:00 [SLEEP] cycle=6 complete; resting 15m
+2026-04-08T20:38:22-04:00 [START] cycle=7/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.6s)
+2026-04-08T20:38:26-04:00 [END] cycle=7 exit=0
+2026-04-08T20:38:26-04:00 [SLEEP] cycle=7 complete; resting 15m
+2026-04-08T20:53:26-04:00 [START] cycle=8/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.7s)
+
+  1 passed (2.9s)
+2026-04-08T20:53:29-04:00 [END] cycle=8 exit=0
+2026-04-08T20:53:29-04:00 [SLEEP] cycle=8 complete; resting 15m
+2026-04-08T21:08:30-04:00 [START] cycle=9/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.6s)
+2026-04-08T21:08:33-04:00 [END] cycle=9 exit=0
+2026-04-08T21:08:33-04:00 [SLEEP] cycle=9 complete; resting 15m
+2026-04-08T21:23:33-04:00 [START] cycle=10/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.5s)
+2026-04-08T21:23:36-04:00 [END] cycle=10 exit=0
+2026-04-08T21:23:36-04:00 [SLEEP] cycle=10 complete; resting 15m
+2026-04-08T21:38:36-04:00 [START] cycle=11/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.7s)
+
+  1 passed (3.0s)
+2026-04-08T21:38:40-04:00 [END] cycle=11 exit=0
+2026-04-08T21:38:40-04:00 [SLEEP] cycle=11 complete; resting 15m
+2026-04-08T21:53:40-04:00 [START] cycle=12/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.5s)
+2026-04-08T21:53:44-04:00 [END] cycle=12 exit=0
+2026-04-08T21:53:44-04:00 [SLEEP] cycle=12 complete; resting 15m
+2026-04-08T22:08:44-04:00 [START] cycle=13/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.6s)
+2026-04-08T22:08:47-04:00 [END] cycle=13 exit=0
+2026-04-08T22:08:47-04:00 [SLEEP] cycle=13 complete; resting 15m
+2026-04-08T22:23:47-04:00 [START] cycle=14/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.4s)
+2026-04-08T22:23:50-04:00 [END] cycle=14 exit=0
+2026-04-08T22:23:50-04:00 [SLEEP] cycle=14 complete; resting 15m
+2026-04-08T22:38:50-04:00 [START] cycle=15/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.5s)
+2026-04-08T22:38:54-04:00 [END] cycle=15 exit=0
+2026-04-08T22:38:54-04:00 [SLEEP] cycle=15 complete; resting 15m
+2026-04-08T22:53:54-04:00 [START] cycle=16/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.6s)
+2026-04-08T22:53:57-04:00 [END] cycle=16 exit=0
+2026-04-08T22:53:57-04:00 [SLEEP] cycle=16 complete; resting 15m
+2026-04-08T23:08:57-04:00 [START] cycle=17/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.7s)
+
+  1 passed (2.9s)
+2026-04-08T23:09:01-04:00 [END] cycle=17 exit=0
+2026-04-08T23:09:01-04:00 [SLEEP] cycle=17 complete; resting 15m
+2026-04-08T23:24:01-04:00 [START] cycle=18/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.7s)
+
+  1 passed (3.1s)
+2026-04-08T23:24:05-04:00 [END] cycle=18 exit=0
+2026-04-08T23:24:05-04:00 [SLEEP] cycle=18 complete; resting 15m
+2026-04-08T23:39:05-04:00 [START] cycle=19/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.6s)
+2026-04-08T23:39:09-04:00 [END] cycle=19 exit=0
+2026-04-08T23:39:09-04:00 [SLEEP] cycle=19 complete; resting 15m
+2026-04-08T23:54:09-04:00 [START] cycle=20/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.5s)
+2026-04-08T23:54:12-04:00 [END] cycle=20 exit=0
+2026-04-08T23:54:12-04:00 [SLEEP] cycle=20 complete; resting 15m
+2026-04-09T00:09:12-04:00 [START] cycle=21/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.7s)
+2026-04-09T00:09:16-04:00 [END] cycle=21 exit=0
+2026-04-09T00:09:16-04:00 [SLEEP] cycle=21 complete; resting 15m
+2026-04-09T00:24:16-04:00 [START] cycle=22/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.5s)
+2026-04-09T00:24:19-04:00 [END] cycle=22 exit=0
+2026-04-09T00:24:19-04:00 [SLEEP] cycle=22 complete; resting 15m
+2026-04-09T00:39:19-04:00 [START] cycle=23/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.6s)
+2026-04-09T00:39:22-04:00 [END] cycle=23 exit=0
+2026-04-09T00:39:22-04:00 [SLEEP] cycle=23 complete; resting 15m
+2026-04-09T00:54:22-04:00 [START] cycle=24/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.5s)
+2026-04-09T00:54:26-04:00 [END] cycle=24 exit=0
+2026-04-09T00:54:26-04:00 [SLEEP] cycle=24 complete; resting 15m
+2026-04-09T01:09:26-04:00 [START] cycle=25/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.5s)
+2026-04-09T01:09:29-04:00 [END] cycle=25 exit=0
+2026-04-09T01:09:29-04:00 [SLEEP] cycle=25 complete; resting 15m
+2026-04-09T01:24:29-04:00 [START] cycle=26/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.8s)
+
+  1 passed (3.0s)
+2026-04-09T01:24:33-04:00 [END] cycle=26 exit=0
+2026-04-09T01:24:33-04:00 [SLEEP] cycle=26 complete; resting 15m
+2026-04-09T01:39:33-04:00 [START] cycle=27/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.6s)
+2026-04-09T01:39:36-04:00 [END] cycle=27 exit=0
+2026-04-09T01:39:36-04:00 [SLEEP] cycle=27 complete; resting 15m
+2026-04-09T01:54:36-04:00 [START] cycle=28/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.7s)
+
+  1 passed (3.0s)
+2026-04-09T01:54:40-04:00 [END] cycle=28 exit=0
+2026-04-09T01:54:40-04:00 [SLEEP] cycle=28 complete; resting 15m
+2026-04-09T02:09:40-04:00 [START] cycle=29/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.5s)
+2026-04-09T02:09:44-04:00 [END] cycle=29 exit=0
+2026-04-09T02:09:44-04:00 [SLEEP] cycle=29 complete; resting 15m
+2026-04-09T02:24:44-04:00 [START] cycle=30/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.7s)
+
+  1 passed (3.0s)
+2026-04-09T02:24:48-04:00 [END] cycle=30 exit=0
+2026-04-09T02:24:48-04:00 [SLEEP] cycle=30 complete; resting 15m
+2026-04-09T02:39:48-04:00 [START] cycle=31/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.6s)
+2026-04-09T02:39:51-04:00 [END] cycle=31 exit=0
+2026-04-09T02:39:51-04:00 [SLEEP] cycle=31 complete; resting 15m
+2026-04-09T02:54:51-04:00 [START] cycle=32/32
+
+> gaiaos_ui_web@0.1.0 test:e2e:fusion
+> playwright test --config=playwright.fusion.config.ts tests/fusion/fusion_s4_console.spec.ts -g WASM UI self-heals missing anchors and UI state without external input
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/fusion/fusion_s4_console.spec.ts:684:7 › Fusion S4 console › WASM UI self-heals missing anchors and UI state without external input (1.3s)
+
+  1 passed (2.5s)
+2026-04-09T02:54:54-04:00 [END] cycle=32 exit=0
+2026-04-09T02:54:54-04:00 overnight-run complete

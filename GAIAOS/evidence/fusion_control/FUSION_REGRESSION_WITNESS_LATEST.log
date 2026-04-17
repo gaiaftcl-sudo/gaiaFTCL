@@ -1,0 +1,57 @@
+=== GaiaFTCL Fusion regression witness ===
+utc: 2026-04-04T15:30:40Z
+host: MacBook-Pro.home
+cwd: /Users/richardgillespie/Documents/FoT8D/GAIAOS
+git: 5729f82
+
+---------- 1 mesh_mooring ----------
+PASS bash_n fusion_turbo_ide.sh
+PASS bash_n fusion_cell_overnight_runner.sh
+PASS bash_n best_control_test_ever.sh
+PASS bash_n fusion_mesh_mooring_heartbeat.sh
+PASS bash_n mcp_bridge_torax
+PASS bash_n mcp_bridge_marte2
+PASS projection_payment
+PASS payment_proj_fn
+PASS mooring_status
+PASS torax_refused
+PASS marte2_refused
+PASS jsonl_merge
+PASS degraded_shape
+PASS heartbeat_refused_no_setup
+PASS best_control
+--- PASSED=15 FAILED=0 ---
+exit_mesh=0
+
+---------- 2 vitest ----------
+
+> gaiaos_ui_web@0.1.0 test:unit:fusion
+> vitest run
+
+
+ RUN  v3.2.4 /Users/richardgillespie/Documents/FoT8D/GAIAOS/services/gaiaos_ui_web
+
+ ✓ tests/unit/fusionS4Gates.test.ts (13 tests) 10ms
+ ✓ tests/unit/fusionS4PcsTelemetry.test.ts (4 tests) 9ms
+
+ Test Files  2 passed (2)
+      Tests  17 passed (17)
+   Start at  11:30:51
+   Duration  2.73s (transform 771ms, setup 0ms, collect 1.14s, tests 18ms, environment 0ms, prepare 1.34s)
+
+exit_vitest=0
+
+---------- 3 playwright fusion ----------
+
+Running 4 tests using 1 worker
+
+  -  1 [chromium] › tests/fusion/fusion_matrix_e2e.spec.ts:4:7 › Fusion matrix API (slow) › runMatrix=1 with minimal cycles when FUSION_MATRIX_E2E=1
+  ✓  2 [chromium] › tests/fusion/fusion_s4_console.spec.ts:12:7 › Fusion S4 console › GET /api/fusion/s4-projection contract (287ms)
+[WebServer] ⚠ Cross origin request detected from 127.0.0.1 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+[WebServer] Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+  ✓  3 [chromium] › tests/fusion/fusion_s4_console.spec.ts:53:7 › Fusion S4 console › /fusion-s4 UI panels (653ms)
+  ✓  4 [chromium] › tests/fusion/fusion_s4_doc.spec.ts:11:7 › Fusion S4 documentation capture › full-page screenshot @fusion-doc (768ms)
+
+  1 skipped
+  3 passed (6.1s)
+exit_playwright_fusion=0

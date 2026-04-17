@@ -1,0 +1,18 @@
+{
+  "receipt_id": "GFTCL-OQ-PHYSICS-20260417T175659Z",
+  "parent_hash": "b46190a71f9883e99fbafc9c1b1495abff6a362416a64284a32cb941255cb081",
+  "terminal_state": "CALORIE",
+  "reason": "",
+  "physics_gate": {
+    "latency_ms": 30,
+    "packet_loss_pct": 2.0,
+    "quorum_status": "Passed"
+  },
+  "metal_patent_gate": {
+    "source_grep": "Checked",
+    "linker_gate": "Checked",
+    "runtime_trace": "Checked"
+  },
+  "timestamp_utc": "2026-04-17T17:57:26Z",
+  "evidence_hash": "a0e6058ffb5ef425e8d4dc8fc9d4ddec49bdff0e4e39e56fb0ad4e0067c23439"
+}

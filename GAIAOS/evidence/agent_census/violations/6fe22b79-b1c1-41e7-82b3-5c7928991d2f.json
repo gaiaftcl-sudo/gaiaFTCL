@@ -1,0 +1,34 @@
+{
+  "action_taken": "AUTO_DETECTED",
+  "agent_id": "bf0180b5-d1f8-4336-835d-5321684d5b34",
+  "detected_at": "2026-02-01T12:09:05.705963+00:00",
+  "evidence": {
+    "detector_rule_id": "GOV_PROMPT_INJECTION",
+    "detector_version": "1.0.0",
+    "excerpt_hash": "df0cb91184e2532a5a55da22cd0f12fe5120ef2d45ca9a2433cc19d3094b279d",
+    "excerpt_length": 74,
+    "pattern_matches": [
+      {
+        "matches": [
+          "system prompt",
+          "override",
+          "forget"
+        ],
+        "type": "keyword_match"
+      },
+      {
+        "matches": [
+          "new system prompt",
+          "override your",
+          "forget what you were told"
+        ],
+        "type": "phrase_match"
+      }
+    ],
+    "platform": "test_fixture",
+    "source_id": "msg_202",
+    "total_matches": 6
+  },
+  "reason_code": "BH_PROMPT_INJECTION_ROUTING",
+  "severity": "critical"
+}

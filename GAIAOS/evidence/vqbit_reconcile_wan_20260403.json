@@ -1,0 +1,11 @@
+{
+  "receipt": "vqbit_reconcile_orphans_dry_run",
+  "arango": "http://77.42.85.60:8529",
+  "database": "gaiaos",
+  "http_status": -1,
+  "sample_orphans": null,
+  "error": "timed out",
+  "strategy_note": "No automatic write. Next: join orphans to truth_envelopes by time/domain/wallet in reviewed AQL; or ingest path fix so new rows carry envelope_id. Apply UPDATE only after operator closure.",
+  "template_aql_comment": "// Example pattern (do not run blind): match envelope by nearest created_at to v.timestamp // FOR v IN vqbit_measurements FILTER v.envelope_id == null LIMIT 1 // LET e = FIRST(FOR x IN truth_envelopes SORT ABS(DATE_DIFF(v.timestamp, x.created_at)) ASC RETURN x) // UPDATE v WITH { envelope_id: e._key, reconciled: true } IN vqbit_measurements",
+  "limb_note": "WAN 8529 not accepted from limb session — REFUSED for live orphan sample until SSH tunnel or cell-internal ARANGO_URL."
+}

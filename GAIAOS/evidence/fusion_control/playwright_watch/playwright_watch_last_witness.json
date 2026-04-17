@@ -1,0 +1,17 @@
+{
+  "schema": "gaiaftcl_fusion_playwright_watch_v1",
+  "ts_utc": "2026-04-09T11:40:23.044238Z",
+  "terminal": "CURE",
+  "cycle": 10,
+  "self_heal_rc": 0,
+  "full_suite_rc": 0,
+  "interval_sec": 900,
+  "test_path": {
+    "self_heal": "tests/fusion/fusion_s4_console.spec.ts -g \"WASM UI self-heals missing anchors and UI state without external input\"",
+    "full_suite": "test:e2e:fusion"
+  },
+  "run_full": true,
+  "run_self_heal": true,
+  "elapsed_total_sec": 13.0,
+  "track": "FOT_FIELD_OF_FIELDS"
+}

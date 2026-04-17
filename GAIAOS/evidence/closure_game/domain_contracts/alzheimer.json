@@ -1,0 +1,22 @@
+{
+  "domain_id": "alzheimer",
+  "allowed_claim_classes": [
+    "TRUTH_ASSERTION",
+    "CAUSALITY_CLAIM",
+    "PREDICTION",
+    "CORRECTNESS",
+    "THERAPEUTIC_CANDIDATE"
+  ],
+  "admissible_evidence_types": [
+    "HTTP_ECHO_SINK",
+    "LAB_PROTOCOL",
+    "REGULATORY_RECEIPT"
+  ],
+  "invariants": [
+    "NONCE_UNIQUENESS",
+    "TIMESTAMP_MONOTONIC",
+    "PER_PATIENT_FEE_AFTER_TRIALS_CLEAR"
+  ],
+  "constraints_template": "Evidence must be submitted via GaiaFTCL-controlled sink. License fee: per-patient, triggered upon first commercial dose post-regulatory approval. Entropy-bleed allocation applies (revenue to Parkinson's, Diabetes, Energy, LEUK, platform). GxP (GCP, GLP, GMP) compliance required. Lab safe. Full disclosure: nothing hidden.",
+  "expiry_seconds_default": 3600
+}

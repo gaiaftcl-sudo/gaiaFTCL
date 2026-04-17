@@ -1,0 +1,331 @@
+{
+  "schema": "gaiaftcl_mac_fusion_sub_invariant_receipt_v1",
+  "invariant_id": "gaiaftcl_mac_fusion_sub_invariant_v1",
+  "terminal": "CALORIE",
+  "ts_utc": "2026-04-07T17:50:15.213847+00:00",
+  "run_id": "20260407T173417Z",
+  "heartbeat_jsonl": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/release/MAC_FUSION_SUB_INVARIANT_20260407T173417Z.jsonl",
+  "gate_results": [
+    {
+      "gate": "fusionControlAppBuildTestGate",
+      "ok": true,
+      "witness": {
+        "script_rc": 0,
+        "script_tail": "  \"schema\": \"fusion_control_batch_receipt_v1\",\n  \"ok\": true,\n  \"cycles_requested\": 2000,\n  \"cycles_completed\": 2000,\n  \"cycles_failed\": 0,\n  \"worst_max_abs_error\": 9.536743e-7,\n  \"wall_time_ms\": 7,\n  \"wall_time_us\": 6733,\n  \"gpu_wall_us\": 816,\n  \"verify_wall_us\": 5911,\n  \"validation_engine\": \"gpu_fused_multicycle\",\n  \"metallib\": \"/Users/richardgillespie/Documents/FoT8D/GAIAOS/services/fusion_control_mac/dist/FusionControl.app/Contents/MacOS/../Resources/default.metallib\",\n  \"kernel\": \"uum8d_contract_multicycle_fused\",\n  \"n\": 65536,\n  \"platform\": \"macos\",\n  \"entropy_tax\": {\n    \"rate_eur_per_kw\": 0.1,\n    \"declared_kw\": 1.0,\n    \"tax_due_eur\": 0.1,\n    \"tax_status\": \"declared\",\n    \"treasury_env_configured\": false\n  }\n}\n[fusion_control_dmg_gate] PASS \u2014 evidence: /Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/dmg_gate_2000_cycle_receipt.json",
+        "receipt_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/dmg_gate_2000_cycle_receipt.json",
+        "app_bundle_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/services/fusion_control_mac/dist/FusionControl.app",
+        "main_binary_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/services/fusion_control_mac/dist/FusionControl.app/Contents/MacOS/fusion_control",
+        "bundle_present_executable": true,
+        "receipt_ok": true,
+        "cycles_completed": 2000,
+        "cycles_requested": 2000,
+        "validation_engine": "gpu_fused_multicycle",
+        "metallib": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/services/fusion_control_mac/dist/FusionControl.app/Contents/MacOS/../Resources/default.metallib"
+      },
+      "blocker": null
+    },
+    {
+      "gate": "fusionPlasmaAppBuildGate",
+      "ok": true,
+      "witness": {
+        "build_script_rc": 0,
+        "build_script_tail": "    Signing Identity:     \"Sign to Run Locally\"\n    \n    /usr/bin/codesign --force --sign - -o runtime --entitlements /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Intermediates.noindex/FusionSidecarHost.build/Release/FusionSidecarHost.build/FusionSidecarHost.app.xcent --timestamp\\=none --generate-entitlement-der /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app\n\nRegisterExecutionPolicyException /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app (in target 'FusionSidecarHost' from project 'FusionSidecarHost')\n    cd /Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/FusionSidecarHost\n    builtin-RegisterExecutionPolicyException /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app\n\nValidate /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app (in target 'FusionSidecarHost' from project 'FusionSidecarHost')\n    cd /Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/FusionSidecarHost\n    builtin-validationUtility /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app -no-validate-extension -infoplist-subpath Contents/Info.plist\n\nTouch /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app (in target 'FusionSidecarHost' from project 'FusionSidecarHost')\n    cd /Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/FusionSidecarHost\n    /usr/bin/touch -c /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app\n\nRegisterWithLaunchServices /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app (in target 'FusionSidecarHost' from project 'FusionSidecarHost')\n    cd /Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/FusionSidecarHost\n    /System/Library/Frameworks/CoreServices.framework/Versions/Current/Frameworks/LaunchServices.framework/Versions/Current/Support/lsregister -f -R -trusted /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app\n\n** BUILD SUCCEEDED **\n\nCALORIE: FusionSidecarHost Release \u2192 /Users/richardgillespie/Documents/FoT8D/GAIAOS/build/plasma_release/FusionSidecarHost.app\nWitness: /Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/mac_fusion/FUSION_PLASMA_APP_BUILD_WITNESS.json",
+        "witness_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/mac_fusion/FUSION_PLASMA_APP_BUILD_WITNESS.json",
+        "schema_ok": true,
+        "bundle_present_executable": true,
+        "binary_sha256_present": true,
+        "cf_bundle_short_version_string": "1.0",
+        "cf_bundle_identifier": "com.gaiaftcl.FusionSidecarHost"
+      },
+      "blocker": null
+    },
+    {
+      "gate": "dmgArtifactGate",
+      "ok": true,
+      "witness": {
+        "dmg_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/dist/GaiaFusion.dmg",
+        "dmg_size_bytes": 961186,
+        "dmg_sha256": "937de65da26be3dd00e01536073a49b23e267426619f5587b37a86f872a6865c",
+        "ensure_script_rc": 0
+      },
+      "blocker": null
+    },
+    {
+      "gate": "dmgMountGate",
+      "ok": true,
+      "witness": {
+        "mountpoint": "/Volumes/GaiaFusion",
+        "df_line": "/dev/disk39s1    13Mi   2.1Mi    10Mi    17%     101  105k    0%   /Volumes/GaiaFusion",
+        "fusion_sidecar_host_app_present": true,
+        "fusion_control_app_present": true,
+        "elapsed_ms": 80.8785830000005,
+        "mount_script_output_tail": "CALORIE: already mounted: /Volumes/GaiaFusion\n/dev/disk39s1         13Mi   2.1Mi    10Mi    17%     101  105k    0%   /Volumes/GaiaFusion"
+      },
+      "blocker": null
+    },
+    {
+      "gate": "outerRebuildRedeployGate",
+      "ok": true,
+      "witness": {
+        "build_rc": 0,
+        "build_tail": "\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u2705 BUILD COMPLETE\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\nDMG: /Users/richardgillespie/Documents/FoT8D/GAIAOS/dist/GaiaFTCL-1.0.0.dmg\nDMG (GaiaFusion): /Users/richardgillespie/Documents/FoT8D/GAIAOS/dist/GaiaFusion.dmg\nSize: 972K\nChecksum: 0fc1db2aa35b4abfa837b06b8b7087ffc79cfa1880af5d1c26757b50152397d5\nVersion: 1.0.0\n\nMesh deploy (nine cells): bash scripts/deploy_dmg_to_mesh.sh",
+        "deploy_rc": 0,
+        "deploy_tail": "\u2705 152.53.88.141 complete\n\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\ud83d\udce1 Deploying to 37.120.187.174\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n  Transferring DMG...\n  Verifying...\n-rw-r--r-- 1 root root 969K Apr  7 19:38 /var/www/gaiaftcl/public/downloads/GaiaFTCL-1.0.0.dmg\n\u2705 37.120.187.174 complete\n\n\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\u2705 DMG DEPLOYED TO ALL 9 CELLS\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\nDownload URLs:\n  https://gaiaftcl.com/downloads/GaiaFTCL-1.0.0.dmg\n  https://gaiaftcl.com/downloads/GaiaFTCL-latest.dmg\n  https://gaiaftcl.com/dmgInstall\n"
+      },
+      "blocker": null
+    },
+    {
+      "gate": "macInstallWitnessGate",
+      "ok": true,
+      "witness": {
+        "resolved_binary_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/services/fusion_control_mac/dist/FusionControl.app/Contents/MacOS/fusion_control",
+        "is_executable": true,
+        "version_probe": "unavailable"
+      },
+      "blocker": null
+    },
+    {
+      "gate": "swiftRuntimeGate",
+      "ok": true,
+      "witness": {
+        "ui_http_ok": true,
+        "ui_http_code": "200",
+        "app_binary_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/build/plasma_release/FusionSidecarHost.app/Contents/MacOS/FusionSidecarHost",
+        "app_binary_executable": true,
+        "app_version_probe": "unavailable",
+        "swift_runtime_running": true,
+        "swift_runtime_processes": [
+          "TIMEOUT"
+        ],
+        "self_heal_steps": [
+          {
+            "step": "fusion_stack_launch_detached",
+            "rc": 0,
+            "tail": "PASS mooring_status\nPASS torax_refused\nPASS marte2_refused\nPASS jsonl_merge\nPASS degraded_shape\nPASS heartbeat_refused_no_setup\nPASS best_control\n--- PASSED=15 FAILED=0 ---\n\u25b6 Starting long-run cell loop\u2026\n   pid=80883\n\u25b6 Port 8910 already listening \u2014 reusing\n CALORIE (detached): http://127.0.0.1:8910/fusion-s4"
+          }
+        ]
+      },
+      "blocker": null
+    },
+    {
+      "gate": "sidecarControlSurfaceGate",
+      "ok": true,
+      "witness": {
+        "content_view_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/FusionSidecarHost/FusionSidecarHost/ContentView.swift",
+        "app_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/FusionSidecarHost/FusionSidecarHost/FusionSidecarHostApp.swift",
+        "has_webkit_surface": true,
+        "has_local_surface_url": true,
+        "has_discord_push_hook": true,
+        "has_playwright_onboarding_hook": true,
+        "has_glass_effect": true,
+        "has_dynamic_blue_theme": true,
+        "has_fusion_menu_actions": true
+      },
+      "blocker": null
+    },
+    {
+      "gate": "macMooringFilesGate",
+      "ok": true,
+      "witness": {
+        "files": {
+          "cell_identity": {
+            "path": "/Users/richardgillespie/.gaiaftcl/cell_identity.json",
+            "present": true,
+            "mtime_utc": "2026-04-07T11:27:52.411076+00:00",
+            "age_sec": 22428.91266131401,
+            "json_valid": true
+          },
+          "mount_receipt": {
+            "path": "/Users/richardgillespie/.gaiaftcl/mount_receipt.json",
+            "present": true,
+            "mtime_utc": "2026-04-07T11:27:52.430098+00:00",
+            "age_sec": 22428.89363884926,
+            "json_valid": true
+          },
+          "fusion_mesh_mooring_state": {
+            "path": "/Users/richardgillespie/.gaiaftcl/fusion_mesh_mooring_state.json",
+            "present": true,
+            "mtime_utc": "2026-04-07T11:27:56.007222+00:00",
+            "age_sec": 22425.316514968872,
+            "json_valid": true
+          }
+        },
+        "all_present": true,
+        "max_age_sec": 86400
+      },
+      "blocker": null
+    },
+    {
+      "gate": "fusionMacVisualGate",
+      "ok": true,
+      "witness": {
+        "png_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/fusion_dashboard_witness.png",
+        "png_size_bytes": 1474332,
+        "dom_snapshot_html_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/fusion_dashboard_dom_snapshot.html",
+        "dom_snapshot_json_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/fusion_dashboard_dom_snapshot.json",
+        "dom_snapshot_bytes": 148475,
+        "s4_projection_witness_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/fusion_s4_projection_witness.json",
+        "s4_projection_schema": "gaiaftcl_fusion_s4_projection_ui_v1",
+        "s4_projection_configurable": true,
+        "s4_projection_control_matrix_ok": true,
+        "s4_projection_long_run_ok": true,
+        "fusion_s4_route_http_ok": true,
+        "fusion_s4_route_http_code": "200",
+        "fusion_fleet_route_http_ok": true,
+        "fusion_fleet_route_http_code": "200",
+        "mesh_digest_api_ok": true,
+        "global_challenge_digest_api_ok": true,
+        "dom_route_ok": true,
+        "dom_anchor_ok": true,
+        "operator_requirements_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/spec/mac_fusion_operator_requirements.json",
+        "operator_requirements_ok": true,
+        "operator_player_class": "advanced_fusion_plant_phd_researcher_and_technician",
+        "operator_personas": [
+          "fusion_research_phd",
+          "fusion_plant_technician"
+        ],
+        "operator_required_fields_missing": [],
+        "operator_games_missing": [],
+        "operator_games_ok": true,
+        "required_anchor_matched": true,
+        "test_pass_line": " CALORIE: fusion operator surface checks passed"
+      },
+      "blocker": null
+    },
+    {
+      "gate": "outerOpsAdminGate",
+      "ok": true,
+      "witness": {
+        "docker_cli_ok": true,
+        "docker_container_count": 34,
+        "docker_container_names_sample": [
+          "gaiaftcl-fusion-fleet-subscriber",
+          "gaiaftcl-bitcoin-core",
+          "gaiaftcl-gateway",
+          "gaiaos-ui-tester-mcp",
+          "gaiaos-edge-proxy",
+          "gaiaos-virtue",
+          "gaiaos-agent",
+          "gaiaos-substrate",
+          "gaiaos-ollama",
+          "gaiaos-nats",
+          "gaiaos-arangodb",
+          "atc-globe-ui",
+          "atc-consciousness-agent",
+          "atc-flight-aggregator",
+          "gaiaos-ui-web",
+          "gaiaos-entropy-api",
+          "gaiaos-airplanes-live-ingest",
+          "gaiaos-adaptive-grid-builder",
+          "gaiaos-atmosphere-noaa-gfs-opendap-ingest",
+          "gaiaos-ocean-noaa-gfswave-opendap-ingest"
+        ],
+        "sovereign_mesh_api_ok": true,
+        "sovereign_mesh_witness_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/sovereign_mesh_witness.json",
+        "sovereign_mesh_cells_count": 9,
+        "openusd_fleet_overlay_ok": true,
+        "dns_resolution_ok": true,
+        "dns_resolution_results": [
+          {
+            "host": "gaiaftcl.com",
+            "ok": true,
+            "answer": "37.120.187.247"
+          },
+          {
+            "host": "www.gaiaftcl.com",
+            "ok": true,
+            "answer": "37.120.187.247"
+          }
+        ]
+      },
+      "blocker": null
+    },
+    {
+      "gate": "teamReadinessProofGate",
+      "ok": true,
+      "witness": {
+        "proof_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/FUSION_11_TEAM_READINESS_PROOF.md",
+        "schema_ok": true,
+        "teams_total_ok": true,
+        "commitment_ok": true,
+        "teams_sealed_count": 11,
+        "teams_sealed_required": 11,
+        "pending_in_team_ledger": false,
+        "independent_artifact_only": true
+      },
+      "blocker": null
+    },
+    {
+      "gate": "surfaceParityInputGate",
+      "ok": true,
+      "witness": {
+        "parity_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/parity/SURFACE_PARITY_WITNESS.json",
+        "schema": "surface_parity_witness_v1",
+        "parity_kind": "discord_mesh_games_pipeline",
+        "divergence_count": 0,
+        "terminal": "CALORIE",
+        "games_total": 13,
+        "games_live": 13,
+        "missing_live_games": [],
+        "source": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/discord_game_rooms/PLAYWRIGHT_MESH_GAME_CAPTURE.json",
+        "parity_mode": "pipeline_discord_mesh_games",
+        "independent_parity_artifact": true
+      },
+      "blocker": null
+    }
+  ],
+  "completed_gates": [
+    "fusionControlAppBuildTestGate",
+    "fusionPlasmaAppBuildGate",
+    "dmgArtifactGate",
+    "dmgMountGate",
+    "outerRebuildRedeployGate",
+    "macInstallWitnessGate",
+    "swiftRuntimeGate",
+    "sidecarControlSurfaceGate",
+    "macMooringFilesGate",
+    "fusionMacVisualGate",
+    "outerOpsAdminGate",
+    "teamReadinessProofGate",
+    "surfaceParityInputGate",
+    "subSealingGate"
+  ],
+  "outer_heal_cycles": [
+    {
+      "outer_cycle": 1,
+      "failed_gate": "fusionMacVisualGate",
+      "failed_reason": "invariant_violation",
+      "self_heal": {
+        "failed_gate": "fusionMacVisualGate",
+        "steps": [
+          {
+            "step": "fusion_stack_launch_detached_reuse_ui",
+            "rc": 0,
+            "tail": "PASS marte2_refused\nPASS jsonl_merge\nPASS degraded_shape\nPASS heartbeat_refused_no_setup\nPASS best_control\n--- PASSED=15 FAILED=0 ---\n\u25b6 Starting long-run cell loop\u2026\n   pid=86525\n\u25b6 Port 8910 already listening \u2014 reusing\n CALORIE (detached): http://127.0.0.1:8910/fusion-s4"
+          },
+          {
+            "step": "verify_fusion_operator_surface",
+            "rc": 0,
+            "tail": "  \u2713  13 [chromium] \u203a tests/fusion/fusion_s4_doc.spec.ts:11:7 \u203a Fusion S4 documentation capture \u203a full-page screenshot @fusion-doc (1.6s)\n  \u2713  14 [chromium] \u203a tests/fusion/gate1_page.spec.ts:7:7 \u203a GATE1 page \u203a gate1 page loads and shows custody copy (404ms)\n  \u2713  15 [chromium] \u203a tests/fusion/gate1_page.spec.ts:13:7 \u203a GATE1 page \u203a gate1-register-options GET returns JSON (19ms)\n  \u2713  16 [chromium] \u203a tests/fusion/gate1_page.spec.ts:21:7 \u203a GATE1 page \u203a gate1-register-options POST is 403 until GATE1_LIFT=1 (14ms)\n\n  2 skipped\n  14 passed (1.0m)\nOK   npm run test:e2e:fusion\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n CALORIE: fusion operator surface checks passed"
+          }
+        ]
+      }
+    },
+    {
+      "outer_cycle": 1,
+      "failed_gate": "surfaceParityInputGate",
+      "failed_reason": "non_independent_parity_artifact",
+      "self_heal": {
+        "failed_gate": "surfaceParityInputGate",
+        "steps": [
+          {
+            "step": "generate_surface_parity_witness",
+            "rc": 0,
+            "tail": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/parity/SURFACE_PARITY_WITNESS.json\n{\"divergence_count\": 0, \"terminal\": \"CALORIE\"}"
+          }
+        ]
+      }
+    }
+  ],
+  "outer_max_cycles": 1
+}

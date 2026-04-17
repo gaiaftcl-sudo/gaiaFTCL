@@ -1,0 +1,44 @@
+{
+  "receipt_id": "GFTCL-PQ-INTERACTIVE-20260417T191708Z",
+  "timestamp_utc": "2026-04-17T19:17:08Z",
+  "operator_id": "richardgillespie",
+  "operator_key_fingerprint": "SHA256:S4xcc/Pg0CEij2sNowFFikcYqgFmnAjDhBictnkN5bo",
+  "plant": {
+    "plant_id": "tokamak.fusion_control",
+    "config_hash": "41fc5fea1f3c7354aae8ae96ab2fa89c2a743abec2539307ea82ad5e3c49ea93",
+    "config_version": 1
+  },
+  "requested_values": {
+    "target_q_value": 1.5,
+    "frame_budget_ms": 3.0
+  },
+  "fleet": {
+    "participating_cells": [
+      "mac-cell-01"
+    ],
+    "quorum": {
+      "required": 1,
+      "of": 1
+    },
+    "per_cell_timeout_s": 300
+  },
+  "fleet_results": [
+    {
+      "cell_id": "mac-cell-01",
+      "terminal_state": "CALORIE",
+      "parent_hash": "345d5e8b734524e23361bf74fd51b09ab383d9173b1a5ec852c0f02567d380af",
+      "oq_hash": "bc3d704f6bd7af1bca7cd404fa321d4908d71b7868b320a7054ae3d1fffdbca5",
+      "run_id": "03991471-f0ca-4ac0-852a-02c111602e49",
+      "reason": "Operator validated",
+      "evidence_hash": "eacd6bff6a48975d79c44bd114f91a5cdef7a7891c126d6c1e72665afa0eba74",
+      "received_at_utc": "2026-04-17T19:17:08Z"
+    }
+  ],
+  "artifact": {
+    "dmg_path": "/tmp/FusionControl_20260417T191653Z.dmg",
+    "dmg_hash": "eacd6bff6a48975d79c44bd114f91a5cdef7a7891c126d6c1e72665afa0eba74",
+    "signature": "Ad-Hoc"
+  },
+  "terminal_state": "CALORIE",
+  "operator_signature": "-----BEGIN SSH SIGNATURE-----\nU1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgBs5mKEjNvRWtxoWMcKcitztGJM\nuG2VmOMTGVuJJP2XoAAAAOZm90LXBxLXJlY2VpcHQAAAAAAAAABnNoYTUxMgAAAFMAAAAL\nc3NoLWVkMjU1MTkAAABAGn6ABHxSp7IaFyiE4xysmB9mRVUa9vHWcwDyWk8FSyOscYkQja\nObIXPlFMdyfqSB36aScvqpl4u5p83+i/rKBA==\n-----END SSH SIGNATURE-----"
+}

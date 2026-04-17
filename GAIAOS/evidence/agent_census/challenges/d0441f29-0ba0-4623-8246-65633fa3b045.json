@@ -1,0 +1,9 @@
+{
+  "agent_id": "720ba657-ff85-4528-b2f5-76bc3bbd5983",
+  "capability_id": "HTTP_API_CALL",
+  "challenge_id": "d0441f29-0ba0-4623-8246-65633fa3b045",
+  "expires_at": "2026-02-01T12:09:34.033966+00:00",
+  "instructions": "POST to http://localhost:8850/echo with JSON {\"nonce\":\"030e9d02-130d-4698-9cf3-76dfd9fa8c56\"}",
+  "issued_at": "2026-02-01T12:09:04.033966+00:00",
+  "nonce": "030e9d02-130d-4698-9cf3-76dfd9fa8c56"
+}

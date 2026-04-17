@@ -1,0 +1,9 @@
+{
+  "schema": "gaiaftcl_benchmark_pcs_shadow_v1",
+  "emulation_active": true,
+  "te_kev": 2.05,
+  "ti_kev": 1.72,
+  "ts_utc": "2026-04-04T18:00:00Z",
+  "source_tag": "osti_2510881_emulated",
+  "note": "test"
+}

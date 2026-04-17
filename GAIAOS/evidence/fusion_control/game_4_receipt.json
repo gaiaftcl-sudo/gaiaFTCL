@@ -1,0 +1,17 @@
+{
+  "game": "game_4_config_discoverability",
+  "terminal_state": "MEETS",
+  "timestamp": "2026-04-09T11:55:06Z",
+  "verification": {
+    "xcodebuild_exit": 0,
+    "playwright_watchdog": "CURE"
+  },
+  "files_changed": [
+    "macos/GaiaFusion/GaiaFusion/Services/ConfigFileManager.swift"
+  ],
+  "assertions": [
+    "ConfigFileManager searches deploy/fusion_cell/ before config/",
+    "Inspector opens deploy/fusion_cell/config.json",
+    "Runner fields (real.command, virtual.binary_relative, tokamak_mode, timeout_sec) editable"
+  ]
+}

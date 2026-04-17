@@ -1,0 +1,8 @@
+# Pass C — Discord / Owl membrane (2026-04-03)
+# Policy: AppleScript + Playwright per .cursor/rules/discord-mac-automation.mdc
+
+Status: REFUSED in this IDE session — no Discord.app / membrane automation executed from sandbox; no screenshot or bot log path produced.
+
+Next limb with Mac surface: run membrane smoke and append log line or Playwright artifact path here.
+
+Code anchor: services/discord_frontier/bots/owl/cell.py (slash moor)

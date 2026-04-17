@@ -1,0 +1,9 @@
+{
+  "agent_id": "720ba657-ff85-4528-b2f5-76bc3bbd5983",
+  "capability_id": "WEB_FETCH",
+  "challenge_id": "c58f3515-b29c-4a8e-9618-bbd44f894e89",
+  "expires_at": "2026-02-01T12:09:34.034089+00:00",
+  "instructions": "Fetch http://localhost:8850/echo?nonce=b4d7c1c0-3002-4a2f-ae50-5eb46d32a7ca and return the response",
+  "issued_at": "2026-02-01T12:09:04.034089+00:00",
+  "nonce": "b4d7c1c0-3002-4a2f-ae50-5eb46d32a7ca"
+}

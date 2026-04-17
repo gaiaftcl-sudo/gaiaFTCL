@@ -1,0 +1,47 @@
+{
+  "schema": "siac_witness_v1",
+  "generated_at_utc": "2026-03-30T17:08:42Z",
+  "repo_root": "/Users/richardgillespie/Documents/FoT8D/GAIAOS",
+  "honest_note": "This file is substrate for Cursor/humans. Discord channel list proof = run /gaia-topology in guild + screenshot, or compare channel IDs via API. Earth-ingestor 201 = docker logs gaiaftcl-earth-ingestor on a cell after NATS feed + GAIAFTCL_INTERNAL_KEY.",
+  "steps": {
+    "test_discord_forest_all_domains": {
+      "exit_code": 0,
+      "calorie_or_cure": true,
+      "log_tail": "=== DISCORD FOREST \u2014 ALL DOMAINS ===\nFrontier: /Users/richardgillespie/Documents/FoT8D/GAIAOS/services/discord_frontier\n\nOK: 16 game_room(s), 8 operational, 13 mesh mailbox slots covered\nWrote 16 service(s) to /Users/richardgillespie/Documents/FoT8D/GAIAOS/services/discord_frontier/docker-compose.discord-domains.yml\nOK: registry \u2194 docker-compose.discord-domains.yml (16 game_room rows)\nWrote 24 keys to /Users/richardgillespie/Documents/FoT8D/GAIAOS/services/discord_frontier/discord-forest.compose-config.env.example\nOK: guild topology plan (34 channels)\n\n=== Python syntax: all domain bot mains ===\n\n=== docker compose config (merged forest + domains) ===\nOK: docker compose config\n\n=== DONE ===\nDeploy every domain bot: cd services/discord_frontier && DISCORD_FOREST_ENV_FILE=/etc/gaiaftcl/discord-forest.env docker compose -f docker-compose.discord-forest.yml --profile domains up -d --build\n"
+    },
+    "guild_topology_plan": {
+      "channel_count": 34,
+      "sample": [
+        "Mesh \u00b7 ATC/game-room-atc",
+        "Mesh \u00b7 BIO/game-room-biology-cures",
+        "Mesh \u00b7 CRYPTO/game-room-crypto-risk",
+        "Mesh \u00b7 ENERGY/game-room-nuclear-fusion",
+        "Mesh \u00b7 FINANCE/game-room-token-economics",
+        "Mesh \u00b7 LOGISTICS/game-room-logistics-chain",
+        "Mesh \u00b7 QUANTUM/game-room-quantum-closure",
+        "Mesh \u00b7 ROBOTICS/game-room-robotics-ops",
+        "Mesh \u00b7 TELECOM/game-room-telecom-mesh",
+        "Mesh \u00b7 MEDICAL/game-room-med",
+        "Mesh \u00b7 LAW/game-room-law",
+        "Mesh \u00b7 CLIMATE/game-room-climate-accounting"
+      ]
+    },
+    "gateway_health_probe": {
+      "url": "http://127.0.0.1:8803/health",
+      "status": "BLOCKED:URLError",
+      "body_preview": "<urlopen error [Errno 61] Connection refused>"
+    },
+    "gateway_torsion_probe": {
+      "url": "http://127.0.0.1:8803/vqbit/torsion",
+      "status": "BLOCKED:URLError"
+    },
+    "earth_ingestor_docker_logs": {
+      "exit_code": 1,
+      "relevant_lines": [],
+      "raw_tail": "Error response from daemon: No such container: gaiaftcl-earth-ingestor\n"
+    },
+    "discord_surface_evidence": {
+      "BLOCKED": "Not observable from repo alone. After deploy: run /gaia-topology, set DISCORD_RECEIPTS_CHANNEL_ID to #receipt-wall, confirm mesh-health posts when torsion\u2260NOHARM."
+    }
+  }
+}

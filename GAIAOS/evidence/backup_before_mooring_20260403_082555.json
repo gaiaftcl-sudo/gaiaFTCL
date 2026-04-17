@@ -1,0 +1,160 @@
+{
+  "timestamp": "2026-04-03T08:25:54.595419",
+  "authorized_wallets": [
+    {
+      "_key": "founder_wallet",
+      "_id": "authorized_wallets/founder_wallet",
+      "_rev": "_lRT3Nd2---",
+      "address": "0x858e7ED49680C38B0254abA515793EEc3d1989F5",
+      "role": "founder",
+      "active": true
+    }
+  ],
+  "discord_cell_lineage": [
+    {
+      "_key": "gaiaftcl-discord-app-01",
+      "_id": "discord_cell_lineage/gaiaftcl-discord-app-01",
+      "_rev": "_lR706KW---",
+      "cell_id": "gaiaftcl-discord-app-01",
+      "mother": "gaiaftcl-mac-origin-01",
+      "grandmother": null,
+      "origin": "gaiaftcl-mac-origin-01",
+      "game_room": "discord_app",
+      "constitutional_invariants": [],
+      "daughters": [],
+      "inception_at": "2026-03-30T15:57:32.683558+00:00"
+    },
+    {
+      "_key": "cell01",
+      "_id": "discord_cell_lineage/cell01",
+      "_rev": "_lS-RvbS---",
+      "cell_id": "cell01",
+      "mother": "gaiaftcl-discord-app-01",
+      "grandmother": null,
+      "origin": "gaiaftcl-mac-origin-01",
+      "game_room": "all",
+      "constitutional_invariants": [],
+      "daughters": [],
+      "inception_at": "2026-03-30T18:48:50.785243+00:00"
+    }
+  ],
+  "user_profiles": [
+    {
+      "_key": "user-richardgillespie",
+      "_id": "user_profiles/user-richardgillespie",
+      "_rev": "_lG7f55a---",
+      "name": "richardgillespie",
+      "role": "founder",
+      "created_at": "2026-02-24T11:20:39.355916+00:00",
+      "communication_patterns": {
+        "preferred_format": "game_state",
+        "response_time_expectation": "immediate",
+        "technical_depth": "full",
+        "typical_greetings": [
+          "hi whats up",
+          "checking in",
+          "status"
+        ]
+      },
+      "topics_of_interest": [
+        "discovery_counts",
+        "mesh_health",
+        "ontology_sync",
+        "entropy_reduction",
+        "treasury_valuation",
+        "gateway_health",
+        "closure_rate",
+        "game_state"
+      ],
+      "last_interaction": "2026-02-24T11:20:39.355936+00:00",
+      "total_interactions": 0,
+      "avg_interactions_per_day": 0,
+      "session_count": 0
+    },
+    {
+      "_key": "user-0x858e7ED49680C38B0254abA515793EEc3d1989F5",
+      "_id": "user_profiles/user-0x858e7ED49680C38B0254abA515793EEc3d1989F5",
+      "_rev": "_lG9tYd----",
+      "wallet_address": "0x858e7ED49680C38B0254abA515793EEc3d1989F5",
+      "user_id": "user_0x858e7E",
+      "role": "founder",
+      "permissions": {
+        "can_deploy": true,
+        "can_query": true,
+        "full_substrate_access": true,
+        "mesh_control": true,
+        "can_spawn_agents": true
+      },
+      "created_at": "2026-02-24T13:55:09.226870+00:00",
+      "first_interaction": "2026-02-24T13:55:09.226894+00:00",
+      "last_interaction": "2026-02-24T13:55:09.226898+00:00"
+    },
+    {
+      "_key": "user-unknown",
+      "_id": "user_profiles/user-unknown",
+      "_rev": "_lG90VLK---",
+      "name": "unknown",
+      "role": "user",
+      "created_at": "2026-02-24T14:03:33.152929+00:00",
+      "communication_patterns": {
+        "preferred_format": "conversational",
+        "response_time_expectation": "normal",
+        "technical_depth": "standard",
+        "typical_greetings": [
+          "franklin: your analysis game at /app/franklin_analysis_game.py has no flush=true on print statements, causing output buffering. can you patch it yourself using your self-healing container? add flush=true to all print() calls in franklin_analysis_game.py, then restart the franklin-games container. you have docker cli access."
+        ]
+      },
+      "topics_of_interest": [
+        "game_state"
+      ],
+      "last_interaction": "2026-02-24T14:03:33.448162+00:00",
+      "total_interactions": {
+        "_increment": 1
+      },
+      "avg_interactions_per_day": 0,
+      "session_count": 0
+    },
+    {
+      "_key": "profile-user_0x858e7ED4-1771947053762",
+      "_id": "user_profiles/profile-user_0x858e7ED4-1771947053762",
+      "_rev": "_lH_ESqO---",
+      "user_id": "user_0x858e7ED4",
+      "role": "user",
+      "created_at": "2026-02-24T15:30:53.762594+00:00",
+      "last_interaction": "2026-02-24T15:30:53.762604+00:00",
+      "communication_patterns": {},
+      "interaction_patterns": {},
+      "permissions": {
+        "can_query": true
+      }
+    },
+    {
+      "_key": "wallet-Rick",
+      "_id": "user_profiles/wallet-Rick",
+      "_rev": "_lI-mJxe---",
+      "wallet_address": "0xRick",
+      "uum_8d": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "created_at": "2026-02-27T17:31:54.039030+00:00",
+      "role": "user"
+    },
+    {
+      "_key": "user-uum8d",
+      "_id": "user_profiles/user-uum8d",
+      "_rev": "_lTKRIYi---",
+      "username": "uum8d",
+      "email": "uum8d@gaiaftcl.com",
+      "onboarding_completed": false,
+      "discord_id": null,
+      "created_at": "2026-04-03T07:21:01.579356"
+    }
+  ]
+}

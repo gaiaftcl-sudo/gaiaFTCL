@@ -1,0 +1,81 @@
+{
+  "ts": "20260327T124650Z",
+  "phase0": {
+    "ok": true
+  },
+  "phase1": {
+    "reports": [
+      {
+        "label": "LEUK-005",
+        "filter": "LEUK-005",
+        "count": 5,
+        "statuses": [
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED"
+        ],
+        "canonical_anchor_hits": 0
+      },
+      {
+        "label": "AML-CHEM-001",
+        "filter": "AML-CHEM-001",
+        "count": 5,
+        "statuses": [
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED"
+        ],
+        "canonical_anchor_hits": 0
+      },
+      {
+        "label": "inv3",
+        "filter": "inv3",
+        "count": 5,
+        "statuses": [
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED"
+        ],
+        "canonical_anchor_hits": 1
+      }
+    ],
+    "leuk_substrate": true,
+    "aml_substrate": true,
+    "claims_anchor_hits": true
+  },
+  "inbound_key": "claim_1774615617.53853",
+  "phase3": {
+    "janowitz": {
+      "hit": true,
+      "game_room": "owl_protocol",
+      "from": "janowitz@cshl.edu",
+      "status": "SUBMITTED"
+    },
+    "owl_protocol": {
+      "hit": true,
+      "game_room": "owl_protocol",
+      "from": "janowitz@cshl.edu",
+      "status": "SUBMITTED"
+    },
+    "research": {
+      "hit": true,
+      "game_room": "owl_protocol",
+      "from": "janowitz@cshl.edu",
+      "status": "SUBMITTED"
+    }
+  },
+  "franklin_doc": "Inbound research mail (substrate recent_claims):\nMAIL claim_1774615617.53853: from=janowitz@cshl.edu room=owl_protocol subject=RE: Owl Protocol \u2014 INV3 AML maternal parity cohort preview=Rick \ufffd\ufffd\ufffd yes we have maternal parity data in our TNBC cohort. We also have inv(3) AML patient records that include birth order information. LEUK-005 binding affinity data attached. AML-CHEM-001 IC50 results coming next week.\nTobias\n\nMetrics: 175,789 claims, 417,740 envelopes. (NATS/generative path skipped.)",
+  "verifier_exit": 0,
+  "smtp_ok": true,
+  "smtp_last": "250",
+  "leuk_final": true,
+  "aml_final": true,
+  "subject_preserved": true,
+  "phase4_ask_alone_ok": true
+}

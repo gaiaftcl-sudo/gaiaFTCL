@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FullReleaseInvariantHeartbeat",
+  "type": "object",
+  "required": ["ts_utc", "gate"],
+  "properties": {
+    "ts_utc": { "type": "string", "format": "date-time" },
+    "cycle": { "type": "integer" },
+    "attempt": { "type": "integer" },
+    "gate": {
+      "type": "string",
+      "enum": [
+        "mountGate",
+        "visualGate",
+        "discordMeshSurfaceGate",
+        "planetaryGate",
+        "languageGameContracts",
+        "sealingGate",
+        "releaseBundle",
+        "done"
+      ]
+    },
+    "terminal": { "type": "string" },
+    "last_error": { "type": "string" },
+    "last_witness": { "type": "object" },
+    "last_remediation": { "type": "string" },
+    "elapsed_ms": { "type": "number" },
+    "earth_torsion_hint": { "type": ["number", "null"] },
+    "rollback_count": { "type": "integer" },
+    "anti_entropy": { "type": "string" }
+  }
+}

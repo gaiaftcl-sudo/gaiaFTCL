@@ -1,0 +1,25 @@
+{
+  "schema": "gaiaftcl_mac_cell_mesh_matrix_closure_v1",
+  "ts_utc": "2026-04-09T20:42:50Z",
+  "terminal": "CALORIE",
+  "rows": {
+    "nats_mooring_pub": "MEETS",
+    "nats_mooring_pub_artifact": "deploy/mac_cell_mount/bin/fusion_mesh_mooring_heartbeat.sh",
+    "launchd_docs": "deploy/mac_cell_mount/launchd/README.md",
+    "mac_leaf_mesh_denominator": "MEETS",
+    "mesh_node_count": 10,
+    "mac_fusion_leaf_id": "gaiaftcl-mac-fusion-leaf",
+    "code": "macos/GaiaFusion/GaiaFusion/MeshStateManager.swift",
+    "substrate_vqbit_seal": "OPEN",
+    "fleet_health_probe_witness": "PARTIAL",
+    "fleet_health_probe_artifact": "evidence/fusion_control/mac_cell_fleet_health_witness.json",
+    "fleet_health_probe_script": "scripts/witness_mac_cell_fleet_health.sh",
+    "readme_membrane_dead_todos": "MEETS",
+    "production_plan_game_2_native_swap_picker": "MEETS",
+    "production_plan_game_4_fusion_cell_config": "MEETS",
+    "production_plan_game_5_gaiafusion_smoke": "MEETS",
+    "production_plan_game_5_full_plant_stack": "OPEN",
+    "gaiafusion_release_smoke_script": "scripts/run_gaiafusion_release_smoke.sh"
+  },
+  "note": "Substrate vQbit OPEN until gateway ingest receipt; Game 5 OPEN until scripts/test_fusion_plant_stack_all.sh + evidence/native_fusion rows; fleet witness PARTIAL JSON on disk."
+}

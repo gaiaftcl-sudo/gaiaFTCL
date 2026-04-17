@@ -1,0 +1,13 @@
+{
+  "agent_id": "0xRick_playwright_1772550055610",
+  "domain_id": "atc",
+  "finalized_at": "2026-03-03T15:00:55.621234+00:00",
+  "invariant_failures": [],
+  "reason_codes": [
+    "USER_ABORT"
+  ],
+  "status": "CANCEL",
+  "steps_completed": [],
+  "tier": "CANCELED",
+  "tube_session_id": "97960709-7929-41c3-ba3f-139648c663c3"
+}

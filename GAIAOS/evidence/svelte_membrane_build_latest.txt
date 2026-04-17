@@ -1,0 +1,9 @@
+# Receipt: gaiaftcl_discord_membrane_svelte production build
+# Commands:
+#   cd services/gaiaftcl_discord_membrane_svelte && npm install && npm run build
+
+Exit: 0
+Vite: dist/index.html + assets (see service dist/)
+
+Dev: npm run dev (port 5173)
+Activity URL: serve dist/ via HTTPS per Discord Embedded App requirements.

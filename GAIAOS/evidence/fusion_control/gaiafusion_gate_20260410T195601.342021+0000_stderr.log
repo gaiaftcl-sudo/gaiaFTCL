@@ -1,0 +1,3 @@
+dyld[91166]: Library not loaded: @loader_path/../Frameworks/libtbb.dylib
+  Referenced from: <1EE48EF3-8442-3019-A8D3-89DBC0F57132> /Users/richardgillespie/Documents/FoT8D/GAIAOS/dist/GaiaFusion.app/Contents/Frameworks/USD_Core.framework/Versions/A/USD_Core
+  Reason: tried: '/Users/richardgillespie/Documents/FoT8D/GAIAOS/dist/GaiaFusion.app/Contents/Frameworks/USD_Core.framework/Versions/A/../Frameworks/libtbb.dylib' (no such file)

@@ -1,0 +1,12 @@
+{
+  "gate": "macInstallWitnessGate",
+  "ok": true,
+  "terminal": "CALORIE",
+  "blocker": null,
+  "witness": {
+    "resolved_binary_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/services/fusion_control_mac/dist/FusionControl.app/Contents/MacOS/fusion_control",
+    "is_executable": true,
+    "version_probe": "}"
+  },
+  "ts_utc": "2026-04-07T18:25:24.276996+00:00"
+}

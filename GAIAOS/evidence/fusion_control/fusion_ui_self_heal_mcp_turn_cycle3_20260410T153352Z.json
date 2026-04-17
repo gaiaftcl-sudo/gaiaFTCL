@@ -1,0 +1,18 @@
+{
+  "ok": false,
+  "http_code": 500,
+  "request": {
+    "name": "closure_game_report_v1",
+    "params": {
+      "ui_contract": "gaiaftcl_fusion_blank_screen_contract_v1",
+      "ui_failures": [
+        "pre_diagnostic_mcp_first"
+      ],
+      "ui_port": 55838,
+      "ui_component_audit": {},
+      "operator_prompt": "What do you believe you are showing in the local fusion UI right now? If splash/mooring, propose exact repair action.",
+      "requested_action": "diagnose_and_propose_fix_patch"
+    }
+  },
+  "error": "UI canonical validation failed: CANONICALS.SHA256 lockfile not found"
+}

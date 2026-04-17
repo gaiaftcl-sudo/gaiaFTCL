@@ -1,0 +1,15 @@
+{
+  "schema": "gaiaftcl_plant_hot_swap_validation_v1",
+  "terminal": "CALORIE",
+  "from_kind": "tokamak",
+  "to_kind": "stellarator",
+  "adapter_kinds": [
+    "tokamak",
+    "stellarator",
+    "frc",
+    "spheromak",
+    "mirror",
+    "inertial"
+  ],
+  "ts_utc": "2026-04-07T20:20:01.174793+00:00"
+}

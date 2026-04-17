@@ -1,0 +1,31 @@
+{
+  "receipt_id": "gaiafusion-native-accessibility-anchors",
+  "generated_at_utc": "2026-04-08T17:39:40Z",
+  "targets": [
+    "macos/GaiaFusion/GaiaFusion/FusionWebView.swift",
+    "macos/GaiaFusion/GaiaFusion/GaiaFusionApp.swift"
+  ],
+  "bindings_applied": [
+    "fusion_webview_substrate",
+    "fusion_main_window"
+  ],
+  "pipeline": {
+    "compile": {
+      "command": "swift build --configuration release",
+      "cwd": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion",
+      "exit_code": 0,
+      "duration_ms": 8911
+    },
+    "xcodebuild_test": {
+      "command": "xcodebuild -scheme GaiaFusion -destination 'platform=macOS' test",
+      "cwd": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion",
+      "exit_code": 0,
+      "duration_ms": 27196,
+      "xcresult": "/Users/richardgillespie/Library/Developer/Xcode/DerivedData/GaiaFusion-ghgpkmbeiknmwpgmbxpfesszulci/Logs/Test/Test-GaiaFusion-2026.04.08_13-39-16--0400.xcresult",
+      "tests": {
+        "total": 16,
+        "failed": 0
+      }
+    }
+  }
+}

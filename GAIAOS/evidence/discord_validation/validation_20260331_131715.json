@@ -1,0 +1,107 @@
+{
+  "timestamp": "2026-03-31T13:17:06.996261",
+  "tests": {
+    "spelling": {
+      "status": "FAILED",
+      "errors": [
+        "medical",
+        "robotics",
+        "law",
+        "logistics",
+        "telecom",
+        "climate"
+      ],
+      "total_checked": 14
+    },
+    "channels": {
+      "status": "PASSED",
+      "found": 16,
+      "expected": 14,
+      "missing": []
+    },
+    "game_interactions": {
+      "status": "PASSED",
+      "results": [
+        {
+          "channel": "quantum-closure",
+          "status": "PASSED",
+          "message_id": "1488587965373485059"
+        },
+        {
+          "channel": "biology-cures",
+          "status": "PASSED",
+          "message_id": "1488587966719987984"
+        },
+        {
+          "channel": "chemistry-lab",
+          "status": "PASSED",
+          "message_id": "1488587967869227048"
+        },
+        {
+          "channel": "neuro-clinical",
+          "status": "PASSED",
+          "message_id": "1488587968678727751"
+        },
+        {
+          "channel": "medical",
+          "status": "PASSED",
+          "message_id": "1488587971002241254"
+        },
+        {
+          "channel": "atc-ops",
+          "status": "PASSED",
+          "message_id": "1488587972407464016"
+        },
+        {
+          "channel": "robotics",
+          "status": "PASSED",
+          "message_id": "1488587973900370130"
+        },
+        {
+          "channel": "nuclear-fusion",
+          "status": "PASSED",
+          "message_id": "1488587975674691876"
+        },
+        {
+          "channel": "crypto-risk",
+          "status": "PASSED",
+          "message_id": "1488587976933113979"
+        },
+        {
+          "channel": "law",
+          "status": "PASSED",
+          "message_id": "1488587978220503322"
+        },
+        {
+          "channel": "logistics",
+          "status": "PASSED",
+          "message_id": "1488587979340517607"
+        },
+        {
+          "channel": "telecom",
+          "status": "PASSED",
+          "message_id": "1488587980213063730"
+        },
+        {
+          "channel": "climate",
+          "status": "PASSED",
+          "message_id": "1488587980665786480"
+        },
+        {
+          "channel": "sports-vortex",
+          "status": "PASSED",
+          "message_id": "1488587981945311477"
+        }
+      ]
+    },
+    "onboarding": {
+      "status": "PARTIAL",
+      "error": "Server Members Intent not enabled (manual fix required)"
+    },
+    "betting_alerts": {
+      "status": "PASSED",
+      "message_id": "1488587997933862954"
+    }
+  },
+  "overall_status": "PASSED"
+}

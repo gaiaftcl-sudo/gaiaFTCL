@@ -1,0 +1,4 @@
+GaiaFusion: no Next dev server found on candidate ports; defaulting dev proxy to 3000
+GaiaFusion server on 127.0.0.1:51683 (static)
+NATS stream subscription not available at nats://127.0.0.1:4222
+[REFUSED] NATS-MCP Bridge arm failed at nats://127.0.0.1:4222

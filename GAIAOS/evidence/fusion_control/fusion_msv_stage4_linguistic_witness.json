@@ -1,0 +1,100 @@
+{
+  "schema": "gaiaftcl_msv_stage4_linguistic_eversion_v1",
+  "ts_utc": "2026-04-10T15:22:47.306Z",
+  "locale_count": 11,
+  "terminal": "CURE",
+  "variants": [
+    {
+      "id": "USA",
+      "locale": "en-US",
+      "pipeline": "MSDF-Latin",
+      "delta_ms": 9.800000011920929,
+      "shell_stable": true,
+      "post_message_seen": true
+    },
+    {
+      "id": "CHN",
+      "locale": "zh-CN",
+      "pipeline": "MSDF-CJK",
+      "delta_ms": 9,
+      "shell_stable": true,
+      "post_message_seen": true
+    },
+    {
+      "id": "RUS",
+      "locale": "ru-RU",
+      "pipeline": "MSDF-Cyrillic",
+      "delta_ms": 7.100000023841858,
+      "shell_stable": true,
+      "post_message_seen": true
+    },
+    {
+      "id": "JPN",
+      "locale": "ja-JP",
+      "pipeline": "MSDF-CJK",
+      "delta_ms": 5.800000011920929,
+      "shell_stable": true,
+      "post_message_seen": true
+    },
+    {
+      "id": "KOR",
+      "locale": "ko-KR",
+      "pipeline": "MSDF-CJK",
+      "delta_ms": 7.700000017881393,
+      "shell_stable": true,
+      "post_message_seen": true
+    },
+    {
+      "id": "IND",
+      "locale": "hi-IN",
+      "pipeline": "MSDF-Indic",
+      "delta_ms": 6.600000023841858,
+      "shell_stable": true,
+      "post_message_seen": true
+    },
+    {
+      "id": "EU-DE",
+      "locale": "de-DE",
+      "pipeline": "MSDF-Latin",
+      "delta_ms": 7.200000017881393,
+      "shell_stable": true,
+      "post_message_seen": true
+    },
+    {
+      "id": "EU-FR",
+      "locale": "fr-FR",
+      "pipeline": "MSDF-Latin",
+      "delta_ms": 13.399999976158142,
+      "shell_stable": true,
+      "post_message_seen": true
+    },
+    {
+      "id": "EU-IT",
+      "locale": "it-IT",
+      "pipeline": "MSDF-Latin",
+      "delta_ms": 5.9000000059604645,
+      "shell_stable": true,
+      "post_message_seen": true
+    },
+    {
+      "id": "EU-ES",
+      "locale": "es-ES",
+      "pipeline": "MSDF-Latin",
+      "delta_ms": 7.9000000059604645,
+      "shell_stable": true,
+      "post_message_seen": true
+    },
+    {
+      "id": "GBR",
+      "locale": "en-GB",
+      "pipeline": "MSDF-Latin",
+      "delta_ms": 6.5999999940395355,
+      "shell_stable": true,
+      "post_message_seen": true
+    }
+  ],
+  "summary": {
+    "max_delta_ms": 13.399999976158142,
+    "min_delta_ms": 5.800000011920929
+  }
+}

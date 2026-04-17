@@ -1,0 +1,10 @@
+{
+  "schema": "gaiaftcl_mac_cell_spine_witness_v1",
+  "ts_utc": "2026-04-12T11:41:58Z",
+  "terminal": "CALORIE",
+  "swift_build_macos_GaiaFusion": "exit 0",
+  "plant_adapters_contract": "exit 0 kinds=9",
+  "npm_test_unit_fusion": "39 passed",
+  "xctest_agent_shell": "not claimed — prior signalled(9) on swiftpm-xctest-helper in IDE environment",
+  "cursorrules_edit": "MAC CELL airgap wording de-personalized (no operator handoff phrasing)"
+}

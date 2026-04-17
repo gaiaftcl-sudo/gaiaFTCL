@@ -1,0 +1,13 @@
+{
+  "schema": "gaiaftcl_fusion_new_user_playwright_witness_v1",
+  "ts_utc": "2026-04-07T17:50:22Z",
+  "gaia_root": "/Users/richardgillespie/Documents/FoT8D/GAIAOS",
+  "playwright_config": "services/gaiaos_ui_web/playwright.fusion.config.ts",
+  "specs": [
+    "tests/fusion/fusion_s4_console.spec.ts",
+    "tests/fusion/fusion_dashboard_visual_witness.spec.ts"
+  ],
+  "rc": 2,
+  "terminal": "REFUSED",
+  "reason": "banned_mock_or_simulation_wording_in_specs"
+}

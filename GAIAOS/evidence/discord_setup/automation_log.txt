@@ -1,0 +1,66 @@
+2026-03-31 08:34:40,525 - INFO - ╔════════════════════════════════════════════════════════════╗
+2026-03-31 08:34:40,526 - INFO - ║     DISCORD BOT SETUP - VISIBLE AUTOMATION                 ║
+2026-03-31 08:34:40,526 - INFO - ║     Creating 26 bots with live browser                     ║
+2026-03-31 08:34:40,526 - INFO - ╚════════════════════════════════════════════════════════════╝
+2026-03-31 08:34:44,809 - INFO - 🔐 Logging into Discord Developer Portal
+2026-03-31 08:34:47,752 - INFO - 📸 Screenshot saved: ./evidence/discord_setup/20260331_083446_01_login_page.png
+2026-03-31 08:34:54,428 - INFO - 📸 Screenshot saved: ./evidence/discord_setup/20260331_083449_02_credentials_entered.png
+2026-03-31 08:35:00,089 - INFO - 📸 Screenshot saved: ./evidence/discord_setup/20260331_083459_04_after_login.png
+2026-03-31 08:35:03,288 - INFO - 📸 Screenshot saved: ./evidence/discord_setup/20260331_083503_05_applications_page.png
+2026-03-31 08:35:03,289 - INFO - ✅ Login successful
+2026-03-31 08:35:03,289 - INFO - 
+============================================================
+2026-03-31 08:35:03,289 - INFO - Creating bot 1/26: sports_vortex
+2026-03-31 08:35:03,289 - INFO - ============================================================
+2026-03-31 08:35:03,289 - INFO - 🤖 Creating bot: sports_vortex
+2026-03-31 08:35:07,575 - INFO - 📸 Screenshot saved: ./evidence/discord_setup/20260331_083507_06_sports_vortex_new_app_dialog.png
+2026-03-31 08:35:08,175 - INFO - 📸 Screenshot saved: ./evidence/discord_setup/20260331_083508_07_sports_vortex_name_entered.png
+2026-03-31 08:35:16,648 - INFO - 📸 Screenshot saved: ./evidence/discord_setup/20260331_083516_08_sports_vortex_app_created.png
+2026-03-31 08:35:16,648 - INFO -   App ID: unknown
+2026-03-31 08:35:27,151 - ERROR - ❌ Failed to create sports_vortex: Page.click: Timeout 10000ms exceeded.
+Call log:
+  - waiting for locator("a:has-text(\"Bot\")")
+
+2026-03-31 08:35:27,254 - INFO - 📸 Screenshot saved: ./evidence/discord_setup/20260331_083527_ERROR_sports_vortex.png
+2026-03-31 08:35:27,254 - INFO - ⏳ Waiting 5 seconds before next bot...
+2026-03-31 08:35:32,256 - INFO - 
+============================================================
+2026-03-31 08:35:32,256 - INFO - Creating bot 2/26: birth_order_verifier
+2026-03-31 08:35:32,256 - INFO - ============================================================
+2026-03-31 08:35:32,256 - INFO - 🤖 Creating bot: birth_order_verifier
+2026-03-31 08:35:36,516 - INFO - 📸 Screenshot saved: ./evidence/discord_setup/20260331_083536_06_birth_order_verifier_new_app_dialog.png
+2026-03-31 08:35:37,117 - INFO - 📸 Screenshot saved: ./evidence/discord_setup/20260331_083537_07_birth_order_verifier_name_entered.png
+2026-03-31 08:36:10,128 - ERROR - ❌ Failed to create birth_order_verifier: Page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("button:has-text(\"Create\")")
+  -     - locator resolved to 2 elements. Proceeding with the first one: <button role="button" type="button" aria-expanded="false" aria-haspopup="dialog" aria-label="Create menu" data-mana-component="button" class="button_a22cb0 sm_a22cb0 secondary_a22cb0 hasText_a22cb0">…</button>
+  -   - attempting click action
+  -     2 × waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div role="none" class="scrim__40128"></div> from <div class="scrimContainer__15fe3 modalContainer__15fe3">…</div> subtree intercepts pointer events
+  -     - retrying click action
+  -     - waiting 20ms
+  -     2 × waiting for element to be visible, enabled and stable
+  -       - element is visible, enabled and stable
+  -       - scrolling into view if needed
+  -       - done scrolling
+  -       - <div role="none" class="scrim__40128"></div> from <div class="scrimContainer__15fe3 modalContainer__15fe3">…</div> subtree intercepts pointer events
+  -     - retrying click action
+  -       - waiting 100ms
+  -     58 × waiting for element to be visible, enabled and stable
+  -        - element is visible, enabled and stable
+  -        - scrolling into view if needed
+  -        - done scrolling
+  -        - <div role="none" class="scrim__40128"></div> from <div class="scrimContainer__15fe3 modalContainer__15fe3">…</div> subtree intercepts pointer events
+  -      - retrying click action
+  -        - waiting 500ms
+
+2026-03-31 08:36:10,233 - INFO - 📸 Screenshot saved: ./evidence/discord_setup/20260331_083610_ERROR_birth_order_verifier.png
+2026-03-31 08:36:10,233 - INFO - ⏳ Waiting 5 seconds before next bot...
+2026-03-31 08:36:15,234 - INFO - 
+============================================================
+2026-03-31 08:36:15,234 - INFO - Creating bot 3/26: franklin
+2026-03-31 08:36:15,234 - INFO - ============================================================
+2026-03-31 08:36:15,234 - INFO - 🤖 Creating bot: franklin

@@ -1,0 +1,21 @@
+{
+  "schema": "gaiaftcl_fusion_xcode_sidecar_dmg_mount_witness_v1",
+  "ts_utc": "2026-04-04T16:38:00Z",
+  "host_note": "Local limb: xcodebuild Release + sidecar-only DMG + hdiutil attach + file(1) on mounted binary",
+  "xcode_project": "macos/FusionSidecarHost/FusionSidecarHost.xcodeproj",
+  "xcode_scheme": "FusionSidecarHost",
+  "xcode_configuration": "Release",
+  "derived_data_pattern": "${TMPDIR}/gaiaftcl_FusionSidecarHost_derived_${USER}",
+  "sidecar_dmg_script": "scripts/build_fusion_sidecar_host_dmg.sh",
+  "sidecar_dmg_artifact": "dist/FusionSidecarHost-1.0.0-sidecar.dmg",
+  "mount_smoke": {
+    "hdiutil_attach_readonly_nobrowse": true,
+    "file_invocation": "file \"<mount>/FusionSidecarHost.app/Contents/MacOS/FusionSidecarHost\"",
+    "file_result_summary": "Mach-O universal binary arm64+x86_64"
+  },
+  "facade_dmg_integration": {
+    "script": "scripts/build_gaiaftcl_facade_dmg.sh",
+    "fusion_sidecar_host_staged_when": "FUSION_DMG_INCLUDE_SIDECAR_HOST=1 (default) and xcodebuild succeeds",
+    "full_volume_witness_script": "scripts/witness_gaiaftcl_dmg_mount.sh"
+  }
+}

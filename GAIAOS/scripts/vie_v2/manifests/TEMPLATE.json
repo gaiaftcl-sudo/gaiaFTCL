@@ -1,0 +1,31 @@
+{
+  "hunt_date": "REPLACE-ME-YYYY-MM-DD",
+  "notes": "Copy to manifests/YYYY-MM-DD.json. Edit games[] only — check-in is merged by the runner.",
+  "checkin": {
+    "domain_schema_name": "sports_daily_hunt_checkin",
+    "raw_data": {
+      "session": {
+        "session_id": "hunt-REPLACE-ME-YYYY-MM-DD",
+        "ordinal_day": 1.0,
+        "party_stance": "HUNTER",
+        "card_tier": "opening",
+        "prior_session_score": 0.0,
+        "rules_ack_score": 1.0,
+        "entropy_budget": 0.55,
+        "window_label": "card_open",
+        "slot_progress": 0.0,
+        "line_movement_proximity": 0.0
+      },
+      "market": { "liquidity_proxy": 0.5 },
+      "operator": { "fatigue_reserve": 0.9, "energy_commitment": 0.85 }
+    }
+  },
+  "games": [
+    {
+      "label": "example-mlb-slot",
+      "domain_schema_name": "sports_mlb",
+      "entity_id": "fixture-your-external-id",
+      "raw_file": "payloads/example_mlb_slot.json"
+    }
+  ]
+}

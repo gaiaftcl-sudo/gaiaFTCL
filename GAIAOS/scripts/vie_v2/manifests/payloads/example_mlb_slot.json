@@ -1,0 +1,19 @@
+{
+  "player": {
+    "id": "fixture-your-external-id",
+    "birth_order": 2.0,
+    "hunter_class": "HUNTER",
+    "handedness": "R",
+    "career_era": 3.5,
+    "consistency_score": 0.8,
+    "recovery_factor": 0.85
+  },
+  "team": { "historical_win_rate": 0.5 },
+  "game": {
+    "pitcher_entropy_index": 0.5,
+    "current_velocity_percentile": 0.6,
+    "leverage_description": "listed_game",
+    "inning_progress": 0.0,
+    "fatigue_threshold_proximity": 0.4
+  }
+}

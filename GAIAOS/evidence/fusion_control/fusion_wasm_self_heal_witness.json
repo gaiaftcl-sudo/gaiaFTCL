@@ -1,0 +1,43 @@
+{
+  "schema": "gaiaftcl_fusion_wasm_self_heal_v1",
+  "ts_utc": "2026-04-10T15:22:41.781Z",
+  "terminal": "CURE",
+  "tracked_anchors": [
+    "[data-testid=\"fusion-s4-main\"]",
+    "[data-testid=\"fusion-status-ribbon\"]",
+    "[data-testid=\"fusion-topology-view\"]",
+    "[data-testid=\"fusion-projection-panel\"]",
+    "[data-testid=\"fusion-cell-grid\"]",
+    "[data-testid=\"fusion-plant-controls\"]",
+    "[data-testid=\"fusion-swap-panel\"]",
+    "[data-testid=\"fusion-section-nav\"]",
+    "[data-testid=\"fusion-control-matrix-receipt\"]",
+    "[data-testid=\"fusion-panel-pcs\"]",
+    "[data-testid=\"fusion-panel-industry-pillars\"]",
+    "[data-testid=\"fusion-panel-mesh-bridge\"]",
+    "[data-testid=\"fusion-panel-global-challenge\"]",
+    "[data-testid=\"fusion-panel-soak-proof\"]",
+    "[data-testid=\"fusion-soak-run-commands\"]",
+    "[data-testid=\"fusion-panel-stability-game\"]",
+    "[data-testid=\"fusion-panel-m8-feeders\"]",
+    "[data-testid=\"fusion-panel-virtual\"]",
+    "[data-testid=\"fusion-panel-production\"]"
+  ],
+  "heal_result": {
+    "attempts": 1,
+    "repaired": true,
+    "missing": []
+  },
+  "palette_probe": "rgb(219, 234, 254)",
+  "pre_inject_console_errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "post_inject_console_errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "track": "FOT_FIELD_OF_FIELDS"
+}

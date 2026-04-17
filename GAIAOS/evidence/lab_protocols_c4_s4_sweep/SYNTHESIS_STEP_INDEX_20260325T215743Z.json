@@ -1,0 +1,652 @@
+[
+  {
+    "file": "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md",
+    "line": 24,
+    "step_line": "1. **Protein Synthesis**: ALZ-001 \"Plaque Disruptor\", ALZ-002 \"Tau Stabilizer\" (lead candidates)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md",
+    "line": 25,
+    "step_line": "2. **Validation**: Binding assays, BBB penetration (PAMPA, Caco-2), metabolic flux, AMPK\u03b1 assays"
+  },
+  {
+    "file": "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md",
+    "line": 26,
+    "step_line": "3. **Animal Models**: Transgenic mice, cognitive endpoints, metabolic markers"
+  },
+  {
+    "file": "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md",
+    "line": 27,
+    "step_line": "4. **Regulatory Path**: IND, Phase I"
+  },
+  {
+    "file": "LAB_PROTOCOLS_ALZHEIMER_BIOINVARIANT.md",
+    "line": 28,
+    "step_line": "5. **Focused Ultrasound (FUS)**: Frequency-based delivery protocol"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 17,
+    "step_line": "1. **Protein Synthesis**: LEUK-005 \"Harbinger\" (67 amino acids)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 18,
+    "step_line": "2. **Small Molecule Synthesis**: AML-CHEM-001 \"Kinase Killer\""
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 19,
+    "step_line": "3. **Validation**: Binding assays, toxicity testing, efficacy studies"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 20,
+    "step_line": "4. **Scale-up**: Manufacturing at clinical trial scale"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 62,
+    "step_line": "1. **Order Synthetic Gene**:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 68,
+    "step_line": "2. **Clone into pET-28a**:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 78,
+    "step_line": "3. **Transform BL21(DE3)**:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 85,
+    "step_line": "4. **Small-Scale Test Expression** (50 mL):"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 95,
+    "step_line": "5. **Analyze Expression**:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 103,
+    "step_line": "6. **Scale Up** (1-2 L culture):"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 115,
+    "step_line": "7. **Cell Lysis**:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 124,
+    "step_line": "8. **His-Tag Purification** (IMAC):"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 135,
+    "step_line": "9. **Buffer Exchange & Concentration**:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 144,
+    "step_line": "10. **Quality Control**:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 163,
+    "step_line": "1. **Clone into pPICZ\u03b1**:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 168,
+    "step_line": "2. **Expression**:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 175,
+    "step_line": "3. **Purification**:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 188,
+    "step_line": "1. **SPPS Parameters**:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 194,
+    "step_line": "2. **Sequence Assembly**:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 202,
+    "step_line": "3. **Purification**:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 209,
+    "step_line": "4. **Disulfide Bond Formation** (if needed):"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 287,
+    "step_line": "1. Add 3-bromo-6-trifluoromethylpyridazine (1.0 eq, 2.27 g, 10 mmol)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 288,
+    "step_line": "2. Add 3-pyridylboronic acid (1.2 eq, 1.48 g, 12 mmol)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 289,
+    "step_line": "3. Add Pd(PPh\u2083)\u2084 (0.05 eq, 578 mg)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 290,
+    "step_line": "4. Add K\u2082CO\u2083 (2.0 eq, 2.76 g)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 291,
+    "step_line": "5. Dissolve in DMF/H\u2082O (9:1, 100 mL)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 292,
+    "step_line": "6. Heat to 80\u00b0C under N\u2082 for 16 hours"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 293,
+    "step_line": "7. Cool, add water (200 mL), extract with ethyl acetate (3 \u00d7 100 mL)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 294,
+    "step_line": "8. Wash organic layer with brine, dry over Na\u2082SO\u2084"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 295,
+    "step_line": "9. Concentrate under vacuum"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 296,
+    "step_line": "10. Purify by flash chromatography (silica gel, 0-50% EtOAc/hexanes)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 307,
+    "step_line": "1. Dissolve product from Step 1 (1.8 g, 7.2 mmol) in THF (50 mL)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 308,
+    "step_line": "2. Cool to -78\u00b0C under N\u2082"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 309,
+    "step_line": "3. Add n-BuLi (1.1 eq, 3.2 mL of 2.5 M solution) dropwise"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 310,
+    "step_line": "4. Stir 30 min at -78\u00b0C"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 311,
+    "step_line": "5. Add DMF (2.0 eq, 1.1 mL) dropwise"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 312,
+    "step_line": "6. Warm to RT over 2 hours"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 313,
+    "step_line": "7. Quench with saturated NH\u2084Cl (50 mL)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 314,
+    "step_line": "8. Extract with ethyl acetate (3 \u00d7 50 mL)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 315,
+    "step_line": "9. Purify by flash chromatography"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 326,
+    "step_line": "1. Dissolve aldehyde from Step 2 (1.2 g, 4.3 mmol) in MeOH (30 mL)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 327,
+    "step_line": "2. Cool to 0\u00b0C"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 328,
+    "step_line": "3. Add NaBH\u2084 (1.5 eq, 244 mg) in portions over 10 min"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 329,
+    "step_line": "4. Stir at 0\u00b0C for 2 hours"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 330,
+    "step_line": "5. Quench with water (20 mL)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 331,
+    "step_line": "6. Extract with ethyl acetate (3 \u00d7 30 mL)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 332,
+    "step_line": "7. Concentrate under vacuum"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 343,
+    "step_line": "1. Dissolve alcohol from Step 3 (1.0 g, 3.5 mmol) in DMF (20 mL)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 344,
+    "step_line": "2. Add NaH (60% dispersion, 1.3 eq, 182 mg) at 0\u00b0C"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 345,
+    "step_line": "3. Stir 30 min at 0\u00b0C"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 346,
+    "step_line": "4. Add isobutyl bromide (1.5 eq, 0.57 mL)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 347,
+    "step_line": "5. Warm to RT, stir overnight"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 348,
+    "step_line": "6. Quench with water (50 mL)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 349,
+    "step_line": "7. Extract with ethyl acetate (3 \u00d7 30 mL)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 350,
+    "step_line": "8. Purify by flash chromatography"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 359,
+    "step_line": "1. Preparative HPLC (C18 column)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 360,
+    "step_line": "2. Gradient: 30-80% acetonitrile in water (0.1% TFA)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 361,
+    "step_line": "3. Collect pure fractions (>98% purity by HPLC)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 362,
+    "step_line": "4. Lyophilize to white powder"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 370,
+    "step_line": "1. \u00b9H NMR (400 MHz, CDCl\u2083): Confirm structure"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 371,
+    "step_line": "2. \u00b9\u00b3C NMR (100 MHz, CDCl\u2083): Confirm structure"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 372,
+    "step_line": "3. HRMS (ESI+): Exact mass [M+H]\u207a = 325.1276 (calculated 325.1276)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 373,
+    "step_line": "4. HPLC: Purity >98% (220 nm, 254 nm)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 374,
+    "step_line": "5. Melting point: Expected 142-145\u00b0C"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 389,
+    "step_line": "1. **Continuous Flow Reactor**:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 394,
+    "step_line": "2. **Advantages**:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 449,
+    "step_line": "1. Immobilize GATA2::MECOM on CM5 sensor chip (~5000 RU)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 450,
+    "step_line": "2. Flow LEUK-005 at concentrations: 1, 2.5, 5, 10, 25, 50, 100 nM"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 451,
+    "step_line": "3. Measure association (120 sec) and dissociation (300 sec)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 452,
+    "step_line": "4. Regenerate surface with 10 mM glycine pH 2.0"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 453,
+    "step_line": "5. Calculate KD using 1:1 Langmuir binding model"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 463,
+    "step_line": "1. Coat 96-well plate with GATA2::MECOM (100 ng/well)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 464,
+    "step_line": "2. Block with 3% BSA in PBST"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 465,
+    "step_line": "3. Add LEUK-005 at concentrations: 0.1, 1, 10, 100, 1000 nM"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 466,
+    "step_line": "4. Detect with anti-His antibody (HRP-conjugated)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 467,
+    "step_line": "5. Add TMB substrate, measure A450"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 485,
+    "step_line": "1. Prepare serial dilutions: 0.1, 1, 10, 100, 1000 nM in kinase buffer"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 486,
+    "step_line": "2. Mix kinase + peptide substrate + ATP + compound"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 487,
+    "step_line": "3. Incubate 60 min at RT"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 488,
+    "step_line": "4. Add ADP-Glo\u2122 reagent (stop kinase, deplete ATP)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 489,
+    "step_line": "5. Add kinase detection reagent (convert ADP to luminescence)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 490,
+    "step_line": "6. Measure luminescence (plate reader)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 491,
+    "step_line": "7. Calculate IC\u2085\u2080 using 4-parameter logistic fit"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 514,
+    "step_line": "1. Seed cells at 5,000 cells/well in 96-well plate"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 515,
+    "step_line": "2. Add compound at concentrations: 0.01, 0.1, 1, 10, 100 \u03bcM"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 516,
+    "step_line": "3. Incubate 72 hours at 37\u00b0C, 5% CO\u2082"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 517,
+    "step_line": "4. Add MTT reagent (5 mg/mL, 20 \u03bcL/well)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 518,
+    "step_line": "5. Incubate 4 hours"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 519,
+    "step_line": "6. Add DMSO (100 \u03bcL) to dissolve formazan"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 520,
+    "step_line": "7. Measure A570"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 534,
+    "step_line": "1. Treat cells with IC\u2085\u2080 concentration for 24, 48, 72 hours"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 535,
+    "step_line": "2. Harvest cells, wash with PBS"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 536,
+    "step_line": "3. Stain with Annexin V-FITC + Propidium Iodide"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 537,
+    "step_line": "4. Analyze by flow cytometry"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 549,
+    "step_line": "1. Treat inv(3) AML cells with LEUK-005 (1, 5, 10 \u03bcM, 24 hours)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 550,
+    "step_line": "2. Lyse cells, quantify protein"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 551,
+    "step_line": "3. Western blot for:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 565,
+    "step_line": "1. Treat cells with AML-CHEM-001 (0.1, 1, 10 \u03bcM, 4 hours)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 566,
+    "step_line": "2. Western blot for:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 585,
+    "step_line": "1. Vehicle control (PBS or DMSO vehicle)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 586,
+    "step_line": "2. LEUK-005 low dose (5 mg/kg, IV, 2\u00d7/week)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 587,
+    "step_line": "3. LEUK-005 high dose (20 mg/kg, IV, 2\u00d7/week)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 588,
+    "step_line": "4. AML-CHEM-001 low dose (25 mg/kg, PO, daily)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 589,
+    "step_line": "5. AML-CHEM-001 high dose (100 mg/kg, PO, daily)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 590,
+    "step_line": "6. Combination (LEUK-005 5 mg/kg + AML-CHEM-001 25 mg/kg)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 617,
+    "step_line": "1. Single dose administration (IV or PO at efficacy dose)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 618,
+    "step_line": "2. Collect blood samples: 0, 0.25, 0.5, 1, 2, 4, 8, 24, 48 hours"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 619,
+    "step_line": "3. Measure drug concentration by LC-MS/MS"
+  },
+  {
+    "file": "LAB_PROTOCOLS_INV3_LEUKEMIA_THERAPEUTICS.md",
+    "line": 620,
+    "step_line": "4. Calculate PK parameters:"
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 46,
+    "step_line": "1. **PART 1** \u2014 Protein program (**MENING-PROT-001**): expression or SPPS path, QC, formulation"
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 47,
+    "step_line": "2. **PART 2** \u2014 Small-molecule programs (**MEN-CHEM-001 \u2026 005**): hit-to-lead narrative, analytical QC, formulation classes"
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 48,
+    "step_line": "3. **PART 3** \u2014 Validation: acapsular phenotype, metabolic block, denitrification survival, **combination index**"
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 49,
+    "step_line": "4. **PART 4** \u2014 Animal models & PK (including **CNS penetration** for meningitis indication)"
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 50,
+    "step_line": "5. **PART 5** \u2014 Regulatory path & translational checklist"
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 74,
+    "step_line": "1. Codon-optimize **domain construct** (soluble fragment of CtrC NBD or extracellular loop \u2014 **structure-guided**)."
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 75,
+    "step_line": "2. Clone into **pET-28a(+)** or similar; N-terminal His-tag."
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 76,
+    "step_line": "3. Transform **BL21(DE3)**; test expression (37 \u00b0C vs 18 \u00b0C overnight)."
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 77,
+    "step_line": "4. Solubility screen (BugBuster / sonication); Ni-NTA purification if soluble."
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 78,
+    "step_line": "5. QC: SDS-PAGE, SEC, **LC-MS** identity, endotoxin **< 10 EU/mg** if injectable track."
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 107,
+    "step_line": "1. Hit identification (fragment screen / HTS on ATPase activity)."
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 108,
+    "step_line": "2. SAR around **ATP-site** or **allosteric** pocket (bacterial-specific residues)."
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 109,
+    "step_line": "3. **PKM** optimization: Gram-negative permeability."
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 110,
+    "step_line": "4. **CYP / hERG** counter-screens."
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 111,
+    "step_line": "5. **Crystallography** with protein construct."
+  },
+  {
+    "file": "LAB_PROTOCOLS_PROJECT_GREAT_OWL_MENINGOCOCCAL_HARDWARE.md",
+    "line": 112,
+    "step_line": "6. **Scale-up** + **GMP** precursor route."
+  }
+]

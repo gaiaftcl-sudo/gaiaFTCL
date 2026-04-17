@@ -1,0 +1,7 @@
+{
+  "schema": "gaiaftcl_plant_hot_swap_witness_v1",
+  "terminal": "CALORIE",
+  "from_kind": "tokamak",
+  "to_kind": "stellarator",
+  "ts_utc": "2026-04-07T00:00:00Z"
+}

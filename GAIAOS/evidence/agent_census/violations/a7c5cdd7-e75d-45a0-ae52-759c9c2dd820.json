@@ -1,0 +1,33 @@
+{
+  "action_taken": "AUTO_DETECTED",
+  "agent_id": "bf0180b5-d1f8-4336-835d-5321684d5b34",
+  "detected_at": "2026-02-01T12:09:04.783995+00:00",
+  "evidence": {
+    "detector_rule_id": "GOV_COERCIVE_BINDING",
+    "detector_version": "1.0.0",
+    "excerpt_hash": "9a45969f45620818f1dab34a92bd2a4677bf2b33223ee423ad84a22633753910",
+    "excerpt_length": 86,
+    "pattern_matches": [
+      {
+        "matches": [
+          "oath",
+          "tithe",
+          "must"
+        ],
+        "type": "keyword_match"
+      },
+      {
+        "matches": [
+          "take an oath",
+          "tithe"
+        ],
+        "type": "phrase_match"
+      }
+    ],
+    "platform": "test_fixture",
+    "source_id": "msg_101",
+    "total_matches": 5
+  },
+  "reason_code": "BH_COERCIVE_BINDING_PROTOCOL",
+  "severity": "critical"
+}

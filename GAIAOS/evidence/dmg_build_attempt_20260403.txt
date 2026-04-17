@@ -1,0 +1,23 @@
+# DMG build — witness (2026-04-03, macOS + Xcode)
+
+Command (from GAIAOS root):
+
+  bash scripts/build_gaiaftcl_facade_dmg.sh
+
+Exit: 0
+
+Artifact:
+
+  dist/GaiaFTCL-1.0.0.dmg
+  dist/GaiaFTCL-1.0.0.dmg.sha256  (checksum in file)
+
+Build fixes applied in this pass:
+
+- Renamed `main.swift` → `gaiaftcl_app.swift` (Swift treats `main.swift` as script mode; conflicted with `@main` in `entry_point.swift`).
+- Added `src/entry_point.swift` with `@main enum GaiaFTCLMain` and strong ref to delegate.
+- Moved `VQbitEvent` + `MountManager` to `mount_and_events.swift`; removed duplicate types.
+- `build_gaiaftcl_facade_dmg.sh`: absolute `BUILD_DIR` / `DIST_DIR` so DMG packaging finds the `.app` after `cd`.
+- Swift: `import AppKit` where UI types were used (`projection_engine`, `s4_ingestor`, `identity_mooring`).
+- `wallet_gate`: optional public GET `vqbit/torsion` (deploy to take effect on mesh).
+
+`/dmgInstall` (Next): returns **200** when `public/downloads/GaiaFTCL-latest.dmg` exists; limb did not commit that binary — copy from `dist/` for local smoke or use `deploy_dmg_to_mesh.sh`.

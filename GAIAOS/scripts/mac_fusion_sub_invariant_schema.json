@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MacFusionSubInvariantHeartbeat",
+  "type": "object",
+  "required": ["ts_utc", "gate"],
+  "properties": {
+    "ts_utc": { "type": "string", "format": "date-time" },
+    "cycle": { "type": "integer" },
+    "gate": {
+      "type": "string",
+      "enum": [
+        "fusionControlAppBuildTestGate",
+        "fusionPlasmaAppBuildGate",
+        "dmgArtifactGate",
+        "dmgMountGate",
+        "outerRebuildRedeployGate",
+        "macInstallWitnessGate",
+        "swiftRuntimeGate",
+        "sidecarControlSurfaceGate",
+        "macMooringFilesGate",
+        "fusionMacVisualGate",
+        "outerOpsAdminGate",
+        "teamReadinessProofGate",
+        "surfaceParityInputGate",
+        "outerSelfHealGate",
+        "subSealingGate",
+        "done"
+      ]
+    },
+    "terminal": {
+      "type": "string",
+      "enum": ["CALORIE", "REFUSED", "BLOCKED", "Death"]
+    },
+    "last_error": { "type": "string" },
+    "last_witness": { "type": "object" },
+    "blocker_reason": { "type": "string" },
+    "elapsed_ms": { "type": "number" },
+    "attempt": { "type": "integer" }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,22 @@
+{
+  "gate": "swiftRuntimeGate",
+  "ok": true,
+  "terminal": "CALORIE",
+  "blocker": null,
+  "witness": {
+    "ui_http_ok": true,
+    "ui_http_code": "200",
+    "app_binary_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/build/plasma_release/FusionSidecarHost.app/Contents/MacOS/FusionSidecarHost",
+    "app_binary_executable": true,
+    "app_version_probe": "unavailable",
+    "swift_runtime_running": true,
+    "swift_runtime_processes": [
+      "16964 /Users/richardgillespie/Documents/FoT8D/GAIAOS/build/plasma_release/FusionSidecarHost.app/Contents/MacOS/FusionSidecarHost --version",
+      "36251 /Users/richardgillespie/Documents/FoT8D/GAIAOS/build/plasma_release/FusionSidecarHost.app/Contents/MacOS/FusionSidecarHost --version",
+      "49575 /Users/richardgillespie/Documents/FoT8D/GAIAOS/build/plasma_release/FusionSidecarHost.app/Contents/MacOS/FusionSidecarHost --version",
+      "50006 bash -lc pgrep -fal \"FusionSidecarHost|GaiaFTCL|FusionControl\" || true"
+    ],
+    "self_heal_steps": []
+  },
+  "ts_utc": "2026-04-07T18:25:52.960583+00:00"
+}

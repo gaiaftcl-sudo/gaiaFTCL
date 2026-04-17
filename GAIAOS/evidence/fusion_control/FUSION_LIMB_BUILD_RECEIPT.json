@@ -1,0 +1,41 @@
+{
+  "schema": "gaiaftcl_fusion_limb_build_receipt_v1",
+  "generated_at_utc": "2026-04-04T16:00:00Z",
+  "host": "darwin",
+  "steps": [
+    {
+      "name": "FusionControl.app",
+      "script": "scripts/build_fusion_control_mac_app.sh",
+      "exit": 0,
+      "artifact": "services/fusion_control_mac/dist/FusionControl.app",
+      "witness": "cargo release + metal -> default.metallib + 1-cycle fusion_control JSON receipt"
+    },
+    {
+      "name": "FusionSidecarHost.app",
+      "command": "xcodebuild -scheme FusionSidecarHost -configuration Release",
+      "exit": 0,
+      "artifact": "~/Library/Developer/Xcode/DerivedData/FusionSidecarHost-*/Build/Products/Release/FusionSidecarHost.app",
+      "note": "Path under DerivedData; copy to dist/ manually for packaging if required"
+    },
+    {
+      "name": "gaiaos_ui_web Next production build",
+      "command": "npm run build",
+      "cwd": "services/gaiaos_ui_web",
+      "exit": 0
+    },
+    {
+      "name": "docker compose fusion-sidecar",
+      "file": "docker-compose.fusion-sidecar.yml",
+      "exit": 0,
+      "images": ["fusion_sidecar-fusion-sidecar-gateway", "fusion_sidecar-fusion-sidecar-tester"]
+    }
+  ],
+  "dmg": {
+    "script": "scripts/build_gaiaftcl_facade_dmg.sh",
+    "exit": 0,
+    "path": "dist/GaiaFTCL-1.0.0.dmg",
+    "hdiutil_verify": "VALID",
+    "sha256": "2855b395434ac3832844aeae944bd39fbfff570237d4eb6114c91e6a932e4505",
+    "signing": "DEVELOPER_ID unset — not signed"
+  }
+}

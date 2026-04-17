@@ -1,0 +1,78 @@
+{
+  "schema_version": "type1_receipt.v1",
+  "timestamp_iso": "2026-03-29T12:04:48Z",
+  "cell_id": "demo",
+  "repo_root": "/Users/richardgillespie/Documents/FoT8D",
+  "iq": {
+    "pass": true,
+    "artifacts": [
+      {
+        "id": "iq_arch",
+        "pass": true,
+        "detail": "arm64"
+      },
+      {
+        "id": "iq_dev_urandom",
+        "pass": true,
+        "detail": "/dev/urandom"
+      },
+      {
+        "id": "iq_manifest_sha256",
+        "pass": true,
+        "detail": "skipped (set TYPE1_MANIFEST_PATH and TYPE1_MANIFEST_EXPECTED_SHA256 to enforce)"
+      }
+    ]
+  },
+  "oq": {
+    "pass": true,
+    "artifacts": [
+      {
+        "id": "oq_cursor_app",
+        "pass": true,
+        "detail": "/Applications/Cursor.app"
+      },
+      {
+        "id": "oq_port_8803_listen",
+        "pass": true,
+        "detail": "tcp 127.0.0.1:8803 open=False (relaxed; set TYPE1_OQ_RELAXED=0 to enforce)",
+        "duration_ms": 0.173
+      },
+      {
+        "id": "oq_port_8830_listen",
+        "pass": true,
+        "detail": "tcp 127.0.0.1:8830 open=True (relaxed; set TYPE1_OQ_RELAXED=0 to enforce)",
+        "duration_ms": 0.171
+      },
+      {
+        "id": "oq_gateway_8830_http",
+        "pass": true,
+        "detail": "http_code=200 curl_rc=0 (relaxed)",
+        "duration_ms": 19.294
+      },
+      {
+        "id": "oq_global_cursor_rules_dir",
+        "pass": true,
+        "detail": "skipped (project-only default; set TYPE1_OQ_REQUIRE_GLOBAL_CURSOR_RULES=1 to enforce)"
+      }
+    ]
+  },
+  "pq": {
+    "pass": true,
+    "artifacts": [
+      {
+        "id": "pq_vq_check",
+        "pass": true,
+        "detail": "LIGHT_BLUE\tmemory_bank:GAIAOS/infrastructure/vqbit_cursor_kit/memory_bank/PRODUCT_BRIEF.md\t/Users/richardgillespie/Documents/FoT8D/GAIAOS/infrastructure/vqbit_cursor_kit/memory_bank/PRODUCT_BRIEF.md\nLIGHT_BLUE\tmemory_bank:GAIAOS/infrastructure/vqbit_cursor_kit/memory_bank/ACTIVE_CONTEXT.md\t/Users/richardgillespie/Documents/FoT8D/GAIAOS/infrastructure/vqbit_cursor_kit/memory_bank/ACTIVE_CONTEXT.md\nLIGHT_BLUE\tmemory_bank:GAIAOS/infrastructure/vqbit_cursor_kit/memory_bank/TECH_CONTEXT.md\t/Users/richardgillespie/Documents/FoT8D/GAIAOS/infrastructure/vqbit_cursor_kit/memory_bank/TECH_CONTEXT.md\nLIGHT_BLUE\tmemory_bank:GAIAOS/infrastructure/vqbit_cursor_kit/memory_bank/PROGRESS.md\t/Users/richardgillespie/Documents/FoT8D/GAIAOS/infrastructure/vqbit_cursor_kit/memory_bank/PROGRESS.md\nLIGHT_BLUE\tcursor_rule:.cursor/rules/c4-s4-recursive-witness.mdc\t/Users/richardgillespie/Documents/FoT8D/.cursor/rules/c4-s4-recursive-witness.mdc\nLIGHT_BLUE\tcursor_rule:.cursor/rules/gaiaftcl-architecture.mdc\t/Users/richardgillespie/Documents/FoT8D/.cursor/rules/gaiaftcl-architecture.mdc\nLIGHT_BLUE\twitness:mail_tls_subject\texit 0\nLIGHT_BLUE\twitness:mail_sogo_redirect\texit 0\n\nTorsion=0.000 (failed 0/8) threshold=0.2\nCLOSURE: LIGHT_BLUE \u2014 manifest anchors satisfied.\n",
+        "duration_ms": 3905.306
+      },
+      {
+        "id": "pq_mesh_authenticated_ping",
+        "pass": true,
+        "detail": "skipped (set TYPE1_PQ_URL and TYPE1_PQ_AUTH_TOKEN to require moor ping)"
+      }
+    ]
+  },
+  "closure": "LIGHT_BLUE",
+  "vq_check_exit_code": 0,
+  "summary": "STATUS: LIGHT_BLUE. Identity mooring audit complete (IQ+OQ+PQ)."
+}

@@ -1,0 +1,17 @@
+{
+  "gate": "fusionPlasmaAppBuildGate",
+  "ok": true,
+  "terminal": "CALORIE",
+  "blocker": null,
+  "witness": {
+    "build_script_rc": 0,
+    "build_script_tail": "    Signing Identity:     \"Sign to Run Locally\"\n    \n    /usr/bin/codesign --force --sign - -o runtime --entitlements /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Intermediates.noindex/FusionSidecarHost.build/Release/FusionSidecarHost.build/FusionSidecarHost.app.xcent --timestamp\\=none --generate-entitlement-der /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app\n\nRegisterExecutionPolicyException /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app (in target 'FusionSidecarHost' from project 'FusionSidecarHost')\n    cd /Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/FusionSidecarHost\n    builtin-RegisterExecutionPolicyException /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app\n\nValidate /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app (in target 'FusionSidecarHost' from project 'FusionSidecarHost')\n    cd /Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/FusionSidecarHost\n    builtin-validationUtility /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app -no-validate-extension -infoplist-subpath Contents/Info.plist\n\nTouch /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app (in target 'FusionSidecarHost' from project 'FusionSidecarHost')\n    cd /Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/FusionSidecarHost\n    /usr/bin/touch -c /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app\n\nRegisterWithLaunchServices /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app (in target 'FusionSidecarHost' from project 'FusionSidecarHost')\n    cd /Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/FusionSidecarHost\n    /System/Library/Frameworks/CoreServices.framework/Versions/Current/Frameworks/LaunchServices.framework/Versions/Current/Support/lsregister -f -R -trusted /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Products/Release/FusionSidecarHost.app\n\n** BUILD SUCCEEDED **\n\nCALORIE: FusionSidecarHost Release \u2192 /Users/richardgillespie/Documents/FoT8D/GAIAOS/build/plasma_release/FusionSidecarHost.app\nWitness: /Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/mac_fusion/FUSION_PLASMA_APP_BUILD_WITNESS.json",
+    "witness_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/mac_fusion/FUSION_PLASMA_APP_BUILD_WITNESS.json",
+    "schema_ok": true,
+    "bundle_present_executable": true,
+    "binary_sha256_present": true,
+    "cf_bundle_short_version_string": "1.0",
+    "cf_bundle_identifier": "com.gaiaftcl.FusionSidecarHost"
+  },
+  "ts_utc": "2026-04-07T18:22:00.752214+00:00"
+}

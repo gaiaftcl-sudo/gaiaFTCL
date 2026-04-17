@@ -1,0 +1,124 @@
+{
+  "schema": "gaiaftcl_fusion_ui_self_heal_loop_receipt_v1",
+  "ts_utc": "2026-04-10T09:23:58.114592+00:00",
+  "terminal": "REFUSED",
+  "reason": "max_cycles_exhausted",
+  "cycles_attempted": 2,
+  "max_cycles": 2,
+  "ui_port": 8910,
+  "heal_mode": "full",
+  "conversation_wallet": "0xgaiaftcl_internal_feed_readonly",
+  "jsonl": "evidence/fusion_control/fusion_ui_self_heal_loop_20260410T092312Z.jsonl",
+  "last_cycle": {
+    "ts_utc": "2026-04-10T09:23:37.585388+00:00",
+    "cycle": 2,
+    "ui_port": 8910,
+    "heal_mode": "full",
+    "contract": {
+      "schema": "gaiaftcl_fusion_blank_screen_contract_v1",
+      "pass": false,
+      "fail_ids": [
+        "fusion_health_contract",
+        "self_probe_dom_contract",
+        "fusion_html_contract"
+      ],
+      "checks": [
+        {
+          "id": "fusion_health_contract",
+          "pass": false,
+          "http_code": 404,
+          "reason": "fusion_health_contract_failed",
+          "hint": "run_fusion_mac_app_gate.py --port <ui_port> to restore runtime witness",
+          "sample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/%5Broot-of-the-server%5D__28bc9c2a._.css\" data-precedence=\"next_static/chunks/[root-of-the-server]__28bc9c2a._.css\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_956a0d3a._.js\"/><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_next-devtools_index_1dd7fb59.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_a0e4c7b4._.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_client_17643121._.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_f3530cac._.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_%40swc_helpers_cjs_d80fb378._.js\" async=\"\"></script><script src=\"/_next"
+        },
+        {
+          "id": "self_probe_dom_contract",
+          "pass": false,
+          "http_code": 404,
+          "reason": "self_probe_dom_contract_failed",
+          "hint": "restart GaiaFusion and ensure WKWebView bridge is loaded",
+          "sample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/%5Broot-of-the-server%5D__28bc9c2a._.css\" data-precedence=\"next_static/chunks/[root-of-the-server]__28bc9c2a._.css\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_956a0d3a._.js\"/><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_next-devtools_index_1dd7fb59.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_a0e4c7b4._.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_client_17643121._.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_f3530cac._.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_%40swc_helpers_cjs_d80fb378._.js\" async=\"\"></script><script src=\"/_next"
+        },
+        {
+          "id": "substrate_html_contract",
+          "pass": true,
+          "http_code": 200,
+          "reason": "",
+          "hint": "rebuild composite assets and verify fusion-web mirror includes substrate route",
+          "sample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/%5Broot-of-the-server%5D__28bc9c2a._.css\" data-precedence=\"next_static/chunks/[root-of-the-server]__28bc9c2a._.css\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_956a0d3a._.js\"/><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_"
+        },
+        {
+          "id": "fusion_html_contract",
+          "pass": false,
+          "http_code": 500,
+          "reason": "fusion_html_contract_failed",
+          "hint": "ensure fusion-s4 page publishes heartbeat + topology witness markers",
+          "sample": "<!DOCTYPE html><html id=\"__next_error__\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/%5Bturbopack%5D_browser_dev_hmr-client_hmr-client_ts_956a0d3a._.js\"/><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_react-server-dom-turbopack_9212ccad._.js\" async=\"\"></script><script src=\"/_next/static/chunks/node_modules_next_dist_compiled_next-devtool"
+        },
+        {
+          "id": "mac_gateway_health_contract",
+          "pass": true,
+          "http_code": 200,
+          "reason": "",
+          "hint": "restart fusion sidecar stack (docker-compose.fusion-sidecar.yml)",
+          "sample": {
+            "status": "healthy",
+            "service": "gaiaftcl-mcp-gateway-dynamic",
+            "nats_connected": false
+          }
+        }
+      ]
+    },
+    "mcp_conversation": {
+      "ok": false,
+      "http_code": 500,
+      "request": {
+        "name": "closure_game_report_v1",
+        "params": {
+          "ui_contract": "gaiaftcl_fusion_blank_screen_contract_v1",
+          "ui_failures": [
+            "fusion_health_contract",
+            "self_probe_dom_contract",
+            "fusion_html_contract"
+          ],
+          "ui_port": 8910
+        }
+      },
+      "error": "UI canonical validation failed: CANONICALS.SHA256 lockfile not found"
+    },
+    "failure_signature": "fusion_health_contract,self_probe_dom_contract,fusion_html_contract|mcp:500",
+    "healing": [
+      {
+        "step": "soft_reprobe",
+        "command": "bash scripts/gaiafusion_internal_cli.sh 8910",
+        "rc": 1,
+        "stdout_tail": "REFUSED: http://127.0.0.1:8910 not reachable \u2014 launch GaiaFusion or set FUSION_UI_PORT",
+        "ok": false
+      },
+      {
+        "step": "restart_sidecar",
+        "command": "docker compose -f docker-compose.fusion-sidecar.yml up -d --build",
+        "rc": 0,
+        "stdout_tail": "#3 DONE 0.1s\n\n#4 [fusion-sidecar-tester internal] load metadata for docker.io/library/debian:bookworm-slim\n#4 DONE 0.0s\n\n#5 [fusion-sidecar-tester internal] load metadata for docker.io/library/rust:bookworm\n#5 DONE 0.0s\n\n#6 [fusion-sidecar-tester internal] load .dockerignore\n#6 transferring context: 2B done\n#6 DONE 0.0s\n\n#7 [fusion-sidecar-gateway internal] load metadata for docker.io/library/python:3.12-slim-bookworm\n#7 DONE 0.2s\n\n#8 [fusion-sidecar-tester builder 1/6] FROM docker.io/library/rust:bookworm\n#8 DONE 0.0s\n\n#9 [fusion-sidecar-tester stage-1 1/6] FROM docker.io/library/debian:bookworm-slim\n#9 DONE 0.0s\n\n#10 [fusion-sidecar-tester internal] load build context\n#10 ...\n\n#11 [fusion-sidecar-gateway internal] load .dockerignore\n#11 transferring context: 161B done\n#11 DONE 0.0s\n\n#12 [fusion-sidecar-gateway 1/8] FROM docker.io/library/python:3.12-slim-bookworm@sha256:d97792894a6a4162cae14da44542a83c75e56c77a27b92d58f3f83b7bc961292\n#12 DONE 0.0s\n\n#13 [fusion-sidecar-gateway internal] load build context\n#13 transferring context: 2.38kB 0.0s done\n#13 DONE 0.0s\n\n#14 [fusion-sidecar-gateway 7/8] COPY services/discord_frontier/shared/constitution.py ./gaiaftcl_constitution_doc.py\n#14 CACHED\n\n#15 [fusion-sidecar-gateway 2/8] WORKDIR /app\n#15 CACHED\n\n#16 [fusion-sidecar-gateway 3/8] RUN apt-get update && apt-get install -y --no-install-recommends curl     && rm -rf /var/lib/apt/lists/*\n#16 CACHED\n\n#17 [fusion-sidecar-gateway 4/8] COPY services/fot_mcp_gateway/requirements.txt .\n#17 CACHED\n\n#18 [fusion-sidecar-gateway 6/8] COPY services/fot_mcp_gateway/main.py services/fot_mcp_gateway/wallet_auth.py services/fot_mcp_gateway/universal_ingest.py ./\n#18 CACHED\n\n#19 [fusion-sidecar-gateway 5/8] RUN pip install --no-cache-dir -r requirements.txt\n#19 CACHED\n\n#20 [fusion-sidecar-gateway 8/8] COPY services/vie_v2 /app/vie_v2\n#20 CACHED\n\n#10 [fusion-sidecar-tester internal] load build context\n#10 transferring context: 879.75kB 0.2s done\n#10 DONE 0.3s\n\n#21 [fusion-sidecar-gateway] exporting to image\n#21 exporting layers done\n#21 writing image sha256:2a92f3d12dd2ac642dfea105ad9bd2d6311b062093392c32fbb18cb13d96103f done\n#21 naming to docker.io/library/fusion_sidecar-fusion-sidecar-gateway done\n#21 DONE 0.0s\n\n#22 [fusion-sidecar-tester builder 2/6] WORKDIR /build\n#22 CACHED\n\n#23 [fusion-sidecar-tester builder 4/6] RUN rustup toolchain install nightly && rustup default nightly\n#23 CACHED\n\n#24 [fusion-sidecar-tester stage-1 5/6] COPY evidence /app/evidence\n#24 CACHED\n\n#25 [fusion-sidecar-tester builder 6/6] RUN cargo build --release\n#25 CACHED\n\n#26 [fusion-sidecar-tester stage-1 3/6] WORKDIR /app\n#26 CACHED\n\n#27 [fusion-sidecar-tester stage-1 4/6] COPY --from=builder /build/target/release/gaiaos_ui_tester_mcp /app/gaiaos_ui_tester_mcp\n#27 CACHED\n\n#28 [fusion-sidecar-tester builder 3/6] RUN apt-get update && apt-get install -y     pkg-config     libssl-dev     build-essential     && rm -rf /var/lib/apt/lists/*\n#28 CACHED\n\n#29 [fusion-sidecar-tester stage-1 2/6] RUN apt-get update && apt-get install -y     ca-certificates     libssl3     curl     && rm -rf /var/lib/apt/lists/*\n#29 CACHED\n\n#30 [fusion-sidecar-tester builder 5/6] COPY . .\n#30 CACHED\n\n#31 [fusion-sidecar-tester stage-1 6/6] RUN mkdir -p /app/evidence/{ui_expected,ui_contract,agent_census,domain_tubes,closure_game,echo,mcp_calls}\n#31 CACHED\n\n#32 [fusion-sidecar-tester] exporting to image\n#32 exporting layers done\n#32 writing image sha256:d4f25f7d48943186093acb02e45e71ce7fda35561b0cdd1ffee85277733f5422 done\n#32 naming to docker.io/library/fusion_sidecar-fusion-sidecar-tester done\n#32 DONE 0.0s\n\n#33 [fusion-sidecar-gateway] resolving provenance for metadata file\n#33 DONE 0.0s\n\n#34 [fusion-sidecar-tester] resolving provenance for metadata file\n#34 DONE 0.0s\n fusion_sidecar-fusion-sidecar-tester  Built\n fusion_sidecar-fusion-sidecar-gateway  Built\n Container fusion-sidecar-arangodb  Running\n Container fusion-sidecar-tester  Running\n Container fusion-sidecar-gateway  Running\n Container fusion-sidecar-arangodb  Waiting\n Container fusion-sidecar-arangodb  Healthy\n Container fusion-sidecar-arango-init  Starting\n Container fusion-sidecar-arango-init  Started\n Container fusion-sidecar-arangodb  Waiting\n Container fusion-sidecar-arango-init  Waiting\n Container fusion-sidecar-arango-init  Exited\n Container fusion-sidecar-arangodb  Healthy",
+        "ok": true
+      },
+      {
+        "step": "rebuild_composite",
+        "command": "bash scripts/build_gaiafusion_composite_assets.sh",
+        "rc": 1,
+        "stdout_tail": "[build_gaiafusion_composite_assets] ROOT=/Users/richardgillespie/Documents/FoT8D/GAIAOS\nCALORIE: /Users/richardgillespie/Documents/FoT8D/GAIAOS/macos/GaiaFusion/GaiaFusion/Resources/default.metallib\n[build_gaiafusion_wasm_pack] wasm-pack build failed \u2014 spike fallback (see /tmp/gaiafusion_wasm_pack.err tail)\n[INFO]: \ud83c\udfaf  Checking for the Wasm target...\nError: wasm32-unknown-unknown target not found in sysroot: \"/opt/homebrew/Cellar/rust/1.88.0\"\n\nUsed rustc from the following path: \"/opt/homebrew/bin/rustc\"\nIt looks like Rustup is not being used. For non-Rustup setups, the wasm32-unknown-unknown target needs to be installed manually. See https://rustwasm.github.io/wasm-pack/book/prerequisites/non-rustup-setups.html on how to do this.\n\nCaused by: wasm32-unknown-unknown target not found in sysroot: \"/opt/homebrew/Cellar/rust/1.88.0\"\n\nUsed rustc from the following path: \"/opt/homebrew/bin/rustc\"\nIt looks like Rustup is not being used. For non-Rustup setups, the wasm32-unknown-unknown target needs to be installed manually. See https://rustwasm.github.io/wasm-pack/book/prerequisites/non-rustup-setups.html on how to do this.\n\n[build_gaiafusion_composite_assets] next build (standalone)\n\n> gaiaos_ui_web@0.1.0 build\n> next build\n\n\u25b2 Next.js 16.1.1 (Turbopack)\n- Environments: .env\n\n  Creating an optimized production build ...\n\u2713 Compiled successfully in 4.1s\n  Running TypeScript ...\nFailed to compile.\n\n./app/fusion-s4/page.tsx:1019:9\nType error: Cannot find name 'viewportStatus'.\n\n\u001b[0m \u001b[90m 1017 |\u001b[39m   useEffect(() \u001b[33m=>\u001b[39m {\n \u001b[90m 1018 |\u001b[39m     \u001b[90m// Closure heartbeat for embedded viewport health witnesses.\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 1019 |\u001b[39m     \u001b[36mif\u001b[39m (viewportStatus \u001b[33m!==\u001b[39m \u001b[32m'ready'\u001b[39m) {\n \u001b[90m      |\u001b[39m         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 1020 |\u001b[39m       \u001b[36mreturn\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 1021 |\u001b[39m     }\n \u001b[90m 1022 |\u001b[39m     \u001b[36mconst\u001b[39m timer \u001b[33m=\u001b[39m setInterval(() \u001b[33m=>\u001b[39m setViewportLoadedAt(\u001b[33mDate\u001b[39m\u001b[33m.\u001b[39mnow())\u001b[33m,\u001b[39m \u001b[35m5000\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\nNext.js build worker exited with code: 1 and signal: null",
+        "ok": false
+      },
+      {
+        "step": "restart_app_gate",
+        "command": "python3 scripts/run_fusion_mac_app_gate.py --root /Users/richardgillespie/Documents/FoT8D/GAIAOS --port 8910",
+        "rc": 1,
+        "stdout_tail": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/fusion_mac_app_gate_receipt.json\nBLOCKED: composite_assets_failed",
+        "ok": false
+      }
+    ]
+  },
+  "failure_signatures": {
+    "fusion_health_contract,self_probe_dom_contract,fusion_html_contract|mcp:500": 2
+  }
+}

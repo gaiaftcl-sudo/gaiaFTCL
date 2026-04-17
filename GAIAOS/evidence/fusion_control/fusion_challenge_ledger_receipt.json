@@ -1,0 +1,961 @@
+{
+  "schema": "gaiaftcl_fusion_challenge_ledger_hint_v1",
+  "ts_utc": "2026-04-10T15:22:34.266Z",
+  "cumulative_revenue_eur": 0,
+  "teams_moored_reported": 136,
+  "registered_teams": [
+    {
+      "team_id": "cli_smoke_test",
+      "hub_id": null,
+      "note": null,
+      "registered_at_utc": "2026-04-04T21:17:23.065Z",
+      "source": "cli_sh"
+    },
+    {
+      "team_id": "pw_ledger_1775337464882",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-04T21:17:44.886Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775397735788",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-05T14:02:15.793Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775402439308",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-05T15:20:39.316Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775404226743",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-05T15:50:26.748Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775406002503",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-05T16:20:02.508Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775406245232",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-05T16:24:05.239Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775406643864",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-05T16:30:43.872Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775406659682",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-05T16:30:59.688Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775407894345",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-05T16:51:34.395Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775409026333",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-05T17:10:26.340Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775409347146",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-05T17:15:47.152Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775409595375",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-05T17:19:55.381Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775415407593",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-05T18:56:47.600Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775467426373",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-06T09:23:46.383Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775477222450",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-06T12:07:02.463Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775477371744",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-06T12:09:31.749Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775479725540",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-06T12:48:45.547Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775491484027",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-06T16:04:44.032Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775493032223",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-06T16:30:32.230Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775493148564",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-06T16:32:28.570Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775493857376",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-06T16:44:17.384Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775494545725",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-06T16:55:45.733Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775494645733",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-06T16:57:25.741Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775494893313",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-06T17:01:33.320Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775495610282",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-06T17:13:30.289Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775504646288",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-06T19:44:06.295Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775561294399",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T11:28:14.409Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775561403476",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T11:30:03.482Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775561653992",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T11:34:14.017Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775562760713",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T11:52:40.718Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775562872287",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T11:54:32.292Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775562978689",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T11:56:18.697Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775563692756",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T12:08:12.763Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775564028206",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T12:13:48.214Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775564036447",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T12:13:56.454Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775564154601",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T12:15:54.611Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775564917840",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T12:28:37.857Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775564987462",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T12:29:47.471Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775565096544",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T12:31:36.551Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775565192604",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T12:33:12.608Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775566205610",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T12:50:05.616Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775566246340",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T12:50:46.355Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775566779466",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T12:59:39.477Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775566800670",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T13:00:00.683Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775566898471",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T13:01:38.479Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775566940680",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T13:02:20.715Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775567180995",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T13:06:21.012Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775567414143",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T13:10:14.149Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775567435047",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T13:10:35.102Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775567497705",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T13:11:37.723Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775567579869",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T13:12:59.990Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775567944520",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T13:19:04.560Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775568252063",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T13:24:12.068Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775568466059",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T13:27:46.160Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775568799442",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T13:33:19.446Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775569086190",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T13:38:06.195Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775575684029",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T15:28:04.037Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775576146531",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T15:35:46.541Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775577502025",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T15:58:22.038Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775578179996",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T16:09:40.008Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775578949804",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T16:22:29.811Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775579185709",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T16:26:25.717Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775579541288",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T16:32:21.294Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775580167132",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T16:42:47.138Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775581380442",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:03:00.447Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775581512270",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:05:12.282Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775581868886",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:11:08.894Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775581878055",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:11:18.066Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775582747307",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:25:47.313Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775582763561",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:26:03.567Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775583271459",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:34:31.464Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775583288470",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:34:48.479Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775583303343",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:35:03.353Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775583870571",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:44:33.656Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775584090095",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:48:10.101Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775584166516",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:49:26.524Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775584295380",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:51:35.396Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775584295424",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:51:35.436Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775584295580",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:51:35.597Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775584352412",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T17:52:32.429Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775585311545",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T18:08:31.559Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775585944001",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T18:19:04.008Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775586361740",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T18:26:01.774Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775594526337",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T20:42:06.348Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775594643247",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T20:44:03.252Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775594966665",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-07T20:49:26.674Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775668342827",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-08T17:12:22.833Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775669031872",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-08T17:23:51.878Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775669048193",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-08T17:24:08.200Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775680509335",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-08T20:35:09.345Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775680659912",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-08T20:37:39.919Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775680723425",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-08T20:38:43.429Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775680731691",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-08T20:38:51.695Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775685832805",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-08T22:03:52.814Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775686155795",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-08T22:09:15.801Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775686354094",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-08T22:12:34.100Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775687500418",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-08T22:31:40.424Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775687544055",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-08T22:32:24.060Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775687589681",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-08T22:33:09.686Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775688174199",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-08T22:42:54.204Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775689671687",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-08T23:07:51.691Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775726837299",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-09T09:27:17.304Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775726860782",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-09T09:27:40.788Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775727775474",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-09T09:42:55.479Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775728692166",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-09T09:58:12.173Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775729607076",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-09T10:13:27.083Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775730520921",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-09T10:28:40.926Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775730549315",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-09T10:29:09.321Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775731468621",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-09T10:44:28.626Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775732381026",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-09T10:59:41.031Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775733294727",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-09T11:14:54.749Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775734208236",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-09T11:30:08.243Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775734233088",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-09T11:30:33.093Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775734818121",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-09T11:40:18.126Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775820780483",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T11:33:00.487Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775820816072",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T11:33:36.077Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775820992261",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T11:36:32.264Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775821031571",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T11:37:11.576Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775821119774",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T11:38:39.778Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775821317345",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T11:41:57.350Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775821579354",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T11:46:19.360Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775822041024",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T11:54:01.029Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775822532272",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T12:02:12.285Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775823691247",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T12:21:31.252Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775823770295",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T12:22:50.299Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775823924533",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T12:25:24.538Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775824441769",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T12:34:01.828Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775825129097",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T12:45:29.179Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775825708640",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T12:55:08.644Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775826201885",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T13:03:21.888Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775826905373",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T13:15:05.415Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775826962169",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T13:16:02.263Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775827655980",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T13:27:35.985Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775834499445",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T15:21:39.481Z",
+      "source": "playwright"
+    },
+    {
+      "team_id": "pw_ledger_1775834554240",
+      "hub_id": "eurofusion",
+      "note": null,
+      "registered_at_utc": "2026-04-10T15:22:34.266Z",
+      "source": "playwright"
+    }
+  ],
+  "source": "fusion_challenge_ledger"
+}

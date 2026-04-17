@@ -1,0 +1,218 @@
+{
+  "schema": "gaiaftcl_kinematic_gate_receipt_v1",
+  "terminal": "CURE",
+  "ts_utc": "2026-04-12T14:47:24.987515+00:00",
+  "run_id": "20260412T144615.292597+0000",
+  "detail": "",
+  "witness": {
+    "schema": "gaiaftcl_kinematic_gate_receipt_v1",
+    "plant_kinds_order": [
+      "tokamak",
+      "stellarator",
+      "frc",
+      "spheromak",
+      "mirror",
+      "inertial",
+      "spherical_tokamak",
+      "z_pinch",
+      "mif"
+    ],
+    "poll_interval_sec": 0.12,
+    "normalized_t_bands": {
+      "low": "[0.0, 0.33)",
+      "mid": "[0.33, 0.66)",
+      "high": "[0.66, 1.0]"
+    },
+    "per_plant": [
+      {
+        "plant_kind": "tokamak",
+        "load_post_ok": true,
+        "load_post": {
+          "ok": true,
+          "plant_kind": "tokamak",
+          "schema": "gaiaftcl_gate_load_viewport_plant_v1"
+        },
+        "verified_ok": true,
+        "engage_ok": true,
+        "engage_body": {
+          "ok": true,
+          "schema": "gaiaftcl_gate_engage_viewport_v1"
+        },
+        "bands_observed": {
+          "low": true,
+          "mid": true,
+          "high": true
+        },
+        "sample_count": 22
+      },
+      {
+        "plant_kind": "stellarator",
+        "load_post_ok": true,
+        "load_post": {
+          "ok": true,
+          "plant_kind": "stellarator",
+          "schema": "gaiaftcl_gate_load_viewport_plant_v1"
+        },
+        "verified_ok": true,
+        "engage_ok": true,
+        "engage_body": {
+          "ok": true,
+          "schema": "gaiaftcl_gate_engage_viewport_v1"
+        },
+        "bands_observed": {
+          "low": true,
+          "mid": true,
+          "high": true
+        },
+        "sample_count": 21
+      },
+      {
+        "plant_kind": "frc",
+        "load_post_ok": true,
+        "load_post": {
+          "ok": true,
+          "plant_kind": "frc",
+          "schema": "gaiaftcl_gate_load_viewport_plant_v1"
+        },
+        "verified_ok": true,
+        "engage_ok": true,
+        "engage_body": {
+          "ok": true,
+          "schema": "gaiaftcl_gate_engage_viewport_v1"
+        },
+        "bands_observed": {
+          "low": true,
+          "mid": true,
+          "high": true
+        },
+        "sample_count": 23
+      },
+      {
+        "plant_kind": "spheromak",
+        "load_post_ok": true,
+        "load_post": {
+          "ok": true,
+          "plant_kind": "spheromak",
+          "schema": "gaiaftcl_gate_load_viewport_plant_v1"
+        },
+        "verified_ok": true,
+        "engage_ok": true,
+        "engage_body": {
+          "ok": true,
+          "schema": "gaiaftcl_gate_engage_viewport_v1"
+        },
+        "bands_observed": {
+          "low": true,
+          "mid": true,
+          "high": true
+        },
+        "sample_count": 23
+      },
+      {
+        "plant_kind": "mirror",
+        "load_post_ok": true,
+        "load_post": {
+          "ok": true,
+          "plant_kind": "mirror",
+          "schema": "gaiaftcl_gate_load_viewport_plant_v1"
+        },
+        "verified_ok": true,
+        "engage_ok": true,
+        "engage_body": {
+          "ok": true,
+          "schema": "gaiaftcl_gate_engage_viewport_v1"
+        },
+        "bands_observed": {
+          "low": true,
+          "mid": true,
+          "high": true
+        },
+        "sample_count": 23
+      },
+      {
+        "plant_kind": "inertial",
+        "load_post_ok": true,
+        "load_post": {
+          "ok": true,
+          "plant_kind": "inertial",
+          "schema": "gaiaftcl_gate_load_viewport_plant_v1"
+        },
+        "verified_ok": true,
+        "engage_ok": true,
+        "engage_body": {
+          "ok": true,
+          "schema": "gaiaftcl_gate_engage_viewport_v1"
+        },
+        "bands_observed": {
+          "low": true,
+          "mid": true,
+          "high": true
+        },
+        "sample_count": 21
+      },
+      {
+        "plant_kind": "spherical_tokamak",
+        "load_post_ok": true,
+        "load_post": {
+          "ok": true,
+          "plant_kind": "spherical_tokamak",
+          "schema": "gaiaftcl_gate_load_viewport_plant_v1"
+        },
+        "verified_ok": true,
+        "engage_ok": true,
+        "engage_body": {
+          "ok": true,
+          "schema": "gaiaftcl_gate_engage_viewport_v1"
+        },
+        "bands_observed": {
+          "low": true,
+          "mid": true,
+          "high": true
+        },
+        "sample_count": 22
+      },
+      {
+        "plant_kind": "z_pinch",
+        "load_post_ok": true,
+        "load_post": {
+          "ok": true,
+          "plant_kind": "z_pinch",
+          "schema": "gaiaftcl_gate_load_viewport_plant_v1"
+        },
+        "verified_ok": true,
+        "engage_ok": true,
+        "engage_body": {
+          "ok": true,
+          "schema": "gaiaftcl_gate_engage_viewport_v1"
+        },
+        "bands_observed": {
+          "low": true,
+          "mid": true,
+          "high": true
+        },
+        "sample_count": 22
+      },
+      {
+        "plant_kind": "mif",
+        "load_post_ok": true,
+        "load_post": {
+          "ok": true,
+          "plant_kind": "mif",
+          "schema": "gaiaftcl_gate_load_viewport_plant_v1"
+        },
+        "verified_ok": true,
+        "engage_ok": true,
+        "engage_body": {
+          "ok": true,
+          "schema": "gaiaftcl_gate_engage_viewport_v1"
+        },
+        "bands_observed": {
+          "low": true,
+          "mid": true,
+          "high": true
+        },
+        "sample_count": 21
+      }
+    ]
+  }
+}

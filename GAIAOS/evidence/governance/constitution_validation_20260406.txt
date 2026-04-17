@@ -1,0 +1,12 @@
+Governance domain validation (2026-04-06)
+Commands (GAIAOS root):
+  python3 -m pytest tests/discord_frontier/test_governance_constitution.py tests/fot_mcp_gateway/test_constitution_route.py -v
+  exit 0 — 4 passed
+  python3 -m compileall -q services/discord_frontier/bots/governance services/discord_frontier/shared/constitution.py services/fot_mcp_gateway/main.py
+  exit 0
+
+Surfaces shipped:
+  Discord governance: /constitution, /policy_receipts (plus inherited /cell, etc.)
+  Gateway: GET /constitution (KV when NATS connected; codex fallback via gaiaftcl_constitution_doc.py in image)
+
+OPEN: Live mesh witness (curl GET /constitution against :8803 with NATS+JetStream) not executed in this session.

@@ -1,0 +1,56 @@
+{
+  "generated_at_utc": "2026-04-04T14:30:43Z",
+  "passed": 9,
+  "failed": 0,
+  "steps": [
+    {
+      "step": "docker_compose_fusion_sidecar_build_skipped",
+      "status": "PASS",
+      "at": "2026-04-04T14:30:43Z"
+    },
+    {
+      "step": "verify_fusion_sidecar_bundle_xcode",
+      "status": "PASS",
+      "at": "2026-04-04T14:30:43Z"
+    },
+    {
+      "step": "test_fusion_mesh_mooring_stack",
+      "status": "PASS",
+      "at": "2026-04-04T14:30:43Z"
+    },
+    {
+      "step": "npm_test_unit_fusion",
+      "status": "PASS",
+      "at": "2026-04-04T14:30:43Z"
+    },
+    {
+      "step": "docker_compose_fusion_sidecar_up",
+      "status": "PASS",
+      "at": "2026-04-04T14:30:43Z"
+    },
+    {
+      "step": "preflight_mcp_gateway_live",
+      "status": "PASS",
+      "at": "2026-04-04T14:30:43Z"
+    },
+    {
+      "step": "test_fusion_discord_tier_a_gateway_slice",
+      "status": "PASS",
+      "at": "2026-04-04T14:30:43Z"
+    },
+    {
+      "step": "docker_compose_fusion_sidecar_down",
+      "status": "PASS",
+      "at": "2026-04-04T14:30:43Z"
+    },
+    {
+      "step": "npm_test_e2e_fusion",
+      "status": "PASS",
+      "at": "2026-04-04T14:30:43Z"
+    }
+  ],
+  "notes": [
+    "Tier A /claims with full JSON array requires live Arango (mesh tunnel or cell). FUSION_PLANT_SKIP_CLAIMS_CURL=1 used during compose tier.",
+    "test:fusion:all in gaiaos_ui_web still enforces /claims; use mesh MCP_BASE_URL for full green."
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "generated_at_utc": "2026-04-04T15:31:00Z",
+  "host_note": "Mac limb session — commands executed from GAIAOS root",
+  "suites": [
+    {
+      "name": "scripts/test_fusion_mesh_mooring_stack.sh",
+      "exit": 0,
+      "includes": ["bash_n harness", "fusion_projection jq", "mcp_bridge REFUSED", "fusion_control JSON merge", "best_control_test_ever.sh / Metal batch"]
+    },
+    {
+      "name": "scripts/test_fusion_plant_stack_all.sh",
+      "env": "VERIFY_FUSION_SIDECAR_XCODE=1 FUSION_PLANT_PLAYWRIGHT=1 GAIA_ROOT set",
+      "exit": 0,
+      "includes": ["xcodebuild FusionSidecarHost", "mesh mooring", "vitest fusion", "docker-compose.fusion-sidecar up/down", "preflight 8803", "tier A with FUSION_PLANT_SKIP_CLAIMS_CURL", "playwright fusion (3 pass, 1 skipped matrix)"]
+    },
+    {
+      "name": "npm run test:fusion:all (gateway-only, no Arango)",
+      "exit": 1,
+      "reason": "preflight failed — nothing on 127.0.0.1:8803"
+    },
+    {
+      "name": "npm run test:fusion:all with compose + FUSION_PLANT_SKIP_CLAIMS_CURL=1",
+      "exit": 0,
+      "includes": ["preflight", "tier A membrane bash_n + gateway_health + claims_skipped", "mesh mooring + best_control", "vitest", "playwright fusion", "playwright discord Tier B skipped (no DISCORD_PLAYWRIGHT_STORAGE_STATE)"]
+    }
+  ],
+  "strict_claims": "Unset FUSION_PLANT_SKIP_CLAIMS_CURL and use MCP_BASE_URL to mesh with Arango for full tier A /claims array check.",
+  "one_shot_local": "npm run test:fusion:all:local  (scripts/test_fusion_all_with_sidecar.sh)"
+}

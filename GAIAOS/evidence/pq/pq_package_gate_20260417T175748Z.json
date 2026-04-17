@@ -1,0 +1,13 @@
+{
+  "receipt_id": "GFTCL-PQ-PACKAGE-20260417T175748Z",
+  "parent_hash": "a0e6058ffb5ef425e8d4dc8fc9d4ddec49bdff0e4e39e56fb0ad4e0067c23439",
+  "terminal_state": "CALORIE",
+  "reason": "",
+  "packaging": {
+    "dmg_path": "/tmp/FusionControl_20260417T175748Z.dmg",
+    "dmg_hash": "34c9ac93d2213ad8f62752a250ea2fb4d01ca3ea58cbf1e53800655fcab69d87",
+    "signing": "Ad-Hoc"
+  },
+  "timestamp_utc": "2026-04-17T17:58:03Z",
+  "evidence_hash": "b378eec3ddd12d6090e5715ad2aae4bd188c545e3b668e736535396aadfb3506"
+}

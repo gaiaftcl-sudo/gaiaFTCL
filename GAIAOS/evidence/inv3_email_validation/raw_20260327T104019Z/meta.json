@@ -1,0 +1,68 @@
+{
+  "ts": "20260327T104019Z",
+  "phase0": {
+    "ok": true
+  },
+  "phase1": {
+    "reports": [
+      {
+        "label": "LEUK-005",
+        "filter": "LEUK-005",
+        "count": 1,
+        "statuses": [
+          "SUBMITTED"
+        ],
+        "canonical_anchor_hits": 1
+      },
+      {
+        "label": "AML-CHEM-001",
+        "filter": "AML-CHEM-001",
+        "count": 0,
+        "statuses": [],
+        "canonical_anchor_hits": 0
+      },
+      {
+        "label": "inv3",
+        "filter": "inv3",
+        "count": 3,
+        "statuses": [
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED"
+        ],
+        "canonical_anchor_hits": 3
+      }
+    ],
+    "leuk_substrate": true,
+    "aml_substrate": true,
+    "claims_anchor_hits": true
+  },
+  "inbound_key": "claim_1774608024.465234",
+  "phase3": {
+    "janowitz": {
+      "hit": true,
+      "game_room": "owl_protocol",
+      "from": "janowitz@cshl.edu",
+      "status": "SUBMITTED"
+    },
+    "owl_protocol": {
+      "hit": true,
+      "game_room": "owl_protocol",
+      "from": "janowitz@cshl.edu",
+      "status": "SUBMITTED"
+    },
+    "research": {
+      "hit": false,
+      "game_room": "",
+      "from": "",
+      "status": null
+    }
+  },
+  "franklin_doc": "Substrate unreachable. 175,345 claims, 417,614 envelopes. Valuation = substrate query.",
+  "verifier_exit": 0,
+  "smtp_ok": false,
+  "smtp_last": "",
+  "leuk_final": true,
+  "aml_final": true,
+  "subject_preserved": false
+}

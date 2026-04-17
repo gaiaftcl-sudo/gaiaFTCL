@@ -1,0 +1,78 @@
+{
+  "schema": "gaiaftcl_native_rust_fusion_invariant_receipt_v1",
+  "invariant_id": "gaiaftcl_native_rust_fusion_invariant_v1",
+  "run_id": "20260408T113714Z_L0001",
+  "terminal": "REFUSED",
+  "failed_gate": "preflightFusionUi",
+  "fusion_ui_bootstrap": {
+    "single_probe": true,
+    "witness": {
+      "mode": "probe_only",
+      "bootstrap_disabled": true,
+      "fusion_ui_port": "8910",
+      "http_rc": 7,
+      "closure_ok": false,
+      "tail": "curl: (7) Failed to connect to 127.0.0.1 port 8910 after 0 ms: Couldn't connect to server\n"
+    }
+  },
+  "gate_results": [
+    {
+      "gate": "invariantToolboxGate",
+      "ok": true,
+      "witness": {
+        "witness_path": "evidence/native_fusion/invariant_toolbox_witness.json",
+        "latest_path": "evidence/native_fusion/LATEST_INVARIANT_TOOLBOX_WITNESS.json",
+        "tool_count": 15,
+        "required_failures": [],
+        "ids_probed": [
+          "bash",
+          "curl",
+          "jq",
+          "python3",
+          "git",
+          "cargo",
+          "swift",
+          "npm",
+          "docker",
+          "ssh",
+          "scp",
+          "rsync",
+          "tar",
+          "hcloud",
+          "openssl"
+        ],
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "nineCellMeshGreenGate",
+      "ok": true,
+      "witness": {
+        "skipped": true,
+        "reason": "C4_INVARIANT_MESH_NINE_CELL_OFFLINE",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    }
+  ],
+  "ts_utc": "2026-04-08T11:37:16.886734+00:00",
+  "policy_refusal": false,
+  "outer_fix_loop": {
+    "iteration": 1,
+    "max_configured": 1,
+    "unlimited": false,
+    "exhausted": true,
+    "recovery_log": []
+  }
+}

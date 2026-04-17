@@ -1,0 +1,33 @@
+# mesh_health_snapshot 2026-04-03T19:09:23Z
+# columns: cell	ip	port	path	http_code
+# 8803 = fot-mcp-gateway-mesh (or legacy path); 8807 = domain edge if exposed
+
+gaiaftcl-hcloud-hel1-01	77.42.85.60	8803	/health	200
+gaiaftcl-hcloud-hel1-01	77.42.85.60	8807	/health	200
+gaiaftcl-hcloud-hel1-02	135.181.88.134	8803	/health	200
+gaiaftcl-hcloud-hel1-02	135.181.88.134	8807	/health	000000
+gaiaftcl-hcloud-hel1-03	77.42.32.156	8803	/health	200
+gaiaftcl-hcloud-hel1-03	77.42.32.156	8807	/health	000000
+gaiaftcl-hcloud-hel1-04	77.42.88.110	8803	/health	200
+gaiaftcl-hcloud-hel1-04	77.42.88.110	8807	/health	000000
+gaiaftcl-hcloud-hel1-05	37.27.7.9	8803	/health	200
+gaiaftcl-hcloud-hel1-05	37.27.7.9	8807	/health	000000
+gaiaftcl-netcup-nbg1-01	37.120.187.247	8803	/health	200
+gaiaftcl-netcup-nbg1-01	37.120.187.247	8807	/health	200
+gaiaftcl-netcup-nbg1-02	152.53.91.220	8803	/health	200
+gaiaftcl-netcup-nbg1-02	152.53.91.220	8807	/health	000000
+gaiaftcl-netcup-nbg1-03	152.53.88.141	8803	/health	200
+gaiaftcl-netcup-nbg1-03	152.53.88.141	8807	/health	000000
+gaiaftcl-netcup-nbg1-04	37.120.187.174	8803	/health	200
+gaiaftcl-netcup-nbg1-04	37.120.187.174	8807	/health	000000
+
+# claims without wallet (expect 400 on gated mesh)
+gaiaftcl-hcloud-hel1-01	77.42.85.60	8803	/claims	404
+gaiaftcl-hcloud-hel1-02	135.181.88.134	8803	/claims	400
+gaiaftcl-hcloud-hel1-03	77.42.32.156	8803	/claims	400
+gaiaftcl-hcloud-hel1-04	77.42.88.110	8803	/claims	400
+gaiaftcl-hcloud-hel1-05	37.27.7.9	8803	/claims	400
+gaiaftcl-netcup-nbg1-01	37.120.187.247	8803	/claims	400
+gaiaftcl-netcup-nbg1-02	152.53.91.220	8803	/claims	400
+gaiaftcl-netcup-nbg1-03	152.53.88.141	8803	/claims	400
+gaiaftcl-netcup-nbg1-04	37.120.187.174	8803	/claims	400

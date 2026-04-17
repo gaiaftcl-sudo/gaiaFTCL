@@ -1,0 +1,15 @@
+{
+  "receipt_id": "GFTCL-PQ-NOTARY-20260417T174322Z",
+  "parent_hash": "0b6ca4ac7fad23682a45a4cf36a42984f333994fa127686f5539c063bd2528fd",
+  "terminal_state": "REFUSED",
+  "reason": "Gatekeeper rejected the bundle",
+  "notarization": {
+    "profile": "mac-cell-notary",
+    "status": "Failed"
+  },
+  "gatekeeper": {
+    "status": "Failed"
+  },
+  "timestamp_utc": "2026-04-17T17:43:36Z",
+  "evidence_hash": "91ea9aed17c283c5efb2b284b23ea0b062a227d574501978f777072945f7673b"
+}

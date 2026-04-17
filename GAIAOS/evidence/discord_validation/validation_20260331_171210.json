@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-03-31T17:12:10.583591",
+  "results": {
+    "spelling": {
+      "passed": 14,
+      "total": 14,
+      "status": "PASSED"
+    },
+    "channels": {
+      "passed": 14,
+      "total": 14,
+      "status": "PASSED"
+    },
+    "game_interactions": {
+      "passed": 14,
+      "total": 14,
+      "status": "PASSED"
+    },
+    "onboarding": {
+      "status": "PARTIAL"
+    },
+    "betting_alerts": {
+      "status": "PASSED"
+    },
+    "overall": "PASSED"
+  }
+}

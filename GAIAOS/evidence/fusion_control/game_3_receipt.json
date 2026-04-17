@@ -1,0 +1,19 @@
+{
+  "game": "game_3_api_boundary_normalization",
+  "terminal_state": "MEETS",
+  "timestamp": "2026-04-09T11:55:06Z",
+  "verification": {
+    "xcodebuild_exit": 0,
+    "playwright_watchdog": "CURE"
+  },
+  "files_changed": [
+    "macos/GaiaFusion/GaiaFusion/LocalServer.swift",
+    "spec/cell_plant_state.schema.json",
+    "services/gaiaos_ui_web/app/fusion-s4/page.tsx"
+  ],
+  "assertions": [
+    "GET /api/fusion/plant-kinds returns 6 canonical kinds",
+    "POST /api/fusion/swap rejects unsupported_plant_kind",
+    "Web UI fetches kinds dynamically, no fixed literals"
+  ]
+}

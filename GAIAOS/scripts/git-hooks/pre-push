@@ -1,0 +1,145 @@
+#!/bin/bash
+# FRANKLIN LOCKDOWN GATE — Pre-push hook
+# Blocks push if protected paths changed and canaries fail
+
+set -e
+
+# PROTECTED PATHS (changes trigger canary validation)
+PROTECTED_PATHS=(
+    "services/gaiaos_ui_tester_mcp/src/main.rs"
+    "services/gaiaos_ui_tester_mcp/src/treasury/"
+    "services/gaiaos_ui_tester_mcp/src/enforcement.rs"
+    "services/gaiaos_ui_tester_mcp/src/uum8d_"
+    "evidence/closure_game/CANONICALS.SHA256"
+    "services/gaiaos_ui_tester_mcp/tests/no_outflow_guard.sh"
+    "services/gaiaos_ui_tester_mcp/tests/run_all_canaries.sh"
+)
+
+echo "🔒 FRANKLIN LOCKDOWN GATE — Checking protected paths..."
+echo ""
+
+# Get list of changed files being pushed
+REMOTE="$1"
+URL="$2"
+
+# Detect changed files between local and remote
+CHANGED_FILES=$(git diff --name-only @{u}..HEAD 2>/dev/null || git diff --name-only HEAD~1..HEAD)
+
+if [ -z "$CHANGED_FILES" ]; then
+    echo "✅ No changes detected. Skipping canaries."
+    exit 0
+fi
+
+# Check if any protected path was modified
+PROTECTED_CHANGED=false
+for path in "${PROTECTED_PATHS[@]}"; do
+    if echo "$CHANGED_FILES" | grep -q "$path"; then
+        echo "⚠️  Protected path changed: $path"
+        PROTECTED_CHANGED=true
+    fi
+done
+
+if [ "$PROTECTED_CHANGED" = false ]; then
+    echo "✅ No protected paths changed. Skipping canaries."
+    exit 0
+fi
+
+echo ""
+echo "🚨 PROTECTED PATHS CHANGED — Running authoritative canaries..."
+echo ""
+
+# Navigate to git root
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+# Ensure Docker is running
+if ! docker info > /dev/null 2>&1; then
+    echo "❌ BLOCKED: Docker is not running. Canaries require Docker."
+    exit 1
+fi
+
+# Build latest image (silent)
+echo "🔨 Building image..."
+docker build -t gaiaos-ui-tester-mcp:latest "$REPO_ROOT/GAIAOS/services/gaiaos_ui_tester_mcp" > /dev/null 2>&1 || {
+    echo "❌ BLOCKED: Docker build failed"
+    exit 1
+}
+
+# Start dev container for canaries 4-6
+echo "🚀 Starting dev container..."
+docker stop gaiaos-ui-tester-mcp-dev 2>&1 > /dev/null || true
+docker run -d --name gaiaos-ui-tester-mcp-dev --rm -p 8901:8900 \
+    -e RUST_LOG=info -e MCP_PORT=8900 \
+    -e mesh_TREASURY_ADDRESS="0xTREASURY_TEST_ADDRESS" \
+    -e ALLOW_TEST_TOOLS=true \
+    -v "$REPO_ROOT/GAIAOS/evidence:/app/evidence:rw" \
+    gaiaos-ui-tester-mcp:latest > /dev/null 2>&1
+
+sleep 5
+
+# Create fixtures
+docker exec gaiaos-ui-tester-mcp-dev mkdir -p /var/lib/gaiaftcl/treasury/fixtures
+docker exec gaiaos-ui-tester-mcp-dev sh -c 'cat > /var/lib/gaiaftcl/treasury/fixtures/known_payments.json <<EOF
+{
+  "payments": {
+    "0xTEST_TX_HASH_100": {
+      "tx_hash": "0xTEST_TX_HASH_100",
+      "chain_id": "ethereum-mainnet",
+      "asset": "USDC",
+      "amount": 100,
+      "payor_address": "0xTEST_PAYOR",
+      "recipient_address": "0xTREASURY_TEST_ADDRESS"
+    },
+    "0xTEST_TX_HASH_REPLAY": {
+      "tx_hash": "0xTEST_TX_HASH_REPLAY",
+      "chain_id": "ethereum-mainnet",
+      "asset": "USDC",
+      "amount": 100,
+      "payor_address": "0xTEST_PAYOR",
+      "recipient_address": "0xTREASURY_TEST_ADDRESS"
+    }
+  }
+}
+EOF'
+
+echo ""
+echo "▶️  Running canaries..."
+echo ""
+
+# Run canaries (using absolute path from git root)
+if ! "$REPO_ROOT/GAIAOS/services/gaiaos_ui_tester_mcp/tests/run_all_canaries.sh"; then
+    echo ""
+    echo "❌ CANARIES FAILED — Push BLOCKED"
+    echo ""
+    echo "FRANKLIN BLOCKS THIS PUSH."
+    echo ""
+    echo "Protected paths were modified, but canaries failed."
+    echo "Fix the failures before pushing."
+    echo ""
+    echo "To bypass (NOT RECOMMENDED):"
+    echo "  git push --no-verify"
+    echo ""
+    docker stop gaiaos-ui-tester-mcp-dev > /dev/null 2>&1 || true
+    exit 1
+fi
+
+# Verify evidence files exist
+echo ""
+echo "🔒 Verifying evidence artifacts..."
+if ! "$REPO_ROOT/GAIAOS/services/gaiaos_ui_tester_mcp/verify_evidence.sh"; then
+    echo ""
+    echo "❌ EVIDENCE VERIFICATION FAILED — Push BLOCKED"
+    echo ""
+    echo "FRANKLIN BLOCKS THIS PUSH."
+    echo ""
+    echo "Canaries passed, but evidence files are missing or incomplete."
+    echo "This indicates a canary suite integrity failure."
+    echo ""
+    docker stop gaiaos-ui-tester-mcp-dev > /dev/null 2>&1 || true
+    exit 1
+fi
+
+echo ""
+echo "✅ ALL CANARIES PASSED + EVIDENCE VERIFIED — Push allowed"
+docker stop gaiaos-ui-tester-mcp-dev > /dev/null 2>&1 || true
+exit 0

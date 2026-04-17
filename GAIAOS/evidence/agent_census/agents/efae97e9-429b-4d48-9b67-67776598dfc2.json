@@ -1,0 +1,29 @@
+{
+  "agent_id": "efae97e9-429b-4d48-9b67-67776598dfc2",
+  "agent_name": "cert_test_agent",
+  "agrees_to_witness_gate": true,
+  "capability_proofs": {
+    "CODE_RUN": {
+      "proof_id": "6600f174-1043-4700-b2b6-90248c53c91a",
+      "verdict": "PROVEN",
+      "verified_at": "2026-02-01T12:09:04.457471+00:00"
+    }
+  },
+  "declared_capabilities": {
+    "AGENT_COORDINATE": false,
+    "CODE_RUN": true,
+    "EMAIL_SEND": false,
+    "FILE_WRITE": false,
+    "HTTP_API_CALL": false,
+    "SMS_SEND": false,
+    "SSH_CONNECT": false,
+    "TASK_SCHEDULE": false,
+    "TRADE_EXECUTE": false,
+    "WALLET_SIGN": false,
+    "WEB_FETCH": true
+  },
+  "last_activity": "2026-02-01T12:09:04.457474+00:00",
+  "operator_contact": null,
+  "registered_at": "2026-02-01T12:09:04.336484+00:00",
+  "runtime_type": "local"
+}

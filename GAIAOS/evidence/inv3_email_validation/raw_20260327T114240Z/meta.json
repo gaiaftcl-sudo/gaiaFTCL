@@ -1,0 +1,77 @@
+{
+  "ts": "20260327T114240Z",
+  "phase0": {
+    "ok": true
+  },
+  "phase1": {
+    "reports": [
+      {
+        "label": "LEUK-005",
+        "filter": "LEUK-005",
+        "count": 4,
+        "statuses": [
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED"
+        ],
+        "canonical_anchor_hits": 1
+      },
+      {
+        "label": "AML-CHEM-001",
+        "filter": "AML-CHEM-001",
+        "count": 3,
+        "statuses": [
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED"
+        ],
+        "canonical_anchor_hits": 0
+      },
+      {
+        "label": "inv3",
+        "filter": "inv3",
+        "count": 5,
+        "statuses": [
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED",
+          "SUBMITTED"
+        ],
+        "canonical_anchor_hits": 2
+      }
+    ],
+    "leuk_substrate": true,
+    "aml_substrate": true,
+    "claims_anchor_hits": true
+  },
+  "inbound_key": "claim_1774611770.402995",
+  "phase3": {
+    "janowitz": {
+      "hit": true,
+      "game_room": "owl_protocol",
+      "from": "janowitz@cshl.edu",
+      "status": "SUBMITTED"
+    },
+    "owl_protocol": {
+      "hit": true,
+      "game_room": "owl_protocol",
+      "from": "janowitz@cshl.edu",
+      "status": "SUBMITTED"
+    },
+    "research": {
+      "hit": true,
+      "game_room": "owl_protocol",
+      "from": "janowitz@cshl.edu",
+      "status": "SUBMITTED"
+    }
+  },
+  "franklin_doc": "Substrate unreachable. 175,567 claims, 417,677 envelopes. Valuation = substrate query.",
+  "verifier_exit": 0,
+  "smtp_ok": true,
+  "smtp_last": "250",
+  "leuk_final": true,
+  "aml_final": true,
+  "subject_preserved": false
+}

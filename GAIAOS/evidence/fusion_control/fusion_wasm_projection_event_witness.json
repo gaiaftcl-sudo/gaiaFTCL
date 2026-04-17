@@ -1,0 +1,394 @@
+{
+  "schema": "gaiaftcl_fusion_wasm_projection_event_v1",
+  "ts_utc": "2026-04-10T15:22:39.454Z",
+  "projection_event": {
+    "action": "GET_PROJECTION",
+    "type": "GET_PROJECTION",
+    "status": "ACTIVE",
+    "mesh": {
+      "status": "ACTIVE",
+      "healthy": 7,
+      "total": 9,
+      "archetype": "Tokamak (NSTX-U)",
+      "toroidal_field": "1.20 T",
+      "plasma_current": "2.8 MA",
+      "ingress_host": "gaiaftcl-hcloud-hel1-01",
+      "nats_connected": true,
+      "active_cell_id": "cell-7",
+      "http_ok": true,
+      "cells": [
+        {
+          "id": "cell-1",
+          "name": "Cell 1",
+          "ipv4": "10.2.0.1",
+          "health": "nominal",
+          "role": "planner",
+          "status": "MOORED",
+          "input": "tokamak",
+          "output": "tokamak",
+          "active": false
+        },
+        {
+          "id": "cell-2",
+          "name": "Cell 2",
+          "ipv4": "10.2.0.2",
+          "health": "nominal",
+          "role": "planner",
+          "status": "MOORED",
+          "input": "tokamak",
+          "output": "tokamak",
+          "active": false
+        },
+        {
+          "id": "cell-3",
+          "name": "Cell 3",
+          "ipv4": "10.2.0.3",
+          "health": "nominal",
+          "role": "planner",
+          "status": "MOORED",
+          "input": "tokamak",
+          "output": "tokamak",
+          "active": false
+        },
+        {
+          "id": "cell-4",
+          "name": "Cell 4",
+          "ipv4": "10.2.0.4",
+          "health": "nominal",
+          "role": "planner",
+          "status": "MOORED",
+          "input": "tokamak",
+          "output": "tokamak",
+          "active": false
+        },
+        {
+          "id": "cell-5",
+          "name": "Cell 5",
+          "ipv4": "10.2.0.5",
+          "health": "nominal",
+          "role": "planner",
+          "status": "MOORED",
+          "input": "tokamak",
+          "output": "tokamak",
+          "active": false
+        },
+        {
+          "id": "cell-6",
+          "name": "Cell 6",
+          "ipv4": "10.2.0.6",
+          "health": "nominal",
+          "role": "planner",
+          "status": "MOORED",
+          "input": "tokamak",
+          "output": "tokamak",
+          "active": false
+        },
+        {
+          "id": "cell-7",
+          "name": "Cell 7",
+          "ipv4": "10.2.0.7",
+          "health": "nominal",
+          "role": "planner",
+          "status": "ACTIVE",
+          "input": "tokamak",
+          "output": "stellarator",
+          "active": true
+        },
+        {
+          "id": "cell-8",
+          "name": "Cell 8",
+          "ipv4": "10.2.0.8",
+          "health": "nominal",
+          "role": "planner",
+          "status": "MOORED",
+          "input": "tokamak",
+          "output": "tokamak",
+          "active": false
+        },
+        {
+          "id": "cell-9",
+          "name": "Cell 9",
+          "ipv4": "10.2.0.9",
+          "health": "nominal",
+          "role": "planner",
+          "status": "MOORED",
+          "input": "tokamak",
+          "output": "tokamak",
+          "active": false
+        }
+      ]
+    },
+    "telemetry": {
+      "v_qbit": "0.00987",
+      "ts": "2026-04-10T15:22:36.455Z"
+    },
+    "vqbit": "0.00987",
+    "ts_utc": "2026-04-10T15:22:36.455Z",
+    "vector": "11",
+    "signature": "PLAYWRIGHT-FULL-PROJECTION-11",
+    "description": "full projection event",
+    "timestamp": 1775834556456,
+    "data": {
+      "status": "ACTIVE",
+      "projection_s4": {
+        "mesh": {
+          "status": "ACTIVE",
+          "healthy": 7,
+          "total": 9,
+          "archetype": "Tokamak (NSTX-U)",
+          "toroidal_field": "1.20 T",
+          "plasma_current": "2.8 MA",
+          "ingress_host": "gaiaftcl-hcloud-hel1-01",
+          "nats_connected": true,
+          "active_cell_id": "cell-7",
+          "http_ok": true,
+          "cells": [
+            {
+              "id": "cell-1",
+              "name": "Cell 1",
+              "ipv4": "10.2.0.1",
+              "health": "nominal",
+              "role": "planner",
+              "status": "MOORED",
+              "input": "tokamak",
+              "output": "tokamak",
+              "active": false
+            },
+            {
+              "id": "cell-2",
+              "name": "Cell 2",
+              "ipv4": "10.2.0.2",
+              "health": "nominal",
+              "role": "planner",
+              "status": "MOORED",
+              "input": "tokamak",
+              "output": "tokamak",
+              "active": false
+            },
+            {
+              "id": "cell-3",
+              "name": "Cell 3",
+              "ipv4": "10.2.0.3",
+              "health": "nominal",
+              "role": "planner",
+              "status": "MOORED",
+              "input": "tokamak",
+              "output": "tokamak",
+              "active": false
+            },
+            {
+              "id": "cell-4",
+              "name": "Cell 4",
+              "ipv4": "10.2.0.4",
+              "health": "nominal",
+              "role": "planner",
+              "status": "MOORED",
+              "input": "tokamak",
+              "output": "tokamak",
+              "active": false
+            },
+            {
+              "id": "cell-5",
+              "name": "Cell 5",
+              "ipv4": "10.2.0.5",
+              "health": "nominal",
+              "role": "planner",
+              "status": "MOORED",
+              "input": "tokamak",
+              "output": "tokamak",
+              "active": false
+            },
+            {
+              "id": "cell-6",
+              "name": "Cell 6",
+              "ipv4": "10.2.0.6",
+              "health": "nominal",
+              "role": "planner",
+              "status": "MOORED",
+              "input": "tokamak",
+              "output": "tokamak",
+              "active": false
+            },
+            {
+              "id": "cell-7",
+              "name": "Cell 7",
+              "ipv4": "10.2.0.7",
+              "health": "nominal",
+              "role": "planner",
+              "status": "ACTIVE",
+              "input": "tokamak",
+              "output": "stellarator",
+              "active": true
+            },
+            {
+              "id": "cell-8",
+              "name": "Cell 8",
+              "ipv4": "10.2.0.8",
+              "health": "nominal",
+              "role": "planner",
+              "status": "MOORED",
+              "input": "tokamak",
+              "output": "tokamak",
+              "active": false
+            },
+            {
+              "id": "cell-9",
+              "name": "Cell 9",
+              "ipv4": "10.2.0.9",
+              "health": "nominal",
+              "role": "planner",
+              "status": "MOORED",
+              "input": "tokamak",
+              "output": "tokamak",
+              "active": false
+            }
+          ]
+        },
+        "telemetry": {
+          "v_qbit": "0.00987",
+          "ts": "2026-04-10T15:22:36.455Z"
+        },
+        "healthy_cells": 7,
+        "vqbit": "0.00987",
+        "ts_utc": "2026-04-10T15:22:36.455Z"
+      }
+    }
+  },
+  "substrate_state_payload": {
+    "status": "ok",
+    "source": "playwright_wasm_projection_gate",
+    "mesh": {
+      "status": "ACTIVE",
+      "healthy": 7,
+      "total": 9,
+      "ingress_host": "gaiaftcl-hcloud-hel1-01"
+    },
+    "telemetry": {
+      "v_qbit": "0.00987",
+      "ts": "2026-04-10T15:22:36.455Z"
+    },
+    "cells": [
+      {
+        "id": "cell-1",
+        "name": "Cell 1",
+        "ipv4": "10.2.0.1",
+        "health": "nominal",
+        "role": "planner",
+        "status": "MOORED",
+        "input": "tokamak",
+        "output": "tokamak",
+        "active": false
+      },
+      {
+        "id": "cell-2",
+        "name": "Cell 2",
+        "ipv4": "10.2.0.2",
+        "health": "nominal",
+        "role": "planner",
+        "status": "MOORED",
+        "input": "tokamak",
+        "output": "tokamak",
+        "active": false
+      },
+      {
+        "id": "cell-3",
+        "name": "Cell 3",
+        "ipv4": "10.2.0.3",
+        "health": "nominal",
+        "role": "planner",
+        "status": "MOORED",
+        "input": "tokamak",
+        "output": "tokamak",
+        "active": false
+      },
+      {
+        "id": "cell-4",
+        "name": "Cell 4",
+        "ipv4": "10.2.0.4",
+        "health": "nominal",
+        "role": "planner",
+        "status": "MOORED",
+        "input": "tokamak",
+        "output": "tokamak",
+        "active": false
+      },
+      {
+        "id": "cell-5",
+        "name": "Cell 5",
+        "ipv4": "10.2.0.5",
+        "health": "nominal",
+        "role": "planner",
+        "status": "MOORED",
+        "input": "tokamak",
+        "output": "tokamak",
+        "active": false
+      },
+      {
+        "id": "cell-6",
+        "name": "Cell 6",
+        "ipv4": "10.2.0.6",
+        "health": "nominal",
+        "role": "planner",
+        "status": "MOORED",
+        "input": "tokamak",
+        "output": "tokamak",
+        "active": false
+      },
+      {
+        "id": "cell-7",
+        "name": "Cell 7",
+        "ipv4": "10.2.0.7",
+        "health": "nominal",
+        "role": "planner",
+        "status": "ACTIVE",
+        "input": "tokamak",
+        "output": "stellarator",
+        "active": true
+      },
+      {
+        "id": "cell-8",
+        "name": "Cell 8",
+        "ipv4": "10.2.0.8",
+        "health": "nominal",
+        "role": "planner",
+        "status": "MOORED",
+        "input": "tokamak",
+        "output": "tokamak",
+        "active": false
+      },
+      {
+        "id": "cell-9",
+        "name": "Cell 9",
+        "ipv4": "10.2.0.9",
+        "health": "nominal",
+        "role": "planner",
+        "status": "MOORED",
+        "input": "tokamak",
+        "output": "tokamak",
+        "active": false
+      }
+    ],
+    "ts_utc": "2026-04-10T15:22:36.455Z"
+  },
+  "substrate_health_payload": {
+    "status": "ok",
+    "source": "playwright_wasm_projection_gate",
+    "terminal": "LIVE",
+    "mesh_ok": true,
+    "ts": "2026-04-10T15:22:36.455Z"
+  },
+  "console_errors": [
+    "Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:\n\n- A server/client branch `if (typeof window !== 'undefined')`.\n- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.\n- Date formatting in a user's locale which doesn't match the server.\n- External changing data without sending a snapshot of it along with the HTML.\n- Invalid HTML tag nesting.\n\nIt can also happen if the client has a browser extension installed which messes with the HTML before React loaded.\n\nhttps://react.dev/link/hydration-mismatch\n\n  ...\n    <RenderFromTemplateContext>\n      <ScrollAndFocusHandler segmentPath={[...]}>\n        <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>\n          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>\n            <LoadingBoundary name=\"fusion-s4/\" loading={null}>\n              <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>\n                <RedirectBoundary>\n                  <RedirectErrorBoundary router={{...}}>\n                    <InnerLayoutRouter url=\"/fusion-s4\" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} ...>\n                      <SegmentViewNode type=\"page\" pagePath=\"fusion-s4/...\">\n                        <SegmentTrieNode>\n                        <ClientPageRoot Component={function GaiaOperatorManifold} serverProvidedParams={{...}}>\n                          <GaiaOperatorManifold params={Promise} searchParams={Promise}>\n                            <main\n                              id=\"fusion-s4-main\"\n                              data-testid=\"fusion-s4-main\"\n+                             data-mooring-state=\"UNRESOLVED\"\n-                             data-mooring-state={null}\n                              className=\"h-screen w-screen bg-[#dbeafe] text-[#0f172a] overflow-hidden\"\n                            >\n+                             <div\n+                               id=\"mesh-mooring-container\"\n+                               data-testid=\"mesh-mooring-container\"\n+                               data-mooring-state=\"UNRESOLVED\"\n+                               className=\"hidden\"\n+                             >\n-                             <script id=\"fusion-bridge-signature-token\">\n                              ...\n                      ...\n                    ...\n          ...\n",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. r-1775834556456",
+    "Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. r-1775834556456"
+  ],
+  "console_warnings": [
+    "fusion bridge unavailable; running UI-only path",
+    "fusion bridge unavailable; running UI-only path",
+    "fusion bridge unavailable; running UI-only path",
+    "fusion bridge unavailable; running UI-only path"
+  ],
+  "terminal": "CURE"
+}
