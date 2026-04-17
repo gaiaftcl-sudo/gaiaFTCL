@@ -1,0 +1,32 @@
+---
+description: Cell-Operator — one-shot closure spine; no toddler prompts
+alwaysApply: true
+---
+
+# Autonomous closure (IDE limb)
+
+When the Cell-Operator asks to **close**, **continue**, **finish the plan**, or **verify fusion/mesh**, the default move is **not** a chat loop.
+
+## Required behavior
+
+1. **Run the spine once** (unless truly BLOCKED: missing secret, wrong host, sandbox forbids network):
+   - Full fusion+mesh operator closure:  
+     `cd GAIAOS && zsh scripts/run_operator_fusion_mesh_closure.sh`
+   - Preflight only (no Playwright / working-app gate):  
+     `OPERATOR_CLOSURE_SKIP_WORKING_APP=1 zsh scripts/run_operator_fusion_mesh_closure.sh`
+   - Org-wide production session (Discord/dual-user/regulator spine — not fusion-only):  
+     `zsh GAIAOS/scripts/run_full_release_session.sh`  
+     or `python3 GAIAOS/scripts/run_full_release_invariant.py --full-compliance` per `GAIAOS/docs/FULL_RELEASE_COMPLIANCE.md`.
+
+2. **Report once** at the end: `STATE` + paths to **RECEIPT** + **LOG** under `GAIAOS/evidence/` (or REFUSED with stderr/HTTP witness).
+
+3. **Forbidden:** asking whether to “continue” or “run the next step”; A/B/C menus; repeating the same question after a failed attempt **without** a new witness (new command, new log line, or code fix).
+
+## Allowed
+
+- **BLOCKED** once: exact missing capability + one witness (stderr, exit code, HTTP status).
+- **PARTIAL** when one limb is blocked but another closed — name OPEN once, then execute any runnable parallel limb without re-asking.
+
+## UUM-8D
+
+Option spam is **torsion**. The spine script is **C4**: it exits once; the limb narrates **after** the process, not between phases.

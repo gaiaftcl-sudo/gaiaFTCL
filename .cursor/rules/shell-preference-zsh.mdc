@@ -1,0 +1,87 @@
+# Shell Preference: zsh (not bash)
+
+## Hard rule
+
+All `.sh` scripts must use **zsh** as the interpreter, not bash. Use `#!/usr/bin/env zsh` as the shebang.
+
+## Rationale
+
+- **More power:** zsh has advanced features (parameter expansion, arrays, associative arrays, floating point)
+- **Mac default:** zsh is the default shell on macOS since Catalina (10.15)
+- **Better error handling:** zsh `-e` mode and `${var:A:h}` path modifiers are more robust
+- **Future-proof:** All GaiaFTCL scripts use zsh; consistency reduces context switching
+
+## Required shebang
+
+```zsh
+#!/usr/bin/env zsh
+```
+
+**Not:**
+```bash
+#!/usr/bin/env bash  # WRONG
+#!/bin/bash          # WRONG
+#!/bin/sh            # WRONG (unless strict POSIX portability required)
+```
+
+## Script syntax examples
+
+### Variable expansion (zsh-specific)
+
+```zsh
+SCRIPT_DIR="${0:A:h}"  # Absolute path to script directory (zsh-specific)
+```
+
+### Array handling (zsh)
+
+```zsh
+CELLS=(
+  "77.42.85.60"
+  "135.181.88.134"
+)
+
+for ip in "${CELLS[@]}"; do
+  echo "$ip"
+done
+```
+
+### Associative arrays (zsh)
+
+```zsh
+typeset -A CELL_NAMES
+CELL_NAMES=(
+  [77.42.85.60]=hel1-01
+  [135.181.88.134]=hel1-02
+)
+
+echo ${CELL_NAMES[77.42.85.60]}  # Outputs: hel1-01
+```
+
+## Documentation references
+
+When writing **documentation** that shows command examples (Markdown code blocks), use:
+
+```zsh
+# commands here
+```
+
+**Not:**
+```bash
+# commands here
+```
+
+## Exceptions
+
+- **POSIX portability:** If a script must run on non-zsh systems (e.g., Docker Alpine, embedded systems), use `#!/bin/sh` with strict POSIX syntax.
+- **Third-party scripts:** Do not modify shebangs in vendored / upstream scripts.
+
+## Cursor agent behavior
+
+When the agent **generates new shell scripts**, it must:
+1. Use `#!/usr/bin/env zsh` shebang
+2. Use zsh-specific features where beneficial (`${0:A:h}`, `[[ ]]` conditionals, etc.)
+3. Test with `zsh -n script.sh` for syntax validation (not `bash -n`)
+
+## UUM-8D reading
+
+Shell choice is an **S4 projection decision** — zsh is the canonical shell for GaiaFTCL Mac cell operations.

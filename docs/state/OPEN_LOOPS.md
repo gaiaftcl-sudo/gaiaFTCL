@@ -1,0 +1,2 @@
+- [BLOCKED] Confirm SSH vs GPG signing for git commits.
+- [BLOCKED] S⁴C⁴ hash migration for `cell_identity.json`.

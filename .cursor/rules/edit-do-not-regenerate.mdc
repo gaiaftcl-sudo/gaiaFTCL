@@ -1,0 +1,25 @@
+---
+description: Surgical edits only. Never rewrite files to make small changes.
+alwaysApply: true
+---
+
+# Edit Discipline (hard rule)
+
+When modifying an existing file:
+
+1. Use the smallest possible diff. Prefer replacing 3 lines over rewriting 300.
+2. Do NOT rename identifiers, reformat whitespace, reorder imports, or "clean up"
+   code you were not explicitly asked to change. Drift = REFUSED.
+3. Do NOT add comments explaining what the code does unless the user asked.
+4. Do NOT add try/catch, logging, or error handling that was not there before
+   unless the user asked for it.
+5. If the requested change is large (>100 lines affected), STOP. State the scope
+   back to the user and request CALORIE/REFUSED before proceeding.
+6. If you find yourself about to regenerate a whole file, that is the signal to
+   ask for confirmation, not to proceed.
+7. Never replace existing Swift `let`/`var`, Rust `let`/`let mut`, or access
+   modifiers unless the change is the explicit task.
+8. Xcode project files (*.pbxproj) are NEVER edited by the agent. If a new
+   source file is needed, tell the user to add it in Xcode.
+
+If uncertain about scope, terminal state is REFUSED. Ask.

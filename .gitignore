@@ -58,3 +58,30 @@ GaiaHealth/wasm_constitutional/pkg/
 GAIAFTCL/evidence/
 .build/
 *.a
+
+# Xcode
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+
+# SPM
+.swiftpm/
+.build/
+# NOTE: Package.resolved IS committed — it's your lockfile
+
+# Rust
+target/
+**/*.rs.bk
+
+# macOS
+.DS_Store
+
+# Secrets & local state
+.env
+.env.local
+~/.gaiaftcl/
+*.keychain

@@ -1,0 +1,25 @@
+---
+description: Mac app reality. Xcode and SPM are load-bearing; do not improvise.
+alwaysApply: true
+globs: ["**/*.swift", "**/*.pbxproj", "**/Package.swift", "**/Package.resolved"]
+---
+
+# Mac App Build System (hard rule)
+
+1. `project.pbxproj` is hand-edited by Xcode only. The agent NEVER writes to it.
+   To add a file: create the .swift on disk, then tell the user to add it to
+   the Xcode target.
+2. `Package.swift` changes require explicit user CALORIE. Adding a dependency
+   is an architectural decision — see `no-speculative-architecture.mdc`.
+3. `Package.resolved` is the lockfile. Do not regenerate it ("resolve packages")
+   as a side effect. Version bumps are a separate commit with justification.
+4. Never suggest CocoaPods or Carthage. SPM only.
+5. Metal shaders are precompiled (<3ms frame budget is a patent requirement).
+   Runtime shader compilation is REFUSED.
+6. Rust FFI: `vQbitPrimitive` is 76 bytes, `#[repr(C)]`. Layout changes touch
+   USPTO 19/096,071 and require a BLOCKED receipt for human review.
+7. SwiftUI: prefer existing Layout/View composition over introducing new
+   dependency injection frameworks, Combine pipelines, or async/await refactors.
+8. If a build error mentions DerivedData, the fix is:
+     rm -rf ~/Library/Developer/Xcode/DerivedData/GaiaFusion-*
+   NOT adding build settings, NOT "Clean Build Folder" suggestions as prose.

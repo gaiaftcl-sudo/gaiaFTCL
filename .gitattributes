@@ -1,0 +1,6 @@
+evidence/**          -diff -merge
+evidence/**          text eol=lf
+*.xcodeproj/project.pbxproj  merge=union
+Package.resolved     merge=ours
+GaiaFusion.xcworkspace/xcuserdata/**  export-ignore
+cell_identity.json   -merge -diff

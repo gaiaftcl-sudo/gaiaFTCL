@@ -1,0 +1,21 @@
+---
+description: Every session begins by reading the substrate state. No assumptions.
+alwaysApply: true
+---
+
+# Session Start Protocol (hard rule)
+
+At the start of every task, before proposing any change:
+
+1. Read `docs/state/CURRENT_STATE.md` in full. This is the substrate projection.
+2. Read `docs/state/OPEN_LOOPS.md`. Work MUST target an existing open loop or
+   the user must declare a new one. No free-floating work.
+3. If the user's request conflicts with CURRENT_STATE, surface the conflict
+   BEFORE working. Terminal state is REFUSED until the user resolves it.
+4. Do NOT rely on memory of previous chat sessions. Prior chats are not substrate.
+   If a fact is not in CURRENT_STATE, OPEN_LOOPS, an ADR, or a receipt,
+   treat it as unknown and ASK.
+5. When the user says "continue where we left off," that means: read the state
+   files and the three most recent commits. Not: invent plausible continuation.
+6. NEVER suggest external LLM APIs, Neo4j, or rebranding to "GaiaOS". These
+   are permanent REFUSED per constitution.

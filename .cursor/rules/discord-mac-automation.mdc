@@ -1,0 +1,33 @@
+---
+description: UUM-8D — Mac Discord must be driven by AppleScript or Playwright; no Founder homework for routine Discord ops
+alwaysApply: true
+---
+
+# Mac Discord — AppleScript or Playwright only
+
+## Hard rule
+
+On the Founder’s **Mac**, any work that touches the **Discord client surface** (native app or web) is **not** a manual checklist for Rick. The **IDE limb** automates it using:
+
+1. **AppleScript** — target **Discord.app** (`System Events`, menu/UI scripting, `open location` for `discord://` / `https://discord.com/...` where applicable).
+2. **Playwright** — drive **Discord in the browser** (chromium) for flows the app script cannot reach or when the web UI is more stable.
+
+Pick the path that actually completes the loop; **try both** before declaring **BLOCKED**.
+
+## Forbidden
+
+- Ending with “you need to…” / “re-invite the bot yourself…” / “open Discord and…” as the **primary** resolution when the task is **client navigation, invites, settings, channel checks, or slash-command smoke tests** on Mac.
+- **Closing assistant messages** with sections like **“What you still do”**, **“Remaining steps for you”**, or equivalent checklists for **Discord OAuth, membrane/gateway deploy, or vortex verification** — those are **limb + mesh** obligations (run scripts, SSH deploy, Playwright, MCP), not Rick’s queue.
+- Substituting a long human runbook for a **script** in `GAIAOS/scripts/` (or repo `tools/`) that the limb can execute.
+- Claiming success without **witness** (exit code, screenshot path, log line, or MCP/gateway receipt).
+
+## Required
+
+1. **Implement or extend** automation scripts (shell wrapping `osascript`, or Playwright spec under existing GAIAOS UI test patterns) and **run** them from the agent session when the environment allows. **Head deploy:** `GAIAOS/scripts/deploy_crystal_nine_cells.sh` (rsync + `crystal_remote_deploy.sh`) refreshes **`fot-mcp-gateway-mesh`** and **`gaiaftcl-discord-membrane`** when `DISCORD_MEMBRANE_DEPLOY=1` on the head. **OAuth gap:** `GAIAOS/scripts/discord_open_bot_invite_mac.sh` opens the install URL with `applications.commands`.
+2. **Server-side** (tokens, bot deploy, gateway, membrane) stays on the mesh path: **MCP / gateway / Franklin / deploy scripts** — same “no homework” rule; the limb executes what keys allow.
+3. **Franklin / GaiaFTCL** owns **substrate closure** (claims, ingest, deploy hooks). The **assistant** owns **Mac limb execution** (AppleScript + Playwright). Do not ask Rick to stand in for either.
+4. **Sovereign exceptions** (one-time device passcode, hardware key, App Store Apple ID gate): emit **BLOCKED** once with **exact** witness — after automation attempts — not a standing default.
+
+## UUM-8D reading
+
+The Mac client is **S4 projection**. Automating it **reduces envelope entropy**; pushing steps back to the Founder **without trying AppleScript + Playwright** is **REFUSED**-shaped behavior for the limb.
