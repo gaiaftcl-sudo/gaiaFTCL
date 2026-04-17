@@ -1,1 +1,1 @@
-- [CALORIE] S⁴C⁴ hash migration for `cell_identity.json` completed.
+- [CALORIE] Xcode Cloud Dispatcher workflow created.

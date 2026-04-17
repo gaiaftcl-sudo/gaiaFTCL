@@ -8,6 +8,7 @@
 - Git commit signing configured locally for `gaiaftcl-sudo` using a dedicated sovereign SSH key.
 - `gaiaftcl-sudo` SSH key registered in GitHub for authentication.
 - S⁴C⁴ hash migration completed for `cell_identity.json`. `identityHashProvider` now deterministically fuses S4 topological anchor and C4 cryptographic anchor.
+- Xcode Cloud Dispatcher workflow and runbook implemented.
 
 ## BLOCKED
 - None.
