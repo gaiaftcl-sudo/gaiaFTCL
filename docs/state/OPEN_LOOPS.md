@@ -1,1 +1,1 @@
-- [BLOCKED] S⁴C⁴ hash migration for `cell_identity.json`.
+- [CALORIE] S⁴C⁴ hash migration for `cell_identity.json` completed.

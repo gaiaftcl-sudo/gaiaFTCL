@@ -596,7 +596,7 @@ final class AppCoordinator: ObservableObject {
         self.server = LocalServer(meshManager: meshManager)
         self.server.fusionBridge = self.bridge
         self.server.identityHashProvider = { [weak self] in
-            self?.cellIdentityHash
+            self?.computeS4C4IdentityHash()
         }
         self.server.traceActiveProvider = { [weak self] in
             self?.showTraceLayer == true
@@ -660,7 +660,7 @@ final class AppCoordinator: ObservableObject {
             await self?.natsMcpBridge?.publishPresenceSnapshot(trigger: "http_mcp_cell_ping")
         }
         self.bridge.identityHashProvider = { [weak self] in
-            self?.cellIdentityHash
+            self?.computeS4C4IdentityHash()
         }
         self.bridge.traceModeProvider = { [weak self] in
             self?.showTraceLayer == true
@@ -1322,17 +1322,14 @@ final class AppCoordinator: ObservableObject {
             natsURL: defaults.string(forKey: "fusion_nats_url") ?? "nats://127.0.0.1:4222"
         )
 
-        guard let identity = readCellIdentity(),
-              let storedHash = identity["s4c4_hash"] as? String else {
+        let hash = computeS4C4IdentityHash()
+        if hash == "unverified" {
             await runAutoMooringIfNeeded(type: .autoFirstRun)
             return
         }
-        guard let storedS4 = identity["s4"] as? [String: Any], isS4Match(storedS4: storedS4) else {
-            setIdentityStateUnmoored(identity: identity)
-            return
-        }
 
-        cellIdentityHash = storedHash
+        cellIdentityHash = hash
+
         markOnboardingAsCompleted()
         showOnboarding = false
         await runAutoMooringIfNeeded(type: .autoSubsequent)
@@ -1412,6 +1409,21 @@ final class AppCoordinator: ObservableObject {
         UserDefaults.standard.setValue(false, forKey: "fusion_onboarding_complete")
         UserDefaults.standard.setValue(false, forKey: "fusion_auto_moored_complete")
         showOnboarding = false
+    }
+
+    func computeS4C4IdentityHash() -> String {
+        let file = homeMooringDirectory.appendingPathComponent("cell_identity.json")
+        guard FileManager.default.fileExists(atPath: file.path),
+              let data = try? Data(contentsOf: file),
+              let payload = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let cellId = payload["cell_id"] as? String, !cellId.isEmpty,
+              let pubKey = payload["public_key"] as? String, !pubKey.isEmpty else {
+            return "unverified"
+        }
+        let inputString = "\(cellId)|\(pubKey)"
+        let inputData = Data(inputString.utf8)
+        let hash = SHA256.hash(data: inputData)
+        return hash.compactMap { String(format: "%02x", $0) }.joined()
     }
 
     func readCellIdentity() -> [String: Any]? {
@@ -1526,31 +1538,11 @@ final class AppCoordinator: ObservableObject {
                 "mooring_ts_utc": now,
                 "quorum_at_mooring": cells.filter { $0.active }.count,
             ]
-            let s4Payload = currentS4Payload()
-            let hashInput = canonicalJSONString(s4Payload) + "||" + canonicalJSONString(c4State)
-            let identityHash = sha256Hex(hashInput)
+            let identityHash = computeS4C4IdentityHash()
             cellIdentityHash = identityHash
 
-            let identityPayload: [String: Any] = [
-                "schema": "gaiaftcl_cell_identity_v1",
-                "s4c4_hash": identityHash,
-                "s4": [
-                    "hardware_uuid": s4State.hardwareUUID,
-                    "username": s4State.username,
-                    "hostname": s4State.hostname,
-                    "ssh_key_fingerprint": s4State.sshKeyFingerprint,
-                    "app_version": s4State.appVersion,
-                ],
-                "c4": [
-                    "mesh_snapshot": snapshot,
-                    "nats_server_id": natsID,
-                    "mooring_ts_utc": now,
-                    "quorum_at_mooring": cells.filter { $0.active }.count,
-                ],
-                "mooring_state": "MOORED",
-                "ts_utc": now,
-            ]
             let mountPayload: [String: Any] = [
+
                 "schema": "gaiaftcl_mount_receipt_v1",
                 "cell_identity_hash": identityHash,
                 "mount_ts_utc": now,
@@ -1566,7 +1558,6 @@ final class AppCoordinator: ObservableObject {
                 "mesh_cells": cells.count,
                 "cell_identity_hash": identityHash,
             ]
-            try writeJSON(identityPayload, to: homeMooringDirectory.appendingPathComponent("cell_identity.json"))
             try writeJSON(mountPayload, to: homeMooringDirectory.appendingPathComponent("mount_receipt.json"))
             try writeJSON(statePayload, to: homeMooringDirectory.appendingPathComponent("fusion_mesh_mooring_state.json"))
             return (true, "MOORED")

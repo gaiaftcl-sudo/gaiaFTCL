@@ -7,9 +7,10 @@
 - `gaitfc[l]` typo fully corrected across Swift files.
 - Git commit signing configured locally for `gaiaftcl-sudo` using a dedicated sovereign SSH key.
 - `gaiaftcl-sudo` SSH key registered in GitHub for authentication.
+- S⁴C⁴ hash migration completed for `cell_identity.json`. `identityHashProvider` now deterministically fuses S4 topological anchor and C4 cryptographic anchor.
 
 ## BLOCKED
-- `cell_identity.json` returning `"unverified"` pending S⁴C⁴ hash migration human gate.
+- None.
 
 ## Next Receipt
-- Await human unblock on S⁴C⁴ hash migration.
+- None.
