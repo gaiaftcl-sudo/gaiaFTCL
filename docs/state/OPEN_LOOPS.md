@@ -1,1 +1,1 @@
-- [CALORIE] GitHub Secrets and Variables for Xcode Cloud Dispatcher configured.
+- [CALORIE] Removed Xcode Cloud Dispatcher in favor of 100% code-defined GitHub Actions `xcodebuild` pipeline.
