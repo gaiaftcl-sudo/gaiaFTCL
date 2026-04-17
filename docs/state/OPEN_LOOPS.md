@@ -1,1 +1,2 @@
 - [BLOCKED] S⁴C⁴ hash migration for `cell_identity.json`.
+- [BLOCKED] Register `gaiaftcl_sudo_ed25519.pub` in GitHub for the `gaiaftcl-sudo` account.
