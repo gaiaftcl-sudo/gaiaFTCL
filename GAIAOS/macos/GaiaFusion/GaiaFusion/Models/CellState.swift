@@ -24,6 +24,7 @@ public extension PlantType {
     static var zpinch: PlantType { .zPinch }
     static var icf: PlantType { .inertial }
     static var thetaPinch: PlantType { .mif }
+    static var polywell: PlantType { .inertial }
     
     static func normalized(raw: String?) -> PlantType {
         PlantKindsCatalog.shared.canonical(raw)

@@ -1,0 +1,4 @@
+module GaiaHealthRenderer {
+    header "../../gaia-health-renderer/gaia_health_renderer.h"
+    export *
+}

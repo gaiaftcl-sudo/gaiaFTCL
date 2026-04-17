@@ -1,0 +1,17 @@
+[package]
+name        = "biologit-usd-parser"
+version     = "0.1.0"
+edition     = "2021"
+description = "GaiaHealth protein/ligand scene parser — BioligitPrimitive ABI"
+license     = "LicenseRef-GaiaHealth-Source-Available"
+
+[lib]
+crate-type = ["staticlib", "rlib"]
+
+[dependencies]
+serde              = { workspace = true }
+serde_json         = { workspace = true }
+sha2               = { workspace = true }
+hex                = { workspace = true }
+thiserror          = { workspace = true }
+biologit-md-engine = { path = "../biologit_md_engine" }

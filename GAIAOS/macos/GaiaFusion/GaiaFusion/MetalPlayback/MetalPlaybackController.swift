@@ -13,6 +13,17 @@ final class MetalPlaybackController: ObservableObject {
     @Published private(set) var fps: Double = 0
     @Published private(set) var stageLoaded: Bool = false
     
+    /// Render next frame for performance testing
+    func renderNextFrame(width: UInt32, height: UInt32) {
+        _rustRenderer?.renderFrame(width: width, height: height)
+        framesPresented += 1
+    }
+    
+    /// Get last frame time in microseconds
+    func getFrameTimeUs() -> UInt64 {
+        return _rustRenderer?.getFrameTimeUs() ?? 0
+    }
+    
     /// Emits discrete plant-swap lifecycle states to WKWebView + gate logs.
     var onPlantSwapLifecycle: (([String: Any]) -> Void)?
     
@@ -22,7 +33,7 @@ final class MetalPlaybackController: ObservableObject {
     /// Mesh `vQbit` sample for optional `vqbit_rate` timeline driver.
     var vqbitSample: () -> Double = { 0 }
     
-    private var rustRenderer: RustMetalProxyRenderer?
+    private var _rustRenderer: RustMetalProxyRenderer?
     private var lastFrameTime: TimeInterval = 0
     private var fpsAccumulator: Double = 0
     private var fpsFrames: Int = 0
@@ -35,12 +46,14 @@ final class MetalPlaybackController: ObservableObject {
     /// IQ/OQ/PQ test entry point — initialise renderer with an optional CAMetalLayer.
     /// Passing nil creates a headless instance suitable for unit tests (no GPU rendering).
     func initialize(layer: CAMetalLayer?) async {
+        StartupProfiler.shared.checkpoint("metal_init_start")
         if let layer = layer {
             let proxy = RustMetalProxyRenderer(layer: layer)
             setMetalRenderer(proxy)
         }
         // If layer is nil, rustRenderer stays nil — headless mode for test protocols.
         stageLoaded = true
+        StartupProfiler.shared.checkpoint("metal_init_complete")
     }
 
     /// Request a plant swap — PQ protocol entry point.
@@ -62,7 +75,7 @@ final class MetalPlaybackController: ObservableObject {
     func loadPlantSync(_ kind: String) {
         plantKind = kind
         // Gap #8: Parse USD with explicit buffer allocation
-        guard let usdPath = Bundle.module.path(forResource: "plants/\(kind)/root", ofType: "usda") else {
+        guard let usdPath = Bundle.gaiaFusionResourceBundle.path(forResource: "plants/\(kind)/root", ofType: "usda") else {
             print("USD file not found for plant: \(kind)")
             stageLoaded = false
             return
@@ -79,7 +92,7 @@ final class MetalPlaybackController: ObservableObject {
         print("Loaded \(count) primitives from \(kind)")
         
         // Upload to renderer if available
-        if count > 0, let renderer = rustRenderer {
+        if count > 0, let renderer = _rustRenderer {
             let prims = Array(UnsafeBufferPointer(start: primsBuffer, count: Int(count)))
             renderer.uploadPrimitives(prims)
         }
@@ -88,11 +101,11 @@ final class MetalPlaybackController: ObservableObject {
     }
     
     func setMetalRenderer(_ renderer: RustMetalProxyRenderer) {
-        self.rustRenderer = renderer
+        self._rustRenderer = renderer
     }
     
     func drawFrame(drawable: CAMetalDrawable, viewportSize: CGSize) {
-        guard let renderer = rustRenderer else { return }
+        guard let renderer = _rustRenderer else { return }
         
         let now = CACurrentMediaTime()
         if lastFrameTime > 0 {
@@ -128,11 +141,11 @@ final class MetalPlaybackController: ObservableObject {
     }
     
     func setTau(_ blockHeight: UInt64) {
-        rustRenderer?.setTau(blockHeight)
+        _rustRenderer?.setTau(blockHeight)
     }
     
     func getTau() -> UInt64 {
-        return rustRenderer?.getTau() ?? 0
+        return _rustRenderer?.getTau() ?? 0
     }
     
     // MARK: - PQ Test Protocol Support
@@ -140,7 +153,7 @@ final class MetalPlaybackController: ObservableObject {
     /// Cleanup alias for PQ tests (maps to disengage)
     func cleanup() {
         disengage()
-        rustRenderer = nil
+        _rustRenderer = nil
     }
     
     /// Current FPS for PQ tests
@@ -150,7 +163,7 @@ final class MetalPlaybackController: ObservableObject {
     
     /// Current geometry for PQ tests (placeholder - vertex count from renderer)
     var currentGeometry: Geometry? {
-        guard rustRenderer != nil else { return nil }
+        guard _rustRenderer != nil else { return nil }
         return Geometry(vertexCount: 256)
     }
     
@@ -173,6 +186,26 @@ final class MetalPlaybackController: ObservableObject {
             "fps": fps,
             "stage_loaded": stageLoaded
         ]
+    }
+    
+    /// Enable plasma particle rendering
+    func enablePlasma() {
+        _rustRenderer?.enablePlasma()
+    }
+    
+    /// Disable plasma particle rendering
+    func disablePlasma() {
+        _rustRenderer?.disablePlasma()
+    }
+    
+    /// Update the Metal drawable size when viewport geometry changes
+    func updateDrawableSize(_ size: CGSize) {
+        _rustRenderer?.updateDrawableSize(size)
+    }
+    
+    /// Set the base wireframe color
+    func setWireframeBaseColor(_ rgba: [Float]) {
+        _rustRenderer?.setWireframeBaseColor(rgba)
     }
 }
 

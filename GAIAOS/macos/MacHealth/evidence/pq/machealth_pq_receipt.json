@@ -1,0 +1,10 @@
+{
+  "spec" : "GAIA-HEALTH-PQ-MAC-001",
+  "cell" : "MacHealth",
+  "nonzero_pixels" : 12288,
+  "timestamp" : "2026-04-17T11:25:43Z",
+  "pii_stored" : false,
+  "metal_device_name" : "Apple M4 Max",
+  "pq_status" : "PASS",
+  "phase" : "PQ"
+}

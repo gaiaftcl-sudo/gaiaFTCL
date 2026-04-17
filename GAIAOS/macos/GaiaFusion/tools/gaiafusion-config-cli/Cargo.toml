@@ -1,0 +1,10 @@
+[package]
+name = "gaiafusion-config-cli"
+version = "1.0.0"
+edition = "2021"
+authors = ["Richard Gillespie <research@fortressai.com>"]
+description = "TOML config parser for GaiaFusion GAMP 5 validation scripts"
+license = "Proprietary"
+
+[dependencies]
+toml = "0.8"

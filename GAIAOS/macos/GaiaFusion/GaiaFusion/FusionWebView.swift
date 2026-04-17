@@ -68,7 +68,7 @@ private final class WasmSchemeHandler: NSObject, WKURLSchemeHandler {
     guard
       !resourceName.isEmpty,
       !resourceType.isEmpty,
-      let resourceURL = Bundle.module.url(forResource: resourceName, withExtension: resourceType)
+      let resourceURL = Bundle.gaiaFusionResourceBundle.url(forResource: resourceName, withExtension: resourceType)
         ?? Bundle.main.url(forResource: resourceName, withExtension: resourceType),
       let payload = try? Data(contentsOf: resourceURL)
     else {
@@ -332,10 +332,13 @@ private struct FusionWebKitView: NSViewRepresentable {
                 webView.configuration.userContentController.add(self.bridge!, name: "wasmRuntime")
                 attached = true
             }
+            
+            StartupProfiler.shared.checkpoint("webview_load_start")
             webView.load(URLRequest(url: target))
         }
 
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+            StartupProfiler.shared.checkpoint("webview_load_finish")
             FusionWebKitView.applyMacOSWebViewTransparencyHolePunch(webView)
             DispatchQueue.main.async {
                 FusionWebKitView.applyMacOSWebViewTransparencyHolePunch(webView)

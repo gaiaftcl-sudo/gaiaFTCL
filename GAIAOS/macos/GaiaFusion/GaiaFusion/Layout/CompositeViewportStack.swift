@@ -30,24 +30,31 @@ struct CompositeViewportStack: View {
                     
                     // Layer 1: Metal wireframe viewport (Z=1)
                     // Centered in viewportGeometry space (the actual available space)
-                    FusionMetalViewportView(playback: metalPlayback)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color.clear)
-                        .opacity(layoutManager.metalOpacity)
-                        .allowsHitTesting(layoutManager.currentMode == .geometryFocus)
-                        .zIndex(1)
-                        .accessibilityIdentifier("metal_wireframe_viewport")
-                        .onAppear {
-                            print("🎯 Metal viewport space: \(viewportGeometry.size.width)×\(viewportGeometry.size.height)")
-                            metalPlayback.updateDrawableSize(viewportGeometry.size)
-                        }
-                        .onChange(of: viewportGeometry.size) { _, newSize in
-                            print("🎯 Metal viewport resize: \(newSize.width)×\(newSize.height)")
-                            metalPlayback.updateDrawableSize(newSize)
-                        }
-                        .onChange(of: layoutManager.wireframeColor) { _, newColor in
-                            metalPlayback.setWireframeBaseColor(newColor.rgba)
-                        }
+                    if coordinator.shellMode == .phiWitness {
+                        PhiWitnessView()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .zIndex(1)
+                            .accessibilityIdentifier("phi_witness_viewport")
+                    } else {
+                        FusionMetalViewportView(playback: metalPlayback)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(Color.clear)
+                            .opacity(layoutManager.metalOpacity)
+                            .allowsHitTesting(layoutManager.currentMode == .geometryFocus)
+                            .zIndex(1)
+                            .accessibilityIdentifier("metal_wireframe_viewport")
+                            .onAppear {
+                                print("🎯 Metal viewport space: \(viewportGeometry.size.width)×\(viewportGeometry.size.height)")
+                                metalPlayback.updateDrawableSize(viewportGeometry.size)
+                            }
+                            .onChange(of: viewportGeometry.size) { _, newSize in
+                                print("🎯 Metal viewport resize: \(newSize.width)×\(newSize.height)")
+                                metalPlayback.updateDrawableSize(newSize)
+                            }
+                            .onChange(of: layoutManager.wireframeColor) { _, newColor in
+                                metalPlayback.setWireframeBaseColor(newColor.rgba)
+                            }
+                    }
                     
                     // Layer 2: WKWebView dashboard (Z=2) - CRITICAL: This renders Next.js panels
                     if coordinator.server.isRunning {
@@ -125,7 +132,8 @@ struct CompositeViewportStack: View {
         .onChange(of: coordinator.server.isRunning) { _, _ in
             coordinator.refreshSplashHandshake()
         }
-        .onChange(of: coordinator.fusionCellStateMachine.operationalState) { _, newState in
+        .onChange(of: coordinator.fusionCellStateMachine.operationalState) {
+            let newState = coordinator.fusionCellStateMachine.operationalState
             withAnimation(.easeInOut(duration: 0.2)) {
                 layoutManager.applyForcedMode(for: newState)
             }
@@ -133,14 +141,8 @@ struct CompositeViewportStack: View {
             // Phase 7: Control plasma visibility based on plant state
             switch newState {
             case .running, .constitutionalAlarm:
-                // Enable plasma particles with default state
+                // Enable plasma particles
                 metalPlayback.enablePlasma()
-                metalPlayback.setPlasmaState(
-                    density: 1.0e20,
-                    temperature: 15.0,
-                    magneticField: 5.5,
-                    opacity: 0.7
-                )
             case .idle, .moored, .tripped, .maintenance, .training:
                 // Disable plasma and clear buffer
                 metalPlayback.disablePlasma()
@@ -150,7 +152,7 @@ struct CompositeViewportStack: View {
     
     private var splashOverlay: some View {
         ZStack {
-            // Check Bundle.main first to avoid Bundle.module crash
+            // Check Bundle.main first to avoid Bundle.gaiaFusionResourceBundle crash
             let mainBundle = Bundle.main
             let namedBundleURL = mainBundle.url(forResource: "GaiaFusion_GaiaFusion", withExtension: "bundle")
             let namedBundle = namedBundleURL.flatMap { Bundle(url: $0) }

@@ -85,4 +85,35 @@ final class RustMetalProxyRenderer {
         guard let ptr = rendererPtr else { return 0 }
         return gaia_metal_renderer_get_frame_time_us(ptr)
     }
+    
+    /// Enable plasma particle rendering
+    func enablePlasma() {
+        guard let ptr = rendererPtr else { return }
+        // FFI function will be implemented in Rust library
+        // gaia_metal_renderer_enable_plasma(ptr)
+        print("enablePlasma() called - Rust FFI not yet wired")
+    }
+    
+    /// Disable plasma particle rendering
+    func disablePlasma() {
+        guard let ptr = rendererPtr else { return }
+        // FFI function will be implemented in Rust library
+        // gaia_metal_renderer_disable_plasma(ptr)
+        print("disablePlasma() called - Rust FFI not yet wired")
+    }
+    
+    /// Update the Metal drawable size when viewport geometry changes
+    func updateDrawableSize(_ size: CGSize) {
+        resize(width: UInt32(size.width), height: UInt32(size.height))
+    }
+    
+    /// Set the base wireframe color (RGBA normalized 0-1)
+    func setWireframeBaseColor(_ rgba: [Float]) {
+        guard let ptr = rendererPtr, rgba.count >= 4 else { return }
+        // FFI function will be implemented in Rust library
+        // rgba.withUnsafeBufferPointer { buf in
+        //     gaia_metal_renderer_set_wireframe_color(ptr, buf.baseAddress!)
+        // }
+        print("setWireframeBaseColor(\(rgba)) called - Rust FFI not yet wired")
+    }
 }

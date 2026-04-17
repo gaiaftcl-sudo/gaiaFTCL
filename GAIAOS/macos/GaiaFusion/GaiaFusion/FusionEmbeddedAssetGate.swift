@@ -56,7 +56,7 @@ enum FusionEmbeddedAssetGate {
         return resolveFusionWebRootPreferringComplete()
     }
 
-    /// One-shot: if `fusion_web_embed.tar.gz` or `fusion_web_embed.zip` exists in the resource bundle (`Bundle.module`), extract to Application Support and reuse on subsequent launches.
+    /// One-shot: if `fusion_web_embed.tar.gz` or `fusion_web_embed.zip` exists in the resource bundle (`Bundle.gaiaFusionResourceBundle`), extract to Application Support and reuse on subsequent launches.
     static func materializeEmbeddedArchiveIfNeeded() {
         if UserDefaults.standard.bool(forKey: embedExpandedDefaultsKey) {
             return
@@ -68,8 +68,8 @@ enum FusionEmbeddedAssetGate {
             return
         }
         guard let archive =
-            Bundle.module.url(forResource: embeddedArchiveBaseName, withExtension: "tar.gz")
-            ?? Bundle.module.url(forResource: embeddedArchiveBaseName, withExtension: "zip")
+            Bundle.gaiaFusionResourceBundle.url(forResource: embeddedArchiveBaseName, withExtension: "tar.gz")
+            ?? Bundle.gaiaFusionResourceBundle.url(forResource: embeddedArchiveBaseName, withExtension: "zip")
             ?? Bundle.main.url(forResource: embeddedArchiveBaseName, withExtension: "tar.gz")
             ?? Bundle.main.url(forResource: embeddedArchiveBaseName, withExtension: "zip")
         else {
@@ -97,12 +97,12 @@ enum FusionEmbeddedAssetGate {
         return FileManager.default.fileExists(atPath: path)
     }
 
-    /// SwiftPM ships processed resources under `GaiaFusion_GaiaFusion.bundle` (`Bundle.module`), not `Bundle.main` when running the `.build` binary.
+    /// SwiftPM ships processed resources under `GaiaFusion_GaiaFusion.bundle` (`Bundle.gaiaFusionResourceBundle`), not `Bundle.main` when running the `.build` binary.
     private static func metallibPresentInResourceBundle() -> Bool {
-        if let u = Bundle.module.url(forResource: "default", withExtension: "metallib") {
+        if let u = Bundle.gaiaFusionResourceBundle.url(forResource: "default", withExtension: "metallib") {
             return FileManager.default.fileExists(atPath: u.path)
         }
-        return metallibPresent(resourcesRoot: Bundle.module.resourceURL)
+        return metallibPresent(resourcesRoot: Bundle.gaiaFusionResourceBundle.resourceURL)
     }
 
     private static func evaluateFusionWeb(at root: URL) -> (ok: Bool, required: [String: Bool], missing: [String]) {
@@ -133,7 +133,7 @@ enum FusionEmbeddedAssetGate {
 
     private static func resolveFusionWebRootPreferringComplete() -> URL? {
         let candidates: [URL?] = [
-            Bundle.module.resourceURL?.appendingPathComponent(fusionWebDirName),
+            Bundle.gaiaFusionResourceBundle.resourceURL?.appendingPathComponent(fusionWebDirName),
             Bundle.main.resourceURL?.appendingPathComponent(fusionWebDirName),
             applicationSupportFusionWebURL(),
             URL(filePath: "./GaiaFusion/Resources/\(fusionWebDirName)", relativeTo: URL(fileURLWithPath: FileManager.default.currentDirectoryPath)).absoluteURL,

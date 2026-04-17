@@ -1,0 +1,25 @@
+# Mesh Liveness Configuration
+# GaiaFusion Constitutional Architecture
+# FortressAI Research Institute | USPTO 19/460,960
+
+[mesh]
+role = "liveness_validator"
+heartbeat_interval_seconds = 30
+degradation_timeout_seconds = 3600  # Production: 1 hour | Integration test override: 10
+quorum_threshold = 5  # Minimum cells required for SubGame Z quorum
+total_cells = 9
+
+# Constitutional intent: cell dies by design on mesh loss
+# Survival without mesh connectivity is a bug, not resilience
+designed_death = true
+
+# Validation protocol reference
+validation_protocol = "SP-002"
+
+[recovery]
+# After designed death (TRIPPED/CONSTITUTIONAL_ALARM), recovery requires:
+# 1. Mesh connectivity restored
+# 2. Physics state clear (violationCode == 0)
+# 3. L3 dual-auth for re-entry to RUNNING
+manual_recovery_only = true
+auto_restart_prohibited = true

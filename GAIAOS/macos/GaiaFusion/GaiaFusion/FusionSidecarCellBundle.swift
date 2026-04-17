@@ -18,7 +18,7 @@ enum FusionSidecarCellBundle {
 
     /// Canonical `docker-compose.fusion-sidecar.yml` inside the app resources (if packaged).
     static func bundledComposeURL() -> URL? {
-        Bundle.module.url(
+        Bundle.gaiaFusionResourceBundle.url(
             forResource: "docker-compose.fusion-sidecar",
             withExtension: "yml",
             subdirectory: subdir

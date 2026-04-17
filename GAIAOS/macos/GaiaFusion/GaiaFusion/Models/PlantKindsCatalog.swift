@@ -8,6 +8,9 @@ public struct PlantKindsCatalog: Sendable {
         "tokamak", "stellarator", "frc", "spheromak", "mirror", "inertial",
         "spherical_tokamak", "z_pinch", "mif",
     ]
+    
+    /// Alias for test compatibility
+    public static let canonicalNames: Set<String> = canonicalKinds
 
     /// Narrow alias map (logged on resolve). Exposed for `/api/fusion/plant-kinds` and WASM clients.
     public static let kindAliases: [String: String] = [
@@ -65,7 +68,7 @@ public struct PlantKindsCatalog: Sendable {
     }
 
     private static func plantAdapterPath() -> URL? {
-        if let bundled = Bundle.module.url(
+        if let bundled = Bundle.gaiaFusionResourceBundle.url(
             forResource: "plant_adapters",
             withExtension: "json",
             subdirectory: "spec/native_fusion"

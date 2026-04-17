@@ -1,0 +1,5 @@
+[package]
+name    = "gxp-harness"
+version = "0.1.0"
+edition = "2021"
+description = "Shared GxP test harness utilities for all Gaia cells"

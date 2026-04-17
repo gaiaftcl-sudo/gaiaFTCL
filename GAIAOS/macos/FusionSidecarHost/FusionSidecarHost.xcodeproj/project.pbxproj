@@ -1,0 +1,239 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F801 /* FusionSidecarHostApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F101 /* FusionSidecarHostApp.swift */; };
+		F802 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F102 /* ContentView.swift */; };
+		F803 /* VirtualMachineController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103 /* VirtualMachineController.swift */; };
+		F804 /* TCPPortForwarder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F104 /* TCPPortForwarder.swift */; };
+		F806 /* FusionMacCLI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F107 /* FusionMacCLI.swift */; };
+		F805 /* Virtualization.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F201 /* Virtualization.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F101 /* FusionSidecarHostApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FusionSidecarHostApp.swift; sourceTree = "<group>"; };
+		F102 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F103 /* VirtualMachineController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualMachineController.swift; sourceTree = "<group>"; };
+		F104 /* TCPPortForwarder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCPPortForwarder.swift; sourceTree = "<group>"; };
+		F107 /* FusionMacCLI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FusionMacCLI.swift; sourceTree = "<group>"; };
+		F105 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F106 /* FusionSidecarHost.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FusionSidecarHost.entitlements; sourceTree = "<group>"; };
+		F199 /* FusionSidecarHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FusionSidecarHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F201 /* Virtualization.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Virtualization.framework; path = System/Library/Frameworks/Virtualization.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F900 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F805 /* Virtualization.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F000 = {
+			isa = PBXGroup;
+			children = (
+				F110 /* FusionSidecarHost */,
+				F198 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F110 /* FusionSidecarHost */ = {
+			isa = PBXGroup;
+			children = (
+				F101 /* FusionSidecarHostApp.swift */,
+				F102 /* ContentView.swift */,
+				F103 /* VirtualMachineController.swift */,
+				F104 /* TCPPortForwarder.swift */,
+				F107 /* FusionMacCLI.swift */,
+				F105 /* Info.plist */,
+				F106 /* FusionSidecarHost.entitlements */,
+			);
+			path = FusionSidecarHost;
+			sourceTree = "<group>";
+		};
+		F198 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F199 /* FusionSidecarHost.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F700 /* FusionSidecarHost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F702 /* Build configuration list for PBXNativeTarget "FusionSidecarHost" */;
+			buildPhases = (
+				F701 /* Sources */,
+				F900 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FusionSidecarHost;
+			productName = FusionSidecarHost;
+			productReference = F199 /* FusionSidecarHost.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F600 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = F601 /* Build configuration list for PBXProject "FusionSidecarHost" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F000;
+			productRefGroup = F198 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F700 /* FusionSidecarHost */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F701 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F801 /* FusionSidecarHostApp.swift in Sources */,
+				F802 /* ContentView.swift in Sources */,
+				F803 /* VirtualMachineController.swift in Sources */,
+				F804 /* TCPPortForwarder.swift in Sources */,
+				F806 /* FusionMacCLI.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		FA01 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FA02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		FA11 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FusionSidecarHost/FusionSidecarHost.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FusionSidecarHost/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © GaiaFTCL.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gaiaftcl.FusionSidecarHost;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		FA12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FusionSidecarHost/FusionSidecarHost.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FusionSidecarHost/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © GaiaFTCL.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gaiaftcl.FusionSidecarHost;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F601 /* Build configuration list for PBXProject "FusionSidecarHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA01 /* Debug */,
+				FA02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F702 /* Build configuration list for PBXNativeTarget "FusionSidecarHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA11 /* Debug */,
+				FA12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F600 /* Project object */;
+}

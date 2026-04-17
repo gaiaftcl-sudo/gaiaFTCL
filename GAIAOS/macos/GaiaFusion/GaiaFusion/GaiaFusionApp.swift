@@ -10,6 +10,7 @@ enum FusionShellMode: String, CaseIterable, Identifiable {
     case topology = "topology"
     case projection = "projection"
     case metrics = "metrics"
+    case phiWitness = "phi_witness"
 
     var id: String { rawValue }
 
@@ -23,6 +24,8 @@ enum FusionShellMode: String, CaseIterable, Identifiable {
             "Projection"
         case .metrics:
             "Metrics"
+        case .phiWitness:
+            "Φ-Witness"
         }
     }
 
@@ -36,6 +39,8 @@ enum FusionShellMode: String, CaseIterable, Identifiable {
             "show_projection"
         case .metrics:
             "show_metrics"
+        case .phiWitness:
+            "show_phi_witness"
         }
     }
 }
@@ -112,10 +117,69 @@ struct GaiaFusionApp: App {
     @StateObject private var coordinator: AppCoordinator
 
     init() {
+        // Start startup profiling immediately
+        StartupProfiler.shared.start()
+        
         SingleMacCellLock.enforceSingleGUIInstanceOrExit()
+        StartupProfiler.shared.checkpoint("single_instance_check")
+        
         NSApplication.shared.setActivationPolicy(.regular)
         NSApplication.shared.activate(ignoringOtherApps: true)
+        StartupProfiler.shared.checkpoint("app_activation")
+        
         _coordinator = StateObject(wrappedValue: AppCoordinator())
+        StartupProfiler.shared.checkpoint("coordinator_init")
+    }
+    
+    // MARK: - GAMP 5 Test Mode
+    
+    /// Setup test mode based on GAIAFUSION_TEST_MODE environment variable
+    /// Used by automated GAMP 5 runtime verification suite
+    private func setupTestMode() {
+        guard let testMode = ProcessInfo.processInfo.environment["GAIAFUSION_TEST_MODE"] else { return }
+        
+        print("🧪 GAMP 5 Test Mode: \(testMode)")
+        
+        switch testMode {
+        case "CHECK_2_METAL_CENTER":
+            // Normal launch, Cell-Operator verifies metal centering
+            print("   → RT-002: Metal wireframe centering verification")
+            
+        case "CHECK_3_NEXTJS_PANEL":
+            // Normal launch, verify right panel
+            print("   → RT-003: Next.js dashboard visibility verification")
+            
+        case "CHECK_4_KEYBOARD_SHORTCUTS":
+            // Normal launch for keyboard shortcut testing
+            print("   → RT-004: Keyboard shortcut functionality verification")
+            
+        case "CHECK_5_TRIPPED_LOCK":
+            // Force .tripped state after 2 seconds
+            print("   → RT-005: Tripped state keyboard lock verification")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.coordinator.fusionCellStateMachine.forceState(.tripped)
+                print("   ✅ Forced state: .tripped (RT-005)")
+            }
+            
+        case "CHECK_6_CONSTITUTIONAL_ALARM":
+            // Force .constitutionalAlarm after 2 seconds
+            print("   → RT-006: Constitutional alarm response verification")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.coordinator.fusionCellStateMachine.forceState(.constitutionalAlarm)
+                print("   ✅ Forced state: .constitutionalAlarm (RT-006)")
+            }
+            
+        case "CHECK_7_PLASMA_PARTICLES":
+            // Cycle IDLE → RUNNING for plasma test
+            print("   → RT-007: Plasma particle state dependency verification")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                print("   ⏳ Transitioning IDLE → RUNNING for plasma verification")
+                self.coordinator.fusionCellStateMachine.forceState(.running)
+            }
+            
+        default:
+            print("   ⚠️  Unknown test mode: \(testMode)")
+        }
     }
 
     var body: some Scene {
@@ -126,11 +190,20 @@ struct GaiaFusionApp: App {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.clear)
                 .onAppear {
+                    StartupProfiler.shared.checkpoint("window_appear")
+                    
+                    // GAMP 5 Test Mode Setup
+                    setupTestMode()
+                    
                     coordinator.probeAllCells()
+                    StartupProfiler.shared.checkpoint("cells_probed")
+                    
                     FusionMainWindowTitleSync.apply(coordinator.windowTitle)
                     NSApplication.shared.activate(ignoringOtherApps: true)
                     FusionMainWindowTransparency.applyToMainWindow()
                     FusionMainWindowPresentation.maximizeToVisibleScreen()
+                    StartupProfiler.shared.checkpoint("window_configured")
+                    
                     DispatchQueue.main.async {
                         if let mainWindow = NSApp.mainWindow {
                             mainWindow.makeKeyAndOrderFront(nil)
@@ -138,6 +211,12 @@ struct GaiaFusionApp: App {
                             FusionMainWindowTitleSync.apply(coordinator.windowTitle)
                             FusionMainWindowTransparency.applyToMainWindow()
                             FusionMainWindowPresentation.maximizeToVisibleScreen()
+                        }
+                        StartupProfiler.shared.checkpoint("window_ready")
+                        
+                        // Mark complete after a brief delay to ensure Metal/WebView have rendered
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            StartupProfiler.shared.complete()
                         }
                     }
                 }
@@ -2331,14 +2410,8 @@ To change wallet roles, re-run the IQ qualification process.
     
     func showAbout() {
         let alert = NSAlert()
-        let ver =
-            Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-            ?? Bundle.gaiafusionResources.infoDictionary?["CFBundleShortVersionString"] as? String
-            ?? "1.0"
-        let build =
-            Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-            ?? Bundle.gaiafusionResources.infoDictionary?["CFBundleVersion"] as? String
-            ?? "1"
+        let ver = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
         alert.messageText = "GaiaFusion"
         alert.informativeText =
             "GaiaFTCL Fusion Mac Host — FortressAI Research Institute\nVersion \(ver) (\(build))\nNative Metal + OpenUSD viewport behind the fusion-s4 WebView."

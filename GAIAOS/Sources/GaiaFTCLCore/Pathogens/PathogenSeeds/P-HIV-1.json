@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "pathogen_id": "P-HIV-1",
+  "common_name": "HIV-1",
+  "scientific_name": "Human immunodeficiency virus 1",
+  "taxonomy": {
+    "kingdom": "Pararnavirae",
+    "phylum": "Artverviricota",
+    "genus": "Lentivirus",
+    "species": "HIV-1"
+  },
+  "target": {
+    "kind": "viral_spike",
+    "stiffness_n_per_m": 0.018,
+    "mass_kg": 2.5e-22,
+    "length_m": 1.4e-8,
+    "youngs_modulus_pa": 3.5e7
+  },
+  "computed_mor_hz": 1350880000.0,
+  "mopa_band": {
+    "carrier_low_hz": 3000000.0,
+    "carrier_high_hz": 4000000.0,
+    "modulator_low_hz": 20.0,
+    "modulator_high_hz": 20000.0
+  },
+  "epistemic_tag": "M",
+  "status": "CURE-PROXY",
+  "description": "Env glycoprotein trimer (gp120/gp41) modeled as a cantilever. k from AFM studies of HIV-1 virions; m from Env trimer mass.",
+  "invariants_applied": [
+    "GFTCL-RIFE-INV1-CANTILEVER-RESONANCE",
+    "GFTCL-RIFE-INV2-CALM-ENERGY-BOUNDARY",
+    "GFTCL-RIFE-INV3-MOPA-HARMONIC-SIDEBAND"
+  ],
+  "literature": [
+    {"pmid_or_doi": "10.1529/biophysj.107.111765", "year": 2007, "role": "afm_hiv_envelope"},
+    {"pmid_or_doi": "10.1126/science.1245625", "year": 2013, "role": "env_structure"},
+    {"pmid_or_doi": "10.1038/nature10696", "year": 2011, "role": "maturation_mechanics"}
+  ],
+  "provenance": {
+    "created_at": "2026-04-17T00:00:00Z",
+    "created_by_wallet_hash": "sha256:seed",
+    "cell_id": "local",
+    "signature": ""
+  },
+  "history": [
+    {
+      "timestamp": "2026-04-17T00:00:00Z",
+      "event": "seed_created",
+      "actor_wallet_hash": "sha256:seed"
+    }
+  ]
+}

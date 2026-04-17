@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "pathogen_id": "P-RIFE-BX-HISTORICAL",
+  "common_name": "Rife BX (historical carcinoma datum)",
+  "scientific_name": "Unidentified carcinoma-associated agent (Rife 1930s observation, species not molecularly confirmed)",
+  "taxonomy": {
+    "kingdom": "unknown",
+    "phylum": "unknown",
+    "genus": "unknown",
+    "species": "Rife BX historical datum"
+  },
+  "target": {
+    "kind": "historical_empirical_resonance",
+    "stiffness_n_per_m": 1.015,
+    "mass_kg": 1.0e-14,
+    "length_m": 1.0e-5,
+    "youngs_modulus_pa": 1.0e4
+  },
+  "computed_mor_hz": 1604000.0,
+  "mopa_band": {
+    "carrier_low_hz": 3000000.0,
+    "carrier_high_hz": 4000000.0,
+    "modulator_low_hz": 20.0,
+    "modulator_high_hz": 20000.0
+  },
+  "epistemic_tag": "T",
+  "status": "DRAFT",
+  "description": "Historical Rife datum for the BX carcinoma-associated frequency (1.604 MHz), preserved here for audit completeness. No primary AFM nanoindentation or cryo-EM mass measurement exists for a molecularly identified target. The k and m values in this record are NOT primary measurements — they are back-solved from f = (1/2π)\u221a(k/m) at cell-scale (m \u223c 1e-14 kg, k \u223c 1 N/m) so INV1's self-consistency guard passes arithmetically. Because epistemic_tag = T (Theoretical), INV3's M-tag hard-refuse rule blocks any emission authorization on this record. This seed exists to preserve the historical claim inside the substrate so it can be studied, compared against measured pathogens, and either promoted to M only after primary biophysical measurements or left permanently T. It is explicitly NOT a therapeutic target.",
+  "invariants_applied": [
+    "GFTCL-RIFE-INV1-CANTILEVER-RESONANCE",
+    "GFTCL-RIFE-INV2-CALM-ENERGY-BOUNDARY",
+    "GFTCL-RIFE-INV3-MOPA-HARMONIC-SIDEBAND"
+  ],
+  "literature": [
+    {"pmid_or_doi": "historical:rife-1931-1938", "year": 1938, "role": "historical_empirical_frequency_observation_no_modern_replication"}
+  ],
+  "provenance": {
+    "created_at": "2026-04-17T00:00:00Z",
+    "created_by_wallet_hash": "sha256:seed",
+    "cell_id": "local",
+    "signature": ""
+  },
+  "history": [
+    {
+      "timestamp": "2026-04-17T00:00:00Z",
+      "event": "seed_created_theoretical",
+      "actor_wallet_hash": "sha256:seed"
+    }
+  ]
+}
