@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "invariant_id": "OWL-NEURO-INV3-STEROID",
+  "title": "Steroid-signature longitudinal correlation",
+  "domain": "neuro",
+  "owl_classification": "modifiableHardware",
+  "epistemic_tag": "I",
+  "status": "CURE-PROXY",
+  "description": "13 autosomal signatures modifiable hardware.",
+  "measurement_vectors": [],
+  "linked_invariants": [],
+  "closure_condition_id": "",
+  "literature": [
+    {"pmid_or_doi": "GH-OWL-NEURO-001", "year": 2026, "role": "primary"}
+  ],
+  "test_harness": {
+    "type": "comparison",
+    "harness_id": "HARNESS-NEURO-INV3",
+    "inputs": [],
+    "pass_criteria": "",
+    "implementation": "GaiaFTCLCore/Invariants/Harnesses/NeuroInv3Harness.swift"
+  }
+}

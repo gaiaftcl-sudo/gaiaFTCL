@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "pathogen_id": "P-SARS-COV-2",
+  "common_name": "SARS-CoV-2",
+  "scientific_name": "Severe acute respiratory syndrome coronavirus 2",
+  "taxonomy": {
+    "kingdom": "Orthornavirae",
+    "phylum": "Pisuviricota",
+    "genus": "Betacoronavirus",
+    "species": "SARS-CoV-2"
+  },
+  "target": {
+    "kind": "viral_spike",
+    "stiffness_n_per_m": 0.03,
+    "mass_kg": 3.3e-22,
+    "length_m": 1.8e-8,
+    "youngs_modulus_pa": 5.0e7
+  },
+  "computed_mor_hz": 1517547000.0,
+  "mopa_band": {
+    "carrier_low_hz": 3000000.0,
+    "carrier_high_hz": 4000000.0,
+    "modulator_low_hz": 20.0,
+    "modulator_high_hz": 20000.0
+  },
+  "epistemic_tag": "M",
+  "status": "CURE-PROXY",
+  "description": "Spike glycoprotein (S1/S2 trimer) modeled as a cantilever beam fixed to the viral envelope. k and m derived from AFM nanoindentation and cryo-EM molecular weight. Computed resonance is in the GHz band — well above Rife's historical 3-4 MHz assumption. This is an honest physics result, not a therapeutic claim.",
+  "invariants_applied": [
+    "GFTCL-RIFE-INV1-CANTILEVER-RESONANCE",
+    "GFTCL-RIFE-INV2-CALM-ENERGY-BOUNDARY",
+    "GFTCL-RIFE-INV3-MOPA-HARMONIC-SIDEBAND"
+  ],
+  "literature": [
+    {"pmid_or_doi": "10.1126/science.abb2507", "year": 2020, "role": "spike_structure_cryo_em"},
+    {"pmid_or_doi": "10.1021/acs.nanolett.0c04494", "year": 2021, "role": "afm_nanoindentation_spike"},
+    {"pmid_or_doi": "10.1016/j.cell.2020.02.058", "year": 2020, "role": "receptor_binding_domain_mechanics"}
+  ],
+  "provenance": {
+    "created_at": "2026-04-17T00:00:00Z",
+    "created_by_wallet_hash": "sha256:seed",
+    "cell_id": "local",
+    "signature": ""
+  },
+  "history": [
+    {
+      "timestamp": "2026-04-17T00:00:00Z",
+      "event": "seed_created",
+      "actor_wallet_hash": "sha256:seed"
+    }
+  ]
+}

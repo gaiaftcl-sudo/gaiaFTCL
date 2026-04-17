@@ -56,7 +56,8 @@ let package = Package(
         .testTarget(
             name: "GaiaFusionTests",
             dependencies: ["GaiaFusion"],
-            path: "Tests/Protocols"
+            path: "Tests",
+            exclude: ["Protocols", "UITests"]
         ),
         .testTarget(
             name: "GaiaFusionUITests",

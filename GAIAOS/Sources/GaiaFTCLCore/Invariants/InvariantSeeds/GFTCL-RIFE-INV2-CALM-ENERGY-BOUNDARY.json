@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "invariant_id": "GFTCL-RIFE-INV2-CALM-ENERGY-BOUNDARY",
+  "title": "Calm Energy Boundary (Non-Ionizing Constraint)",
+  "domain": "health.pathogen.rife",
+  "owl_classification": "safety_energy_bound",
+  "epistemic_tag": "M",
+  "status": "CURE-PROXY",
+  "description": "Emission power density P_delivered MUST remain strictly below the minimum structural failure threshold P_host_min of any healthy host tissue in the emission field. Additionally, photon energy h\u03bd MUST remain below the ionizing threshold (< 10 eV, wavelength > ~124 nm). Any execution path that requires breaching either bound to achieve the MOR MUST trip the substrate to REFUSED automatically. Rife protocol operates exclusively via non-ionizing RF electromagnetic fields.",
+  "measurement_vectors": [
+    {
+      "vector_id": "MV-RIFE-INV2-01",
+      "label": "delivered_power_density_w_per_cm2",
+      "count": 1,
+      "source": "substrate_transmitter_telemetry"
+    },
+    {
+      "vector_id": "MV-RIFE-INV2-02",
+      "label": "host_tissue_failure_threshold_w_per_cm2",
+      "count": 1,
+      "source": "literature_tissue_damage_bound"
+    },
+    {
+      "vector_id": "MV-RIFE-INV2-03",
+      "label": "photon_energy_ev",
+      "count": 1,
+      "source": "derived_h_nu"
+    },
+    {
+      "vector_id": "MV-RIFE-INV2-04",
+      "label": "ionizing_threshold_ev",
+      "count": 1,
+      "source": "icrp_reference"
+    },
+    {
+      "vector_id": "MV-RIFE-INV2-05",
+      "label": "specific_absorption_rate_w_per_kg",
+      "count": 1,
+      "source": "ieee_c95_1"
+    }
+  ],
+  "linked_invariants": [
+    "GFTCL-RIFE-INV1-CANTILEVER-RESONANCE",
+    "GFTCL-RIFE-INV3-MOPA-HARMONIC-SIDEBAND"
+  ],
+  "closure_condition_id": "GFTCL-RIFE-CLOSURE-001",
+  "literature": [
+    {"pmid_or_doi": "10.1109/IEEESTD.2019.8859679", "year": 2019, "role": "ieee_c95_1_rf_safety"},
+    {"pmid_or_doi": "icrp_publication_103", "year": 2007, "role": "ionizing_radiation_definition"},
+    {"pmid_or_doi": "10.1088/0031-9155/58/10/R201", "year": 2013, "role": "tissue_dielectric_thresholds"}
+  ],
+  "test_harness": {
+    "type": "swift_xctest",
+    "harness_id": "RifeInvariantTests.testCalmEnergyBoundary",
+    "inputs": ["delivered_power_density_w_per_cm2", "host_tissue_failure_threshold_w_per_cm2", "photon_energy_ev"],
+    "pass_criteria": "delivered < host_threshold AND photon_energy < 10.0 eV",
+    "implementation": "GaiaFTCLCore/Pathogens/RifeInvariantEngine.swift:calmEnergyBoundary"
+  },
+  "provenance": {
+    "created_at": "2026-04-17T00:00:00Z",
+    "created_by_wallet_hash": "sha256:seed",
+    "cell_id": "local",
+    "signature": ""
+  },
+  "history": [
+    {
+      "timestamp": "2026-04-17T00:00:00Z",
+      "event": "seed_created",
+      "actor_wallet_hash": "sha256:seed"
+    }
+  ]
+}

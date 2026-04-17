@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "pathogen_id": "P-HSV-1",
+  "common_name": "Herpes simplex virus 1",
+  "scientific_name": "Human alphaherpesvirus 1",
+  "taxonomy": {
+    "kingdom": "Heunggongvirae",
+    "phylum": "Peploviricota",
+    "genus": "Simplexvirus",
+    "species": "Human alphaherpesvirus 1"
+  },
+  "target": {
+    "kind": "viral_capsid",
+    "stiffness_n_per_m": 1.2,
+    "mass_kg": 4.0e-18,
+    "length_m": 1.25e-7,
+    "youngs_modulus_pa": 1.5e9
+  },
+  "computed_mor_hz": 87050000.0,
+  "mopa_band": {
+    "carrier_low_hz": 3000000.0,
+    "carrier_high_hz": 4000000.0,
+    "modulator_low_hz": 20.0,
+    "modulator_high_hz": 20000.0
+  },
+  "epistemic_tag": "M",
+  "status": "CURE-PROXY",
+  "description": "HSV-1 T=16 icosahedral capsid modeled as a spherical shell resonator. k from AFM shell-indentation; m from capsid total protein mass.",
+  "invariants_applied": [
+    "GFTCL-RIFE-INV1-CANTILEVER-RESONANCE",
+    "GFTCL-RIFE-INV2-CALM-ENERGY-BOUNDARY",
+    "GFTCL-RIFE-INV3-MOPA-HARMONIC-SIDEBAND"
+  ],
+  "literature": [
+    {"pmid_or_doi": "10.1073/pnas.0509259103", "year": 2006, "role": "capsid_afm_mechanics"},
+    {"pmid_or_doi": "10.1016/j.str.2006.03.017", "year": 2006, "role": "hsv1_capsid_structure"},
+    {"pmid_or_doi": "10.1128/JVI.00330-15", "year": 2015, "role": "capsid_stability_pressure"}
+  ],
+  "provenance": {
+    "created_at": "2026-04-17T00:00:00Z",
+    "created_by_wallet_hash": "sha256:seed",
+    "cell_id": "local",
+    "signature": ""
+  },
+  "history": [
+    {
+      "timestamp": "2026-04-17T00:00:00Z",
+      "event": "seed_created",
+      "actor_wallet_hash": "sha256:seed"
+    }
+  ]
+}

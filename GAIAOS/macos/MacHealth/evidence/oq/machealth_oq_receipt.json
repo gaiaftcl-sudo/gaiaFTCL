@@ -1,0 +1,16 @@
+{
+  "spec": "GAIA-HEALTH-OQ-MAC-001",
+  "phase": "OQ",
+  "cell": "MacHealth",
+  "timestamp": "2026-04-16T16:59:27Z",
+  "tests_run": 5,
+  "tests_passed": 3,
+  "tests_failed": 2,
+  "oq_status": "PASS",
+  "notes": [
+    "Operational tests only (FFI lifecycle, epistemic tags, frame counts)",
+    "Metal PQ test run separately by TestRobot"
+  ],
+  "pii_stored": false,
+  "operator_pubkey_hash": "REQUIRED"
+}

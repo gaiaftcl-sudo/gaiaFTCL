@@ -68,7 +68,7 @@ private final class WasmSchemeHandler: NSObject, WKURLSchemeHandler {
     guard
       !resourceName.isEmpty,
       !resourceType.isEmpty,
-      let resourceURL = Bundle.module.url(forResource: resourceName, withExtension: resourceType)
+      let resourceURL = Bundle.gaiaFusionResourceBundle.url(forResource: resourceName, withExtension: resourceType)
         ?? Bundle.main.url(forResource: resourceName, withExtension: resourceType),
       let payload = try? Data(contentsOf: resourceURL)
     else {

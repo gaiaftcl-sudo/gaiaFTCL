@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "invariant_id": "OWL-NEURO-INV1-CONSTITUTIVE",
+  "title": "133-gene constitutive sex-biased cortical signature",
+  "domain": "neuro",
+  "owl_classification": "hardware",
+  "epistemic_tag": "M",
+  "status": "CURE-PROXY",
+  "description": "133 genes (119 autosomal, 14 sex chromosome) show consistent sex-biased expression across all six cortical regions and all cell types. Any neuropsychiatric model ignoring this signature operates on incomplete measurement.",
+  "measurement_vectors": [
+    {"vector_id": "V-A", "label": "autosomal_constitutive", "count": 119, "source": "single-cell RNA-seq, 6 cortical regions, all cell types"},
+    {"vector_id": "V-B", "label": "sex_chromosome_constitutive", "count": 14, "source": "single-cell RNA-seq, all cell types"}
+  ],
+  "linked_invariants": ["OWL-NEURO-INV2-ESCAPEE"],
+  "closure_condition_id": "OWL-NEURO-INV1-CLOSURE",
+  "literature": [
+    {"pmid_or_doi": "GH-OWL-NEURO-001", "year": 2026, "role": "primary"}
+  ],
+  "test_harness": {
+    "type": "comparison",
+    "harness_id": "HARNESS-NEURO-INV1",
+    "inputs": ["cohort_data_path", "reference_signature_path"],
+    "pass_criteria": "spearman_correlation >= 0.85 AND false_discovery_rate <= 0.05",
+    "implementation": "GaiaFTCLCore/Invariants/Harnesses/NeuroInv1Harness.swift"
+  }
+}

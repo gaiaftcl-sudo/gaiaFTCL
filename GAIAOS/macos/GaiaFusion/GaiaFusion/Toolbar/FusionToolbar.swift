@@ -7,7 +7,7 @@ struct FusionToolbar: View {
     var body: some View {
         Picker("", selection: Binding(
             get: { shellMode },
-            set: { newValue in
+            set: { (newValue: FusionShellMode) in
                 shellMode = newValue
                 onModeChange(newValue)
             }

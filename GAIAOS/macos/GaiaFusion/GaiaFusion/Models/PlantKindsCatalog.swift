@@ -68,7 +68,7 @@ public struct PlantKindsCatalog: Sendable {
     }
 
     private static func plantAdapterPath() -> URL? {
-        if let bundled = Bundle.module.url(
+        if let bundled = Bundle.gaiaFusionResourceBundle.url(
             forResource: "plant_adapters",
             withExtension: "json",
             subdirectory: "spec/native_fusion"

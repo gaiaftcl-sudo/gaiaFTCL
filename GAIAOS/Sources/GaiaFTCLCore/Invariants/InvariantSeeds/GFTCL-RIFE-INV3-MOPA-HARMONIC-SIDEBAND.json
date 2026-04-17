@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "invariant_id": "GFTCL-RIFE-INV3-MOPA-HARMONIC-SIDEBAND",
+  "title": "Harmonic Sideband Vector Integrity (M.O.P.A. Invariant)",
+  "domain": "health.pathogen.rife",
+  "owl_classification": "rf_signal_integrity",
+  "epistemic_tag": "M",
+  "status": "CURE-PROXY",
+  "description": "Master Oscillator Power Amplifier (M.O.P.A.) output MUST deliver the computed MOR as a harmonic sideband of a 3.0-4.0 MHz RF carrier modulated by an audio-range modulator. The substrate MUST mathematically verify that (carrier_matrix \u229b modulator_matrix) resolves to the S4-measured MOR target vector before authorizing any emission. A raw audio-only generator is REFUSED. The resolved MOR vector MUST be cryptographically locked with epistemic_tag='M'. Assumed (A) or theoretical (T) variables CANNOT satisfy this invariant.",
+  "measurement_vectors": [
+    {
+      "vector_id": "MV-RIFE-INV3-01",
+      "label": "carrier_frequency_hz",
+      "count": 1,
+      "source": "mopa_oscillator_telemetry"
+    },
+    {
+      "vector_id": "MV-RIFE-INV3-02",
+      "label": "modulator_frequency_hz",
+      "count": 1,
+      "source": "mopa_audio_synth_telemetry"
+    },
+    {
+      "vector_id": "MV-RIFE-INV3-03",
+      "label": "resolved_sideband_mor_hz",
+      "count": 1,
+      "source": "derived_carrier_plus_minus_modulator"
+    },
+    {
+      "vector_id": "MV-RIFE-INV3-04",
+      "label": "target_mor_hz",
+      "count": 1,
+      "source": "pathogen_record_m_tagged"
+    },
+    {
+      "vector_id": "MV-RIFE-INV3-05",
+      "label": "carrier_band_compliant",
+      "count": 1,
+      "source": "boolean_3e6_to_4e6"
+    },
+    {
+      "vector_id": "MV-RIFE-INV3-06",
+      "label": "epistemic_tag_measured",
+      "count": 1,
+      "source": "signature_verified_m_tag"
+    }
+  ],
+  "linked_invariants": [
+    "GFTCL-RIFE-INV1-CANTILEVER-RESONANCE",
+    "GFTCL-RIFE-INV2-CALM-ENERGY-BOUNDARY"
+  ],
+  "closure_condition_id": "GFTCL-RIFE-CLOSURE-001",
+  "literature": [
+    {"pmid_or_doi": "rife_ray_5_schematic_1950", "year": 1950, "role": "historical_mopa_circuit"},
+    {"pmid_or_doi": "10.1109/TMTT.1966.1126288", "year": 1966, "role": "sideband_modulation_theory"},
+    {"pmid_or_doi": "itu_r_recommendation_sm_1541", "year": 2015, "role": "unwanted_emissions_spectrum"}
+  ],
+  "test_harness": {
+    "type": "swift_xctest",
+    "harness_id": "RifeInvariantTests.testMOPAHarmonicSideband",
+    "inputs": ["carrier_frequency_hz", "modulator_frequency_hz", "target_mor_hz", "epistemic_tag"],
+    "pass_criteria": "3e6 <= carrier <= 4e6 AND abs((carrier + modulator) - target_mor) <= tolerance AND epistemic_tag == 'M'",
+    "implementation": "GaiaFTCLCore/Pathogens/RifeInvariantEngine.swift:mopaHarmonicSideband"
+  },
+  "provenance": {
+    "created_at": "2026-04-17T00:00:00Z",
+    "created_by_wallet_hash": "sha256:seed",
+    "cell_id": "local",
+    "signature": ""
+  },
+  "history": [
+    {
+      "timestamp": "2026-04-17T00:00:00Z",
+      "event": "seed_created",
+      "actor_wallet_hash": "sha256:seed"
+    }
+  ]
+}

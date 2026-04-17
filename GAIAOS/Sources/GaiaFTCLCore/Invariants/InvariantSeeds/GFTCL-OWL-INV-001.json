@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "invariant_id": "GFTCL-OWL-INV-001",
+  "title": "Anti-inflammation vectors",
+  "domain": "anti-inflammation",
+  "owl_classification": "hardware",
+  "epistemic_tag": "M",
+  "status": "CURE-PROXY",
+  "description": "TRPV1/capsaicin and TRPM8/menthol vectors.",
+  "measurement_vectors": [],
+  "linked_invariants": [],
+  "closure_condition_id": "",
+  "literature": [],
+  "test_harness": {
+    "type": "comparison",
+    "harness_id": "HARNESS-ANTI-INFLAMMATION",
+    "inputs": [],
+    "pass_criteria": "",
+    "implementation": "GaiaFTCLCore/Invariants/Harnesses/AntiInflammationHarness.swift"
+  }
+}

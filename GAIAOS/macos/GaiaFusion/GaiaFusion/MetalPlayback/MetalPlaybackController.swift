@@ -75,7 +75,7 @@ final class MetalPlaybackController: ObservableObject {
     func loadPlantSync(_ kind: String) {
         plantKind = kind
         // Gap #8: Parse USD with explicit buffer allocation
-        guard let usdPath = Bundle.module.path(forResource: "plants/\(kind)/root", ofType: "usda") else {
+        guard let usdPath = Bundle.gaiaFusionResourceBundle.path(forResource: "plants/\(kind)/root", ofType: "usda") else {
             print("USD file not found for plant: \(kind)")
             stageLoaded = false
             return

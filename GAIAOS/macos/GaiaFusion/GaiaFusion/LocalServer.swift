@@ -530,7 +530,7 @@ final class LocalServer: ObservableObject {
 
         /// Same-origin WASM bytes for `WebAssembly.instantiateStreaming` — WKWebView `fetch` to `gaiasubstrate://` may fail; HTTP seam is C4 for the runtime gate.
         server.GET["/api/fusion/wasm-substrate"] = { _ in
-            guard let url = Bundle.module.url(forResource: "gaiafusion_substrate", withExtension: "wasm"),
+            guard let url = Bundle.gaiaFusionResourceBundle.url(forResource: "gaiafusion_substrate", withExtension: "wasm"),
                   let data = try? Data(contentsOf: url),
                   !data.isEmpty
             else {
@@ -541,7 +541,7 @@ final class LocalServer: ObservableObject {
 
         /// wasm-bindgen glue (ES module) — pair with `gaiafusion_substrate.wasm` (`*_bg.wasm`); WKWebView `import()` loads this, then `default('/api/fusion/wasm-substrate')` completes instantiation.
         server.GET["/api/fusion/wasm-substrate-bindgen.js"] = { _ in
-            guard let url = Bundle.module.url(forResource: "gaiafusion_substrate_bindgen", withExtension: "js"),
+            guard let url = Bundle.gaiaFusionResourceBundle.url(forResource: "gaiafusion_substrate_bindgen", withExtension: "js"),
                   let data = try? Data(contentsOf: url),
                   !data.isEmpty
             else {

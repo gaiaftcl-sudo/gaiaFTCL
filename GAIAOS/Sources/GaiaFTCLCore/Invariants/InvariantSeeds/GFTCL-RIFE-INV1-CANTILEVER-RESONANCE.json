@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "invariant_id": "GFTCL-RIFE-INV1-CANTILEVER-RESONANCE",
+  "title": "Cantilever Resonance Lock",
+  "domain": "health.pathogen.rife",
+  "owl_classification": "physical_resonance",
+  "epistemic_tag": "M",
+  "status": "CURE-PROXY",
+  "description": "The Mortal Oscillatory Rate (MOR) emission frequency f must be strictly locked to the target structure's effective stiffness k and effective mass m through f = (1/2\u03c0)\u221a(k/m). The vQbit substrate MUST exclude any emission-authorization state in which f deviates from this value by more than the declared tolerance band. This is a self-closing validation loop: the substrate cannot physically represent an emission state that does not mathematically guarantee resonance with the target.",
+  "measurement_vectors": [
+    {
+      "vector_id": "MV-RIFE-INV1-01",
+      "label": "effective_stiffness_k",
+      "count": 1,
+      "source": "afm_nanoindentation"
+    },
+    {
+      "vector_id": "MV-RIFE-INV1-02",
+      "label": "effective_mass_m",
+      "count": 1,
+      "source": "cryo_em_mass_spec"
+    },
+    {
+      "vector_id": "MV-RIFE-INV1-03",
+      "label": "computed_mor_hz",
+      "count": 1,
+      "source": "derived_f_equals_1_over_2pi_sqrt_k_over_m"
+    },
+    {
+      "vector_id": "MV-RIFE-INV1-04",
+      "label": "emission_frequency_hz",
+      "count": 1,
+      "source": "substrate_generator"
+    },
+    {
+      "vector_id": "MV-RIFE-INV1-05",
+      "label": "resonance_tolerance_pct",
+      "count": 1,
+      "source": "policy_bound"
+    }
+  ],
+  "linked_invariants": [
+    "GFTCL-RIFE-INV2-CALM-ENERGY-BOUNDARY",
+    "GFTCL-RIFE-INV3-MOPA-HARMONIC-SIDEBAND"
+  ],
+  "closure_condition_id": "GFTCL-RIFE-CLOSURE-001",
+  "literature": [
+    {"pmid_or_doi": "10.1038/nphys1236", "year": 2009, "role": "cantilever_viral_resonance_theory"},
+    {"pmid_or_doi": "10.1103/PhysRevE.72.021917", "year": 2005, "role": "forced_vibration_of_viral_capsids"},
+    {"pmid_or_doi": "rife_1953_history_of_development", "year": 1953, "role": "historical_mor_protocol"}
+  ],
+  "test_harness": {
+    "type": "swift_xctest",
+    "harness_id": "RifeInvariantTests.testCantileverResonance",
+    "inputs": ["pathogen_record.json", "emission_frequency_hz", "resonance_tolerance_pct"],
+    "pass_criteria": "abs(emission_frequency_hz - computed_mor_hz) / computed_mor_hz <= resonance_tolerance_pct/100",
+    "implementation": "GaiaFTCLCore/Pathogens/RifeInvariantEngine.swift:cantileverResonanceLock"
+  },
+  "provenance": {
+    "created_at": "2026-04-17T00:00:00Z",
+    "created_by_wallet_hash": "sha256:seed",
+    "cell_id": "local",
+    "signature": ""
+  },
+  "history": [
+    {
+      "timestamp": "2026-04-17T00:00:00Z",
+      "event": "seed_created",
+      "actor_wallet_hash": "sha256:seed"
+    }
+  ]
+}

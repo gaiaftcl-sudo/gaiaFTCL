@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "pathogen_id": "P-MTB-H37RV",
+  "common_name": "Mycobacterium tuberculosis H37Rv",
+  "scientific_name": "Mycobacterium tuberculosis",
+  "taxonomy": {
+    "kingdom": "Bacteria",
+    "phylum": "Actinobacteria",
+    "genus": "Mycobacterium",
+    "species": "tuberculosis"
+  },
+  "target": {
+    "kind": "bacterial_cell_wall",
+    "stiffness_n_per_m": 1.5,
+    "mass_kg": 2.5e-15,
+    "length_m": 3.0e-6,
+    "youngs_modulus_pa": 2.5e7
+  },
+  "computed_mor_hz": 123113000.0,
+  "mopa_band": {
+    "carrier_low_hz": 3000000.0,
+    "carrier_high_hz": 4000000.0,
+    "modulator_low_hz": 20.0,
+    "modulator_high_hz": 20000.0
+  },
+  "epistemic_tag": "M",
+  "status": "CURE-PROXY",
+  "description": "Mycolic-acid cell wall modeled as a cylindrical cantilever. k from AFM indentation of mycobacterial envelope; m from whole-cell dry mass.",
+  "invariants_applied": [
+    "GFTCL-RIFE-INV1-CANTILEVER-RESONANCE",
+    "GFTCL-RIFE-INV2-CALM-ENERGY-BOUNDARY",
+    "GFTCL-RIFE-INV3-MOPA-HARMONIC-SIDEBAND"
+  ],
+  "literature": [
+    {"pmid_or_doi": "10.1038/nchembio.794", "year": 2012, "role": "mycobacterial_envelope_afm"},
+    {"pmid_or_doi": "10.1038/nrmicro2236", "year": 2010, "role": "cell_wall_biosynthesis"},
+    {"pmid_or_doi": "10.1128/JB.00957-13", "year": 2014, "role": "mtb_mechanics"}
+  ],
+  "provenance": {
+    "created_at": "2026-04-17T00:00:00Z",
+    "created_by_wallet_hash": "sha256:seed",
+    "cell_id": "local",
+    "signature": ""
+  },
+  "history": [
+    {
+      "timestamp": "2026-04-17T00:00:00Z",
+      "event": "seed_created",
+      "actor_wallet_hash": "sha256:seed"
+    }
+  ]
+}

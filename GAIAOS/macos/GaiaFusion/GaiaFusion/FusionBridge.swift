@@ -1261,4 +1261,128 @@ final class FusionBridge: NSObject, ObservableObject, WKScriptMessageHandler {
         
         checkConstitutional(i_p: i_p, b_t: b_t, n_e: n_e)
     }
+    
+    // MARK: - GAMP 5 Wallet Signing (21 CFR Part 11 §11.200(b))
+    
+    /// GAMP 5 Wallet Signature for 21 CFR Part 11 Compliance
+    /// Authority: Private key possession (§11.200(b) biometric/token alternative)
+    struct WalletSignature: Codable {
+        let walletPubkey: String        // P256 public key (hex)
+        let signature: String            // ECDSA signature over digest (hex)
+        let digest: String               // SHA-256 of signed content (hex)
+        let role: String                 // L1/L2/L3 from authorized_wallets
+        let meaning: String              // Attestation statement
+        let timestamp: String            // ISO8601 UTC
+        let foundingWallet: Bool         // true if Founder wallet (perpetual L3 + exempt)
+    }
+    
+    /// Sign content with operator's wallet (cryptographic attestation for GAMP 5)
+    /// - Parameters:
+    ///   - content: The content to sign (test report, audit trail, execution ID)
+    ///   - meaning: What this signature attests to
+    ///   - role: Operator role (L1/L2/L3) from authorized_wallets lookup
+    /// - Returns: WalletSignature with public key, signature, and metadata
+    func signWithWallet(content: String, meaning: String, role: OperatorRole) async throws -> WalletSignature {
+        // Generate content digest
+        let contentData = Data(content.utf8)
+        let digest = SHA256.hash(data: contentData)
+        let digestHex = digest.compactMap { String(format: "%02x", $0) }.joined()
+        
+        // Load operator's wallet private key
+        let privateKey = try await loadOperatorWalletKey()
+        
+        // Sign the digest with P256 ECDSA
+        let signature = try privateKey.signature(for: contentData)
+        let signatureHex = signature.rawRepresentation.map { String(format: "%02x", $0) }.joined()
+        
+        // Get public key
+        let publicKey = privateKey.publicKey
+        let pubkeyHex = publicKey.rawRepresentation.map { String(format: "%02x", $0) }.joined()
+        
+        // Check if this is the Founder wallet
+        let isFounder = await checkIfFounderWallet(pubkeyHex)
+        
+        return WalletSignature(
+            walletPubkey: pubkeyHex,
+            signature: signatureHex,
+            digest: digestHex,
+            role: isFounder ? "L3" : role.rawValue,
+            meaning: meaning,
+            timestamp: ISO8601DateFormatter().string(from: Date()),
+            foundingWallet: isFounder
+        )
+    }
+    
+    /// Verify a wallet signature (for audit review / QA validation)
+    func verifyWalletSignature(_ sig: WalletSignature, originalContent: String) throws -> Bool {
+        // Reconstruct content digest
+        let contentData = Data(originalContent.utf8)
+        let computedDigest = SHA256.hash(data: contentData)
+        let computedDigestHex = computedDigest.compactMap { String(format: "%02x", $0) }.joined()
+        
+        // Verify digest matches
+        guard computedDigestHex == sig.digest else {
+            print("❌ Signature verification failed: digest mismatch")
+            return false
+        }
+        
+        // Reconstruct public key from hex
+        guard let pubkeyData = Data(hexString: sig.walletPubkey),
+              let publicKey = try? P256.Signing.PublicKey(rawRepresentation: pubkeyData) else {
+            print("❌ Invalid public key format")
+            return false
+        }
+        
+        // Reconstruct signature from hex
+        guard let sigData = Data(hexString: sig.signature),
+              let signature = try? P256.Signing.ECDSASignature(rawRepresentation: sigData) else {
+            print("❌ Invalid signature format")
+            return false
+        }
+        
+        // Verify ECDSA signature
+        return publicKey.isValidSignature(signature, for: contentData)
+    }
+    
+    /// Load operator's wallet private key (secure storage in production)
+    private func loadOperatorWalletKey() async throws -> P256.Signing.PrivateKey {
+        // Test mode: Use ephemeral key or load from GAIAFUSION_TEST_WALLET_PATH
+        if let testWalletPath = ProcessInfo.processInfo.environment["GAIAFUSION_TEST_WALLET_PATH"] {
+            let keyData = try Data(contentsOf: URL(fileURLWithPath: testWalletPath))
+            return try P256.Signing.PrivateKey(rawRepresentation: keyData)
+        } else {
+            // Generate ephemeral test wallet for GAMP 5 validation
+            print("⚠️  Using ephemeral test wallet (GAMP 5 validation mode)")
+            return P256.Signing.PrivateKey()
+        }
+    }
+    
+    /// Check if wallet is the Founder wallet (perpetual L3 + exempt)
+    private func checkIfFounderWallet(_ pubkeyHex: String) async -> Bool {
+        // Query authorized_wallets collection via MCP gateway
+        // Founder wallet has founding_wallet = true
+        // For validation: Return false (implement MCP query in production)
+        return false
+    }
+}
+
+// MARK: - Hex String Conversion
+
+extension Data {
+    init?(hexString: String) {
+        let len = hexString.count / 2
+        var data = Data(capacity: len)
+        var i = hexString.startIndex
+        for _ in 0..<len {
+            let j = hexString.index(i, offsetBy: 2)
+            let bytes = hexString[i..<j]
+            if var num = UInt8(bytes, radix: 16) {
+                data.append(&num, count: 1)
+            } else {
+                return nil
+            }
+            i = j
+        }
+        self = data
+    }
 }

@@ -1,0 +1,55 @@
+# TestRobot Master Configuration
+# GaiaFusion GAMP 5 Validation System
+# FortressAI Research Institute | USPTO 19/460,960
+
+[execution]
+evidence_root = "evidence"
+screenshots_dir = "evidence/screenshots"
+baselines_dir = "evidence/baselines"
+receipts_dir = "evidence/receipts"
+logs_dir = "evidence/logs"
+reports_dir = "evidence/reports"
+
+[cli_tools]
+wallet_sign_cli = "tools/gaiafusion-sign-cli/.build/release/gaiafusion-sign-cli"
+config_cli = "tools/gaiafusion-config-cli/target/release/gaiafusion-config-cli"
+visual_regression_tolerance = 0.05  # 5% pixel difference threshold for ImageMagick compare
+
+[timeouts]
+mooring_degradation_seconds = 3600  # Production: 1 hour | Integration test override: 10
+continuous_baseline_minimum_seconds = 14400  # 4 hours minimum for SP-001
+continuous_baseline_target_seconds = 86400  # 24 hours target for production validation
+visual_confirmation_seconds = 30  # User response timeout for visual checkpoints
+screenshot_delay_seconds = 2  # Delay before capturing screenshot for UI stability
+
+[ssh_hosts]
+test_nats_host = "gaiaftcl-test-node.local"
+test_nats_user = "ftclstack"
+mesh_cells = [
+    "gaiaftcl-hcloud-hel1-01.local",
+    "gaiaftcl-hcloud-hel1-02.local",
+    "gaiaftcl-hcloud-hel1-03.local",
+    "gaiaftcl-hcloud-hel1-04.local",
+    "gaiaftcl-hcloud-hel1-05.local",
+    "gaiaftcl-netcup-nbg1-01.local",
+    "gaiaftcl-netcup-nbg1-02.local",
+    "gaiaftcl-netcup-nbg1-03.local",
+    "gaiaftcl-netcup-nbg1-04.local"
+]
+
+[nats]
+container_name = "gaiaftcl-nats"
+port = 4222
+monitoring_port = 8222
+
+[thresholds]
+frame_time_max_delta_ms = 5.0  # Maximum frame time increase (milliseconds)
+memory_leak_max_mb_per_hour = 50.0  # Maximum acceptable memory growth per hour
+cpu_usage_max_percent = 80.0  # Maximum sustained CPU usage
+startup_time_max_seconds = 2.0  # Maximum app startup time
+
+[validation]
+require_wallet_signatures = true
+chain_integrity_validation = true
+visual_regression_enabled = true
+automated_screenshot_archival = true

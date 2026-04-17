@@ -1,0 +1,16 @@
+{
+  "spec": "GAIA-HEALTH-IQ-MAC-001",
+  "phase": "IQ",
+  "cell": "MacHealth",
+  "timestamp": "2026-04-16T16:59:26Z",
+  "checks": {
+    "staticlibs_present": true,
+    "header_present": true,
+    "package_manifest": true,
+    "build_success": true,
+    "executable_present": true
+  },
+  "iq_status": "PASS",
+  "pii_stored": false,
+  "operator_pubkey_hash": "REQUIRED"
+}

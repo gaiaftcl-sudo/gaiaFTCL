@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "invariant_id": "OWL-NEURO-CONST-001-FETAL-CLOSURE",
+  "title": "Fetal closure condition",
+  "domain": "neuro",
+  "owl_classification": "closureCondition",
+  "epistemic_tag": "M",
+  "status": "OPEN",
+  "description": "Fetal closure condition for INV1.",
+  "measurement_vectors": [],
+  "linked_invariants": ["OWL-NEURO-INV1-CONSTITUTIVE"],
+  "closure_condition_id": "",
+  "literature": [
+    {"pmid_or_doi": "GH-OWL-NEURO-001", "year": 2026, "role": "primary"}
+  ],
+  "test_harness": {
+    "type": "comparison",
+    "harness_id": "HARNESS-NEURO-CONST-001",
+    "inputs": [],
+    "pass_criteria": "",
+    "implementation": "GaiaFTCLCore/Invariants/Harnesses/NeuroInv1FetalClosureHarness.swift"
+  }
+}
