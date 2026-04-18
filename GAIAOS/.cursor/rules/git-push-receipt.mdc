@@ -25,7 +25,7 @@ Optional but strong: paste **one line** of actual `git ls-remote` or `git rev-pa
 
 ## Helper
 
-Canonical committed doc: [`docs/REMOTE_GIT_AGENT_RULES.md`](../../docs/REMOTE_GIT_AGENT_RULES.md).  
+Canonical committed doc: [`docs/REMOTE_GIT_AGENT_RULES.md`](../../../docs/REMOTE_GIT_AGENT_RULES.md).  
 Script: `bash GAIAOS/scripts/verify_remote_push_receipt.sh [REMOTE] [BRANCH]`.
 
 ## Terminal state
