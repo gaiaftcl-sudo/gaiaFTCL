@@ -1,3 +1,5 @@
-# GitHub metadata only
+# `.github` folder
 
-This folder intentionally contains **no** GitHub Actions workflows. The repository uses GitHub as a **git remote** (`git push` / `git pull`). Run builds and tests on your machines when you need proof.
+This directory holds **no** GitHub Actions workflows. Validation runs on your own machines.
+
+**GitHub’s public landing page for this repository is the root [`README.md`](../README.md)** (overview, screenshots, wiki links). Use the **[Wiki](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki)** for the full doc tree and navigation.

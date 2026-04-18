@@ -3,9 +3,21 @@
 **FortressAI Research Institute | Norwich, Connecticut**  
 **Patents: USPTO 19/460,960 | USPTO 19/096,071 — © 2026 Richard Gillespie**
 
-[![Build](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/gaiaftcl-sudo/gaiaFTCL/actions)
-[![GxP](https://img.shields.io/badge/GxP-GAMP5%20%7C%20EU%20Annex%2011-blue)](GAIAOS/macos/GaiaFusion/evidence/GFTCL-PQ-002_v1.0.md)
+[![Source](https://img.shields.io/badge/GitHub-main-blue)](https://github.com/gaiaftcl-sudo/gaiaFTCL/tree/main)
+[![Wiki](https://img.shields.io/badge/docs-wiki-181717)](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki)
+[![GxP](https://img.shields.io/badge/GxP-GAMP5%20%7C%20EU%20Annex%2011-blue)](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/GAIAOS/macos/GaiaFusion/evidence/GFTCL-PQ-002_v1.0.md)
 [![Patents](https://img.shields.io/badge/patents-USPTO%2019%2F460%2C960%20%7C%2019%2F096%2C071-orange)](LICENSE)
+
+---
+
+## Landing (read me first)
+
+| Where | What you get |
+|--------|----------------|
+| **[GitHub Wiki](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki)** | Full narrative: Home, Mac Cell guide, IQ/OQ/PQ, plant catalog, operator guides—same story as this README, with full navigation and images. |
+| **This file (`README.md`)** | Repo overview, architecture summary, quick start, and links into `GAIAOS/`. |
+
+Screenshots below are stored under [`docs/media/images/`](docs/media/images/) so they render on GitHub.
 
 ---
 
@@ -66,9 +78,13 @@ When S⁴ and C⁴ disagree, **the substrate wins**. Always.
 
 ## GaiaFusion Mac Cell — Human Interface Node
 
-![GaiaFusion UI — Tokamak Topology](GAIAOS/macos/GaiaFusion/docs/images/gaiafusion-ui-tokamak-20260414.png)
+![GaiaFusion UI — Tokamak Topology](docs/media/images/gaiafusion-ui-tokamak-20260414.png)
 
 *Tokamak plant topology (10/10 cells moored) — Cyan wireframe, 500 plasma particles with temperature gradient, Next.js telemetry dashboard, operational state machine HUD*
+
+![Fusion dashboard — live witness](docs/media/images/fusion-dashboard.png)
+
+*Fusion dashboard screenshot (witness bundle under `GAIAOS/evidence/fusion/`; copy in-repo for this page).*
 
 The **Mac Cell** is the sovereign human interface node: Apple Silicon M-chip workstation running a native Metal renderer that visualizes the live plasma state of all nine canonical fusion plant kinds simultaneously.
 
