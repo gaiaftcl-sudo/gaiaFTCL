@@ -7,7 +7,7 @@ cell_identity.json   -merge -diff
 # Word/Office — binary (overrides evidence/** text eol=lf; .docx are ZIP).
 *.docx binary
 *.doc binary
-# Large MP4 elsewhere under docs/media may use LFS; wiki-embed MP4 under videos/ must be plain git blobs
-# so https://raw.githubusercontent.com/.../file.mp4 works in <video src> on GitHub Wiki.
+# Large MP4 elsewhere under docs/media may use LFS; wiki/doc MP4 under videos/ are plain git blobs
+# so https://raw.githubusercontent.com/.../file.mp4 works when linked from Markdown (GitHub strips <video>).
 docs/media/**/*.mp4 filter=lfs diff=lfs merge=lfs -text
 docs/media/videos/** binary -filter -diff -merge

@@ -1,8 +1,12 @@
 # GaiaHealth video assets
 
+GitHub **does not render** HTML `<video>` in wiki or repository Markdown (sanitized). Use a **clickable poster PNG → raw MP4** link in docs (see `cells/health/wiki/Home.md`).
+
 | File | Description |
 |------|-------------|
-| [`code-as-physics-gaiahealth-kinematic-pipeline.mp4`](./code-as-physics-gaiahealth-kinematic-pipeline.mp4) | *Code as Physics — Validating the GaiaHealth Kinematic Pipeline* — walkthrough; linked from [GitHub Wiki](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Code-as-Physics-GaiaHealth-Kinematic-Pipeline) and `cells/health/wiki/Home.md`. |
+| [`poster-code-as-physics.png`](./poster-code-as-physics.png) | Poster frame (~3s) for wiki/README image links |
+| [`code-as-physics-gaiahealth-kinematic-pipeline.mp4`](./code-as-physics-gaiahealth-kinematic-pipeline.mp4) | *Code as Physics — Validating the GaiaHealth Kinematic Pipeline* |
 
-**Raw URL (for embeds):**  
-`https://github.com/gaiaftcl-sudo/gaiaFTCL/raw/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4`
+**Raw MP4:** `https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4`  
+
+**Raw poster:** `https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiahealth/poster-code-as-physics.png`

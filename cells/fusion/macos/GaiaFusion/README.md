@@ -10,14 +10,11 @@
 
 ## Media — Architecting the 8D substrate
 
-Walkthrough: *Architecting the 8D Substrate — From Quantum Measurement to Fusion* — UUM-8D / vQbit measurement path into the fusion Mac surface. **Wiki page:** [Architecting-8D-Substrate-GaiaFusion](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Architecting-8D-Substrate-GaiaFusion).
+Walkthrough: *Architecting the 8D Substrate — From Quantum Measurement to Fusion* — UUM-8D / vQbit measurement path into the fusion Mac surface. **Wiki:** [Architecting-8D-Substrate-GaiaFusion](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Architecting-8D-Substrate-GaiaFusion). *GitHub Markdown strips `<video>` — use the clickable poster (image → raw MP4).*
 
-<video controls playsinline width="100%" preload="metadata"
-  src="https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4">
-  <a href="https://github.com/gaiaftcl-sudo/gaiaFTCL/raw/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4">Download / open MP4</a>
-</video>
+[![Architecting the 8D substrate — click poster to play MP4](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/poster-architecting-8d.png)](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4)
 
-**Repo file:** [`docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4`](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4)
+**Play:** [MP4 (raw)](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4) · **Repo file:** [`docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4`](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4)
 
 ---
 

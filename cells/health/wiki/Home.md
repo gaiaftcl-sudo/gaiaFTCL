@@ -5,6 +5,14 @@
 > **Regulatory Class:** GAMP 5 Category 5 — Custom Application (Medical Device Software)  
 > **Standards:** FDA 21 CFR Part 11 · HIPAA 45 CFR §164 · GDPR Article 9 · ISO 27001 · ICH E6 · EU Annex 11 · FAIR Data
 
+## Media — Code as physics (kinematic pipeline)
+
+*GitHub strips `<video>` in repo Markdown; **click the poster** to open the raw MP4 (browser plays or downloads).*
+
+[![Code as Physics — GaiaHealth — click poster to play MP4](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiahealth/poster-code-as-physics.png)](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4)
+
+**Play:** [MP4 (raw)](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4) · [wiki page](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Code-as-Physics-GaiaHealth-Kinematic-Pipeline) · [blob](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4)
+
 ---
 
 ## What Is GaiaHealth?
@@ -26,20 +34,6 @@ small_molecule + protein + MD_substrate = CURE
 ```
 
 A `CURE` is only emitted when the binding free energy is validated at M (Measured) or I (Inferred) epistemic confidence and all ADMET and constitutional checks pass.
-
----
-
-## Media — Code as Physics (kinematic pipeline)
-
-**Walkthrough:** *Code as Physics — Validating the GaiaHealth Kinematic Pipeline* — in-browser playback below (HTML5 `<video>`). Project wiki page with the same embed: [Code-as-Physics-GaiaHealth-Kinematic-Pipeline](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Code-as-Physics-GaiaHealth-Kinematic-Pipeline).
-
-<!-- GitHub renders this in the repo file view and on the wiki mirror; uses raw main-branch MP4 blob. -->
-<video controls playsinline width="100%" preload="metadata"
-  src="https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4">
-  <a href="https://github.com/gaiaftcl-sudo/gaiaFTCL/raw/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4">Download / open MP4</a>
-</video>
-
-**Direct file:** [`docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4`](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4) · [raw stream](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4)
 
 ---
 
