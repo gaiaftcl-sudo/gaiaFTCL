@@ -1,6 +1,10 @@
 # GaiaHealth video assets
 
-GitHub **does not render** HTML `<video>` in wiki or repository Markdown (sanitized). Use a **clickable poster PNG → raw MP4** link in docs (see `cells/health/wiki/Home.md`).
+GitHub **does not render** HTML `<video>` in wiki or repository Markdown (sanitized). **Inline players:** after [enabling GitHub Pages](#github-pages) from `/docs`, open **`https://gaiaftcl-sudo.github.io/gaiaFTCL/`** — full HTML5 `<video>` embeds. **Fallback in Markdown:** clickable poster PNG → raw MP4 (see `cells/health/wiki/Home.md`).
+
+### GitHub Pages
+
+Repo **Settings → Pages → Build and deployment**: source **Deploy from a branch**, branch **`main`**, folder **`/docs`**. Site URL: `https://gaiaftcl-sudo.github.io/gaiaFTCL/` (project site; may take ~1 min after push).
 
 | File | Description |
 |------|-------------|

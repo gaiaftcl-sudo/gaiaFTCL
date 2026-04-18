@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GaiaFTCL — Walkthrough videos</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --bg: #0d1117;
+      --fg: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --border: #30363d;
+      --card: #161b22;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f8fa;
+        --fg: #1f2328;
+        --muted: #656d76;
+        --accent: #0969da;
+        --border: #d0d7de;
+        --card: #ffffff;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.55;
+      max-width: 56rem;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+      background: var(--bg);
+      color: var(--fg);
+    }
+    h1 { font-size: 1.5rem; font-weight: 600; margin: 0 0 0.5rem; }
+    .sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
+    .sub a { color: var(--accent); }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+    section h2 { font-size: 1.1rem; margin: 0 0 0.75rem; font-weight: 600; }
+    video {
+      width: 100%;
+      max-height: min(70vh, 720px);
+      border-radius: 6px;
+      background: #000;
+    }
+    .links { margin-top: 0.75rem; font-size: 0.875rem; color: var(--muted); }
+    .links a { color: var(--accent); }
+    footer { margin-top: 2rem; font-size: 0.8rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <h1>GaiaFTCL — walkthrough videos</h1>
+  <p class="sub">
+    Inline HTML5 players (GitHub Pages). Narrative docs:
+    <a href="https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki">Wiki</a> ·
+    <a href="https://github.com/gaiaftcl-sudo/gaiaFTCL">Repository</a>
+  </p>
+
+  <section id="fusion">
+    <h2>GaiaFusion — Architecting the 8D substrate</h2>
+    <video controls playsinline preload="metadata"
+      src="https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4">
+    </video>
+    <p class="links">
+      <a href="https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Architecting-8D-Substrate-GaiaFusion">Wiki page</a> ·
+      <a href="https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4">Direct MP4</a>
+    </p>
+  </section>
+
+  <section id="health">
+    <h2>GaiaHealth — Code as physics (kinematic pipeline)</h2>
+    <video controls playsinline preload="metadata"
+      src="https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4">
+    </video>
+    <p class="links">
+      <a href="https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Code-as-Physics-GaiaHealth-Kinematic-Pipeline">Wiki page</a> ·
+      <a href="https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4">Direct MP4</a>
+    </p>
+  </section>
+
+  <footer>
+    Patents: USPTO 19/460,960 · USPTO 19/096,071 — © 2026 Richard Gillespie · FortressAI Research Institute
+  </footer>
+</body>
+</html>

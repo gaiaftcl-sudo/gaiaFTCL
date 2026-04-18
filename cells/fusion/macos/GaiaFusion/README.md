@@ -10,7 +10,9 @@
 
 ## Media — Architecting the 8D substrate
 
-Walkthrough: *Architecting the 8D Substrate — From Quantum Measurement to Fusion* — UUM-8D / vQbit measurement path into the fusion Mac surface. **Wiki:** [Architecting-8D-Substrate-GaiaFusion](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Architecting-8D-Substrate-GaiaFusion). *GitHub Markdown strips `<video>` — use the clickable poster (image → raw MP4).*
+**Inline HTML5 player:** [gaiaftcl-sudo.github.io/gaiaFTCL#fusion](https://gaiaftcl-sudo.github.io/gaiaFTCL/#fusion) — GitHub Pages from `docs/` (enable **Settings → Pages →** **`main`** / **`/docs`**).
+
+Walkthrough: *Architecting the 8D Substrate — From Quantum Measurement to Fusion* — UUM-8D / vQbit measurement path into the fusion Mac surface. **Wiki:** [Architecting-8D-Substrate-GaiaFusion](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Architecting-8D-Substrate-GaiaFusion). *Repo Markdown strips `<video>` — poster below links to raw MP4.*
 
 [![Architecting the 8D substrate — click poster to play MP4](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/poster-architecting-8d.png)](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4)
 

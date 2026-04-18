@@ -1,6 +1,10 @@
 # GaiaFusion video assets
 
-GitHub **does not render** HTML `<video>` in wiki or repository Markdown. Use **poster PNG → raw MP4** (see `cells/fusion/macos/GaiaFusion/README.md`).
+GitHub **does not render** HTML `<video>` in wiki or repository Markdown. **Inline players:** `https://gaiaftcl-sudo.github.io/gaiaFTCL/` (enable GitHub Pages from `/docs` per section below). **Fallback:** poster PNG → raw MP4 — `cells/fusion/macos/GaiaFusion/README.md`.
+
+### GitHub Pages
+
+Settings → Pages → branch **`main`**, folder **`/docs`**. See also `docs/index.html`.
 
 | File | Description |
 |------|-------------|

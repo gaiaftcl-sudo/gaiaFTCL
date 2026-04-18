@@ -7,7 +7,9 @@
 
 ## Media — Code as physics (kinematic pipeline)
 
-*GitHub strips `<video>` in repo Markdown; **click the poster** to open the raw MP4 (browser plays or downloads).*
+**Inline HTML5 player:** [gaiaftcl-sudo.github.io/gaiaFTCL#health](https://gaiaftcl-sudo.github.io/gaiaFTCL/#health) — enable **Settings → Pages →** branch **`main`**, folder **`/docs`**.
+
+*GitHub repo/wiki Markdown strips `<video>`; **click the poster** for raw MP4, or use Pages for a real embedded player.*
 
 [![Code as Physics — GaiaHealth — click poster to play MP4](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiahealth/poster-code-as-physics.png)](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4)
 
