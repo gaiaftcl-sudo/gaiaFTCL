@@ -334,7 +334,7 @@ Any attempt to `propose` / `retire-file` / `rename-file` against these
 paths returns a `refuse` receipt unless the request carries a fresh
 `operator_sig`:
 
-- `.github/workflows/*` (CI definitions)
+- `.github/**` (repo metadata; **no** Actions workflows live here anymore — still protect from naive edits)
 - `.cursorrules`
 - `.cursorrules_IQOQPQ`
 - `.signing_keys/*`

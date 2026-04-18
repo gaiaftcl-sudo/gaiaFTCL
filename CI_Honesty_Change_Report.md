@@ -1,5 +1,7 @@
 # CI Honesty Change Report — GaiaFTCL Mac Cell
 
+> **Obsolete (2026‑04‑18):** GitHub Actions workflows were **removed** from this repository on purpose. This file is historical. Current truth: [`docs/CI_WHAT_IT_MEANS.md`](docs/CI_WHAT_IT_MEANS.md).
+
 **Date:** 2026‑04‑18
 **Scope:** four existing workflows + two proposed workflows + one doc.
 **Predecessor:** `GitHubActions_Value_Review.md` (per‑workflow verdict).
