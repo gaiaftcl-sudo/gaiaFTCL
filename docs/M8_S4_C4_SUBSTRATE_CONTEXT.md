@@ -13,7 +13,7 @@
 Operational meaning in-repo: the **entropy / constraint delta** across M8 — **not** a hardware qubit. It names **full constraint geometry** before a **premature classical projection** (e.g. sloppy SMILES export). **AML-CHEM-001** and **LEUK-005** are **INV3** program IDs; canonical structure for comparison lives in **C4** collections when ingested.
 
 **INV3 verification**  
-Runbook: [INV3 S⁴ projection verify (prompt)](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/docs/prompts/CURSOR_RECURSIVE_INV3_S4_PROJECTION_VERIFY.md) · script: [`cells/fusion/scripts/inv3_s4_projection_verify.py`](../cells/fusion/scripts/inv3_s4_projection_verify.py).
+Tooling: [`cells/fusion/scripts/inv3_s4_projection_verify.py`](../cells/fusion/scripts/inv3_s4_projection_verify.py); witness output under [`cells/fusion/evidence/inv3_s4_projection/`](../cells/fusion/evidence/inv3_s4_projection/).
 
 **Apply gate**  
 No edits to lab markdown without **`INV3_VERIFY_APPLY=I_UNDERSTAND`** (human receipt).
