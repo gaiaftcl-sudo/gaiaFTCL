@@ -5,7 +5,7 @@
 
 [![Source](https://img.shields.io/badge/GitHub-main-blue)](https://github.com/gaiaftcl-sudo/gaiaFTCL/tree/main)
 [![Wiki](https://img.shields.io/badge/docs-wiki-181717)](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki)
-[![GxP](https://img.shields.io/badge/GxP-GAMP5%20%7C%20EU%20Annex%2011-blue)](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/fusion/macos/GaiaFusion/evidence/GFTCL-PQ-002_v1.0.md)
+[![GxP](https://img.shields.io/badge/GxP-GAMP5%20%7C%20EU%20Annex%2011-blue)](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/evidence/FUSION_PLANT_PQ_PLAN.md)
 [![Patents](https://img.shields.io/badge/patents-USPTO%2019%2F460%2C960%20%7C%2019%2F096%2C071-orange)](LICENSE)
 
 ### Path migration (Mac cells layout)

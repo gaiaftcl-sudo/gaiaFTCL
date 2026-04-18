@@ -78,7 +78,7 @@ Each signature produces a complete JSON envelope for verification:
 }
 ```
 
-Full schema: [gaiafusion-sign-cli OUTPUT_SCHEMA.md](../tools/gaiafusion-sign-cli/OUTPUT_SCHEMA.md)
+Full schema: [gaiafusion-sign-cli OUTPUT_SCHEMA.md](../../tools/gaiafusion-sign-cli/OUTPUT_SCHEMA.md)
 
 ## Verification
 

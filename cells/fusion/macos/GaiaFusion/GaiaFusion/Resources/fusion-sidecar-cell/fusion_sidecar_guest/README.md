@@ -2,7 +2,7 @@
 
 Embed or copy these into your **Ubuntu arm64 cloud** guest image (cloud-init, Ansible, or golden image). The **Mac app** can expose the host GAIAOS checkout read-only via **virtiofs** tag **`gaiaos`** → mount at **`/opt/gaiaos`**.
 
-**Field of fields (parallel vs blocked):** [`../../evidence/fusion_control/FUSION_SIDECAR_FIELD_OF_FIELDS.md`](../../evidence/fusion_control/FUSION_SIDECAR_FIELD_OF_FIELDS.md)
+**Field of fields (parallel vs blocked):** [`../../../../../../evidence/fusion_control/FUSION_SIDECAR_FIELD_OF_FIELDS.md`](../../../../../../evidence/fusion_control/FUSION_SIDECAR_FIELD_OF_FIELDS.md)
 
 ---
 

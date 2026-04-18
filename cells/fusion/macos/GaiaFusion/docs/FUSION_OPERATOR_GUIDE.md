@@ -117,7 +117,7 @@ zsh scripts/run_full_pq_validation.sh
 
 **Note:** PQ-TAU tests require live NATS connectivity and Bitcoin heartbeat service. Ensure the SSH tunnel is established before running PQ.
 
-**Full PQ specification:** [`evidence/GFTCL-PQ-002_v1.0.md`](../evidence/GFTCL-PQ-002_v1.0.md)
+**Full PQ specification (repo root):** [`evidence/FUSION_PLANT_PQ_PLAN.md`](../../../../../evidence/FUSION_PLANT_PQ_PLAN.md)
 
 ---
 

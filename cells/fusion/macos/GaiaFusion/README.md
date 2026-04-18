@@ -2,9 +2,9 @@
 
 **macOS Native | Metal GPU | Rust FFI | GxP Validated**
 
-[![Build](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/gaiaftcl-sudo/gaiaFTCL/actions)
-[![GxP](https://img.shields.io/badge/GxP-GAMP5%20%7C%20EU%20Annex%2011-blue)](evidence/GFTCL-PQ-002_v1.0.md)
-[![Patents](https://img.shields.io/badge/patents-USPTO%2019%2F460%2C960%20%7C%2019%2F096%2C071-orange)](LICENSE)
+[![Build](https://img.shields.io/badge/build-repo-main-brightgreen)](https://github.com/gaiaftcl-sudo/gaiaFTCL)
+[![GxP](https://img.shields.io/badge/GxP-GAMP5%20%7C%20EU%20Annex%2011-blue)](../../../../evidence/FUSION_PLANT_PQ_PLAN.md)
+[![Patents](https://img.shields.io/badge/patents-USPTO%2019%2F460%2C960%20%7C%2019%2F096%2C071-orange)](../../../../LICENSE)
 
 ---
 
@@ -446,7 +446,7 @@ PQ — Performance Qualification
      → evidence/pq_validation/receipts/master_pq_receipt_*.json
 ```
 
-Full PQ specification: [`evidence/GFTCL-PQ-002_v1.0.md`](evidence/GFTCL-PQ-002_v1.0.md)
+Full PQ specification: [`evidence/FUSION_PLANT_PQ_PLAN.md`](../../../../evidence/FUSION_PLANT_PQ_PLAN.md)
 
 ---
 
@@ -562,7 +562,7 @@ The following artifacts are required for CERN regulatory review:
 | IQ Receipt | `evidence/iq/iq_receipt.json` | `iq_install.sh` |
 | OQ Receipt | `evidence/oq/oq_receipt.json` | `oq_validate.sh` |
 | Master PQ Receipt | `evidence/pq_validation/receipts/master_pq_receipt_*.json` | `run_full_pq_validation.sh` |
-| PQ Specification | `evidence/GFTCL-PQ-002_v1.0.md` | Controlled document |
+| PQ Specification | `evidence/FUSION_PLANT_PQ_PLAN.md` (repo root) | Controlled document |
 | Rust Test Log | `evidence/rust_metal_integration/rust_tests_output.txt` | `run_full_test_suite.sh` |
 | Swift Build Log | `evidence/rust_metal_integration/build_output.txt` | `run_full_test_suite.sh` |
 | τ Sync Log | `evidence/pq_validation/tau/tau_synchronization_log.json` | PQ-TAU-001 |
@@ -621,7 +621,7 @@ log stream --predicate 'process == "GaiaFusion"' --level debug
 |---|---|
 | [`docs/FUSION_OPERATOR_GUIDE.md`](docs/FUSION_OPERATOR_GUIDE.md) | Operator manual — plant topologies, telemetry, swap protocol, safety interlocks |
 | [`docs/PLANT_INVARIANTS.md`](docs/PLANT_INVARIANTS.md) | Physics reference — per-plant parameter bounds, invariants, reference facilities |
-| [`evidence/GFTCL-PQ-002_v1.0.md`](evidence/GFTCL-PQ-002_v1.0.md) | GxP PQ master document — 41 test protocols across 5 teams |
+| [`evidence/FUSION_PLANT_PQ_PLAN.md`](../../../../evidence/FUSION_PLANT_PQ_PLAN.md) | GxP PQ plan — fusion plant qualification narrative |
 
 ---
 

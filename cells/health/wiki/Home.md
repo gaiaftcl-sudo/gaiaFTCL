@@ -69,7 +69,7 @@ FoT8D/
 
 ## Sister Cell
 
-- **[GaiaFTCL Fusion Cell](../../GAIAFTCL/wiki/Home.md)** — plasma physics domain, `vQbitPrimitive`, `gaia1` wallet prefix.
+- **[GaiaFTCL Fusion Cell](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Home)** — plasma physics domain, `vQbitPrimitive`, `gaia1` wallet prefix.
 
 ---
 

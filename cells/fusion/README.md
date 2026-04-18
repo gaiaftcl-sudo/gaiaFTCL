@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="assets/branding/gaiaos-icon-256.png" alt="GaiaOS Logo" width="200">
-</p>
-
 # GaiaOS - Field of Truth Operating System
 
 **Metal GPU (MPS-GNN) + 8D Quantum @ 800 Hz + 15,154 Exam Questions + Production UI**

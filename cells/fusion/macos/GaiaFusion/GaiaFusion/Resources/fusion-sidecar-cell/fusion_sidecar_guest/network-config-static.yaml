@@ -1,0 +1,7 @@
+# cloud-init network v2 — static guest address (align with FusionSidecarHost default Guest IPv4).
+network:
+  version: 2
+  ethernets:
+    eth0:
+      addresses:
+        - 192.168.64.10/24

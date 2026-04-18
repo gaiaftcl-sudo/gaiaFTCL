@@ -5,7 +5,7 @@ Native macOS host for the **sovereign Fusion sidecar**: boots a **Linux VM** (Vi
 - **Operator guide:** [`../../deploy/mac_cell_mount/FUSION_SIDECAR_HOST_APP.md`](../../deploy/mac_cell_mount/FUSION_SIDECAR_HOST_APP.md)
 - **Guest image:** [`../../deploy/mac_cell_mount/FUSION_SIDECAR_GUEST_IMAGE.md`](../../deploy/mac_cell_mount/FUSION_SIDECAR_GUEST_IMAGE.md)
 - **Guest bootstrap (cloud-init, systemd, virtiofs):** [`../../deploy/mac_cell_mount/fusion_sidecar_guest/README.md`](../../deploy/mac_cell_mount/fusion_sidecar_guest/README.md)
-- **Compose (guest):** [`../../docker-compose.fusion-sidecar.yml`](../../docker-compose.fusion-sidecar.yml)
+- **Compose (guest):** [`../GaiaFusion/GaiaFusion/Resources/fusion-sidecar-cell/docker-compose.fusion-sidecar.yml`](../GaiaFusion/GaiaFusion/Resources/fusion-sidecar-cell/docker-compose.fusion-sidecar.yml)
 
 ## Build
 

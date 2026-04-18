@@ -1,0 +1,7 @@
+# Fragment — merge into full cloud-init `user-data` for the sidecar guest.
+# Install Docker Engine, docker compose plugin, virtiofs, and optional systemd unit
+# `fusion-sidecar-compose.service` from this directory.
+package_update: true
+package_upgrade: true
+packages:
+  - docker.io

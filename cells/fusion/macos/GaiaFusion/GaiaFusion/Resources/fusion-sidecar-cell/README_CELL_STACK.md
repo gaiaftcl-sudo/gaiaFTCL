@@ -10,7 +10,7 @@ This folder ships **pinned copies** of the **minimal MCP C⁴ cell** used when y
 **Build contexts** in the compose file are **relative to the GAIAOS repository root** (`services/fot_mcp_gateway`, etc.). To run `docker compose` you need either:
 
 1. A checkout of **GAIAOS** at the same revision as this app build, with this YAML at the repo root, **or**
-2. virtiofs-mount the host GAIAOS tree into the Linux guest (see `deploy/mac_cell_mount/FUSION_SIDECAR_HOST_APP.md`).
+2. virtiofs-mount the host GAIAOS tree into the Linux guest (see [`../../../../../deploy/mac_cell_mount/FUSION_SIDECAR_HOST_APP.md`](../../../../../deploy/mac_cell_mount/FUSION_SIDECAR_HOST_APP.md)).
 
 Release builds refresh these files via `scripts/build_gaiafusion_composite_assets.sh` (copies this README + compose into `macos/GaiaFusion/GaiaFusion/Resources/fusion-sidecar-cell/`).
 

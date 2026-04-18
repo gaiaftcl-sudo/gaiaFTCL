@@ -1,0 +1,27 @@
+# Link checker defaults for this repo. Run with:
+#   export GITHUB_TOKEN="$(gh auth token)"
+#   lychee --config lychee.toml -- '**/*.md' '**/*.html'
+#
+# GitHub may return 429/500/504 to crawlers; treat as non-fatal for gates.
+accept = ["200..=299", "403", "429", "500", "504"]
+
+# Local dev servers and known TLS mismatches — not portable link targets in CI.
+exclude = [
+  '^http://127\.0\.0\.1',
+  '^https://127\.0\.0\.1',
+  '^http://localhost',
+  '^https://localhost',
+  '^https://gaiaos\.net/',
+  '^https://gaiaftcl\.com/',
+]
+
+# Bundled app / Next export / dist — root-relative hrefs need a served base URL.
+exclude_path = [
+  "GaiaFusion\\.app/",
+  "/fusion-web/",
+  "mirror_world_ui/dist/",
+  "mirror_world_ui/index\\.html",
+  "docs/specs/skin/.*\\.html",
+  "cells/fusion/evidence/",
+  "validation_artifacts/",
+]
