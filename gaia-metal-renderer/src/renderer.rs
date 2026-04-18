@@ -1,27 +1,26 @@
-use std::mem;
-use core::ptr::NonNull;
 use core::ffi::c_void;
+use core::ptr::NonNull;
+use std::mem;
 
 use glam::{Mat4, Vec3};
 use objc2::rc::Retained;
 use objc2::runtime::ProtocolObject;
-use objc2_foundation::{NSString, NSSize};
+use objc2_foundation::{NSSize, NSString};
 use objc2_metal::{
-    MTLClearColor, MTLCommandBuffer, MTLCommandQueue,
-    MTLCreateSystemDefaultDevice, MTLDevice, MTLDrawable, MTLIndexType, MTLLibrary,
-    MTLLoadAction, MTLPixelFormat, MTLPrimitiveType, MTLRenderCommandEncoder,
+    MTLBuffer, MTLClearColor, MTLCommandBuffer, MTLCommandEncoder, MTLCommandQueue,
+    MTLCreateSystemDefaultDevice, MTLDevice, MTLDrawable, MTLIndexType, MTLLibrary, MTLLoadAction,
+    MTLPixelFormat, MTLPrimitiveType, MTLRenderCommandEncoder,
     MTLRenderPassColorAttachmentDescriptor, MTLRenderPassDescriptor,
     MTLRenderPipelineColorAttachmentDescriptor, MTLRenderPipelineDescriptor,
     MTLRenderPipelineState, MTLResourceOptions, MTLStoreAction, MTLVertexAttributeDescriptor,
     MTLVertexBufferLayoutDescriptor, MTLVertexDescriptor, MTLVertexFormat, MTLVertexStepFunction,
-    MTLBuffer, MTLCommandEncoder,
 };
 use objc2_quartz_core::{CAMetalDrawable, CAMetalLayer};
 use raw_window_handle::{HasWindowHandle, RawWindowHandle};
 use raw_window_metal::Layer;
 
-use rust_fusion_usd_parser::vQbitPrimitive;
 use crate::shaders::SHADER_SOURCE;
+use rust_fusion_usd_parser::vQbitPrimitive;
 
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -32,7 +31,10 @@ pub struct GaiaVertex {
 
 impl GaiaVertex {
     pub const fn new(pos: [f32; 3], col: [f32; 4]) -> Self {
-        Self { position: pos, color: col }
+        Self {
+            position: pos,
+            color: col,
+        }
     }
 }
 
@@ -56,8 +58,7 @@ pub struct MetalRenderer {
 
 impl MetalRenderer {
     pub fn new(window: &impl HasWindowHandle) -> Self {
-        let device = unsafe { MTLCreateSystemDefaultDevice() }
-            .expect("No Metal-capable GPU found");
+        let device = unsafe { MTLCreateSystemDefaultDevice() }.expect("No Metal-capable GPU found");
 
         let command_queue = device
             .newCommandQueue()
@@ -83,10 +84,10 @@ impl MetalRenderer {
 
         let vert_name = NSString::from_str("vertex_main");
         let frag_name = NSString::from_str("fragment_main");
-        let vert_fn = unsafe { library.newFunctionWithName(&vert_name) }
-            .expect("vertex_main not found");
-        let frag_fn = unsafe { library.newFunctionWithName(&frag_name) }
-            .expect("fragment_main not found");
+        let vert_fn =
+            unsafe { library.newFunctionWithName(&vert_name) }.expect("vertex_main not found");
+        let frag_fn =
+            unsafe { library.newFunctionWithName(&frag_name) }.expect("fragment_main not found");
 
         let vertex_desc = unsafe { MTLVertexDescriptor::new() };
         unsafe {
@@ -189,7 +190,9 @@ impl MetalRenderer {
         let model = Mat4::from_rotation_y(angle) * Mat4::from_rotation_x(angle * 0.7);
         let mvp = projection * view * model;
 
-        let uniforms = Uniforms { mvp: mvp.to_cols_array_2d() };
+        let uniforms = Uniforms {
+            mvp: mvp.to_cols_array_2d(),
+        };
         unsafe {
             let contents = self.uniform_buffer.contents();
             let ptr = contents.as_ptr() as *mut Uniforms;
@@ -211,11 +214,15 @@ impl MetalRenderer {
             ca0.setLoadAction(MTLLoadAction::Clear);
             ca0.setStoreAction(MTLStoreAction::Store);
             ca0.setClearColor(MTLClearColor {
-                red: 0.02, green: 0.02, blue: 0.05, alpha: 1.0,
+                red: 0.02,
+                green: 0.02,
+                blue: 0.05,
+                alpha: 1.0,
             });
         }
 
-        let cmd_buffer = self.command_queue
+        let cmd_buffer = self
+            .command_queue
             .commandBuffer()
             .expect("Failed to create command buffer");
 
@@ -247,14 +254,14 @@ impl MetalRenderer {
 
     fn default_geometry() -> (Vec<GaiaVertex>, Vec<u16>) {
         let vertices = vec![
-            GaiaVertex::new([-0.5, -0.5,  0.5], [0.0, 0.6, 1.0, 1.0]),
-            GaiaVertex::new([ 0.5, -0.5,  0.5], [1.0, 0.7, 0.0, 1.0]),
-            GaiaVertex::new([ 0.5,  0.5,  0.5], [1.0, 1.0, 1.0, 1.0]),
-            GaiaVertex::new([-0.5,  0.5,  0.5], [0.0, 0.3, 0.8, 1.0]),
+            GaiaVertex::new([-0.5, -0.5, 0.5], [0.0, 0.6, 1.0, 1.0]),
+            GaiaVertex::new([0.5, -0.5, 0.5], [1.0, 0.7, 0.0, 1.0]),
+            GaiaVertex::new([0.5, 0.5, 0.5], [1.0, 1.0, 1.0, 1.0]),
+            GaiaVertex::new([-0.5, 0.5, 0.5], [0.0, 0.3, 0.8, 1.0]),
             GaiaVertex::new([-0.5, -0.5, -0.5], [0.0, 0.3, 0.8, 1.0]),
-            GaiaVertex::new([ 0.5, -0.5, -0.5], [0.0, 0.6, 1.0, 1.0]),
-            GaiaVertex::new([ 0.5,  0.5, -0.5], [1.0, 0.7, 0.0, 1.0]),
-            GaiaVertex::new([-0.5,  0.5, -0.5], [1.0, 1.0, 1.0, 1.0]),
+            GaiaVertex::new([0.5, -0.5, -0.5], [0.0, 0.6, 1.0, 1.0]),
+            GaiaVertex::new([0.5, 0.5, -0.5], [1.0, 0.7, 0.0, 1.0]),
+            GaiaVertex::new([-0.5, 0.5, -0.5], [1.0, 1.0, 1.0, 1.0]),
         ];
         #[rustfmt::skip]
         let indices: Vec<u16> = vec![
@@ -303,7 +310,8 @@ impl MetalRenderer {
         }
 
         unsafe {
-            self.vertex_buffer = self.device
+            self.vertex_buffer = self
+                .device
                 .newBufferWithBytes_length_options(
                     NonNull::new(vertices.as_ptr() as *mut c_void).unwrap(),
                     vertices.len() * mem::size_of::<GaiaVertex>(),
@@ -311,7 +319,8 @@ impl MetalRenderer {
                 )
                 .expect("Failed to create vertex buffer");
 
-            self.index_buffer = self.device
+            self.index_buffer = self
+                .device
                 .newBufferWithBytes_length_options(
                     NonNull::new(indices.as_ptr() as *mut c_void).unwrap(),
                     indices.len() * mem::size_of::<u16>(),
@@ -327,14 +336,16 @@ impl MetalRenderer {
             return;
         }
         unsafe {
-            self.vertex_buffer = self.device
+            self.vertex_buffer = self
+                .device
                 .newBufferWithBytes_length_options(
                     NonNull::new(vertices.as_ptr() as *mut c_void).unwrap(),
                     vertices.len() * mem::size_of::<GaiaVertex>(),
                     MTLResourceOptions::StorageModeShared,
                 )
                 .expect("Failed to create vertex buffer");
-            self.index_buffer = self.device
+            self.index_buffer = self
+                .device
                 .newBufferWithBytes_length_options(
                     NonNull::new(indices.as_ptr() as *mut c_void).unwrap(),
                     indices.len() * mem::size_of::<u16>(),
@@ -433,7 +444,7 @@ mod tests {
         // entropy → R channel, truth → G channel, hardcoded 0.5 → B
         let mut prim = vQbitPrimitive::default();
         prim.vqbit_entropy = 0.4;
-        prim.vqbit_truth   = 0.8;
+        prim.vqbit_truth = 0.8;
 
         // Replicate the mapping from upload_geometry_from_primitives
         let color = [
@@ -471,19 +482,28 @@ mod tests {
     fn rg_001_vertex_stride_28_bytes() {
         // Metal vertex descriptor stride must stay 28.  If GaiaVertex layout
         // changes, this test fails and forces a corresponding shader update.
-        assert_eq!(std::mem::size_of::<GaiaVertex>(), 28,
-            "REGRESSION: GaiaVertex stride changed — update MTLVertexDescriptor in renderer::new()");
+        assert_eq!(
+            std::mem::size_of::<GaiaVertex>(),
+            28,
+            "REGRESSION: GaiaVertex stride changed — update MTLVertexDescriptor in renderer::new()"
+        );
     }
 
     #[test]
     fn rg_002_uniforms_stride_64_bytes() {
-        assert_eq!(std::mem::size_of::<Uniforms>(), 64,
-            "REGRESSION: Uniforms stride changed — update Metal buffer(1) binding");
+        assert_eq!(
+            std::mem::size_of::<Uniforms>(),
+            64,
+            "REGRESSION: Uniforms stride changed — update Metal buffer(1) binding"
+        );
     }
 
     #[test]
     fn rg_003_vqbit_primitive_repr_c_size() {
-        assert_eq!(std::mem::size_of::<vQbitPrimitive>(), 76,
-            "REGRESSION: vQbitPrimitive ABI changed — breaks FFI boundary with Swift layer");
+        assert_eq!(
+            std::mem::size_of::<vQbitPrimitive>(),
+            76,
+            "REGRESSION: vQbitPrimitive ABI changed — breaks FFI boundary with Swift layer"
+        );
     }
 }

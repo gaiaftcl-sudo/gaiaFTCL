@@ -1,6 +1,5 @@
 /// Metal Shading Language source compiled at runtime.
 /// No .metallib build step — sovereign, self-contained.
-
 pub const SHADER_SOURCE: &str = r#"
 #include <metal_stdlib>
 using namespace metal;

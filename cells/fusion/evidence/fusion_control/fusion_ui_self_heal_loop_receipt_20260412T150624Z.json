@@ -1,0 +1,168 @@
+{
+  "schema": "gaiaftcl_fusion_ui_self_heal_loop_receipt_v1",
+  "ts_utc": "2026-04-12T15:06:27.492691+00:00",
+  "terminal": "REFUSED",
+  "reason": "max_cycles_exhausted",
+  "cycles_attempted": 1,
+  "max_cycles": 1,
+  "ui_port": 8910,
+  "heal_mode": "light",
+  "relax_mac_gateway": true,
+  "skip_mcp": false,
+  "conversation_wallet": "0xgaiaftcl_internal_feed_readonly",
+  "jsonl": "evidence/fusion_control/fusion_ui_self_heal_loop_20260412T150624Z.jsonl",
+  "last_cycle": {
+    "ts_utc": "2026-04-12T15:06:24.465948+00:00",
+    "cycle": 1,
+    "ui_port": 8910,
+    "heal_mode": "light",
+    "mcp_conversation": {
+      "ok": false,
+      "http_code": 0,
+      "request": {
+        "name": "closure_game_report_v1",
+        "params": {
+          "ui_contract": "gaiaftcl_fusion_blank_screen_contract_v1",
+          "ui_failures": [
+            "pre_diagnostic_mcp_first"
+          ],
+          "ui_port": 8910,
+          "ui_component_audit": {},
+          "operator_prompt": "What do you believe you are showing in the local fusion UI right now? If splash/mooring, propose exact repair action.",
+          "requested_action": "diagnose_and_propose_fix_patch"
+        }
+      },
+      "error": "<urlopen error [Errno 61] Connection refused>"
+    },
+    "contract": {
+      "schema": "gaiaftcl_fusion_blank_screen_contract_v1",
+      "pass": false,
+      "fail_ids": [
+        "fusion_health_contract",
+        "self_probe_dom_contract",
+        "substrate_html_contract",
+        "substrate_raw_routing_contract",
+        "fusion_html_contract"
+      ],
+      "ui_component_audit": {
+        "schema": "gaiaftcl_fusion_ui_component_audit_result_v1",
+        "spec_schema": "gaiaftcl_fusion_ui_component_audit_v1",
+        "spec_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/spec/native_fusion/fusion_ui_component_audit.json",
+        "present_markers": [],
+        "missing_markers": [
+          "fusion-active-composite",
+          "fusion-topology-view",
+          "fusion-projection-panel",
+          "fusion-cell-grid",
+          "fusion-plant-controls",
+          "fusion-swap-panel",
+          "fusion-viewport-heartbeat"
+        ],
+        "blocked_hits": [],
+        "splash_detected": false,
+        "active_surface_ok": false
+      },
+      "checks": [
+        {
+          "id": "fusion_health_contract",
+          "pass": false,
+          "http_code": 0,
+          "reason": "fusion_health_contract_failed",
+          "hint": "run_fusion_mac_app_gate.py --port <ui_port> to restore runtime witness",
+          "sample": "<urlopen error [Errno 61] Connection refused>"
+        },
+        {
+          "id": "self_probe_dom_contract",
+          "pass": false,
+          "http_code": 0,
+          "reason": "self_probe_dom_contract_failed",
+          "hint": "restart GaiaFusion and ensure WKWebView bridge is loaded",
+          "sample": "<urlopen error [Errno 61] Connection refused>"
+        },
+        {
+          "id": "substrate_html_contract",
+          "pass": false,
+          "http_code": 0,
+          "reason": "substrate_html_contract_failed",
+          "hint": "rebuild composite assets and verify fusion-web mirror includes substrate route",
+          "sample": "<urlopen error [Errno 61] Connection refused>"
+        },
+        {
+          "id": "substrate_raw_routing_contract",
+          "pass": false,
+          "http_code": 0,
+          "reason": "substrate_raw_routing_contract_failed",
+          "hint": "must serve substrate-raw.html (not fusion-s4 index) to avoid iframe recursion; see LocalServer / fusion-web",
+          "sample": "<urlopen error [Errno 61] Connection refused>"
+        },
+        {
+          "id": "operator_surface_armed_contract",
+          "pass": true,
+          "http_code": 0,
+          "reason": "",
+          "hint": "when WKWebView is loaded, s4-projection must arm control_matrix.trace_active (webview gate, not only SwiftUI trace chrome)",
+          "sample": {
+            "webview_loaded": false,
+            "trace_active": false,
+            "bridge": "<urlopen error [Errno 61] Connection refused>"
+          }
+        },
+        {
+          "id": "fusion_html_contract",
+          "pass": false,
+          "http_code": 0,
+          "reason": "fusion_html_contract_failed",
+          "hint": "ensure fusion-s4 UI and /api/fusion/s4-projection are both healthy; runtime splash/active state is enforced by Playwright gate",
+          "sample": {
+            "fusion_html_head": "<urlopen error [Errno 61] Connection refused>",
+            "projection_http_code": 0,
+            "projection_sample": "<urlopen error [Errno 61] Connection refused>",
+            "component_audit": {
+              "schema": "gaiaftcl_fusion_ui_component_audit_result_v1",
+              "spec_schema": "gaiaftcl_fusion_ui_component_audit_v1",
+              "spec_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/spec/native_fusion/fusion_ui_component_audit.json",
+              "present_markers": [],
+              "missing_markers": [
+                "fusion-active-composite",
+                "fusion-topology-view",
+                "fusion-projection-panel",
+                "fusion-cell-grid",
+                "fusion-plant-controls",
+                "fusion-swap-panel",
+                "fusion-viewport-heartbeat"
+              ],
+              "blocked_hits": [],
+              "splash_detected": false,
+              "active_surface_ok": false
+            }
+          }
+        },
+        {
+          "id": "mac_gateway_health_contract",
+          "pass": true,
+          "http_code": 0,
+          "reason": "",
+          "hint": "restart fusion sidecar stack (docker-compose.fusion-sidecar.yml) or set FUSION_UI_SELF_HEAL_RELAX_MAC_GATEWAY=1 when Docker/MCP runs in FusionSidecar guest only",
+          "gateway_reachable": false,
+          "relaxed_skip": true,
+          "sample": "<urlopen error [Errno 61] Connection refused>"
+        }
+      ]
+    },
+    "mcp_turn_receipt": "evidence/fusion_control/fusion_ui_self_heal_mcp_turn_cycle1_20260412T150624Z.json",
+    "failure_signature": "fusion_health_contract,self_probe_dom_contract,substrate_html_contract,substrate_raw_routing_contract,fusion_html_contract|mcp:0",
+    "healing": [
+      {
+        "step": "soft_reprobe",
+        "command": "bash scripts/gaiafusion_internal_cli.sh 8910",
+        "rc": 1,
+        "stdout_tail": "REFUSED: http://127.0.0.1:8910 not reachable \u2014 launch GaiaFusion or set FUSION_UI_PORT",
+        "ok": false
+      }
+    ]
+  },
+  "failure_signatures": {
+    "fusion_health_contract,self_probe_dom_contract,substrate_html_contract,substrate_raw_routing_contract,fusion_html_contract|mcp:0": 1
+  },
+  "ui_component_audit_spec_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/spec/native_fusion/fusion_ui_component_audit.json"
+}

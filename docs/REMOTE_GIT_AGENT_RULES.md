@@ -2,7 +2,7 @@
 
 **GitHub server-side settings** on `main` (if enabled in the repo’s Settings) are authoritative for force-push / deletion / linear history — not anything in this file.
 
-**Local reality:** `core.hooksPath` is typically **`.githooks`** for **Git LFS**; that directory’s `pre-push` is the LFS hook. The old **`GAIAOS/scripts/git-hooks/*`** Franklin/M8 scripts were **never wired** when `hooksPath` points at `.githooks`, so they did not run; those files and the installer are **removed** from the tree to stop false confidence.
+**Local reality:** `core.hooksPath` is typically **`.githooks`** for **Git LFS**; that directory’s `pre-push` is the LFS hook. The old **`cells/fusion/scripts/git-hooks/*`** Franklin/M8 scripts were **never wired** when `hooksPath` points at `.githooks`, so they did not run; those files and the installer are **removed** from the tree to stop false confidence.
 
 ## Agent must not
 
@@ -30,7 +30,7 @@ The operator must be able to run the verify commands and see a SHA that **matche
 **Helper (prints fetch + SHA + copy-paste verify lines):**
 
 ```bash
-bash GAIAOS/scripts/verify_remote_push_receipt.sh origin main
+bash cells/fusion/scripts/verify_remote_push_receipt.sh origin main
 ```
 
 Optional: paste **one line** of real `git ls-remote` / `git rev-parse` stdout from the machine that performed the push.

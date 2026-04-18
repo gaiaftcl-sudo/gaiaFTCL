@@ -1,0 +1,161 @@
+{
+  "run_id": "mesh-game-runner-2026-04-07T22-02-36-240Z",
+  "ts_utc": "2026-04-07T22:02:36.242Z",
+  "driver": "playwright",
+  "domains": {
+    "fusion_discord_web_mac": {
+      "live_captured": true,
+      "route": "/fusion-s4",
+      "note": "",
+      "ui_interactions": {
+        "route_opened": true,
+        "gui_visible": true,
+        "gameplay_executed": true
+      },
+      "screenshot_paths": [
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_fusion_discord_web_mac_01.png"
+      ]
+    },
+    "materials_molecules": {
+      "live_captured": true,
+      "route": "/molecular",
+      "note": "",
+      "ui_interactions": {
+        "route_opened": true,
+        "gui_visible": true,
+        "gameplay_executed": true
+      },
+      "screenshot_paths": [
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_materials_molecules_01.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_materials_molecules_02.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_materials_molecules_03.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_materials_molecules_04.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_materials_molecules_05.png"
+      ]
+    },
+    "biology_disease": {
+      "live_captured": true,
+      "route": "/biosphere",
+      "note": "",
+      "ui_interactions": {
+        "route_opened": true,
+        "gui_visible": true,
+        "gameplay_executed": true
+      },
+      "screenshot_paths": [
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_biology_disease_01.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_biology_disease_02.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_biology_disease_03.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_biology_disease_04.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_biology_disease_05.png"
+      ]
+    },
+    "atc_mirror_world": {
+      "live_captured": true,
+      "route": "/atc/turbulence",
+      "note": "",
+      "ui_interactions": {
+        "route_opened": true,
+        "gui_visible": true,
+        "gameplay_executed": true
+      },
+      "screenshot_paths": [
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_atc_mirror_world_01.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_atc_mirror_world_02.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_atc_mirror_world_03.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_atc_mirror_world_04.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_atc_mirror_world_05.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_atc_mirror_world_06.png"
+      ]
+    },
+    "quantum_algorithms": {
+      "live_captured": true,
+      "route": "/astro",
+      "note": "",
+      "ui_interactions": {
+        "route_opened": true,
+        "gui_visible": true,
+        "gameplay_executed": true
+      },
+      "screenshot_paths": [
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_01.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_02.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_03.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_04.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_05.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_06.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_07.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_08.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_09.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_10.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_11.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_12.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_13.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_14.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_15.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_16.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_17.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_18.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_quantum_algorithms_19.png"
+      ]
+    },
+    "sports_vortex": {
+      "live_captured": true,
+      "route": "/ocean",
+      "note": "",
+      "ui_interactions": {
+        "route_opened": true,
+        "gui_visible": true,
+        "gameplay_executed": true
+      },
+      "screenshot_paths": [
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_sports_vortex_01.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_sports_vortex_02.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_sports_vortex_03.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_sports_vortex_04.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_sports_vortex_05.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_sports_vortex_06.png"
+      ]
+    },
+    "neuro_clinical": {
+      "live_captured": true,
+      "route": "/atmosphere",
+      "note": "",
+      "ui_interactions": {
+        "route_opened": true,
+        "gui_visible": true,
+        "gameplay_executed": true
+      },
+      "screenshot_paths": [
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_neuro_clinical_01.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_neuro_clinical_02.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_neuro_clinical_03.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_neuro_clinical_04.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_neuro_clinical_05.png"
+      ]
+    },
+    "telecom_mesh": {
+      "live_captured": true,
+      "route": "/sovereign-mesh",
+      "note": "",
+      "ui_interactions": {
+        "route_opened": true,
+        "gui_visible": true,
+        "gameplay_executed": true
+      },
+      "screenshot_paths": [
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_telecom_mesh_01.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_telecom_mesh_02.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_telecom_mesh_03.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_telecom_mesh_04.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_telecom_mesh_05.png",
+        "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mesh_game_runner/screenshots/mesh_runner_telecom_mesh_06.png"
+      ]
+    }
+  },
+  "global_ui_interactions": {
+    "sovereign_mesh_opened": true,
+    "fusion_fleet_opened": true,
+    "games_hub_opened": true
+  }
+}

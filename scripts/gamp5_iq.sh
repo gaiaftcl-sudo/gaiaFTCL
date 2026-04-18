@@ -13,8 +13,8 @@
 #  Or:   zsh scripts/gamp5_iq.sh --cell both
 #
 #  Writes receipts to:
-#    GAIAOS/macos/GaiaFusion/evidence/iq/iq_receipt.json   (MacFusion)
-#    GAIAOS/macos/MacHealth/evidence/iq/iq_receipt.json    (MacHealth)
+#    cells/fusion/macos/GaiaFusion/evidence/iq/iq_receipt.json   (MacFusion)
+#    cells/fusion/macos/MacHealth/evidence/iq/iq_receipt.json    (MacHealth)
 #
 #  Patents: USPTO 19/460,960 | USPTO 19/096,071 — © 2026 Richard Gillespie
 # ══════════════════════════════════════════════════════════════════════════════
@@ -127,13 +127,13 @@ OLD_ITEMS=()
 [[ -d "/Applications/GaiaFusion.app" ]]    && OLD_ITEMS+=("/Applications/GaiaFusion.app")
 [[ -d "${HOME}/Applications/GaiaFusion.app" ]] && OLD_ITEMS+=("~/Applications/GaiaFusion.app")
 [[ -d "/Applications/MacHealth.app" ]]     && OLD_ITEMS+=("/Applications/MacHealth.app")
-[[ -d "${REPO_ROOT}/GAIAOS/macos/GaiaFusion/GaiaFusion.app" ]] && \
-    OLD_ITEMS+=("GAIAOS/macos/GaiaFusion/GaiaFusion.app (repo copy)")
+[[ -d "${REPO_ROOT}/cells/fusion/macos/GaiaFusion/GaiaFusion.app" ]] && \
+    OLD_ITEMS+=("cells/fusion/macos/GaiaFusion/GaiaFusion.app (repo copy)")
 
 # Check for old receipts
-[[ -f "${REPO_ROOT}/GAIAOS/macos/GaiaFusion/evidence/iq/iq_receipt.json" ]] && \
+[[ -f "${REPO_ROOT}/cells/fusion/macos/GaiaFusion/evidence/iq/iq_receipt.json" ]] && \
     OLD_ITEMS+=("GaiaFusion/evidence/iq/iq_receipt.json (prior IQ receipt)")
-[[ -f "${REPO_ROOT}/GAIAOS/macos/MacHealth/evidence/iq/iq_receipt.json" ]] && \
+[[ -f "${REPO_ROOT}/cells/fusion/macos/MacHealth/evidence/iq/iq_receipt.json" ]] && \
     OLD_ITEMS+=("MacHealth/evidence/iq/iq_receipt.json (prior IQ receipt)")
 
 if [[ ${#OLD_ITEMS[@]} -eq 0 ]]; then
@@ -177,8 +177,8 @@ if [[ "${CLEAN_OLD}" == "yes" ]]; then
 
     # Back up old receipts
     for receipt_path in \
-        "${REPO_ROOT}/GAIAOS/macos/GaiaFusion/evidence/iq/iq_receipt.json" \
-        "${REPO_ROOT}/GAIAOS/macos/MacHealth/evidence/iq/iq_receipt.json"; do
+        "${REPO_ROOT}/cells/fusion/macos/GaiaFusion/evidence/iq/iq_receipt.json" \
+        "${REPO_ROOT}/cells/fusion/macos/MacHealth/evidence/iq/iq_receipt.json"; do
         if [[ -f "${receipt_path}" ]]; then
             cp "${receipt_path}" "${BACKUP_DIR}/"
             warn "Backed up: $(basename ${receipt_path})"
@@ -269,7 +269,7 @@ check_path "shared/wallet_core"   "${REPO_ROOT}/shared/wallet_core/src/lib.rs"
 check_path "shared/owl_protocol"  "${REPO_ROOT}/shared/owl_protocol/src/lib.rs"
 
 if [[ "${INSTALL_MACFUSION}" == "true" ]]; then
-    MF_ROOT="${REPO_ROOT}/GAIAOS/macos/GaiaFusion"
+    MF_ROOT="${REPO_ROOT}/cells/fusion/macos/GaiaFusion"
     check_path "MacFusion Package.swift"          "${MF_ROOT}/Package.swift"
     check_path "MacFusion Swift sources"          "${MF_ROOT}/GaiaFusion/GaiaFusionApp.swift"
     check_path "MacFusion libgaia_metal_renderer" "${MF_ROOT}/MetalRenderer/lib/libgaia_metal_renderer.a"
@@ -278,7 +278,7 @@ if [[ "${INSTALL_MACFUSION}" == "true" ]]; then
 fi
 
 if [[ "${INSTALL_MACHEALTH}" == "true" ]]; then
-    MH_ROOT="${REPO_ROOT}/GAIAOS/macos/MacHealth"
+    MH_ROOT="${REPO_ROOT}/cells/fusion/macos/MacHealth"
     GH_ROOT="${REPO_ROOT}/GaiaHealth"
     check_path "MacHealth dir"                    "${MH_ROOT}"
     check_path "MacHealth Package.swift"          "${MH_ROOT}/Package.swift"
@@ -425,12 +425,12 @@ PYEOF
 
 [[ "${INSTALL_MACFUSION}" == "true" ]] && \
     write_iq_receipt "MacFusion" \
-        "${REPO_ROOT}/GAIAOS/macos/GaiaFusion/evidence/iq" \
+        "${REPO_ROOT}/cells/fusion/macos/GaiaFusion/evidence/iq" \
         "GFTCL-IQ-001"
 
 [[ "${INSTALL_MACHEALTH}" == "true" ]] && \
     write_iq_receipt "MacHealth" \
-        "${REPO_ROOT}/GAIAOS/macos/MacHealth/evidence/iq" \
+        "${REPO_ROOT}/cells/fusion/macos/MacHealth/evidence/iq" \
         "GH-IQ-001"
 
 # ══════════════════════════════════════════════════════════════════════════════

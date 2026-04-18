@@ -1,0 +1,10 @@
+{
+  "ts_utc": "2026-04-08T19:50:32.308608+00:00",
+  "gate": "macFusionAppBuildGate",
+  "build_rc": 1,
+  "artifact": "macos/GaiaFusion/.build/release/GaiaFusion",
+  "build_tail": "[0/1] Planning build\nBuilding for production...\n[0/3] Write sources\n[1/3] Write swift-version--58304C5D6DBC2206.txt\n[3/4] Compiling GaiaFusion OnboardingFlow.swift\nerror: input file '/Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/GaiaFusion/GaiaFusionApp.swift' was modified during the build\nerror: input file '/Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/GaiaFusion/GaiaFusionApp.swift' was modified during the build",
+  "stderr_tail": "",
+  "duration_sec": 8.3,
+  "attempt_serial": 2
+}

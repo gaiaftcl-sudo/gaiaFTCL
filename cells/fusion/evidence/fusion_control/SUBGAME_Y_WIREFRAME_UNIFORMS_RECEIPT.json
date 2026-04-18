@@ -1,0 +1,19 @@
+{
+  "schema": "gaiaftcl_subgame_y_wireframe_uniforms_v1",
+  "description": "OpenUSD proxy fragment shader uniforms: plant topology index, timeline normalized_t, playback ring telemetry I_p/B_T/n_e (SubGame Y wireframe tint; not volumetric plasma).",
+  "metal_uniforms": [
+    "modelViewProjection",
+    "lineColor",
+    "diagnosticRefused",
+    "plantKindIndex",
+    "normalizedT",
+    "telemetryIp",
+    "telemetryBt",
+    "telemetryNe"
+  ],
+  "swift_bridge": "OpenUSDPlaybackRing.snapshotTelemetry -> OpenUSDMetalProxyRenderer.encode",
+  "cpu_uniform_upload": "MTLRenderCommandEncoder.setVertexBytes/setFragmentBytes (no per-frame MTLBuffer alloc)",
+  "lod": "FusionFacilityWireframeGeometry.WireframeLOD from drawable min dimension (<420pt low); mirrored in jsonSnapshot as wireframe_lod + drawable_min_dimension_points",
+  "metallib_build": "cells/fusion/scripts/build_gaiafusion_metal_lib.sh",
+  "terminal": "CALORIE"
+}

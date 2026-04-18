@@ -1,0 +1,50 @@
+[fusion_cell_overnight] pid=3554 config=/Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/fusion_cell/config.json
+[fusion_cell_overnight] stop: touch /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/OVERNIGHT_STOP  OR  bash scripts/fusion_cell_overnight_stop.sh
+
+# --- merged from overnight_control_signals.console.log ---
+[overnight_control_signals] started pid=6587 cycles/iter=500
+[overnight_control_signals] stop: touch /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/OVERNIGHT_STOP  OR  bash scripts/overnight_control_signals_stop.sh
+[overnight_control_signals] stop file seen — clean exit
+[fusion_cell_long_run] pid=65691 config=/Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/fusion_cell/config.json mode=nonstop max_batches=0
+[fusion_cell_long_run] stop: touch /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/LONG_RUN_STOP  OR  bash scripts/fusion_cell_long_run_stop.sh
+[fusion_cell_long_run] iter=322619 mode= rc=1 (continuing)
+[fusion_cell_long_run] iter=322620 mode= rc=1 (continuing)
+jq: invalid JSON text passed to --argjson
+Use jq --help for help with command-line options,
+or see the jq manpage, or online docs  at https://jqlang.github.io/jq
+[fusion_cell_long_run] pid=82242 config=/Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/fusion_cell/config.json mode=nonstop max_batches=0
+[fusion_cell_long_run] stop: touch /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/LONG_RUN_STOP  OR  bash scripts/fusion_cell_long_run_stop.sh
+[fusion_cell_long_run] stop file — exit
+[fusion_cell_long_run] pid=86033 config=/Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/fusion_cell/config.json mode=nonstop max_batches=0
+[fusion_cell_long_run] stop: touch /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/LONG_RUN_STOP  OR  bash scripts/fusion_cell_long_run_stop.sh
+[fusion_cell_long_run] stop file — exit
+[fusion_cell_long_run] pid=92135 config=/Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/fusion_cell/config.json mode=nonstop max_batches=0
+[fusion_cell_long_run] stop: touch /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/LONG_RUN_STOP  OR  bash scripts/fusion_cell_long_run_stop.sh
+[fusion_cell_long_run] stop file — exit
+[fusion_cell_long_run] pid=99617 config=/Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/fusion_cell/config.json mode=nonstop max_batches=0
+[fusion_cell_long_run] stop: touch /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/LONG_RUN_STOP  OR  bash scripts/fusion_cell_long_run_stop.sh
+[fusion_cell_long_run] stop file — exit
+[fusion_cell_long_run] pid=2801 config=/Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/fusion_cell/config.json mode=nonstop max_batches=0
+[fusion_cell_long_run] stop: touch /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/LONG_RUN_STOP  OR  bash scripts/fusion_cell_long_run_stop.sh
+[fusion_cell_long_run] stop file — exit
+[fusion_cell_long_run] pid=3244 config=/Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/fusion_cell/config.json mode=nonstop max_batches=0
+[fusion_cell_long_run] stop: touch /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/LONG_RUN_STOP  OR  bash scripts/fusion_cell_long_run_stop.sh
+[fusion_cell_long_run] iter=6 mode=virtual rc=137 (continuing)
+[fusion_cell_long_run] iter=10 mode=virtual rc=1 (continuing)
+[fusion_cell_long_run] stop file — exit
+[fusion_cell_long_run] pid=48804 config=/Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/fusion_cell/config.json mode=nonstop max_batches=0
+[fusion_cell_long_run] stop: touch /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/LONG_RUN_STOP  OR  bash scripts/fusion_cell_long_run_stop.sh
+[fusion_cell_long_run] stop file — exit
+[fusion_cell_long_run] pid=72936 config=/Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/fusion_cell/config.json mode=nonstop max_batches=0
+[fusion_cell_long_run] stop: touch /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/LONG_RUN_STOP  OR  bash scripts/fusion_cell_long_run_stop.sh
+[fusion_cell_long_run] iter=325 mode=virtual rc=1 (continuing)
+[fusion_cell_long_run] stop file — exit
+[fusion_cell_long_run] pid=22034 config=/Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/fusion_cell/config.json mode=nonstop max_batches=0
+[fusion_cell_long_run] stop: touch /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/LONG_RUN_STOP  OR  bash scripts/fusion_cell_long_run_stop.sh
+[fusion_cell_long_run] stop file — exit
+[fusion_cell_long_run] pid=80883 config=/Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/fusion_cell/config.json mode=nonstop max_batches=0
+[fusion_cell_long_run] stop: touch /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/LONG_RUN_STOP  OR  bash scripts/fusion_cell_long_run_stop.sh
+[fusion_cell_long_run] stop file — exit
+[fusion_cell_long_run] pid=86525 config=/Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/fusion_cell/config.json mode=nonstop max_batches=0
+[fusion_cell_long_run] stop: touch /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/LONG_RUN_STOP  OR  bash scripts/fusion_cell_long_run_stop.sh
+[fusion_cell_long_run] stop file — exit

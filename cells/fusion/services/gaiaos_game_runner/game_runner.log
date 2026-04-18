@@ -1,0 +1,16 @@
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /Users/richardgillespie/Documents/FoT8D/cells/fusion/gaiaos_atc_ui/Cargo.toml
+workspace: /Users/richardgillespie/Documents/FoT8D/cells/fusion/Cargo.toml
+   Compiling gaiaos_game_runner v0.1.0 (/Users/richardgillespie/Documents/FoT8D/cells/fusion/services/gaiaos_game_runner)
+warning: unused import: `error`
+  --> services/gaiaos_game_runner/src/main.rs:17:21
+   |
+17 | use tracing::{info, error};
+   |                     ^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: `gaiaos_game_runner` (bin "gaiaos_game_runner") generated 1 warning (run `cargo fix --bin "gaiaos_game_runner"` to apply 1 suggestion)
+    Finished `dev` profile [optimized + debuginfo] target(s) in 1.59s
+     Running `/Users/richardgillespie/Documents/FoT8D/cells/fusion/target/debug/gaiaos_game_runner`
+2026-01-13T11:03:17.413955Z  INFO gaiaos_game_runner: GaiaFTCL Game Runner listening on port 8805

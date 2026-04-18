@@ -20,7 +20,7 @@
 //!
 //! Patents: USPTO 19/460,960 | USPTO 19/096,071 — © 2026 Richard Gillespie
 
-use std::sync::atomic::{AtomicU64, AtomicU32, Ordering};
+use std::sync::atomic::{AtomicU32, AtomicU64, Ordering};
 
 // ── TauState — sovereign time substrate ───────────────────────────────────────
 
@@ -45,7 +45,7 @@ impl TauState {
     pub fn new() -> Self {
         Self {
             block_height: AtomicU64::new(0),
-            frame_count:  AtomicU64::new(0),
+            frame_count: AtomicU64::new(0),
             epistemic_tag: AtomicU32::new(3), // default: Assumed
         }
     }
@@ -82,7 +82,9 @@ impl TauState {
 }
 
 impl Default for TauState {
-    fn default() -> Self { Self::new() }
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 // ── C FFI surface ─────────────────────────────────────────────────────────────
@@ -107,8 +109,12 @@ pub extern "C" fn gaia_metal_renderer_create() -> GaiaRendererHandle {
 /// not yet destroyed. After this call, `handle` is dangling — do not use.
 #[unsafe(no_mangle)]
 pub extern "C" fn gaia_metal_renderer_destroy(handle: GaiaRendererHandle) {
-    if handle.is_null() { return; }
-    unsafe { drop(Box::from_raw(handle as *mut TauState)); }
+    if handle.is_null() {
+        return;
+    }
+    unsafe {
+        drop(Box::from_raw(handle as *mut TauState));
+    }
 }
 
 /// Set sovereign time τ (Bitcoin block height) from NATS heartbeat.
@@ -116,11 +122,10 @@ pub extern "C" fn gaia_metal_renderer_destroy(handle: GaiaRendererHandle) {
 /// # Safety
 /// `handle` must be valid and non-null. `block_height` = current Bitcoin block.
 #[unsafe(no_mangle)]
-pub extern "C" fn gaia_metal_renderer_set_tau(
-    handle:       GaiaRendererHandle,
-    block_height: u64,
-) {
-    if handle.is_null() { return; }
+pub extern "C" fn gaia_metal_renderer_set_tau(handle: GaiaRendererHandle, block_height: u64) {
+    if handle.is_null() {
+        return;
+    }
     unsafe { (*(handle as *const TauState)).set_tau(block_height) }
 }
 
@@ -130,7 +135,9 @@ pub extern "C" fn gaia_metal_renderer_set_tau(
 /// `handle` must be valid and non-null. Returns 0 if null.
 #[unsafe(no_mangle)]
 pub extern "C" fn gaia_metal_renderer_get_tau(handle: GaiaRendererHandle) -> u64 {
-    if handle.is_null() { return 0; }
+    if handle.is_null() {
+        return 0;
+    }
     unsafe { (*(handle as *const TauState)).tau() }
 }
 
@@ -140,7 +147,9 @@ pub extern "C" fn gaia_metal_renderer_get_tau(handle: GaiaRendererHandle) -> u64
 /// `handle` must be valid and non-null.
 #[unsafe(no_mangle)]
 pub extern "C" fn gaia_metal_renderer_increment_frame(handle: GaiaRendererHandle) {
-    if handle.is_null() { return; }
+    if handle.is_null() {
+        return;
+    }
     unsafe { (*(handle as *const TauState)).increment_frame() }
 }
 
@@ -150,7 +159,9 @@ pub extern "C" fn gaia_metal_renderer_increment_frame(handle: GaiaRendererHandle
 /// `handle` must be valid and non-null. Returns 0 if null.
 #[unsafe(no_mangle)]
 pub extern "C" fn gaia_metal_renderer_get_frame_count(handle: GaiaRendererHandle) -> u64 {
-    if handle.is_null() { return 0; }
+    if handle.is_null() {
+        return 0;
+    }
     unsafe { (*(handle as *const TauState)).frame_count() }
 }
 
@@ -160,11 +171,10 @@ pub extern "C" fn gaia_metal_renderer_get_frame_count(handle: GaiaRendererHandle
 /// # Safety
 /// `handle` must be valid and non-null.
 #[unsafe(no_mangle)]
-pub extern "C" fn gaia_metal_renderer_set_epistemic(
-    handle: GaiaRendererHandle,
-    tag:    u32,
-) {
-    if handle.is_null() { return; }
+pub extern "C" fn gaia_metal_renderer_set_epistemic(handle: GaiaRendererHandle, tag: u32) {
+    if handle.is_null() {
+        return;
+    }
     unsafe { (*(handle as *const TauState)).set_epistemic(tag) }
 }
 
@@ -174,7 +184,9 @@ pub extern "C" fn gaia_metal_renderer_set_epistemic(
 /// `handle` must be valid and non-null. Returns 3 (Assumed) if null.
 #[unsafe(no_mangle)]
 pub extern "C" fn gaia_metal_renderer_get_epistemic(handle: GaiaRendererHandle) -> u32 {
-    if handle.is_null() { return 3; }
+    if handle.is_null() {
+        return 3;
+    }
     unsafe { (*(handle as *const TauState)).epistemic() }
 }
 
@@ -253,13 +265,17 @@ mod tests {
         let writer = {
             let s = Arc::clone(&s);
             thread::spawn(move || {
-                for i in 0u64..1000 { s.set_tau(i); }
+                for i in 0u64..1000 {
+                    s.set_tau(i);
+                }
             })
         };
         let reader = {
             let s = Arc::clone(&s);
             thread::spawn(move || {
-                for _ in 0..1000 { let _ = s.tau(); }
+                for _ in 0..1000 {
+                    let _ = s.tau();
+                }
             })
         };
         writer.join().unwrap();
@@ -296,7 +312,8 @@ mod tests {
         // GaiaVertex: position[3×f32=12] + color[4×f32=16] = 28 bytes
         // Defined in renderer.rs — verify via size_of
         assert_eq!(
-            std::mem::size_of::<[f32; 7]>(), 28,
+            std::mem::size_of::<[f32; 7]>(),
+            28,
             "GaiaVertex layout must be 28 bytes (7 floats)"
         );
     }
@@ -305,7 +322,8 @@ mod tests {
     fn rg_006_uniforms_size_64() {
         // Uniforms: MVP matrix[16×f32=64 bytes]
         assert_eq!(
-            std::mem::size_of::<[[f32; 4]; 4]>(), 64,
+            std::mem::size_of::<[[f32; 4]; 4]>(),
+            64,
             "Uniforms MVP matrix must be 64 bytes"
         );
     }

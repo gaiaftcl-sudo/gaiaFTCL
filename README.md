@@ -5,8 +5,15 @@
 
 [![Source](https://img.shields.io/badge/GitHub-main-blue)](https://github.com/gaiaftcl-sudo/gaiaFTCL/tree/main)
 [![Wiki](https://img.shields.io/badge/docs-wiki-181717)](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki)
-[![GxP](https://img.shields.io/badge/GxP-GAMP5%20%7C%20EU%20Annex%2011-blue)](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/GAIAOS/macos/GaiaFusion/evidence/GFTCL-PQ-002_v1.0.md)
+[![GxP](https://img.shields.io/badge/GxP-GAMP5%20%7C%20EU%20Annex%2011-blue)](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/fusion/macos/GaiaFusion/evidence/GFTCL-PQ-002_v1.0.md)
 [![Patents](https://img.shields.io/badge/patents-USPTO%2019%2F460%2C960%20%7C%2019%2F096%2C071-orange)](LICENSE)
+
+### Path migration (Mac cells layout)
+
+| Old path | New path |
+|----------|----------|
+| `GAIAOS/` | [`cells/fusion/`](cells/fusion/) |
+| Top-level `GaiaHealth/` | [`cells/health/`](cells/health/) |
 
 ---
 
@@ -15,7 +22,7 @@
 | Where | What you get |
 |--------|----------------|
 | **[GitHub Wiki](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki)** | Full narrative: Home, Mac Cell guide, IQ/OQ/PQ, plant catalog, operator guides—same story as this README, with full navigation and images. |
-| **This file (`README.md`)** | Repo overview, architecture summary, quick start, and links into `GAIAOS/`. |
+| **This file (`README.md`)** | Repo overview, architecture summary, quick start, and links into `cells/fusion/`. |
 
 Screenshots below are stored under [`docs/media/images/`](docs/media/images/) so they render on GitHub.
 
@@ -84,7 +91,7 @@ When S⁴ and C⁴ disagree, **the substrate wins**. Always.
 
 ![Fusion dashboard — live witness](docs/media/images/fusion-dashboard.png)
 
-*Fusion dashboard screenshot (witness bundle under `GAIAOS/evidence/fusion/`; copy in-repo for this page).*
+*Fusion dashboard screenshot (witness bundle under `cells/fusion/evidence/fusion/`; copy in-repo for this page).*
 
 The **Mac Cell** is the sovereign human interface node: Apple Silicon M-chip workstation running a native Metal renderer that visualizes the live plasma state of all nine canonical fusion plant kinds simultaneously.
 
@@ -99,7 +106,7 @@ The **Mac Cell** is the sovereign human interface node: Apple Silicon M-chip wor
 
 **Qualification:** Full GAMP 5 / EU Annex 11 / FDA 21 CFR Part 11 IQ → OQ → PQ lifecycle with automated evidence collection. CERN-ready for deployment on physics lab Macs.
 
-**Location:** `GAIAOS/macos/GaiaFusion/` — Complete technical documentation in [README.md](GAIAOS/macos/GaiaFusion/README.md)
+**Location:** `cells/fusion/macos/GaiaFusion/` — Complete technical documentation in [README.md](cells/fusion/macos/GaiaFusion/README.md)
 
 ---
 
@@ -117,7 +124,7 @@ The **Mac Cell** is the sovereign human interface node: Apple Silicon M-chip wor
 | **MIF** | Magnetized inertial fusion, hybrid approach | B_field, ρ, T_i | — | — |
 | **Inertial** | Laser/ion driven implosion | E_laser, ρR, T_i | — | — |
 
-Full physics bounds, invariants, and reference facilities: **[Plant Invariants](GAIAOS/macos/GaiaFusion/docs/PLANT_INVARIANTS.md)**
+Full physics bounds, invariants, and reference facilities: **[Plant Invariants](cells/fusion/macos/GaiaFusion/docs/PLANT_INVARIANTS.md)**
 
 ---
 
@@ -175,7 +182,7 @@ Each domain shares the same **quorum rules**, **epistemic tagging**, and **termi
 
 ```
 FoT8D/
-├── GAIAOS/
+├── cells/fusion/
 │   ├── macos/GaiaFusion/           ⭐ Mac Cell application (CERN-ready)
 │   │   ├── GaiaFusion/            Swift source (Layout, Models, Services, FFI)
 │   │   ├── MetalRenderer/         Rust workspace (renderer, FFI, Metal shaders)
@@ -208,7 +215,7 @@ FoT8D/
 The IQ script checks prerequisites, verifies Apple macOS standards, and generates the **sovereign cell wallet identity**.
 
 ```bash
-cd GAIAOS/macos/GaiaFusion
+cd cells/fusion/macos/GaiaFusion
 zsh scripts/iq_install.sh
 ```
 
@@ -274,11 +281,11 @@ Or open the Swift package in Xcode → scheme **GaiaFusion** → Run.
 | Document | Description |
 |---|---|
 | **[Wiki](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki)** | Complete system architecture, IQ/OQ/PQ, plant catalog |
-| **[GaiaFusion README](GAIAOS/macos/GaiaFusion/README.md)** | Mac Cell technical reference (architecture, FFI, performance) |
+| **[GaiaFusion README](cells/fusion/macos/GaiaFusion/README.md)** | Mac Cell technical reference (architecture, FFI, performance) |
 | **[Mac Cell Guide](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Mac-Cell-Guide)** | Complete operator manual (43 KB) |
-| **[Layout Spec](GAIAOS/macos/GaiaFusion/docs/GaiaFusion_Layout_Spec.md)** | UI layout contract (HStack/VStack/ZStack) |
-| **[Authorization Matrix](GAIAOS/macos/GaiaFusion/docs/OPERATOR_AUTHORIZATION_MATRIX.md)** | Wallet-based L1/L2/L3 roles, dual-auth protocol |
-| **[Plant Invariants](GAIAOS/macos/GaiaFusion/docs/PLANT_INVARIANTS.md)** | Physics bounds for all 9 fusion topologies |
+| **[Layout Spec](cells/fusion/macos/GaiaFusion/docs/GaiaFusion_Layout_Spec.md)** | UI layout contract (HStack/VStack/ZStack) |
+| **[Authorization Matrix](cells/fusion/macos/GaiaFusion/docs/OPERATOR_AUTHORIZATION_MATRIX.md)** | Wallet-based L1/L2/L3 roles, dual-auth protocol |
+| **[Plant Invariants](cells/fusion/macos/GaiaFusion/docs/PLANT_INVARIANTS.md)** | Physics bounds for all 9 fusion topologies |
 | **[Fusion Operator Guide](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Fusion-Operator-Guide)** | Plant swap, telemetry, safety interlocks |
 
 ---

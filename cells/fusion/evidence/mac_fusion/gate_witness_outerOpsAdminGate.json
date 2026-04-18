@@ -1,0 +1,50 @@
+{
+  "gate": "outerOpsAdminGate",
+  "ok": true,
+  "terminal": "CALORIE",
+  "blocker": null,
+  "witness": {
+    "docker_cli_ok": true,
+    "docker_container_count": 34,
+    "docker_container_names_sample": [
+      "gaiaftcl-fusion-fleet-subscriber",
+      "gaiaftcl-bitcoin-core",
+      "gaiaftcl-gateway",
+      "gaiaos-ui-tester-mcp",
+      "gaiaos-edge-proxy",
+      "gaiaos-virtue",
+      "gaiaos-agent",
+      "gaiaos-substrate",
+      "gaiaos-ollama",
+      "gaiaos-nats",
+      "gaiaos-arangodb",
+      "atc-globe-ui",
+      "atc-consciousness-agent",
+      "atc-flight-aggregator",
+      "gaiaos-ui-web",
+      "gaiaos-entropy-api",
+      "gaiaos-airplanes-live-ingest",
+      "gaiaos-adaptive-grid-builder",
+      "gaiaos-atmosphere-noaa-gfs-opendap-ingest",
+      "gaiaos-ocean-noaa-gfswave-opendap-ingest"
+    ],
+    "sovereign_mesh_api_ok": true,
+    "sovereign_mesh_witness_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/sovereign_mesh_witness.json",
+    "sovereign_mesh_cells_count": 9,
+    "openusd_fleet_overlay_ok": true,
+    "dns_resolution_ok": true,
+    "dns_resolution_results": [
+      {
+        "host": "gaiaftcl.com",
+        "ok": true,
+        "answer": "77.42.88.110"
+      },
+      {
+        "host": "www.gaiaftcl.com",
+        "ok": true,
+        "answer": "77.42.88.110"
+      }
+    ]
+  },
+  "ts_utc": "2026-04-07T18:26:21.267387+00:00"
+}

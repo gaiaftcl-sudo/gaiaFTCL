@@ -5,7 +5,7 @@
 **FortressAI Research Institute | Norwich, Connecticut**
 **Patents: USPTO 19/460,960 | USPTO 19/096,071 — © 2026 Richard Gillespie**
 
-> This document audits the Cursor gap-finding plan against the actual source code in the GAIAFTCL repository and the composite app UI requirements. Cursor worked from the GaiaFusion Swift app (`GAIAOS/macos/GaiaFusion`). This audit reads the underlying Rust crates that the Swift app calls. Both perspectives are required for a complete picture.
+> This document audits the Cursor gap-finding plan against the actual source code in the GAIAFTCL repository and the composite app UI requirements. Cursor worked from the GaiaFusion Swift app (`cells/fusion/macos/GaiaFusion`). This audit reads the underlying Rust crates that the Swift app calls. Both perspectives are required for a complete picture.
 
 ---
 

@@ -1,9 +1,0 @@
-{
-  "schema": "gaiaftcl_gaiafusion_swift_test_preflight_refused_v1",
-  "ts_utc": "2026-04-12T10:28:18Z",
-  "terminal": "REFUSED",
-  "exit_code": 86,
-  "reason": "stale_swiftpm_xctest_helper_present",
-  "detail": "run_gaiafusion_swift_tests.sh preflight counts rg match on swiftpm-xctest-helper for GaiaFusionPackageTests; host still held multiple UE workers from prior sessions.",
-  "next_c4": "Reboot or login session reset, then bash GAIAOS/scripts/run_gaiafusion_swift_tests.sh without GAIAFUSION_SKIP_STALL_PREFLIGHT."
-}

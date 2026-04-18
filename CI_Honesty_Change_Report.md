@@ -18,7 +18,7 @@
 | `.github/workflows/gaiaos-ci.yml` | **Landed** — hard-fail Linux Rust/Python subset; scoped pytest; `VALIDATION_TIER`. |
 | `.github/workflows/mac-cell-ci.yml` | **Landed** — honest labels; MetalRenderer **clippy** + build from `MetalRenderer/rust` (Cargo lives there). |
 | `.github/workflows/gaiafusion-gamp5-validation.yml` (root) | **Landed** — honest workflow `name:`, tier stamp, artifact `gaiafusion-build-smoke-evidence`. |
-| `GAIAOS/.github/workflows/gaiafusion-gamp5-validation.yml` (mirror) | **Landed** — in sync with root semantics; GAIAOS-relative paths. |
+| `cells/fusion/.github/workflows/gaiafusion-gamp5-validation.yml` (mirror) | **Landed** — in sync with root semantics; GAIAOS-relative paths. |
 | `.github/workflows/full-cycle.yml` | **Removed** — misleading `FULL_CYCLE_GREEN` / minimal workspace overclaim (preferred alternative to stub). |
 | `.github/workflows/sparkle-release-lint.yml` | **Landed** — zsh lint for Sparkle placeholders. |
 | `.github/workflows/receipt-hygiene.yml` | **Landed** — unsigned `M` provenance gate on evidence JSON. |
@@ -44,26 +44,26 @@ verified against the repo:
 
 | Claim | Verification | Result |
 | --- | --- | --- |
-| `lint_sparkle_release.sh` shebang is `#!/usr/bin/env zsh` (not bash) | Read `GAIAOS/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh` line 1 | **Confirmed zsh** |
-| `lint_sparkle_release.sh` resolves `ROOT` via `$(cd "$(dirname "$0")/../../.." && pwd)` and expects `${ROOT}/macos/GaiaFTCLConsole/project.yml` | Read line 5–6 of the script | **Confirmed** — invoke with full path from repo root: `zsh GAIAOS/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh` |
+| `lint_sparkle_release.sh` shebang is `#!/usr/bin/env zsh` (not bash) | Read `cells/fusion/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh` line 1 | **Confirmed zsh** |
+| `lint_sparkle_release.sh` resolves `ROOT` via `$(cd "$(dirname "$0")/../../.." && pwd)` and expects `${ROOT}/macos/GaiaFTCLConsole/project.yml` | Read line 5–6 of the script | **Confirmed** — invoke with full path from repo root: `zsh cells/fusion/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh` |
 | Root `Cargo.toml` is the minimal workspace `["rust_fusion_usd_parser", "gaia-metal-renderer"]` and does **not** span the full GAIAOS tree | Read `Cargo.toml` | **Confirmed.** `full-cycle.yml`'s "FULL_CYCLE_GREEN" receipt was overclaiming. |
-| GAIAOS mirror of `gaiafusion-gamp5-validation.yml` uses `working-directory: macos/GaiaFusion` vs the root copy's `GAIAOS/macos/GaiaFusion` | Read both files | **Confirmed** — mirror was out of sync. |
+| GAIAOS mirror of `gaiafusion-gamp5-validation.yml` uses `working-directory: macos/GaiaFusion` vs the root copy's `cells/fusion/macos/GaiaFusion` | Read both files | **Confirmed** — mirror was out of sync. |
 | No committed evidence JSON today carries `provenance_tag: "M"` without a `receipt_sig` | `grep -rlE '"provenance_tag"\s*:\s*"M"'` across all evidence roots | **Confirmed zero matches.** Receipt‑hygiene gate would land green. |
-| One `M_SIL` file exists: `GAIAOS/macos/MacHealth/evidence/oq/sil_v2_unit_protocol_contract_fixture.json` | Grep for `"M_SIL"` | **Confirmed.** Excluded by `*_fixture.json` rule and by `M_SIL ≠ M`. |
+| One `M_SIL` file exists: `cells/fusion/macos/MacHealth/evidence/oq/sil_v2_unit_protocol_contract_fixture.json` | Grep for `"M_SIL"` | **Confirmed.** Excluded by `*_fixture.json` rule and by `M_SIL ≠ M`. |
 
 Evidence roots discovered under the repo:
 
 ```
 FoT8D/evidence/
-FoT8D/GAIAOS/macos/GaiaFusion/evidence/
-FoT8D/GAIAOS/macos/MacHealth/evidence/
-FoT8D/GAIAOS/evidence/
-FoT8D/GAIAOS/archive/rust_prototype_2026_04_13/evidence/
-FoT8D/GAIAOS/apps/gaiaos_browser_cell/public/docs/evidence/
-FoT8D/GAIAOS/services/gaiaos_ui_tester_mcp/evidence/
-FoT8D/GAIAOS/services/discord_frontier/evidence/
-FoT8D/GAIAOS/services/gaiaos_ui_web/app/api/evidence/
-FoT8D/GAIAOS/services/gaiaos_ui_web/evidence/
+FoT8D/cells/fusion/macos/GaiaFusion/evidence/
+FoT8D/cells/fusion/macos/MacHealth/evidence/
+FoT8D/cells/fusion/evidence/
+FoT8D/cells/fusion/archive/rust_prototype_2026_04_13/evidence/
+FoT8D/cells/fusion/apps/gaiaos_browser_cell/public/docs/evidence/
+FoT8D/cells/fusion/services/gaiaos_ui_tester_mcp/evidence/
+FoT8D/cells/fusion/services/discord_frontier/evidence/
+FoT8D/cells/fusion/services/gaiaos_ui_web/app/api/evidence/
+FoT8D/cells/fusion/services/gaiaos_ui_web/evidence/
 ```
 
 YAML syntax check performed on the attempted payloads before reversion
@@ -81,7 +81,7 @@ commit. They are the exact payloads that were attempted.
 ### 2.1  `.github/workflows/gaiaos-ci.yml` — hard‑fail the Linux subset
 
 ```yaml
-# Hoisted from GAIAOS/.github/workflows/ci.yml — runs when repo root is FoT8D/gaiaFTCL.
+# Hoisted from cells/fusion/.github/workflows/ci.yml — runs when repo root is FoT8D/gaiaFTCL.
 #
 # VALIDATION_TIER: CI_headless_smoke (Linux Rust/Python subset only).
 # This is NOT operator OQ. AppKit/Metal/Swift tests live in mac-cell-ci.yml
@@ -99,12 +99,12 @@ on:
   push:
     branches: [main, develop]
     paths:
-      - "GAIAOS/**"
+      - "cells/fusion/**"
       - ".github/workflows/gaiaos-ci.yml"
   pull_request:
     branches: [main]
     paths:
-      - "GAIAOS/**"
+      - "cells/fusion/**"
 
 env:
   CARGO_TERM_COLOR: always
@@ -191,15 +191,15 @@ on:
   push:
     branches: [main]
     paths:
-      - 'GAIAOS/macos/GaiaFusion/**'
-      - 'GAIAOS/macos/MacHealth/**'
+      - 'cells/fusion/macos/GaiaFusion/**'
+      - 'cells/fusion/macos/MacHealth/**'
       - 'Scenarios_Physics_Frequencies_Assertions.md'
       - '.github/workflows/mac-cell-ci.yml'
   pull_request:
     branches: [main]
     paths:
-      - 'GAIAOS/macos/GaiaFusion/**'
-      - 'GAIAOS/macos/MacHealth/**'
+      - 'cells/fusion/macos/GaiaFusion/**'
+      - 'cells/fusion/macos/MacHealth/**'
       - 'Scenarios_Physics_Frequencies_Assertions.md'
   workflow_dispatch:
 
@@ -228,29 +228,29 @@ jobs:
       - name: Cache Rust dependencies
         uses: Swatinem/rust-cache@v2
         with:
-          workspaces: "GAIAOS/macos/GaiaFusion/MetalRenderer"
+          workspaces: "cells/fusion/macos/GaiaFusion/MetalRenderer"
 
       - name: Cache Xcode DerivedData
         uses: actions/cache@v4
         with:
           path: ~/Library/Developer/Xcode/DerivedData
-          key: ${{ runner.os }}-xcode-deriveddata-${{ hashFiles('GAIAOS/macos/GaiaFusion/Package.resolved') }}
+          key: ${{ runner.os }}-xcode-deriveddata-${{ hashFiles('cells/fusion/macos/GaiaFusion/Package.resolved') }}
           restore-keys: |
             ${{ runner.os }}-xcode-deriveddata-
 
       - name: Clippy MetalRenderer (hard gate — no warnings)
-        working-directory: GAIAOS/macos/GaiaFusion/MetalRenderer
+        working-directory: cells/fusion/macos/GaiaFusion/MetalRenderer
         run: cargo clippy --release --target aarch64-apple-darwin --all-targets -- -D warnings
 
       - name: Build Rust Metal Renderer (FFI)
-        working-directory: GAIAOS/macos/GaiaFusion/MetalRenderer
+        working-directory: cells/fusion/macos/GaiaFusion/MetalRenderer
         run: |
           cargo build --release --target aarch64-apple-darwin
           mkdir -p lib
           cp target/aarch64-apple-darwin/release/libgaia_metal_renderer.a lib/
 
       - name: Build Swift Package (GaiaFusion)
-        working-directory: GAIAOS/macos/GaiaFusion
+        working-directory: cells/fusion/macos/GaiaFusion
         run: |
           xcodebuild build \
             -scheme GaiaFusion \
@@ -260,7 +260,7 @@ jobs:
       # Intentionally labeled a "CI headless smoke", not OQ.
       # Operator OQ happens in Terminal.app Aqua with a signed receipt.
       - name: GaiaFusion xcodebuild test (CI headless smoke — not operator OQ)
-        working-directory: GAIAOS/macos/GaiaFusion
+        working-directory: cells/fusion/macos/GaiaFusion
         run: |
           xcodebuild test \
             -scheme GaiaFusion \
@@ -278,7 +278,7 @@ jobs:
         run: sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
 
       - name: Swift test (MacHealth + SIL V2 contracts, CI smoke)
-        working-directory: GAIAOS/macos/MacHealth
+        working-directory: cells/fusion/macos/MacHealth
         run: swift test -v
 ```
 
@@ -289,7 +289,7 @@ comment anchored to KERNEL DEADLOCK PROTOCOL.
 ### 2.3  `.github/workflows/gaiafusion-gamp5-validation.yml` (root) — honest rename
 
 ```yaml
-# Hoisted for monorepo root — mirror: GAIAOS/.github/workflows/gaiafusion-gamp5-validation.yml
+# Hoisted for monorepo root — mirror: cells/fusion/.github/workflows/gaiafusion-gamp5-validation.yml
 #
 # VALIDATION_TIER: CI_headless_smoke
 #
@@ -310,8 +310,8 @@ comment anchored to KERNEL DEADLOCK PROTOCOL.
 #   Either
 #     git mv .github/workflows/gaiafusion-gamp5-validation.yml \
 #            .github/workflows/gaiafusion-build-smoke.yml
-#     git mv GAIAOS/.github/workflows/gaiafusion-gamp5-validation.yml \
-#            GAIAOS/.github/workflows/gaiafusion-build-smoke.yml
+#     git mv cells/fusion/.github/workflows/gaiafusion-gamp5-validation.yml \
+#            cells/fusion/.github/workflows/gaiafusion-build-smoke.yml
 #   or delete both and rely on mac-cell-ci.yml for the headless smoke tier.
 
 name: "GaiaFusion Build Smoke (was GAMP 5 Validation — renamed for honesty)"
@@ -320,12 +320,12 @@ on:
   push:
     branches: [main, develop]
     paths:
-      - "GAIAOS/macos/GaiaFusion/**"
+      - "cells/fusion/macos/GaiaFusion/**"
       - ".github/workflows/gaiafusion-gamp5-validation.yml"
   pull_request:
     branches: [main]
     paths:
-      - "GAIAOS/macos/GaiaFusion/**"
+      - "cells/fusion/macos/GaiaFusion/**"
 
 env:
   VALIDATION_TIER: CI_headless_smoke
@@ -350,7 +350,7 @@ jobs:
           python-version: "3.11"
 
       - name: Build config CLI
-        working-directory: GAIAOS/macos/GaiaFusion
+        working-directory: cells/fusion/macos/GaiaFusion
         run: |
           cd tools/gaiafusion-config-cli
           cargo build --release
@@ -359,15 +359,15 @@ jobs:
       # smoke here. The VALIDATION_TIER.txt below tells any downstream
       # auditor what this artifact actually represents.
       - name: Run IQ script (headless smoke)
-        working-directory: GAIAOS/macos/GaiaFusion
+        working-directory: cells/fusion/macos/GaiaFusion
         run: zsh scripts/run_iq_validation.sh
 
       - name: Run OQ script (headless smoke)
-        working-directory: GAIAOS/macos/GaiaFusion
+        working-directory: cells/fusion/macos/GaiaFusion
         run: zsh scripts/run_oq_validation.sh
 
       - name: Stamp VALIDATION_TIER.txt into evidence/
-        working-directory: GAIAOS/macos/GaiaFusion
+        working-directory: cells/fusion/macos/GaiaFusion
         run: |
           mkdir -p evidence
           cat > evidence/VALIDATION_TIER.txt <<EOF
@@ -390,11 +390,11 @@ jobs:
         if: always()
         with:
           name: gaiafusion-build-smoke-evidence
-          path: GAIAOS/macos/GaiaFusion/evidence/
+          path: cells/fusion/macos/GaiaFusion/evidence/
           retention-days: 90
 ```
 
-### 2.4  `GAIAOS/.github/workflows/gaiafusion-gamp5-validation.yml` (mirror) — kept in sync
+### 2.4  `cells/fusion/.github/workflows/gaiafusion-gamp5-validation.yml` (mirror) — kept in sync
 
 ```yaml
 # GAIAOS-tree mirror — kept in sync with
@@ -458,7 +458,7 @@ jobs:
           mkdir -p evidence
           cat > evidence/VALIDATION_TIER.txt <<EOF
           VALIDATION_TIER=CI_headless_smoke
-          workflow=GAIAOS/.github/workflows/gaiafusion-gamp5-validation.yml
+          workflow=cells/fusion/.github/workflows/gaiafusion-gamp5-validation.yml
           runner=macos-14 (GitHub-hosted)
           witnessed_by=github-actions (NO human operator, NO Aqua session)
           metal_window_launched=false
@@ -544,9 +544,9 @@ jobs:
 # Sparkle signing keys or feed URL. Runs the same zsh lint script a human
 # would run locally from repo root:
 #
-#   zsh GAIAOS/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh
+#   zsh cells/fusion/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh
 #
-# The script checks GAIAOS/macos/GaiaFTCLConsole/project.yml and refuses
+# The script checks cells/fusion/macos/GaiaFTCLConsole/project.yml and refuses
 # if SUPublicEDKey is a placeholder (placeholder / PLACEHOLDER / changeme
 # / TODO) or if SUFeedURL points at example.com / placeholder / localhost:0.
 # Hard fail is the correct behavior — do NOT add continue-on-error here.
@@ -557,14 +557,14 @@ on:
   push:
     branches: [main, develop]
     paths:
-      - 'GAIAOS/macos/GaiaFTCLConsole/project.yml'
-      - 'GAIAOS/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh'
+      - 'cells/fusion/macos/GaiaFTCLConsole/project.yml'
+      - 'cells/fusion/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh'
       - '.github/workflows/sparkle-release-lint.yml'
   pull_request:
     branches: [main]
     paths:
-      - 'GAIAOS/macos/GaiaFTCLConsole/project.yml'
-      - 'GAIAOS/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh'
+      - 'cells/fusion/macos/GaiaFTCLConsole/project.yml'
+      - 'cells/fusion/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh'
       - '.github/workflows/sparkle-release-lint.yml'
   workflow_dispatch:
 
@@ -589,11 +589,11 @@ jobs:
 
       - name: Confirm project.yml is present (sanity)
         run: |
-          test -f GAIAOS/macos/GaiaFTCLConsole/project.yml \
-            || { echo "missing GAIAOS/macos/GaiaFTCLConsole/project.yml"; exit 2; }
+          test -f cells/fusion/macos/GaiaFTCLConsole/project.yml \
+            || { echo "missing cells/fusion/macos/GaiaFTCLConsole/project.yml"; exit 2; }
 
       - name: Run Sparkle release lint (hard gate)
-        run: zsh GAIAOS/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh
+        run: zsh cells/fusion/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh
 
       # Positive-path evidence so reviewers can see what was inspected.
       - name: Print inspected Sparkle fields
@@ -601,7 +601,7 @@ jobs:
         run: |
           echo "── SUPublicEDKey / SUFeedURL in project.yml ──"
           grep -nE 'SUPublicEDKey|SUFeedURL' \
-            GAIAOS/macos/GaiaFTCLConsole/project.yml || true
+            cells/fusion/macos/GaiaFTCLConsole/project.yml || true
 ```
 
 ### 2.7  `.github/workflows/receipt-hygiene.yml` — NEW hard gate
@@ -619,7 +619,7 @@ jobs:
 #
 # Scope:
 #   • evidence/**          at repo root
-#   • GAIAOS/**/evidence/** anywhere under GAIAOS
+#   • cells/fusion/**/evidence/** anywhere under GAIAOS
 #
 # Excluded by design:
 #   • Tests/**, Fixtures/**, sil_v2_unit_protocol_contract_fixture.json,
@@ -636,13 +636,13 @@ on:
     branches: [main, develop]
     paths:
       - 'evidence/**'
-      - 'GAIAOS/**/evidence/**'
+      - 'cells/fusion/**/evidence/**'
       - '.github/workflows/receipt-hygiene.yml'
   pull_request:
     branches: [main]
     paths:
       - 'evidence/**'
-      - 'GAIAOS/**/evidence/**'
+      - 'cells/fusion/**/evidence/**'
       - '.github/workflows/receipt-hygiene.yml'
   workflow_dispatch:
 
@@ -778,15 +778,15 @@ git add .github/workflows/gaiaos-ci.yml \
 # 3. Rename (keep filename, fix content) or retire the gamp5 mirrors (§2.3, §2.4):
 #    Option A — in-place honest rename:
 git add .github/workflows/gaiafusion-gamp5-validation.yml \
-        GAIAOS/.github/workflows/gaiafusion-gamp5-validation.yml
+        cells/fusion/.github/workflows/gaiafusion-gamp5-validation.yml
 #    Option B — filename rename (replaces Option A content edits):
 # git mv .github/workflows/gaiafusion-gamp5-validation.yml \
 #        .github/workflows/gaiafusion-build-smoke.yml
-# git mv GAIAOS/.github/workflows/gaiafusion-gamp5-validation.yml \
-#        GAIAOS/.github/workflows/gaiafusion-build-smoke.yml
+# git mv cells/fusion/.github/workflows/gaiafusion-gamp5-validation.yml \
+#        cells/fusion/.github/workflows/gaiafusion-build-smoke.yml
 #    Option C — delete both:
 # git rm .github/workflows/gaiafusion-gamp5-validation.yml \
-#        GAIAOS/.github/workflows/gaiafusion-gamp5-validation.yml
+#        cells/fusion/.github/workflows/gaiafusion-gamp5-validation.yml
 
 # 4. Retire full-cycle.yml (§2.5):
 #    Option A — replace with retirement stub:
@@ -826,7 +826,7 @@ cross into AppKit/Metal/VFS territory.
   `*_fixture.json` file under `Tests/`-adjacent path — excluded twice
   over (filename pattern + `M_SIL ≠ M`).
 - Lint script shebang and `ROOT` resolution verified by direct Read;
-  invocation from repo root is `zsh GAIAOS/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh`.
+  invocation from repo root is `zsh cells/fusion/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh`.
 - Root `Cargo.toml` confirmed minimal workspace (two members).
 
 ---

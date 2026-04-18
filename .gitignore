@@ -55,9 +55,9 @@ venv/
 
 # GaiaHealth — sovereign wallet (zero-PII but private entropy must not be committed)
 .gaiahealth/
-GaiaHealth/evidence/
-GaiaHealth/swift_testrobit/*.a
-GaiaHealth/wasm_constitutional/pkg/
+cells/health/evidence/
+cells/health/swift_testrobit/*.a
+cells/health/wasm_constitutional/pkg/
 
 # GAIAFTCL — existing wallet pattern
 .gaiaftcl/
@@ -101,9 +101,9 @@ evidence/vqbit_test_receipt.json
 .claude/
 BenOS/
 GAIAFTCL/
-GAIAOS/Internal/
-GAIAOS/archive/
-GAIAOS/cursor_watchdog_*.log
+cells/fusion/Internal/
+cells/fusion/archive/
+cells/fusion/cursor_watchdog_*.log
 gaia-ftcl-dist/
 
 # Git LFS hooksPath — local only; never commit (not project source)

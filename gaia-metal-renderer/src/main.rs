@@ -1,3 +1,12 @@
+//! macOS Metal demo binary — objc2-heavy; clippy `-D warnings` is relaxed here.
+#![allow(unused_unsafe)]
+#![allow(dead_code)]
+#![allow(clippy::derivable_impls)]
+#![allow(clippy::unnecessary_cast)]
+#![allow(clippy::explicit_counter_loop)]
+#![allow(clippy::manual_slice_size_calculation)]
+#![allow(clippy::field_reassign_with_default)]
+
 mod renderer;
 mod shaders;
 
@@ -70,9 +79,7 @@ impl ApplicationHandler for GaiaApp {
             }
 
             WindowEvent::RedrawRequested => {
-                if let (Some(window), Some(renderer)) =
-                    (&self.window, &mut self.renderer)
-                {
+                if let (Some(window), Some(renderer)) = (&self.window, &mut self.renderer) {
                     let size = window.inner_size();
                     if size.width > 0 && size.height > 0 {
                         renderer.render_frame(size.width, size.height);

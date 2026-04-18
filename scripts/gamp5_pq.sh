@@ -124,9 +124,9 @@ verify_oq() {
 }
 
 [[ "${PQ_MACFUSION}" == "true" ]] && \
-    verify_oq "MacFusion" "${REPO_ROOT}/GAIAOS/macos/GaiaFusion/evidence/oq/oq_receipt.json"
+    verify_oq "MacFusion" "${REPO_ROOT}/cells/fusion/macos/GaiaFusion/evidence/oq/oq_receipt.json"
 [[ "${PQ_MACHEALTH}" == "true" ]] && \
-    verify_oq "MacHealth" "${REPO_ROOT}/GAIAOS/macos/MacHealth/evidence/oq/oq_receipt.json"
+    verify_oq "MacHealth" "${REPO_ROOT}/cells/fusion/macos/MacHealth/evidence/oq/oq_receipt.json"
 
 # ══════════════════════════════════════════════════════════════════════════════
 # PQ-2: METAL GPU CHECK
@@ -219,19 +219,19 @@ run_pq_swift_tests() {
 }
 
 if [[ "${PQ_MACFUSION}" == "true" ]]; then
-    MF_PQ_RECEIPT="${REPO_ROOT}/GAIAOS/macos/GaiaFusion/evidence/pq/macfusion_pq_receipt.json"
+    MF_PQ_RECEIPT="${REPO_ROOT}/cells/fusion/macos/GaiaFusion/evidence/pq/macfusion_pq_receipt.json"
     run_pq_swift_tests \
         "MacFusion" \
-        "${REPO_ROOT}/GAIAOS/macos/GaiaFusion" \
+        "${REPO_ROOT}/cells/fusion/macos/GaiaFusion" \
         "testMetalPQOffscreenRender" \
         "${MF_PQ_RECEIPT}"
 fi
 
 if [[ "${PQ_MACHEALTH}" == "true" ]]; then
-    MH_PQ_RECEIPT="${REPO_ROOT}/GAIAOS/macos/MacHealth/evidence/pq/machealth_pq_receipt.json"
+    MH_PQ_RECEIPT="${REPO_ROOT}/cells/fusion/macos/MacHealth/evidence/pq/machealth_pq_receipt.json"
     run_pq_swift_tests \
         "MacHealth" \
-        "${REPO_ROOT}/GAIAOS/macos/MacHealth" \
+        "${REPO_ROOT}/cells/fusion/macos/MacHealth" \
         "testMetalPQOffscreenRender" \
         "${MH_PQ_RECEIPT}"
 fi
@@ -263,9 +263,9 @@ check_build_perf() {
 }
 
 [[ "${PQ_MACFUSION}" == "true" ]] && \
-    check_build_perf "MacFusion" "${REPO_ROOT}/GAIAOS/macos/GaiaFusion" "GaiaFusion"
+    check_build_perf "MacFusion" "${REPO_ROOT}/cells/fusion/macos/GaiaFusion" "GaiaFusion"
 [[ "${PQ_MACHEALTH}" == "true" ]] && \
-    check_build_perf "MacHealth" "${REPO_ROOT}/GAIAOS/macos/MacHealth"   "MacHealth"
+    check_build_perf "MacHealth" "${REPO_ROOT}/cells/fusion/macos/MacHealth"   "MacHealth"
 
 # ══════════════════════════════════════════════════════════════════════════════
 # PQ-6: WRITE PQ RECEIPTS
@@ -324,15 +324,15 @@ PYEOF
 
 [[ "${PQ_MACFUSION}" == "true" ]] && \
     write_pq_receipt "MacFusion" \
-        "${REPO_ROOT}/GAIAOS/macos/GaiaFusion/evidence/pq" \
+        "${REPO_ROOT}/cells/fusion/macos/GaiaFusion/evidence/pq" \
         "GFTCL-PQ-002" \
-        "${REPO_ROOT}/GAIAOS/macos/GaiaFusion/evidence/oq/oq_receipt.json"
+        "${REPO_ROOT}/cells/fusion/macos/GaiaFusion/evidence/oq/oq_receipt.json"
 
 [[ "${PQ_MACHEALTH}" == "true" ]] && \
     write_pq_receipt "MacHealth" \
-        "${REPO_ROOT}/GAIAOS/macos/MacHealth/evidence/pq" \
+        "${REPO_ROOT}/cells/fusion/macos/MacHealth/evidence/pq" \
         "GH-PQ-001" \
-        "${REPO_ROOT}/GAIAOS/macos/MacHealth/evidence/oq/oq_receipt.json"
+        "${REPO_ROOT}/cells/fusion/macos/MacHealth/evidence/oq/oq_receipt.json"
 
 # ══════════════════════════════════════════════════════════════════════════════
 # FINAL: CROSS-CHECK ALL THREE RECEIPTS PER CELL
@@ -378,10 +378,10 @@ PYEOF
 
 AUDIT_OK=true
 if [[ "${PQ_MACFUSION}" == "true" ]]; then
-    audit_cell "MacFusion" "${REPO_ROOT}/GAIAOS/macos/GaiaFusion" || AUDIT_OK=false
+    audit_cell "MacFusion" "${REPO_ROOT}/cells/fusion/macos/GaiaFusion" || AUDIT_OK=false
 fi
 if [[ "${PQ_MACHEALTH}" == "true" ]]; then
-    audit_cell "MacHealth" "${REPO_ROOT}/GAIAOS/macos/MacHealth" || AUDIT_OK=false
+    audit_cell "MacHealth" "${REPO_ROOT}/cells/fusion/macos/MacHealth" || AUDIT_OK=false
 fi
 
 [[ "${AUDIT_OK}" == "true" ]] || die "Receipt audit FAILED — one or more receipts missing or FAIL."
@@ -398,9 +398,9 @@ print "  Open the pq_receipt.json for each qualified cell and replace:"
 print "    \"operator\": \"CELL-OPERATOR-PUBKEY-HASH-REQUIRED\""
 print "  with your Owl secp256k1 pubkey SHA-256 hash."
 print ""
-print "  MacFusion: ${REPO_ROOT}/GAIAOS/macos/GaiaFusion/evidence/pq/pq_receipt.json"
+print "  MacFusion: ${REPO_ROOT}/cells/fusion/macos/GaiaFusion/evidence/pq/pq_receipt.json"
 [[ "${PQ_MACHEALTH}" == "true" ]] && \
-    print "  MacHealth: ${REPO_ROOT}/GAIAOS/macos/MacHealth/evidence/pq/pq_receipt.json"
+    print "  MacHealth: ${REPO_ROOT}/cells/fusion/macos/MacHealth/evidence/pq/pq_receipt.json"
 print ""
 print "  Then run: zsh scripts/run_testrobot.sh --cell ${CELL_CHOICE}"
 print ""

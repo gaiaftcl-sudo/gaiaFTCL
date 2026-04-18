@@ -5,7 +5,7 @@ alwaysApply: true
 
 # GaiaFTCL Fusion limb — plug-and-play plant architecture
 
-Workspace may be **`FoT8D`** (monorepo root). Code under **`GAIAOS/`**.
+Workspace may be **`FoT8D`** (monorepo root). Code under **`cells/fusion/`**.
 
 ## Multi-concept fusion (not tokamak-only)
 
@@ -13,26 +13,26 @@ Public taxonomy (magnetic confinement): **tokamak**, **stellarator**, **field-re
 
 ## Plug-and-play PCS / plant I/O (same app)
 
-Industry supplies **PCS**, central control, timing, and machine protection across fusion programs (e.g. open-control lineages such as **EPICS / CODAC-style** stacks in large facilities; integrators advertise fusion I&C and plasma control across **multiple experiments**). **Plant builders and control vendors** attach test bench, simulator, or live machine **without changing the Founder-facing app**: mooring, Fusion S⁴ console, wallet-gate path, DMG story stay **one surface**. Binding: **`GAIAOS/deploy/fusion_cell/config.json`**, **`GAIAOS/deploy/fusion_mesh/fusion_projection.json`**, **`bridges.*.invoke`**, site OPC/DAQ/SSH. **Not “mock”** — **interchangeable I/O backends**.
+Industry supplies **PCS**, central control, timing, and machine protection across fusion programs (e.g. open-control lineages such as **EPICS / CODAC-style** stacks in large facilities; integrators advertise fusion I&C and plasma control across **multiple experiments**). **Plant builders and control vendors** attach test bench, simulator, or live machine **without changing the Founder-facing app**: mooring, Fusion S⁴ console, wallet-gate path, DMG story stay **one surface**. Binding: **`cells/fusion/deploy/fusion_cell/config.json`**, **`cells/fusion/deploy/fusion_mesh/fusion_projection.json`**, **`bridges.*.invoke`**, site OPC/DAQ/SSH. **Not “mock”** — **interchangeable I/O backends**.
 
 ## Metal / cell-side shader path (settled)
 
-**FusionControl** precompiled Metal (`default.metallib`). Receipt regression only if `GAIAOS/evidence/fusion_control/long_run_signals.jsonl` (legacy: `overnight_signals.jsonl`) diverges (`gpu_fused_multicycle`, `metallib`, `gpu_wall_us`).
+**FusionControl** precompiled Metal (`default.metallib`). Receipt regression only if `cells/fusion/evidence/fusion_control/long_run_signals.jsonl` (legacy: `overnight_signals.jsonl`) diverges (`gpu_fused_multicycle`, `metallib`, `gpu_wall_us`).
 
 ## S4 projection
 
-Catalog, cell config, Fusion UI under **`GAIAOS/deploy/fusion_mesh/`**, **`GAIAOS/deploy/fusion_cell/`**. Site endpoints site-defined. **C4 wins.**
+Catalog, cell config, Fusion UI under **`cells/fusion/deploy/fusion_mesh/`**, **`cells/fusion/deploy/fusion_cell/`**. Site endpoints site-defined. **C4 wins.**
 
-**Bibliography / macro framing:** **`GAIAOS/evidence/fusion_control/FUSION_UNIVERSAL_PLANT_CONTROL_ASSESSMENT.md`**
+**Bibliography / macro framing:** **`cells/fusion/evidence/fusion_control/FUSION_UNIVERSAL_PLANT_CONTROL_ASSESSMENT.md`**
 
 ## Mac ports
 
-**`GAIAOS/deploy/mac_cell_mount/MAC_FUSION_MESH_CELL_PORTS.md`**, **`GAIAOS/services/gaiaos_ui_web/app/lib/macFusionCellPorts.ts`**. **C⁴ 8803 / 4222 / 8900**; **S⁴ 8910 / 14222**.
+**`cells/fusion/deploy/mac_cell_mount/MAC_FUSION_MESH_CELL_PORTS.md`**, **`cells/fusion/services/gaiaos_ui_web/app/lib/macFusionCellPorts.ts`**. **C⁴ 8803 / 4222 / 8900**; **S⁴ 8910 / 14222**.
 
 ## Mesh closed · DMG on nine cells
 
-**`GAIAOS/scripts/deploy_dmg_to_mesh.sh`**, build **`GAIAOS/scripts/build_gaiaftcl_facade_dmg.sh`**.
+**`cells/fusion/scripts/deploy_dmg_to_mesh.sh`**, build **`cells/fusion/scripts/build_gaiaftcl_facade_dmg.sh`**.
 
-GAIAOS-only workspace copy: **`GAIAOS/.cursor/rules/mac-fusion-tokamak-mesh-packaging.mdc`**.
+Fusion-cell-only workspace copy: **`cells/fusion/.cursor/rules/mac-fusion-tokamak-mesh-packaging.mdc`**.
 
 Norwich — **S⁴ serves C⁴.**

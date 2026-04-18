@@ -1,0 +1,30 @@
+{
+  "ts_utc": "2026-04-06T15:39:46.001Z",
+  "user_a": {
+    "source": "gaiaftcl-discord-bot-governance",
+    "release_id": "unknown-release",
+    "commands": [
+      "/fusion_fleet (owl)",
+      "/fusion_fleet (owl)"
+    ]
+  },
+  "user_b": {
+    "source": "gaiaftcl-discord-bot-governance",
+    "release_id": "unknown-release",
+    "commands": [
+      "/constitution (governance)",
+      "/fusion_fleet (governance)"
+    ]
+  },
+  "convergence_ms": 245,
+  "criteria": {
+    "non_interference": true,
+    "state_convergence_release_id": true,
+    "source_diversity": false,
+    "convergence_lt_2s": true
+  },
+  "screenshots": [
+    "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/discord/dual_user/20260406T153916Z/user-a-moorer.png",
+    "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/discord/dual_user/20260406T153916Z/user-b-observer.png"
+  ]
+}

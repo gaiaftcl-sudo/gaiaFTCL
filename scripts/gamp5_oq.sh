@@ -124,9 +124,9 @@ verify_iq() {
 }
 
 [[ "${OQ_MACFUSION}" == "true" ]] && \
-    verify_iq "MacFusion" "${REPO_ROOT}/GAIAOS/macos/GaiaFusion/evidence/iq/iq_receipt.json"
+    verify_iq "MacFusion" "${REPO_ROOT}/cells/fusion/macos/GaiaFusion/evidence/iq/iq_receipt.json"
 [[ "${OQ_MACHEALTH}" == "true" ]] && \
-    verify_iq "MacHealth" "${REPO_ROOT}/GAIAOS/macos/MacHealth/evidence/iq/iq_receipt.json"
+    verify_iq "MacHealth" "${REPO_ROOT}/cells/fusion/macos/MacHealth/evidence/iq/iq_receipt.json"
 
 # ══════════════════════════════════════════════════════════════════════════════
 # OQ-2: BUILD
@@ -158,9 +158,9 @@ build_app() {
 }
 
 [[ "${OQ_MACFUSION}" == "true" ]] && \
-    build_app "MacFusion" "${REPO_ROOT}/GAIAOS/macos/GaiaFusion" "GaiaFusion"
+    build_app "MacFusion" "${REPO_ROOT}/cells/fusion/macos/GaiaFusion" "GaiaFusion"
 [[ "${OQ_MACHEALTH}" == "true" ]] && \
-    build_app "MacHealth" "${REPO_ROOT}/GAIAOS/macos/MacHealth"   "MacHealth"
+    build_app "MacHealth" "${REPO_ROOT}/cells/fusion/macos/MacHealth"   "MacHealth"
 
 # ══════════════════════════════════════════════════════════════════════════════
 # OQ-3: RUST GxP TESTS
@@ -193,7 +193,7 @@ run_rust_tests() {
 
 if [[ "${OQ_MACFUSION}" == "true" ]]; then
     # MacFusion's Rust is in the MetalRenderer sub-crate
-    MF_RUST="${REPO_ROOT}/GAIAOS/macos/GaiaFusion/MetalRenderer/rust"
+    MF_RUST="${REPO_ROOT}/cells/fusion/macos/GaiaFusion/MetalRenderer/rust"
     [[ -d "${MF_RUST}" ]] && run_rust_tests "MacFusion" "${MF_RUST}" || \
         warn "MacFusion Rust dir not found at ${MF_RUST} — skipping Rust tests"
 fi
@@ -253,9 +253,9 @@ run_swift_tests() {
 }
 
 [[ "${OQ_MACFUSION}" == "true" ]] && \
-    run_swift_tests "MacFusion" "${REPO_ROOT}/GAIAOS/macos/GaiaFusion"
+    run_swift_tests "MacFusion" "${REPO_ROOT}/cells/fusion/macos/GaiaFusion"
 [[ "${OQ_MACHEALTH}" == "true" ]] && \
-    run_swift_tests "MacHealth" "${REPO_ROOT}/GAIAOS/macos/MacHealth"
+    run_swift_tests "MacHealth" "${REPO_ROOT}/cells/fusion/macos/MacHealth"
 
 # ══════════════════════════════════════════════════════════════════════════════
 # OQ-5: WRITE OQ RECEIPTS
@@ -315,15 +315,15 @@ PYEOF
 
 [[ "${OQ_MACFUSION}" == "true" ]] && \
     write_oq_receipt "MacFusion" \
-        "${REPO_ROOT}/GAIAOS/macos/GaiaFusion/evidence/oq" \
+        "${REPO_ROOT}/cells/fusion/macos/GaiaFusion/evidence/oq" \
         "GFTCL-OQ-001" \
-        "${REPO_ROOT}/GAIAOS/macos/GaiaFusion/evidence/iq/iq_receipt.json"
+        "${REPO_ROOT}/cells/fusion/macos/GaiaFusion/evidence/iq/iq_receipt.json"
 
 [[ "${OQ_MACHEALTH}" == "true" ]] && \
     write_oq_receipt "MacHealth" \
-        "${REPO_ROOT}/GAIAOS/macos/MacHealth/evidence/oq" \
+        "${REPO_ROOT}/cells/fusion/macos/MacHealth/evidence/oq" \
         "GH-OQ-001" \
-        "${REPO_ROOT}/GAIAOS/macos/MacHealth/evidence/iq/iq_receipt.json"
+        "${REPO_ROOT}/cells/fusion/macos/MacHealth/evidence/iq/iq_receipt.json"
 
 # ══════════════════════════════════════════════════════════════════════════════
 banner "OQ COMPLETE"

@@ -1,5 +1,8 @@
-use std::io::{self, BufRead, BufReader};
+#![allow(clippy::assertions_on_constants)]
+#![allow(clippy::needless_range_loop)]
+
 use std::fs::File;
+use std::io::{BufRead, BufReader};
 use std::path::Path;
 
 /// A single vQbit USD primitive extracted from a `.usda` file.
@@ -11,8 +14,8 @@ use std::path::Path;
 #[derive(Debug, Clone, Copy, Default)]
 pub struct vQbitPrimitive {
     pub transform: [[f32; 4]; 4],
-    pub vqbit_entropy: f32,   // maps to custom_vQbit:entropy_delta in USDA
-    pub vqbit_truth: f32,     // maps to custom_vQbit:truth_threshold in USDA
+    pub vqbit_entropy: f32, // maps to custom_vQbit:entropy_delta in USDA
+    pub vqbit_truth: f32,   // maps to custom_vQbit:truth_threshold in USDA
     pub prim_id: u32,
 }
 
@@ -70,8 +73,13 @@ impl UsdParser {
     }
 
     pub fn parse_usd_file<P: AsRef<Path>>(file_path: P) -> Result<Vec<vQbitPrimitive>, String> {
-        let file = File::open(&file_path)
-            .map_err(|e| format!("Failed to open USD file {}: {}", file_path.as_ref().display(), e))?;
+        let file = File::open(&file_path).map_err(|e| {
+            format!(
+                "Failed to open USD file {}: {}",
+                file_path.as_ref().display(),
+                e
+            )
+        })?;
         let reader = BufReader::new(file);
 
         let mut primitives = Vec::new();
@@ -80,8 +88,8 @@ impl UsdParser {
         let mut current_prim: Option<vQbitPrimitive> = None;
 
         for line_result in reader.lines() {
-            let line = line_result
-                .map_err(|e| format!("Failed to read line from USD file: {}", e))?;
+            let line =
+                line_result.map_err(|e| format!("Failed to read line from USD file: {e}"))?;
             let trimmed = line.trim();
             let lower = trimmed.to_lowercase();
 
@@ -91,8 +99,10 @@ impl UsdParser {
                     primitives.push(prim);
                 }
 
-                let mut new_prim = vQbitPrimitive::default();
-                new_prim.prim_id = prim_id_counter;
+                let mut new_prim = vQbitPrimitive {
+                    prim_id: prim_id_counter,
+                    ..Default::default()
+                };
                 prim_id_counter += 1;
 
                 // Parse attributes on the SAME line as the def Scope opener
@@ -135,10 +145,11 @@ impl UsdParser {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::io::Write;
 
     fn create_temp_usd_file(content: &str) -> tempfile::NamedTempFile {
         let mut file = tempfile::NamedTempFile::new().unwrap();
-        io::Write::write_all(&mut file, content.as_bytes()).unwrap();
+        Write::write_all(&mut file, content.as_bytes()).unwrap();
         file
     }
 
@@ -286,9 +297,9 @@ def "World" {
         let prims = UsdParser::parse_usd_file(temp_file.path()).unwrap();
         assert_eq!(prims.len(), 2);
         assert!((prims[0].vqbit_entropy - 0.3).abs() < 1e-5);
-        assert!((prims[0].vqbit_truth   - 0.7).abs() < 1e-5);
+        assert!((prims[0].vqbit_truth - 0.7).abs() < 1e-5);
         assert!((prims[1].vqbit_entropy - 0.6).abs() < 1e-5);
-        assert!((prims[1].vqbit_truth   - 0.4).abs() < 1e-5);
+        assert!((prims[1].vqbit_truth - 0.4).abs() < 1e-5);
     }
 
     #[test]
@@ -306,7 +317,7 @@ def "World" {
         let prims = UsdParser::parse_usd_file(temp_file.path()).unwrap();
         assert_eq!(prims.len(), 1);
         assert!((prims[0].vqbit_entropy - 0.55).abs() < 1e-5);
-        assert!((prims[0].vqbit_truth   - 0.88).abs() < 1e-5);
+        assert!((prims[0].vqbit_truth - 0.88).abs() < 1e-5);
     }
 
     #[test]
@@ -324,7 +335,7 @@ def "World" {
         let prims = UsdParser::parse_usd_file(temp_file.path()).unwrap();
         assert_eq!(prims.len(), 1);
         assert!((prims[0].vqbit_entropy - 0.25).abs() < 1e-5);
-        assert!((prims[0].vqbit_truth   - 0.75).abs() < 1e-5);
+        assert!((prims[0].vqbit_truth - 0.75).abs() < 1e-5);
     }
 
     #[test]
@@ -410,8 +421,6 @@ def "World" {
 
 #[cfg(test)]
 mod iq_tests {
-    use super::*;
-
     #[test]
     fn iq_001_parser_compiles() {
         assert!(true, "Parser crate compiles");

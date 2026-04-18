@@ -1,0 +1,74 @@
+{
+  "schema": "gaiaftcl_mac_fusion_sub_invariant_receipt_v1",
+  "invariant_id": "gaiaftcl_mac_fusion_sub_invariant_v1",
+  "terminal": "REFUSED",
+  "ts_utc": "2026-04-07T18:13:23.849861+00:00",
+  "run_id": "20260407T181048Z",
+  "heartbeat_jsonl": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/release/MAC_FUSION_SUB_INVARIANT_20260407T181048Z.jsonl",
+  "reason": "gate_failed_after_self_heal_recheck",
+  "failed_gate": "fusionPlasmaAppBuildGate",
+  "failed_witness": {
+    "reason": "invariant_violation",
+    "build_script_rc": 1,
+    "build_script_tail": "0gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/CoreGraphics-ABSJM4U9J3VAWWLJBYM05U4FM.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/Symbols-81OD7J29UZBVJ0S2VURO1OSNQ.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/DiskArbitration-8KJ2A1C82C5FWAWOWGS53PTBA.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/JavaScriptCore-75Y4DDJ2FYCFWZ38G5F0RGE4C.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/DeveloperToolsSupport-4DSMYTMY1RC24D6QQHUI14YJU.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/_Builtin_stdarg-AEI3F8EZPV9A2BX4W4W39M0LX.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/Dispatch-6MRNX3P0IDKNWXVUX7JY958VB.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/Security-AK6P6PC1LFBNCXT1Q2586D63F.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/Spatial-LZVMVJULRLM6QERW1CH426KQ.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/Virtualization-6YGFCP0IFNBJBL8UK4K3S3N2H.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/WebKit-3D1DGERDO2IEI1T3CBEECTOZM.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/_Builtin_stdatomic-E827XTYEA7631E22ULU4XQJUI.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/IOSurface-2PGWIII2CZWD7MUQOQSPOO34I.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/_Builtin_stdbool-AQ51JYAD4H18ZZN2E9FTSVJL4.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/CoreServices-TM5MKC7TG0TL8QFRGHWTOJG.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/vmnet-AXMUPJE2W2ZTTUGFDQOXKHBFH.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/CoreFoundation-6WC0AY6WZC8UZ796ZGU08VR0Q.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/ptrcheck-45HB2W3Z26GOHOUF3GUD7BQQP.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/Accessibility-5GTEJ2862PS7DON9ZDU4EFAFI.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/OpenGL-4ZXFZJJK3CSX8SIPVUYOJIBHH.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/dnssd-3R2MG69VGPP07IKSCNGBSEP50.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/QuartzCore-5K4DNZHOSS47OUMCWZRXQA1H4.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/DataDetection-3B5HWZROJAB49NW1TOLW1DVPM.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/Metal-5T1DNWQONKU44EL8U5XJZO3FC.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/_SwiftConcurrencyShims-AQEHW1Q66N0ZH1TRP5ZNEVYH2.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/_Builtin_tgmath-8BEOH3TCAUODSI72J67S83OIA.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/_Builtin_limits-25GU8QZ8WOB7HS3NSCEQ6Q0KG.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/Network-BEANQ69GKDOI9RGUT6VSWQD1C.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/CFNetwork-6WAT3WOOVEIZVZFQP9O3V1GFV.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/libDER-81JY6K9K4NRMQO3GMFFH6NY8A.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/CoreText-AH86UOCRGY3465H4WHYKS6TH9.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/os-A135C97YPESOUJF8HIUS8IYE7.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/os_object-98ABD1LJK6GR3LADVNU3FKVRN.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/ModuleCache.noindex/Foundation-88GIZARVDED54HSCLVTBHPN6U.pcm /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Intermediates.noindex/FusionSidecarHost.build/Release/FusionSidecarHost.build/Objects-normal/arm64/FusionSidecarHost-dependencies-1.json (in target 'FusionSidecarHost' from project 'FusionSidecarHost')\n\tBuilding project FusionSidecarHost with scheme FusionSidecarHost and configuration Release\n(3 failures)\nREFUSED: xcodebuild exit 65 (see /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mac_fusion/fusion_plasma_xcodebuild_last.log)",
+    "witness_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mac_fusion/FUSION_PLASMA_APP_BUILD_WITNESS.json",
+    "schema_ok": true,
+    "bundle_present_executable": true,
+    "binary_sha256_present": true,
+    "cf_bundle_short_version_string": "1.0",
+    "cf_bundle_identifier": "com.gaiaftcl.FusionSidecarHost"
+  },
+  "gate_results": [
+    {
+      "gate": "fusionControlAppBuildTestGate",
+      "ok": true,
+      "witness": {
+        "script_rc": 0,
+        "script_tail": "  \"schema\": \"fusion_control_batch_receipt_v1\",\n  \"ok\": true,\n  \"cycles_requested\": 2000,\n  \"cycles_completed\": 2000,\n  \"cycles_failed\": 0,\n  \"worst_max_abs_error\": 9.536743e-7,\n  \"wall_time_ms\": 66,\n  \"wall_time_us\": 65043,\n  \"gpu_wall_us\": 49604,\n  \"verify_wall_us\": 15430,\n  \"validation_engine\": \"gpu_fused_multicycle\",\n  \"metallib\": \"/Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/dist/FusionControl.app/Contents/MacOS/../Resources/default.metallib\",\n  \"kernel\": \"uum8d_contract_multicycle_fused\",\n  \"n\": 65536,\n  \"platform\": \"macos\",\n  \"entropy_tax\": {\n    \"rate_eur_per_kw\": 0.1,\n    \"declared_kw\": 1.0,\n    \"tax_due_eur\": 0.1,\n    \"tax_status\": \"declared\",\n    \"treasury_env_configured\": false\n  }\n}\n[fusion_control_dmg_gate] PASS \u2014 evidence: /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/dmg_gate_2000_cycle_receipt.json",
+        "receipt_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/dmg_gate_2000_cycle_receipt.json",
+        "app_bundle_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/dist/FusionControl.app",
+        "main_binary_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/dist/FusionControl.app/Contents/MacOS/fusion_control",
+        "bundle_present_executable": true,
+        "receipt_ok": true,
+        "cycles_completed": 2000,
+        "cycles_requested": 2000,
+        "validation_engine": "gpu_fused_multicycle",
+        "metallib": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/dist/FusionControl.app/Contents/MacOS/../Resources/default.metallib"
+      },
+      "blocker": null
+    },
+    {
+      "gate": "fusionPlasmaAppBuildGate",
+      "ok": false,
+      "witness": {
+        "reason": "invariant_violation",
+        "build_script_rc": 1,
+        "build_script_tail": "note: Building targets in dependency order\nnote: Target dependency graph (1 target)\n    Target 'FusionSidecarHost' in project 'FusionSidecarHost' (no dependencies)\n\nGatherProvisioningInputs\n\nCreateBuildDescription\n\nExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.4.sdk -x c -c /dev/null\n\nExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version\n\nExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details\n\nBuild description signature: 2f3457e77e8321b10ca0dabacc5aaef9\nBuild description path: /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Intermediates.noindex/XCBuildData/2f3457e77e8321b10ca0dabacc5aaef9.xcbuilddata\nerror: unable to attach DB: error: accessing build database \"/private/var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T/gaiaftcl_plasma_invariant_derived_richardgillespie/Build/Intermediates.noindex/XCBuildData/build.db\": database is locked Possibly there are two concurrent builds running in the same filesystem location.\n** BUILD FAILED **\n\n\nThe following build commands failed:\n\tBuilding project FusionSidecarHost with scheme FusionSidecarHost and configuration Release\n(1 failure)\nREFUSED: xcodebuild exit 65 (see /Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mac_fusion/fusion_plasma_xcodebuild_last.log)",
+        "witness_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/mac_fusion/FUSION_PLASMA_APP_BUILD_WITNESS.json",
+        "schema_ok": true,
+        "bundle_present_executable": true,
+        "binary_sha256_present": true,
+        "cf_bundle_short_version_string": "1.0",
+        "cf_bundle_identifier": "com.gaiaftcl.FusionSidecarHost"
+      },
+      "blocker": null
+    }
+  ],
+  "outer_heal_cycles": [
+    {
+      "outer_cycle": 1,
+      "failed_gate": "fusionPlasmaAppBuildGate",
+      "failed_reason": "invariant_violation",
+      "self_heal": {
+        "failed_gate": "fusionPlasmaAppBuildGate",
+        "steps": [
+          {
+            "step": "build_fusion_plasma_app_release",
+            "rc": 1,
+            "tail": "rm: /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T//gaiaftcl_plasma_invariant_derived_richardgillespie/Logs: Directory not empty\nrm: /var/folders/5x/j3fn3d2d5x7gtdyc46rk487h0000gn/T//gaiaftcl_plasma_invariant_derived_richardgillespie: Directory not empty"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "witness_ts_utc": "20260405T200921Z",
+  "head": "gaiaftcl-hcloud-hel1-01",
+  "head_ip": "77.42.85.60",
+  "ssh_identity": "~/.ssh/ftclstack-unified",
+  "actions": [
+    "rsync cells/fusion/ \u2192 /opt/gaia/cells/fusion/",
+    "bash scripts/discord_forest_merge_on_head.sh on head",
+    "validate_discord_forest_full_deploy.py \u2192 exit 1 (23 empty bot token keys)"
+  ],
+  "secrets_env": {
+    "DISCORD_FOREST_FULL_DEPLOY": "not_set",
+    "note": "Do not set to 1 until validate exits 0"
+  },
+  "discord_forest_env": {
+    "line_count_after_merge": 42,
+    "DISCORD_APP_BOT_TOKEN": "SET",
+    "DISCORD_GUILD_ID": "SET",
+    "empty_bot_token_keys_count": 23
+  },
+  "docker_head_discord_lane": [
+    "gaiaftcl-discord-membrane (Up)",
+    "discord-frontier-mother (Up)"
+  ],
+  "discord_applications_required": {
+    "core_token_vars": [
+      "DISCORD_APP_BOT_TOKEN",
+      "DISCORD_BOT_TOKEN_OWL",
+      "DISCORD_BOT_TOKEN_DISCOVERY",
+      "DISCORD_BOT_TOKEN_GOVERNANCE",
+      "DISCORD_BOT_TOKEN_TREASURY",
+      "DISCORD_BOT_TOKEN_MESH",
+      "DISCORD_BOT_TOKEN_RECEIPTS",
+      "DISCORD_BOT_TOKEN_FRANKLIN"
+    ],
+    "domain_token_vars": [
+      "DISCORD_BOT_TOKEN_ATC",
+      "DISCORD_BOT_TOKEN_BIOLOGY_CURES",
+      "DISCORD_BOT_TOKEN_CHEMISTRY_LAB",
+      "DISCORD_BOT_TOKEN_CLIMATE_ACCOUNTING",
+      "DISCORD_BOT_TOKEN_CRYPTO_RISK",
+      "DISCORD_BOT_TOKEN_JURISPRUDENCE_LAW",
+      "DISCORD_BOT_TOKEN_LAW",
+      "DISCORD_BOT_TOKEN_LOGISTICS_CHAIN",
+      "DISCORD_BOT_TOKEN_MED",
+      "DISCORD_BOT_TOKEN_NEURO_CLINICAL",
+      "DISCORD_BOT_TOKEN_NUCLEAR_FUSION",
+      "DISCORD_BOT_TOKEN_PHILOSOPHY_ETHICS",
+      "DISCORD_BOT_TOKEN_QUANTUM_CLOSURE",
+      "DISCORD_BOT_TOKEN_ROBOTICS_OPS",
+      "DISCORD_BOT_TOKEN_TELECOM_MESH",
+      "DISCORD_BOT_TOKEN_TOKEN_ECONOMICS"
+    ],
+    "registry_domain_rows": [
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_ATC",
+        "id": "atc",
+        "mesh_mailbox": "ATC"
+      },
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_BIOLOGY_CURES",
+        "id": "biology_cures",
+        "mesh_mailbox": "Bio"
+      },
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_CHEMISTRY_LAB",
+        "id": "chemistry_lab",
+        "mesh_mailbox": null
+      },
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_CLIMATE_ACCOUNTING",
+        "id": "climate_accounting",
+        "mesh_mailbox": "Climate"
+      },
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_CRYPTO_RISK",
+        "id": "crypto_risk",
+        "mesh_mailbox": "Crypto"
+      },
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_JURISPRUDENCE_LAW",
+        "id": "jurisprudence_law",
+        "mesh_mailbox": null
+      },
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_LAW",
+        "id": "law",
+        "mesh_mailbox": "Law"
+      },
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_LOGISTICS_CHAIN",
+        "id": "logistics_chain",
+        "mesh_mailbox": "Logistics"
+      },
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_MED",
+        "id": "med",
+        "mesh_mailbox": "Medical"
+      },
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_NEURO_CLINICAL",
+        "id": "neuro_clinical",
+        "mesh_mailbox": "Neuro"
+      },
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_NUCLEAR_FUSION",
+        "id": "nuclear_fusion",
+        "mesh_mailbox": "Energy"
+      },
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_PHILOSOPHY_ETHICS",
+        "id": "philosophy_ethics",
+        "mesh_mailbox": null
+      },
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_QUANTUM_CLOSURE",
+        "id": "quantum_closure",
+        "mesh_mailbox": "Quantum"
+      },
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_ROBOTICS_OPS",
+        "id": "robotics_ops",
+        "mesh_mailbox": "Robotics"
+      },
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_TELECOM_MESH",
+        "id": "telecom_mesh",
+        "mesh_mailbox": "Telecom"
+      },
+      {
+        "env_token_var": "DISCORD_BOT_TOKEN_TOKEN_ECONOMICS",
+        "id": "token_economics",
+        "mesh_mailbox": "Finance"
+      }
+    ]
+  },
+  "developer_portal": "One Discord Application per row above; Bot tab \u2192 token \u2192 paste into /etc/gaiaftcl/discord-forest.env; OAuth install bot+applications.commands (see scripts/discord_open_bot_invite_mac.sh with each Application ID)."
+}

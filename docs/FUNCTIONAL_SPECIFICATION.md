@@ -18,7 +18,7 @@ This document governs:
 - The shared crates (`wallet_core`, `owl_protocol`) as consumed by the fusion cell
 - The IQ/OQ/PQ validation scripts (`scripts/iq_install.sh`, `scripts/oq_validate.sh`, `scripts/run_full_cycle.sh`)
 
-**Out of scope:** The GaiaFusion orchestration macOS app (`GAIAOS/macos/GaiaFusion/`), NATS server infrastructure, CERN network topology, and the GaiaHealth Biologit Cell (separate FS: GH-FS-001).
+**Out of scope:** The GaiaFusion orchestration macOS app (`cells/fusion/macos/GaiaFusion/`), NATS server infrastructure, CERN network topology, and the GaiaHealth Biologit Cell (separate FS: GH-FS-001).
 
 ---
 

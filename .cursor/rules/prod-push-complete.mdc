@@ -7,13 +7,13 @@ alwaysApply: true
 
 ## Limb behavior
 
-- Treat work as **production closure**. Run the full descent: code + scripts + builds + probes + `GAIAOS/evidence/*` when applicable.
+- Treat work as **production closure**. Run the full descent: code + scripts + builds + probes + `cells/fusion/evidence/*` when applicable.
 - **Forbidden at end of turn:** "If you want…", "optional next steps", "pick A or B", "say the word", or choice menus for work the limb can execute.
 - **Allowed:** **BLOCKED** once with witness (missing sovereign secret, sandbox limit). No Founder runbooks as primary resolution (`no-delegate-homework.mdc`).
 
 ## After substantive changes
 
-- Run closing checks that exist; record outcomes in `GAIAOS/evidence/` or canonical MDs.
+- Run closing checks that exist; record outcomes in `cells/fusion/evidence/` or canonical MDs.
 
 ## Terminal honesty
 

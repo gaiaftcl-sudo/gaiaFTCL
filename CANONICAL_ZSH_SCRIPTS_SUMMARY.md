@@ -84,11 +84,11 @@ All NEW Mac code is **Swift executables** that call zsh when needed:
 
 ### CleanCloneTest (Swift)
 
-**Location:** `GAIAOS/macos/CleanCloneTest/`
+**Location:** `cells/fusion/macos/CleanCloneTest/`
 
 **Build:**
 ```zsh
-cd GAIAOS/macos/CleanCloneTest
+cd cells/fusion/macos/CleanCloneTest
 swift build
 ```
 
@@ -112,7 +112,7 @@ swift build
 
 ## Cursor Rule
 
-**File:** `GAIAOS/.cursor/rules/mac-qualification-no-bash.mdc`
+**File:** `cells/fusion/.cursor/rules/mac-qualification-no-bash.mdc`
 
 **Hard rule:**
 - All NEW Mac code: Swift executables
@@ -140,7 +140,7 @@ swift build
 ## Architecture
 
 ```
-GAIAOS/macos/
+cells/fusion/macos/
 ├── GaiaFusion/          ← MacFusion app (Swift)
 ├── MacHealth/           ← MacHealth app (Swift)
 ├── TestRobot/           ← PQ Metal GPU tests (Swift)

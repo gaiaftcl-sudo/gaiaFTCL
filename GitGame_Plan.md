@@ -53,7 +53,7 @@ constraints are non‑negotiable:
   land as `M_SIL`; physical / operator‑witnessed receipts land as `M`
   with an Ed25519 signature over the canonical JSON.
 - **Sparkle release integrity.** `SUPublicEDKey` / `SUFeedURL`
-  placeholders in `GAIAOS/macos/GaiaFTCLConsole/project.yml` must
+  placeholders in `cells/fusion/macos/GaiaFTCLConsole/project.yml` must
   never reach a Release build. The existing zsh lint is authoritative
   and GitGame calls it before any release‑affecting game.
 - **Nine‑cell sovereign substrate.** GitGame is a sidecar to the Mac
@@ -143,7 +143,7 @@ Inputs: `branch_name`, `base_branch` (default `main`), `commit_message`,
 
 `receipt-land` — commit a receipt JSON under `evidence/**`.
 Inputs: `target_path` (must match `evidence/**` or
-`GAIAOS/**/evidence/**`), `receipt_json`, `provenance_tag` (`M_SIL` or
+`cells/fusion/**/evidence/**`), `receipt_json`, `provenance_tag` (`M_SIL` or
 `M`), `receipt_sig` (required if `M`), `parent_hash`. Preconditions:
 receipt‑hygiene rules pass locally (same Python walker as the CI
 workflow); `provenance_tag: M` requires a valid Ed25519 signature that
@@ -339,8 +339,8 @@ paths returns a `refuse` receipt unless the request carries a fresh
 - `.cursorrules_IQOQPQ`
 - `.signing_keys/*`
 - `.ssh_keys/*`
-- `GAIAOS/macos/GaiaFTCLConsole/project.yml` (Sparkle)
-- `GAIAOS/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh`
+- `cells/fusion/macos/GaiaFTCLConsole/project.yml` (Sparkle)
+- `cells/fusion/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh`
 - `Cargo.toml` (root), `Cargo.lock`
 - `evidence/**` with `provenance_tag: M` (must go through
   `receipt-land` with explicit `operator_sig`)
@@ -470,7 +470,7 @@ receipt.
 - **`receipt-hygiene.yml`** — GitGame runs the same walker locally
   before any push. CI remains the belt‑and‑suspenders gate.
 - **`sparkle-release-lint.yml`** — GitGame runs
-  `zsh GAIAOS/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh`
+  `zsh cells/fusion/macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh`
   before any `release` game and before any `propose` that touches
   `project.yml`. Two doors, same key.
 - **`mac-cell-ci.yml`** — GitGame does not emulate it locally

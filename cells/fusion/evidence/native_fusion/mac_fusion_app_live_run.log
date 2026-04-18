@@ -1,0 +1,58 @@
+
+--- live run 2026-04-07T22:32:45.440716+00:00 ---
+Fusion Native Mac bootstrap ready
+
+--- live run start 2026-04-08T01:18:07.361191+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/apps/fusion_native_mac/src-tauri/target/release/fusion_native_mac ---
+Fusion Native Mac bootstrap ready
+
+--- live run start 2026-04-08T01:18:19.408894+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/apps/fusion_native_mac/src-tauri/target/release/fusion_native_mac ---
+Fusion Native Mac bootstrap ready
+
+--- live run start 2026-04-08T01:18:31.446303+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/apps/fusion_native_mac/src-tauri/target/release/fusion_native_mac ---
+Fusion Native Mac bootstrap ready
+
+--- live run start 2026-04-08T01:18:43.492493+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/apps/fusion_native_mac/src-tauri/target/release/fusion_native_mac ---
+Fusion Native Mac bootstrap ready
+
+--- live run start 2026-04-08T10:34:58.954806+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+
+--- live run start 2026-04-08T10:36:07.944525+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+
+--- live run start 2026-04-08T11:39:57.917632+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+
+--- live run start 2026-04-08T11:45:17.954714+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+
+--- live run start 2026-04-08T12:10:20.483592+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+
+--- live run start 2026-04-08T12:14:06.611172+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+
+--- live run start 2026-04-08T12:52:21.206397+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+
+--- live run start 2026-04-08T12:54:53.142713+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+
+--- live run start 2026-04-08T13:38:34.017623+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+
+--- live run start 2026-04-08T15:11:14.188395+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+GaiaFusion server on 127.0.0.1:8910 (dev proxy)
+
+--- live run start 2026-04-08T16:46:38.876694+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+GaiaFusion server on 127.0.0.1:8910 (dev proxy)
+
+--- live run start 2026-04-08T17:38:13.809156+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+
+--- live run start 2026-04-08T19:41:59.338187+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+GaiaFusion server on 127.0.0.1:8910 (dev proxy)
+
+--- live run start 2026-04-08T20:39:03.344846+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+GaiaFusion failed to start on 127.0.0.1:8910: The operation couldn’t be completed. (Swifter.SocketError error 2.)
+
+--- live run start 2026-04-08T20:53:29.493876+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+
+--- live run start 2026-04-08T20:53:31.560171+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+
+--- live run start 2026-04-08T21:13:24.347864+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+
+--- live run start 2026-04-08T21:14:54.174142+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+
+--- live run start 2026-04-08T22:33:21.532574+00:00 /Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/release/GaiaFusion ---
+GaiaFusion failed to start on 127.0.0.1:8910: The operation couldn’t be completed. (Swifter.SocketError error 2.)

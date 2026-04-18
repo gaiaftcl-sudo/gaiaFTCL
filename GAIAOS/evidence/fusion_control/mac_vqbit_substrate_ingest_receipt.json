@@ -1,8 +1,0 @@
-{
-  "schema": "gaiaftcl_mac_vqbit_substrate_ingest_v1",
-  "ts_utc": "2026-04-09T21:10:46Z",
-  "terminal": "REFUSED",
-  "reason": "missing_gateway_credentials",
-  "note": "Set GAIAFTCL_GATEWAY_URL and GAIAFTCL_INTERNAL_KEY for live universal_ingest; optional MAC_CELL_WITNESS_JSON for fleet payload.",
-  "witness_path": "/Users/richardgillespie/Documents/FoT8D/GAIAOS/evidence/fusion_control/mac_cell_fleet_health_witness.json"
-}

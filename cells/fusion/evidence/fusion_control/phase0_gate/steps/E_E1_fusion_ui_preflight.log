@@ -1,0 +1,147 @@
+[preflight_fusion_ui_live] GAIA_ROOT=/Users/richardgillespie/Documents/FoT8D/GAIAOS
+[preflight_fusion_ui_live] running scope_fortress_scan.sh
+
+[1;33m═══ GATE 1: PASSKEY / KEY CUSTODY ═══[0m
+  [0;32m✓[0m WalletContext — no key generation
+  [0;32m✓[0m GATE 1 clean
+
+[1;33m═══ GATE 2: DISCORD AUTOMATION (MAC / SCRIPTS LANE) ═══[0m
+  [0;32m✓[0m discord-mac-automation.mdc present (/Users/richardgillespie/Documents/FoT8D/cells/fusion/../.cursor/rules/discord-mac-automation.mdc)
+  [0;32m✓[0m membrane_routing.py present
+  [0;32m✓[0m GATE 2 clean
+
+[1;33m═══ GATE 3: LARGE DATA ON NATS ═══[0m
+  [1;33mℹ[0m NATS publish in scripts (must reference schema or ≤4KB guard):
+       /Users/richardgillespie/Documents/FoT8D/cells/fusion/scripts/fusion_challenge_nats_publish_team.sh
+       /Users/richardgillespie/Documents/FoT8D/cells/fusion/scripts/run_pcssp_fault_injection.sh
+       /Users/richardgillespie/Documents/FoT8D/cells/fusion/scripts/fusion_cell_status_nats_publish.sh
+       /Users/richardgillespie/Documents/FoT8D/cells/fusion/scripts/feed_pcssp.sh
+       /Users/richardgillespie/Documents/FoT8D/cells/fusion/scripts/build_and_push_all.sh
+       /Users/richardgillespie/Documents/FoT8D/cells/fusion/scripts/test_wallet_signature.sh
+       /Users/richardgillespie/Documents/FoT8D/cells/fusion/scripts/nstxu_benchmark_feeder.sh
+  [0;32m✓[0m fusion_challenge_nats_publish_team.sh references schema or size guard
+  [0;32m✓[0m run_pcssp_fault_injection.sh references schema or size guard
+  [0;32m✓[0m fusion_cell_status_nats_publish.sh references schema or size guard
+  [0;32m✓[0m feed_pcssp.sh references schema or size guard
+  [0;32m✓[0m build_and_push_all.sh references schema or size guard
+  [0;32m✓[0m test_wallet_signature.sh references schema or size guard
+  [0;32m✓[0m nstxu_benchmark_feeder.sh references schema or size guard
+  [0;32m✓[0m GATE 3 clean
+
+[1;33m═══ GATE 4: FUSION_SKIP_MOOR_PREFLIGHT IN PROD LAUNCH ═══[0m
+  [0;32m✓[0m GATE 4 clean
+
+[1;33m═══ SCAN COMPLETE ═══[0m
+
+[0;32mALL GATES CLEAN — 0 violations[0m
+Terminal state: CALORIE (scope fortress holding)
+
+> gaiaos_ui_web@0.1.0 test:unit:fusion
+> vitest run
+
+
+ RUN  v3.2.4 /Users/richardgillespie/Documents/FoT8D/cells/fusion/services/gaiaos_ui_web
+
+ ✓ tests/unit/fusionChallengeLedger.cjs.test.ts (1 test) 5ms
+ ✓ tests/unit/fusionS4PcsTelemetry.test.ts (4 tests) 3ms
+ ✓ tests/unit/fusionS4GlobalChallenge.test.ts (1 test) 2ms
+ ✓ tests/unit/fusionS4Gates.test.ts (13 tests) 5ms
+
+ Test Files  4 passed (4)
+      Tests  19 passed (19)
+   Start at  12:30:27
+   Duration  251ms (transform 67ms, setup 0ms, collect 124ms, tests 14ms, environment 1ms, prepare 201ms)
+
+
+> gaiaos_ui_web@0.1.0 build
+> next build
+
+▲ Next.js 16.1.1 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.8s
+  Running TypeScript ...
+  Collecting page data using 15 workers ...
+  Generating static pages using 15 workers (0/39) ...
+  Generating static pages using 15 workers (9/39) 
+  Generating static pages using 15 workers (19/39) 
+  Generating static pages using 15 workers (29/39) 
+✓ Generating static pages using 15 workers (39/39) in 293.2ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /api/analytics/download
+├ ƒ /api/echo/nonce
+├ ƒ /api/entropy/[...path]
+├ ƒ /api/evidence/[callId]
+├ ƒ /api/fusion/challenge-ledger
+├ ƒ /api/fusion/fleet-digest
+├ ƒ /api/fusion/fleet-usd
+├ ƒ /api/fusion/gate1-register-options
+├ ƒ /api/fusion/global-challenge-digest
+├ ƒ /api/fusion/mesh-operator-spine
+├ ƒ /api/fusion/s4-projection
+├ ƒ /api/fusion/soak-summary
+├ ƒ /api/fusion/stack-stop
+├ ƒ /api/graph/neighborhood
+├ ƒ /api/graph/path
+├ ƒ /api/graph/stats
+├ ƒ /api/mcp/execute
+├ ƒ /api/mcp/feed
+├ ƒ /api/mcp/receipts
+├ ƒ /api/moor/eligibility
+├ ƒ /api/moor/oath
+├ ƒ /api/moor/pq-receipt
+├ ƒ /api/moor/register
+├ ƒ /api/moor/stake
+├ ƒ /api/moor/status
+├ ƒ /api/observations
+├ ƒ /api/reflection
+├ ƒ /api/sovereign-mesh
+├ ƒ /api/sovereign-mesh/game-room
+├ ƒ /api/sovereign-mesh/materials-domain
+├ ƒ /api/substrate/claims
+├ ƒ /api/substrate/envelope-close
+├ ƒ /api/substrate/envelopes/recent
+├ ƒ /api/substrate/health
+├ ƒ /api/substrate/project
+├ ƒ /api/substrate/query
+├ ƒ /api/substrate/state
+├ ƒ /api/substrate/universal-ingest
+├ ƒ /api/tiles
+├ ƒ /api/turbulence/[...path]
+├ ƒ /api/validations
+├ ƒ /api/version
+├ ƒ /astro
+├ ○ /atc/turbulence
+├ ƒ /atmosphere
+├ ƒ /biosphere
+├ ○ /closure-game
+├ ƒ /closure-proof
+├ ƒ /dmgInstall
+├ ○ /domain-tubes
+├ ○ /entropy/aviation
+├ ○ /fusion-fleet
+├ ○ /fusion-s4
+├ ƒ /games
+├ ○ /gate1
+├ ƒ /molecular
+├ ○ /moor
+├ ƒ /ocean
+├ ○ /sovereign-mesh
+└ ○ /substrate-console
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+CALORIE: fusion UI preflight OK (unit tests + next build).
+Handoff: GAIA_ROOT=/Users/richardgillespie/Documents/FoT8D/GAIAOS npm run dev:fusion → http://127.0.0.1:${FUSION_UI_PORT:-8910}/fusion-s4
+Optional soak rows: npm run fusion:evidence:aux (after Metal data in long_run_signals.jsonl)
+Optional E2E in this script: FUSION_PREFLIGHT_E2E=1 /Users/richardgillespie/Documents/FoT8D/cells/fusion/scripts/preflight_fusion_ui_live.sh
+Slow Metal API test: FUSION_MATRIX_E2E=1 GAIA_ROOT=/Users/richardgillespie/Documents/FoT8D/GAIAOS npm run test:e2e:fusion
+Production: set FUSION_CHALLENGE_LEDGER_SECRET for POST /api/fusion/challenge-ledger

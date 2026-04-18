@@ -1,0 +1,115 @@
+2026-04-09T05:27:06-04:00 START playwright_watch ROOT=/Users/richardgillespie/Documents/FoT8D/GAIAOS pid=38506 interval=900s max_cycles=0
+2026-04-09T05:27:06-04:00 START precompile: build_metal_lib
+[build_metal_lib] compiling shaders in /Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/shaders (std=macos-metal2.0)
+[build_metal_lib] CALORIE: /Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/dist/default.metallib
+[build_metal_lib] CALORIE: /Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/mac_cell_mount/Resources/default.metallib
+2026-04-09T05:27:08-04:00 PASS precompile: build_metal_lib
+2026-04-09T05:27:08-04:00 CYCLE_START 1 on 2026-04-09T05:27:08-04:00
+2026-04-09T05:27:08-04:00 START: WASM self-heal attempt=1
+2026-04-09T05:27:14-04:00 PASS: WASM self-heal attempt=1
+2026-04-09T05:27:14-04:00 START: Fusion full suite attempt=1
+2026-04-09T05:27:27-04:00 RETRY: Fusion full suite rc=1, re-run in 10s (attempt 2)
+2026-04-09T05:27:37-04:00 START: Fusion full suite attempt=2
+2026-04-09T05:27:46-04:00 PASS: Fusion full suite attempt=2
+2026-04-09T05:27:46-04:00 CYCLE_PASS cycle=1 terminal=CURE self_rc=0 full_rc=0 elapsed=38s
+2026-04-09T05:27:46-04:00 SLEEP cycle=1 interval=900
+2026-04-09T05:42:46-04:00 CYCLE_START 2 on 2026-04-09T05:42:46-04:00
+2026-04-09T05:42:46-04:00 START: WASM self-heal attempt=1
+2026-04-09T05:42:52-04:00 PASS: WASM self-heal attempt=1
+2026-04-09T05:42:52-04:00 START: Fusion full suite attempt=1
+2026-04-09T05:43:00-04:00 PASS: Fusion full suite attempt=1
+2026-04-09T05:43:00-04:00 CYCLE_PASS cycle=2 terminal=CURE self_rc=0 full_rc=0 elapsed=14s
+2026-04-09T05:43:00-04:00 SLEEP cycle=2 interval=900
+2026-04-09T05:58:00-04:00 CYCLE_START 3 on 2026-04-09T05:58:00-04:00
+2026-04-09T05:58:00-04:00 START: WASM self-heal attempt=1
+2026-04-09T05:58:08-04:00 PASS: WASM self-heal attempt=1
+2026-04-09T05:58:08-04:00 START: Fusion full suite attempt=1
+2026-04-09T05:58:18-04:00 PASS: Fusion full suite attempt=1
+2026-04-09T05:58:18-04:00 CYCLE_PASS cycle=3 terminal=CURE self_rc=0 full_rc=0 elapsed=18s
+2026-04-09T05:58:18-04:00 SLEEP cycle=3 interval=900
+2026-04-09T06:13:18-04:00 CYCLE_START 4 on 2026-04-09T06:13:18-04:00
+2026-04-09T06:13:18-04:00 START: WASM self-heal attempt=1
+2026-04-09T06:13:23-04:00 PASS: WASM self-heal attempt=1
+2026-04-09T06:13:23-04:00 START: Fusion full suite attempt=1
+2026-04-09T06:13:31-04:00 PASS: Fusion full suite attempt=1
+2026-04-09T06:13:31-04:00 CYCLE_PASS cycle=4 terminal=CURE self_rc=0 full_rc=0 elapsed=13s
+2026-04-09T06:13:31-04:00 SLEEP cycle=4 interval=900
+2026-04-09T06:28:31-04:00 CYCLE_START 5 on 2026-04-09T06:28:31-04:00
+2026-04-09T06:28:31-04:00 START: WASM self-heal attempt=1
+2026-04-09T06:28:37-04:00 PASS: WASM self-heal attempt=1
+2026-04-09T06:28:37-04:00 START: Fusion full suite attempt=1
+2026-04-09T06:28:51-04:00 RETRY: Fusion full suite rc=1, re-run in 10s (attempt 2)
+2026-04-09T06:29:01-04:00 START: Fusion full suite attempt=2
+2026-04-09T06:29:19-04:00 FAIL: Fusion full suite attempt=2 rc=1
+2026-04-09T06:29:19-04:00 CYCLE_FAIL cycle=5 terminal=REFUSED self_rc=0 full_rc=1 elapsed=48s
+2026-04-09T06:29:20-04:00 SLEEP cycle=5 interval=900
+2026-04-09T06:44:20-04:00 CYCLE_START 6 on 2026-04-09T06:44:20-04:00
+2026-04-09T06:44:20-04:00 START: WASM self-heal attempt=1
+2026-04-09T06:44:25-04:00 PASS: WASM self-heal attempt=1
+2026-04-09T06:44:25-04:00 START: Fusion full suite attempt=1
+2026-04-09T06:44:33-04:00 PASS: Fusion full suite attempt=1
+2026-04-09T06:44:33-04:00 CYCLE_PASS cycle=6 terminal=CURE self_rc=0 full_rc=0 elapsed=13s
+2026-04-09T06:44:33-04:00 SLEEP cycle=6 interval=900
+2026-04-09T06:59:33-04:00 CYCLE_START 7 on 2026-04-09T06:59:33-04:00
+2026-04-09T06:59:33-04:00 START: WASM self-heal attempt=1
+2026-04-09T06:59:38-04:00 PASS: WASM self-heal attempt=1
+2026-04-09T06:59:38-04:00 START: Fusion full suite attempt=1
+2026-04-09T06:59:46-04:00 PASS: Fusion full suite attempt=1
+2026-04-09T06:59:46-04:00 CYCLE_PASS cycle=7 terminal=CURE self_rc=0 full_rc=0 elapsed=13s
+2026-04-09T06:59:46-04:00 SLEEP cycle=7 interval=900
+2026-04-09T07:14:46-04:00 CYCLE_START 8 on 2026-04-09T07:14:46-04:00
+2026-04-09T07:14:46-04:00 START: WASM self-heal attempt=1
+2026-04-09T07:14:51-04:00 PASS: WASM self-heal attempt=1
+2026-04-09T07:14:51-04:00 START: Fusion full suite attempt=1
+2026-04-09T07:14:59-04:00 PASS: Fusion full suite attempt=1
+2026-04-09T07:14:59-04:00 CYCLE_PASS cycle=8 terminal=CURE self_rc=0 full_rc=0 elapsed=13s
+2026-04-09T07:14:59-04:00 SLEEP cycle=8 interval=900
+2026-04-09T07:29:59-04:00 CYCLE_START 9 on 2026-04-09T07:29:59-04:00
+2026-04-09T07:29:59-04:00 START: WASM self-heal attempt=1
+2026-04-09T07:30:05-04:00 PASS: WASM self-heal attempt=1
+2026-04-09T07:30:05-04:00 START: Fusion full suite attempt=1
+2026-04-09T07:30:19-04:00 RETRY: Fusion full suite rc=1, re-run in 10s (attempt 2)
+2026-04-09T07:30:29-04:00 START: Fusion full suite attempt=2
+2026-04-09T07:30:38-04:00 PASS: Fusion full suite attempt=2
+2026-04-09T07:30:38-04:00 CYCLE_PASS cycle=9 terminal=CURE self_rc=0 full_rc=0 elapsed=39s
+2026-04-09T07:30:38-04:00 SLEEP cycle=9 interval=900
+2026-04-09T07:39:50-04:00 REFUSED: existing playwright_watch process already active pid=38506
+2026-04-09T07:39:50-04:00 EXIT rc=2 (pid=1708)
+2026-04-09T07:40:02-04:00 START playwright_watch ROOT=/Users/richardgillespie/Documents/FoT8D/GAIAOS pid=2269 interval=900s max_cycles=1
+2026-04-09T07:40:02-04:00 START precompile: build_metal_lib
+[build_metal_lib] compiling shaders in /Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/shaders (std=macos-metal2.0)
+[build_metal_lib] CALORIE: /Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/dist/default.metallib
+[build_metal_lib] CALORIE: /Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/mac_cell_mount/Resources/default.metallib
+2026-04-09T07:40:04-04:00 PASS precompile: build_metal_lib
+2026-04-09T07:40:04-04:00 STOP: max_cycles=1 reached
+2026-04-09T07:40:04-04:00 EXIT rc=0 (pid=2269)
+2026-04-09T07:40:08-04:00 START playwright_watch ROOT=/Users/richardgillespie/Documents/FoT8D/GAIAOS pid=2492 interval=900s max_cycles=10
+2026-04-09T07:40:08-04:00 START precompile: build_metal_lib
+[build_metal_lib] compiling shaders in /Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/shaders (std=macos-metal2.0)
+[build_metal_lib] CALORIE: /Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/dist/default.metallib
+[build_metal_lib] CALORIE: /Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/mac_cell_mount/Resources/default.metallib
+2026-04-09T07:40:08-04:00 PASS precompile: build_metal_lib
+2026-04-09T07:40:09-04:00 CYCLE_START 10 on 2026-04-09T07:40:09-04:00
+2026-04-09T07:40:09-04:00 START: WASM self-heal attempt=1
+2026-04-09T07:40:15-04:00 PASS: WASM self-heal attempt=1
+2026-04-09T07:40:15-04:00 START: Fusion full suite attempt=1
+2026-04-09T07:40:22-04:00 PASS: Fusion full suite attempt=1
+2026-04-09T07:40:22-04:00 CYCLE_PASS cycle=10 terminal=CURE self_rc=0 full_rc=0 elapsed=13s
+2026-04-09T07:40:23-04:00 DONE: max_cycles reached
+2026-04-09T07:40:23-04:00 EXIT rc=0 (pid=2492)
+2026-04-09T07:54:49-04:00 START playwright_watch ROOT=/Users/richardgillespie/Documents/FoT8D/GAIAOS pid=18950 interval=900s max_cycles=10
+2026-04-09T07:54:49-04:00 START precompile: build_metal_lib
+[build_metal_lib] compiling shaders in /Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/shaders (std=macos-metal2.0)
+[build_metal_lib] CALORIE: /Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/dist/default.metallib
+[build_metal_lib] CALORIE: /Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/mac_cell_mount/Resources/default.metallib
+2026-04-09T07:54:50-04:00 PASS precompile: build_metal_lib
+2026-04-09T07:54:50-04:00 STOP: max_cycles=10 reached
+2026-04-09T07:54:50-04:00 EXIT rc=0 (pid=18950)
+2026-04-09T07:55:13-04:00 START playwright_watch ROOT=/Users/richardgillespie/Documents/FoT8D/GAIAOS pid=19536 interval=900s max_cycles=10
+2026-04-09T07:55:13-04:00 START precompile: build_metal_lib
+[build_metal_lib] compiling shaders in /Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/shaders (std=macos-metal2.0)
+[build_metal_lib] CALORIE: /Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/dist/default.metallib
+[build_metal_lib] CALORIE: /Users/richardgillespie/Documents/FoT8D/cells/fusion/deploy/mac_cell_mount/Resources/default.metallib
+2026-04-09T07:55:13-04:00 PASS precompile: build_metal_lib
+2026-04-09T07:55:13-04:00 STOP: max_cycles=10 reached
+2026-04-09T07:55:13-04:00 EXIT rc=0 (pid=19536)

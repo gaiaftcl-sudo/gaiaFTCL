@@ -1,6 +1,6 @@
 # Seven Clinical Scenarios — Frequencies, Refractive Indices, Arrhenius Thresholds, and What Automated Tests Must Assert
 
-**Automated unit contract (Swift):** `GAIAOS/macos/MacHealth/Tests/SILV2/` — XCTest validates §0 cross-rails, §10 receipt schema completeness, and per-scenario thresholds from §1–§7 (`validation_tier: SIL_protocol_contract`).
+**Automated unit contract (Swift):** `cells/fusion/macos/MacHealth/Tests/SILV2/` — XCTest validates §0 cross-rails, §10 receipt schema completeness, and per-scenario thresholds from §1–§7 (`validation_tier: SIL_protocol_contract`).
 
 **Date:** 2026-04-18
 **Scope:** inv(3) AML, Parkinson's, MSL (Mesenchymal Stem-Like) TNBC, breast cancer (general), colon cancer, lung cancer, **and** skin cancer (BCC + melanoma).

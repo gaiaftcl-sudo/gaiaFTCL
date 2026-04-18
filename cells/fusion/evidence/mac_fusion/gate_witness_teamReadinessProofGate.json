@@ -1,0 +1,17 @@
+{
+  "gate": "teamReadinessProofGate",
+  "ok": true,
+  "terminal": "CALORIE",
+  "blocker": null,
+  "witness": {
+    "proof_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/fusion_control/FUSION_11_TEAM_READINESS_PROOF.md",
+    "schema_ok": true,
+    "teams_total_ok": true,
+    "commitment_ok": true,
+    "teams_sealed_count": 11,
+    "teams_sealed_required": 11,
+    "pending_in_team_ledger": false,
+    "independent_artifact_only": true
+  },
+  "ts_utc": "2026-04-07T18:26:21.269326+00:00"
+}

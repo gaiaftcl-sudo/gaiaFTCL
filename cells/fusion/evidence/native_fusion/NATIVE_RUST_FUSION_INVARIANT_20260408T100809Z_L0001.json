@@ -1,0 +1,668 @@
+{
+  "schema": "gaiaftcl_native_rust_fusion_invariant_receipt_v1",
+  "invariant_id": "gaiaftcl_native_rust_fusion_invariant_v1",
+  "run_id": "20260408T100809Z_L0001",
+  "terminal": "REFUSED",
+  "failed_gate": "sidecarControlSurfaceGate",
+  "fusion_ui_bootstrap": {
+    "preflight_phases": 2,
+    "phase_trace": [
+      {
+        "phase": 1,
+        "ok": false,
+        "summary": {
+          "reason": "bootstrap_exhausted"
+        }
+      },
+      {
+        "phase": 2,
+        "ok": true,
+        "summary": {
+          "started": true
+        }
+      }
+    ],
+    "final_witness": {
+      "started": true,
+      "npm_pid": 56667,
+      "fusion_ui_port": "8910",
+      "waited_sec": 85.37826085090637,
+      "bootstrap_attempt": 3,
+      "attempts_trace": [
+        {
+          "attempt": 1,
+          "npm_pid": 34175,
+          "phase": "spawned",
+          "waited_sec": 181.45392298698425,
+          "poll_meta": {
+            "npm_alive_at_deadline": false
+          },
+          "last_probe_rc": 0,
+          "result": "npm_exited_before_s4_ready"
+        },
+        {
+          "attempt": 2,
+          "npm_pid": 45331,
+          "phase": "spawned",
+          "waited_sec": 182.96807503700256,
+          "poll_meta": {
+            "npm_alive_at_deadline": false
+          },
+          "last_probe_rc": 0,
+          "result": "npm_exited_before_s4_ready"
+        },
+        {
+          "attempt": 3,
+          "npm_pid": 56667,
+          "phase": "spawned",
+          "waited_sec": 85.37826085090637,
+          "poll_meta": {},
+          "last_probe_rc": 0
+        }
+      ],
+      "log": "evidence/fusion_control/invariant_fusion_ui_bootstrap.log",
+      "pid_file": "evidence/fusion_control/invariant_fusion_ui_bootstrap.pid"
+    }
+  },
+  "gate_results": [
+    {
+      "gate": "invariantToolboxGate",
+      "ok": true,
+      "witness": {
+        "witness_path": "evidence/native_fusion/invariant_toolbox_witness.json",
+        "latest_path": "evidence/native_fusion/LATEST_INVARIANT_TOOLBOX_WITNESS.json",
+        "tool_count": 15,
+        "required_failures": [],
+        "ids_probed": [
+          "bash",
+          "curl",
+          "jq",
+          "python3",
+          "git",
+          "cargo",
+          "swift",
+          "npm",
+          "docker",
+          "ssh",
+          "scp",
+          "rsync",
+          "tar",
+          "hcloud",
+          "openssl"
+        ],
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "nineCellMeshGreenGate",
+      "ok": true,
+      "witness": {
+        "mesh_green": true,
+        "witness_path": "evidence/native_fusion/nine_cell_mesh_witness.json",
+        "heal_rounds_count": 1,
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "macFusionAppBuildGate",
+      "ok": true,
+      "witness": {
+        "build_rc": 0,
+        "artifact": "macos/GaiaFusion/.build/release/GaiaFusion",
+        "build_tail": "[0/1] Planning build\nBuilding for production...\n[0/4] Write sources\n[1/4] Write swift-version--58304C5D6DBC2206.txt\n[3/5] Compiling Swifter DemoServer.swift\n[4/6] Compiling GaiaFusion OnboardingFlow.swift\n/Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/GaiaFusion/LocalServer.swift:45:26: warning: main actor-isolated property 'server' can not be referenced from a Sendable closure\n  8 |     @Published private(set) var boundPort = 8910\n  9 | \n 10 |     private let server = HttpServer()\n    |                 `- note: property declared here\n 11 |     private var started = false\n 12 |     private let bridgeStatus = BridgeStatus()\n    :\n 43 |             }\n 44 |             do {\n 45 |                 try self.server.start(UInt16(port), forceIPv4: true)\n    |                          `- warning: main actor-isolated property 'server' can not be referenced from a Sendable closure\n 46 |                 let bootedAt = Date().timeIntervalSince1970\n 47 |                 Task { @MainActor in\n[4/6] Write Objects.LinkFileList\n[5/6] Linking GaiaFusion\nBuild complete! (211.85s)",
+        "stderr_tail": "",
+        "duration_sec": 214.5,
+        "attempt_serial": 1,
+        "spin_signature": "build:swift_native_mac:d41d8cd98f00",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "macFusionAppTestGate",
+      "ok": true,
+      "witness": {
+        "test_rc": 0,
+        "tests_ran": true,
+        "test_tail": " 46 |                 let bootedAt = Date().timeIntervalSince1970\n 47 |                 Task { @MainActor in\n[38/52] Compiling GaiaFusion MeshStateManager.swift\n/Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/GaiaFusion/LocalServer.swift:45:26: warning: main actor-isolated property 'server' can not be referenced from a Sendable closure\n  8 |     @Published private(set) var boundPort = 8910\n  9 | \n 10 |     private let server = HttpServer()\n    |                 `- note: property declared here\n 11 |     private var started = false\n 12 |     private let bridgeStatus = BridgeStatus()\n    :\n 43 |             }\n 44 |             do {\n 45 |                 try self.server.start(UInt16(port), forceIPv4: true)\n    |                          `- warning: main actor-isolated property 'server' can not be referenced from a Sendable closure\n 46 |                 let bootedAt = Date().timeIntervalSince1970\n 47 |                 Task { @MainActor in\n[39/52] Compiling GaiaFusion OnboardingFlow.swift\n[40/52] Compiling GaiaFusion AppMenu.swift\n[41/52] Compiling GaiaFusion CellState.swift\n[42/52] Compiling GaiaFusion ProjectionState.swift\n[43/52] Emitting module GaiaFusion\n[44/52] Compiling GaiaFusion FusionWebView.swift\n[45/52] Compiling GaiaFusion GaiaFusionApp.swift\n[46/52] Compiling GaiaFusion FusionSidebarView.swift\n[47/52] Compiling GaiaFusion StatusBarView.swift\n[48/53] Compiling GaiaFusion FusionToolbar.swift\n[48/53] Write Objects.LinkFileList\n[49/53] Linking GaiaFusion\n[50/53] Applying GaiaFusion\n[52/58] Emitting module GaiaFusionTests\n[53/58] Compiling GaiaFusionTests ConfigValidationTests.swift\n[54/58] Compiling GaiaFusionTests SwapLifecycleTests.swift\n[55/58] Compiling GaiaFusionTests MeshProbeTests.swift\n[56/58] Compiling GaiaFusionTests CellStateTests.swift\n[57/60] Compiling GaiaFusionPackageTests runner.swift\n[58/60] Emitting module GaiaFusionPackageTests\n[58/60] Write Objects.LinkFileList\n[59/60] Linking GaiaFusionPackageTests\nBuild complete! (19.97s)",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "macFusionAppLiveRunGate",
+      "ok": true,
+      "witness": {
+        "already_running": true,
+        "pgrep_stdout": "67398\n67498\n67520\n67616",
+        "spin_signature": "live_run:already_running",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "rustAppBuildGate",
+      "ok": true,
+      "witness": {
+        "build_rc": 0,
+        "build_tail": "    Finished `release` profile [optimized] target(s) in 0.12s",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "metalRuntimeGate",
+      "ok": true,
+      "witness": {
+        "exec_rc": 0,
+        "metallib_used": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/dist/FusionControl.app/Contents/Resources/default.metallib",
+        "receipt": {
+          "schema": "fusion_control_batch_receipt_v1",
+          "ok": true,
+          "cycles_requested": 16,
+          "cycles_completed": 16,
+          "cycles_failed": 0,
+          "worst_max_abs_error": 9.536743e-07,
+          "wall_time_ms": 12,
+          "wall_time_us": 11452,
+          "gpu_wall_us": 190,
+          "verify_wall_us": 11259,
+          "validation_engine": "gpu_fused_multicycle",
+          "metallib": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/services/fusion_control_mac/dist/FusionControl.app/Contents/Resources/default.metallib",
+          "kernel": "uum8d_contract_multicycle_fused",
+          "n": 65536,
+          "platform": "macos",
+          "entropy_tax": {
+            "rate_eur_per_kw": 0.1,
+            "declared_kw": 0.0,
+            "tax_due_eur": 0.0,
+            "tax_status": "not_declared",
+            "treasury_env_configured": false
+          }
+        },
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "macDiscordActivitiesGate",
+      "ok": true,
+      "witness": {
+        "path": "scripts/discord_open_bot_invite_mac.sh",
+        "script_present": true,
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "macNatsTunnelContractGate",
+      "ok": true,
+      "witness": {
+        "path": "deploy/mac_cell_mount/MAC_FUSION_MESH_CELL_PORTS.md",
+        "has_tunnel_and_mcp_ports": true,
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "meshFleetSnapshotParityGate",
+      "ok": true,
+      "witness": {
+        "path": "evidence/fusion_control/fusion_fleet_snapshot.json",
+        "cell_keys": 6,
+        "schema_ok": true,
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "s4c4ProjectionGate",
+      "ok": true,
+      "witness": {
+        "http_rc": 0,
+        "schema": null,
+        "projection_schema": null,
+        "tail": "\"GAIAFTCL_GATEWAY_URL unset \u2014 optional for local-only; set for universal_ingest probationary path.\"}}},\"fusion_moor_aggregate\":{\"mesh_moor_ok\":true,\"identity_present\":true,\"mount_present\":true,\"mesh_heartbeat_fresh\":true,\"mesh_heartbeat_max_sec\":86400}},\"s4_note\":\"Labels and file witnesses only. C4 settlement remains gateway/treasury. Discord moor is substrate-side; complete per README_MEMBRANE.\"}",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "meshConnectivityGate",
+      "ok": true,
+      "witness": {
+        "http_rc": 0,
+        "has_mesh_cells": true,
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "arangoQueryGate",
+      "ok": true,
+      "witness": {
+        "docker_rc": 0,
+        "arangodb_present": true,
+        "names_sample": [
+          "gaiaftcl-fusion-fleet-subscriber",
+          "gaiaftcl-bitcoin-core",
+          "gaiaftcl-gateway",
+          "gaiaos-ui-tester-mcp",
+          "gaiaos-edge-proxy",
+          "gaiaos-virtue",
+          "gaiaos-agent",
+          "gaiaos-substrate",
+          "gaiaos-ollama",
+          "gaiaos-nats",
+          "gaiaos-arangodb",
+          "atc-globe-ui",
+          "atc-consciousness-agent",
+          "atc-flight-aggregator",
+          "gaiaos-ui-web",
+          "gaiaos-entropy-api",
+          "gaiaos-airplanes-live-ingest",
+          "gaiaos-adaptive-grid-builder",
+          "gaiaos-atmosphere-noaa-gfs-opendap-ingest",
+          "gaiaos-ocean-noaa-gfswave-opendap-ingest"
+        ],
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "gnnInferenceGate",
+      "ok": true,
+      "witness": {
+        "docker_rc": 0,
+        "gnn_container_present": false,
+        "gnn_source_present": true,
+        "names_sample": [
+          "gaiaftcl-fusion-fleet-subscriber",
+          "gaiaftcl-bitcoin-core",
+          "gaiaftcl-gateway",
+          "gaiaos-ui-tester-mcp",
+          "gaiaos-edge-proxy",
+          "gaiaos-virtue",
+          "gaiaos-agent",
+          "gaiaos-substrate",
+          "gaiaos-ollama",
+          "gaiaos-nats",
+          "gaiaos-arangodb",
+          "atc-globe-ui",
+          "atc-consciousness-agent",
+          "atc-flight-aggregator",
+          "gaiaos-ui-web",
+          "gaiaos-entropy-api",
+          "gaiaos-airplanes-live-ingest",
+          "gaiaos-adaptive-grid-builder",
+          "gaiaos-atmosphere-noaa-gfs-opendap-ingest",
+          "gaiaos-ocean-noaa-gfswave-opendap-ingest"
+        ],
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "nativeMenuActionCoverageGate",
+      "ok": true,
+      "witness": {
+        "command_count": 63,
+        "required_min": 63,
+        "path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/spec/native_fusion/menu_command_registry.json",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "sidecarControlSurfaceGate",
+      "ok": false,
+      "witness": {
+        "fusion_bridge_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/GaiaFusion/FusionBridge.swift",
+        "app_menu_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/GaiaFusion/AppMenu.swift",
+        "has_fusion_bridge_binding": true,
+        "has_menu_actions": false,
+        "retry_exhausted": true,
+        "retry_attempts": 8,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": false
+          },
+          {
+            "attempt": 2,
+            "ok": false
+          },
+          {
+            "attempt": 3,
+            "ok": false
+          },
+          {
+            "attempt": 4,
+            "ok": false
+          },
+          {
+            "attempt": 5,
+            "ok": false
+          },
+          {
+            "attempt": 6,
+            "ok": false
+          },
+          {
+            "attempt": 7,
+            "ok": false
+          },
+          {
+            "attempt": 8,
+            "ok": false
+          }
+        ]
+      }
+    },
+    {
+      "gate": "plantAdapterContractGate",
+      "ok": true,
+      "witness": {
+        "path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/spec/native_fusion/plant_adapters.json",
+        "adapter_kinds": 6,
+        "required_min": 6,
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "plantHotSwapGate",
+      "ok": true,
+      "witness": {
+        "path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/native_fusion/plant_hot_swap_witness.json",
+        "from_kind": "tokamak",
+        "to_kind": "stellarator",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "protectionInterlockGate",
+      "ok": true,
+      "witness": {
+        "path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/native_fusion/protection_interlock_witness.json",
+        "terminal": "CALORIE",
+        "key": "interlock_ok",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "iso25010QualityGate",
+      "ok": true,
+      "witness": {
+        "path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/native_fusion/iso25010_quality_witness.json",
+        "terminal": "CALORIE",
+        "key": "quality_ok",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "functionalSafetyLifecycleGate",
+      "ok": true,
+      "witness": {
+        "path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/native_fusion/functional_safety_witness.json",
+        "terminal": "CALORIE",
+        "key": "safety_ok",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "facilityMiddlewareCompatGate",
+      "ok": true,
+      "witness": {
+        "path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/native_fusion/facility_middleware_witness.json",
+        "terminal": "CALORIE",
+        "key": "compat_ok",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "fatConformanceGate",
+      "ok": true,
+      "witness": {
+        "path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/native_fusion/fat_stage_witness.json",
+        "terminal": "CALORIE",
+        "key": "fat_ok",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "satNetworkSecurityGate",
+      "ok": true,
+      "witness": {
+        "path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/native_fusion/sat_stage_witness.json",
+        "terminal": "CALORIE",
+        "key": "sat_ok",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "commissioningLoadGate",
+      "ok": true,
+      "witness": {
+        "path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/native_fusion/commissioning_stage_witness.json",
+        "terminal": "CALORIE",
+        "key": "commissioning_ok",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "longSoakStabilityGate",
+      "ok": true,
+      "witness": {
+        "path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/evidence/native_fusion/long_soak_stage_witness.json",
+        "terminal": "CALORIE",
+        "key": "soak_ok",
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "fusionAppFullOperationalGate",
+      "ok": true,
+      "witness": {
+        "operational": true,
+        "recovered_on_round": 1,
+        "rounds_sample": [
+          {
+            "round": 1,
+            "s4_projection": true,
+            "sovereign_mesh": true,
+            "fusion_s4_page": true,
+            "fleet_digest": true,
+            "self_heal_round1": {
+              "start_fusion_local_popen": "scripts/start_fusion_local.sh",
+              "ensure_fusion_ui_surface": {
+                "ok": true,
+                "keys": [
+                  "already_listening",
+                  "fusion_ui_port",
+                  "http_rc"
+                ]
+              }
+            }
+          }
+        ],
+        "final_checks": {
+          "round": 1,
+          "s4_projection": true,
+          "sovereign_mesh": true,
+          "fusion_s4_page": true,
+          "fleet_digest": true,
+          "self_heal_round1": {
+            "start_fusion_local_popen": "scripts/start_fusion_local.sh",
+            "ensure_fusion_ui_surface": {
+              "ok": true,
+              "keys": [
+                "already_listening",
+                "fusion_ui_port",
+                "http_rc"
+              ]
+            }
+          }
+        },
+        "retry_attempts": 1,
+        "attempts_log": [
+          {
+            "attempt": 1,
+            "ok": true
+          }
+        ]
+      }
+    },
+    {
+      "gate": "subSealingGate",
+      "ok": false,
+      "witness": {
+        "reason": "skipped_prior_refused",
+        "note": "subSealingGate runs only after all prior gates pass (exit gate is CURE)"
+      }
+    }
+  ],
+  "ts_utc": "2026-04-08T10:35:52.032156+00:00",
+  "policy_refusal": false,
+  "outer_fix_loop": {
+    "iteration": 1,
+    "max_configured": 0,
+    "unlimited": true
+  }
+}

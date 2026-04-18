@@ -1,0 +1,10 @@
+{
+  "ts_utc": "2026-04-08T21:22:01.524435+00:00",
+  "gate": "macFusionAppBuildGate",
+  "build_rc": 1,
+  "artifact": "macos/GaiaFusion/.build/release/GaiaFusion",
+  "build_tail": "Building for production...\n[0/3] Write swift-version--58304C5D6DBC2206.txt\n[2/4] Compiling GaiaFusion OnboardingFlow.swift\n/Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/GaiaFusion/LocalServer.swift:416:20: warning: value 'fallback' was defined but never used; consider replacing with boolean test [#no-usage]\n414 |             : \"\"\n415 |         guard isProxyHealthy else {\n416 |             if let fallback = bundledFusionPath() {\n    |                    `- warning: value 'fallback' was defined but never used; consider replacing with boolean test [#no-usage]\n417 |                 return serveStatic(path: request.path)\n418 |             }\n\n/Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/GaiaFusion/LocalServer.swift:331:13: error: 'guard' body must not fall through, consider using a 'return' or 'throw' to exit the scope\n329 |                     return fallback\n330 |                 }\n331 |             }\n    |             `- error: 'guard' body must not fall through, consider using a 'return' or 'throw' to exit the scope\n332 |             let proxyAttempt = proxyToDevServer(path: fallbackPath, request: request)\n333 |             if proxyAttempt.isSuccess {",
+  "stderr_tail": "",
+  "duration_sec": 6.0,
+  "attempt_serial": 6
+}

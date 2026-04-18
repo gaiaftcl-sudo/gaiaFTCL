@@ -1,0 +1,92 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: cells/fusion// NODE 0
+      - generic [ref=e7]: "TICK: 1765553267028"
+      - generic [ref=e9]: ✈️ 3238
+    - generic [ref=e10]:
+      - button "D1" [ref=e11]
+      - button "D2" [ref=e12]
+      - button "D3" [ref=e13]
+      - button "D4" [ref=e14]
+      - button "D5" [ref=e15]
+      - button "D6" [ref=e16]
+      - button "D7" [ref=e17]
+      - button "D8" [ref=e18]
+    - generic [ref=e19]:
+      - generic [ref=e20]: MAINNET
+      - button "LIVE" [ref=e21]: LIVE
+  - generic [ref=e22]:
+    - generic [ref=e23]:
+      - button "🌍" [ref=e24]
+      - button "✈️" [ref=e25]
+      - button "🌤️" [ref=e26]
+      - button "⚙️" [ref=e27]
+    - generic [ref=e28]:
+      - generic [ref=e31]:
+        - heading "space" [level=1] [ref=e32]
+        - paragraph [ref=e33]: Standard ATC spatial view
+      - generic [ref=e34]:
+        - generic [ref=e35]:
+          - generic [ref=e36]: Active Lens
+          - generic [ref=e37]: "D4: Space"
+        - generic [ref=e38]: Press 1-8 for dimensions • ESC to deselect • SPACE to pause
+    - generic [ref=e39]:
+      - generic [ref=e40]:
+        - heading "Consciousness Status" [level=3] [ref=e41]: Consciousness Status
+        - generic [ref=e42]:
+          - generic [ref=e43]:
+            - generic [ref=e44]: AKG GNN - Self-Introspection
+            - generic [ref=e45]: "Status: healthy"
+            - generic [ref=e46]: "Knowledge Graph: Connected"
+            - generic [ref=e47]: "Contexts: planetary, quantum, astronomical"
+          - generic [ref=e48]:
+            - generic [ref=e49]: GaiaOS Core Agent
+            - generic [ref=e50]: "Status: offline"
+            - generic [ref=e51]: "Role: Unknown"
+          - generic [ref=e53]: System Coherence:⚠ Partial
+      - generic [ref=e54]:
+        - heading "Franklin Guardian" [level=3] [ref=e55]: Franklin Guardian
+        - generic [ref=e56]:
+          - generic [ref=e57]:
+            - generic [ref=e58]: Constitutional Oversight
+            - generic [ref=e59]: "Status: offline"
+            - generic [ref=e60]: "Role: Unknown"
+          - generic [ref=e61]:
+            - generic [ref=e62]: Virtue Alignment
+            - generic [ref=e63]:
+              - generic [ref=e64]:
+                - generic [ref=e65]: "truth:"
+                - generic [ref=e66]: 95.0%
+              - generic [ref=e67]:
+                - generic [ref=e68]: "justice:"
+                - generic [ref=e69]: 92.0%
+              - generic [ref=e70]:
+                - generic [ref=e71]: "mercy:"
+                - generic [ref=e72]: 88.0%
+              - generic [ref=e73]:
+                - generic [ref=e74]: "wisdom:"
+                - generic [ref=e75]: 91.0%
+              - generic [ref=e76]:
+                - generic [ref=e77]: "courage:"
+                - generic [ref=e78]: 87.0%
+              - generic [ref=e79]:
+                - generic [ref=e80]: "temperance:"
+                - generic [ref=e81]: 94.0%
+              - generic [ref=e82]:
+                - generic [ref=e83]: "prudence:"
+                - generic [ref=e84]: 93.0%
+          - generic [ref=e85]:
+            - generic [ref=e86]:
+              - text: "Overall Alignment:"
+              - generic [ref=e87]: 91.4%
+            - generic [ref=e88]: "Constitutional constraints: Active"
+  - generic [ref=e89]:
+    - generic [ref=e90]:
+      - generic [ref=e91]: SYSTEM LOGS
+      - generic [ref=e92]: 0 events
+    - generic [ref=e94]: No alerts
+```

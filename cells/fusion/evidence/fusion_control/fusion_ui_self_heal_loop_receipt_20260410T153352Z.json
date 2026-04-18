@@ -1,0 +1,314 @@
+{
+  "schema": "gaiaftcl_fusion_ui_self_heal_loop_receipt_v1",
+  "ts_utc": "2026-04-10T15:35:19.849516+00:00",
+  "terminal": "CALORIE",
+  "reason": "stable_mode_closed",
+  "cycles_attempted": 3,
+  "max_cycles": 4,
+  "ui_port": 8910,
+  "heal_mode": "full",
+  "conversation_wallet": "0xgaiaftcl_internal_feed_readonly",
+  "jsonl": "evidence/fusion_control/fusion_ui_self_heal_loop_20260410T153352Z.jsonl",
+  "last_cycle": {
+    "ts_utc": "2026-04-10T15:35:19.827169+00:00",
+    "cycle": 3,
+    "ui_port": 55838,
+    "heal_mode": "full",
+    "mcp_conversation": {
+      "ok": false,
+      "http_code": 500,
+      "request": {
+        "name": "closure_game_report_v1",
+        "params": {
+          "ui_contract": "gaiaftcl_fusion_blank_screen_contract_v1",
+          "ui_failures": [
+            "pre_diagnostic_mcp_first"
+          ],
+          "ui_port": 55838,
+          "ui_component_audit": {},
+          "operator_prompt": "What do you believe you are showing in the local fusion UI right now? If splash/mooring, propose exact repair action.",
+          "requested_action": "diagnose_and_propose_fix_patch"
+        }
+      },
+      "error": "UI canonical validation failed: CANONICALS.SHA256 lockfile not found"
+    },
+    "contract": {
+      "schema": "gaiaftcl_fusion_blank_screen_contract_v1",
+      "pass": true,
+      "fail_ids": [],
+      "ui_component_audit": {
+        "schema": "gaiaftcl_fusion_ui_component_audit_result_v1",
+        "spec_schema": "gaiaftcl_fusion_ui_component_audit_v1",
+        "spec_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/spec/native_fusion/fusion_ui_component_audit.json",
+        "present_markers": [
+          "fusion-topology-view",
+          "fusion-projection-panel",
+          "fusion-cell-grid",
+          "fusion-plant-controls",
+          "fusion-swap-panel"
+        ],
+        "missing_markers": [
+          "fusion-active-composite",
+          "fusion-viewport-heartbeat"
+        ],
+        "blocked_hits": [
+          "Cell formation in progress",
+          "00: Inserting mooring vector into mesh ingress.",
+          "fusion-splash-manifold"
+        ],
+        "splash_detected": true,
+        "active_surface_ok": false
+      },
+      "checks": [
+        {
+          "id": "fusion_health_contract",
+          "pass": true,
+          "http_code": 200,
+          "reason": "",
+          "hint": "run_fusion_mac_app_gate.py --port <ui_port> to restore runtime witness",
+          "sample": {
+            "cell_stack": {
+              "bundled_cell_compose_present": true,
+              "bundled_compose_bundle_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/arm64-apple-macosx/debug/GaiaFusion_GaiaFusion.bundle/fusion-sidecar-cell/docker-compose.fusion-sidecar.yml",
+              "cell_substrate": "docker_compose_bundled_full_cell",
+              "fusion_surface": "native_swift",
+              "mac_full_cell_note": "GaiaFusion ships fusion-sidecar-cell/docker-compose.fusion-sidecar.yml for the local MCP gateway cell; production loop verification probes 127.0.0.1:8803 alongside the nine WAN cells."
+            },
+            "dev_proxy_failures": 0,
+            "dev_proxy_healthy": true,
+            "dev_proxy_port": 3002,
+            "klein_bottle": {
+              "closed": true,
+              "default_metallib_present": true,
+              "fusion_web_root": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/arm64-apple-macosx/debug/GaiaFusion_GaiaFusion.bundle/fusion-web",
+              "missing": [],
+              "required_paths": {
+                "_next/static": true,
+                "index.html": true,
+                "substrate.html": true
+              }
+            },
+            "klein_bottle_closed": true,
+            "local_ui_port": 55838,
+            "mesh_nodes_total": 10,
+            "mode": "static",
+            "pid": 44364,
+            "self_heal": {
+              "recovery_active": false,
+              "reprobe_upstream_allowed": true
+            },
+            "status": "ok",
+            "trace_active": false,
+            "uptime_sec": 7.910664081573486,
+            "v_qbit": 0.9,
+            "v_qbit_note": "Healthy mesh nodes / 10 (fleet + Mac leaf); not Arango vqbit_measurements unless gateway-ingested.",
+            "v_qbit_projection": "local_mesh_ratio",
+            "wasm_runtime": {
+              "age_ms": 6855,
+              "closed": true,
+              "fallback_from_streaming": false,
+              "instantiate_path": "instantiateStreaming",
+              "last_reason": "",
+              "last_ts_ms": 1775835312983,
+              "ok": true,
+              "schema": "gaiaftcl_wasm_runtime_v1"
+            },
+            "wasm_runtime_closed": true,
+            "wasm_surface": {
+              "age_ms": 7,
+              "closed": true,
+              "document_nodes_approx": 171,
+              "fusion_tsx_surface": {
+                "closed": true,
+                "envelope": {
+                  "boot_state": "ACTIVE",
+                  "invariant_id": "fusion-s4-operator-manifold",
+                  "schema": "gaiaftcl_fusion_s4_tsx_surface_v1",
+                  "ts_ms": 1775835315679
+                },
+                "schema": "gaiaftcl_fusion_s4_tsx_surface_v1"
+              },
+              "href": "http://127.0.0.1:55838/fusion-s4",
+              "last_reason": "mutation",
+              "last_ts_ms": 1775835319831,
+              "monitoring": true,
+              "schema": "gaiaftcl_wasm_dom_surface_v1",
+              "shadow_roots_enumerated": 1,
+              "tree_depth_max": 10
+            },
+            "wasm_surface_closed": true
+          }
+        },
+        {
+          "id": "self_probe_dom_contract",
+          "pass": true,
+          "http_code": 200,
+          "reason": "",
+          "hint": "restart GaiaFusion and ensure WKWebView bridge is loaded",
+          "sample": {
+            "bridge_webview_loaded": true,
+            "cell_stack": {
+              "bundled_cell_compose_present": true,
+              "bundled_compose_bundle_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/macos/GaiaFusion/.build/arm64-apple-macosx/debug/GaiaFusion_GaiaFusion.bundle/fusion-sidecar-cell/docker-compose.fusion-sidecar.yml",
+              "cell_substrate": "docker_compose_bundled_full_cell",
+              "fusion_surface": "native_swift",
+              "mac_full_cell_note": "GaiaFusion ships fusion-sidecar-cell/docker-compose.fusion-sidecar.yml for the local MCP gateway cell; production loop verification probes 127.0.0.1:8803 alongside the nine WAN cells."
+            },
+            "dom_analysis": {
+              "body_text_len": 1245,
+              "document_element_count": 171,
+              "fusion_tsx_envelope_present": true,
+              "href": "http://127.0.0.1:55838/fusion-s4",
+              "pathname": "/fusion-s4",
+              "schema": "gaiaftcl_fusion_internal_dom_probe_v1",
+              "title": "Fusion control console \u2014 GaiaFTCL",
+              "user_agent": "GaiaFusion",
+              "webview_attached": true
+            },
+            "fusion_surface": "native_swift",
+            "local_ui_port": 55838,
+            "pid": 44364,
+            "schema": "gaiaftcl_fusion_self_probe_v1",
+            "terminal": "CURE",
+            "ts_utc": "2026-04-10T15:35:19Z",
+            "wasm_runtime": {
+              "age_ms": 6857,
+              "closed": true,
+              "fallback_from_streaming": false,
+              "instantiate_path": "instantiateStreaming",
+              "last_reason": "",
+              "last_ts_ms": 1775835312983,
+              "ok": true,
+              "schema": "gaiaftcl_wasm_runtime_v1"
+            },
+            "wasm_surface": {
+              "age_ms": 9,
+              "closed": true,
+              "document_nodes_approx": 171,
+              "fusion_tsx_surface": {
+                "closed": true,
+                "envelope": {
+                  "boot_state": "ACTIVE",
+                  "invariant_id": "fusion-s4-operator-manifold",
+                  "schema": "gaiaftcl_fusion_s4_tsx_surface_v1",
+                  "ts_ms": 1775835315679
+                },
+                "schema": "gaiaftcl_fusion_s4_tsx_surface_v1"
+              },
+              "href": "http://127.0.0.1:55838/fusion-s4",
+              "last_reason": "mutation",
+              "last_ts_ms": 1775835319831,
+              "monitoring": true,
+              "schema": "gaiaftcl_wasm_dom_surface_v1",
+              "shadow_roots_enumerated": 1,
+              "tree_depth_max": 10
+            }
+          }
+        },
+        {
+          "id": "substrate_html_contract",
+          "pass": true,
+          "http_code": 200,
+          "reason": "",
+          "hint": "rebuild composite assets and verify fusion-web mirror includes substrate route",
+          "sample": "<!DOCTYPE html><!--4l1DO12bWyU_AZ93cyVvF--><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" href=\"/_next/static/media/797e433ab948586e-s.p.dbea232f.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" href=\"/_next/static/media/caa3a2e1cccd8315-s.p.853070df.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"stylesheet\" href=\"/_next/static/chunks/4aad125e9a5240ff.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/d59f830a2b8e76"
+        },
+        {
+          "id": "fusion_html_contract",
+          "pass": true,
+          "http_code": 200,
+          "reason": "",
+          "hint": "ensure fusion-s4 UI and /api/fusion/s4-projection are both healthy; runtime splash/active state is enforced by Playwright gate",
+          "sample": {
+            "fusion_html_head": "<!DOCTYPE html><!--4l1DO12bWyU_AZ93cyVvF--><html lang=\"en\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" href=\"/_next/static/media/797e433ab948586e-s.p.dbea232f.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"prelo",
+            "projection_http_code": 200,
+            "projection_sample": {
+              "control_matrix": {
+                "nats_connected": true,
+                "swap_ready": true,
+                "trace_active": false,
+                "v_qbit_delta": 0.9
+              },
+              "flow_catalog_s4": {
+                "production_systems": [
+                  "fusion",
+                  "mesh",
+                  "nats",
+                  "control"
+                ],
+                "virtual_systems": [
+                  "quantum_bridge",
+                  "portal",
+                  "vault"
+                ]
+              },
+              "long_run": {
+                "record_count": 0,
+                "running": false
+              },
+              "production_systems_ui": {
+                "healthy_cells": 9,
+                "mesh_health": "9/10",
+                "total_cells": 10,
+                "v_qbit": 0.9
+              },
+              "projection_s4": {
+                "mesh": {
+                  "healthy": 9,
+                  "total": 10
+                },
+                "nats_connected": true,
+                "updated_at": "2026-04-10T15:35:19Z",
+                "v_qbit": 0.9
+              },
+              "schema": "gaiaftcl_fusion_s4_projection_ui_v1"
+            },
+            "component_audit": {
+              "schema": "gaiaftcl_fusion_ui_component_audit_result_v1",
+              "spec_schema": "gaiaftcl_fusion_ui_component_audit_v1",
+              "spec_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/spec/native_fusion/fusion_ui_component_audit.json",
+              "present_markers": [
+                "fusion-topology-view",
+                "fusion-projection-panel",
+                "fusion-cell-grid",
+                "fusion-plant-controls",
+                "fusion-swap-panel"
+              ],
+              "missing_markers": [
+                "fusion-active-composite",
+                "fusion-viewport-heartbeat"
+              ],
+              "blocked_hits": [
+                "Cell formation in progress",
+                "00: Inserting mooring vector into mesh ingress.",
+                "fusion-splash-manifold"
+              ],
+              "splash_detected": true,
+              "active_surface_ok": false
+            }
+          }
+        },
+        {
+          "id": "mac_gateway_health_contract",
+          "pass": true,
+          "http_code": 200,
+          "reason": "",
+          "hint": "restart fusion sidecar stack (docker-compose.fusion-sidecar.yml)",
+          "sample": {
+            "status": "healthy",
+            "service": "gaiaftcl-mcp-gateway-dynamic",
+            "nats_connected": false
+          }
+        }
+      ]
+    },
+    "mcp_turn_receipt": "evidence/fusion_control/fusion_ui_self_heal_mcp_turn_cycle3_20260410T153352Z.json",
+    "stable_streak": 2,
+    "terminal": "CALORIE"
+  },
+  "failure_signatures": {
+    "fusion_health_contract,self_probe_dom_contract,mac_gateway_health_contract|mcp:0": 1,
+    "|mcp:500": 1
+  },
+  "ui_component_audit_spec_path": "/Users/richardgillespie/Documents/FoT8D/cells/fusion/spec/native_fusion/fusion_ui_component_audit.json"
+}

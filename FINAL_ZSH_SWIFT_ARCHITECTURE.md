@@ -36,7 +36,7 @@
 ## Architecture
 
 ```
-GAIAOS/macos/
+cells/fusion/macos/
 ├── GaiaFusion/          ← MacFusion app (Swift)
 ├── MacHealth/           ← MacHealth app (Swift)
 ├── TestRobot/           ← PQ Metal GPU tests (Swift)
@@ -92,7 +92,7 @@ zsh scripts/gamp5_pq.sh --cell both
 
 ### CleanCloneTest (Swift)
 
-**Location:** `GAIAOS/macos/CleanCloneTest/`
+**Location:** `cells/fusion/macos/CleanCloneTest/`
 
 **How it calls zsh:**
 ```swift
@@ -104,7 +104,7 @@ process.arguments = ["zsh", "scripts/gamp5_iq.sh", "--cell", "both"]
 
 **Build:**
 ```zsh
-cd GAIAOS/macos/CleanCloneTest
+cd cells/fusion/macos/CleanCloneTest
 swift build
 ```
 
@@ -117,7 +117,7 @@ swift build
 
 ### TestRobot (Swift)
 
-**Location:** `GAIAOS/macos/TestRobot/`
+**Location:** `cells/fusion/macos/TestRobot/`
 
 **What it does:**
 - Metal GPU offscreen render (both apps)
@@ -127,7 +127,7 @@ swift build
 
 **Build:**
 ```zsh
-cd GAIAOS/macos/TestRobot
+cd cells/fusion/macos/TestRobot
 swift build
 ```
 
@@ -140,7 +140,7 @@ swift build
 
 ## Cursor Rule
 
-**File:** `GAIAOS/.cursor/rules/mac-qualification-zsh-swift.mdc`
+**File:** `cells/fusion/.cursor/rules/mac-qualification-zsh-swift.mdc`
 
 **Hard rules:**
 1. **New Mac code:** Swift executables only
@@ -187,14 +187,14 @@ swift build
 ## Receipts (7 total)
 
 **MacFusion (3):**
-- `GAIAOS/macos/GaiaFusion/evidence/iq/iq_receipt.json`
-- `GAIAOS/macos/GaiaFusion/evidence/oq/oq_receipt.json`
-- `GAIAOS/macos/GaiaFusion/evidence/pq/pq_receipt.json`
+- `cells/fusion/macos/GaiaFusion/evidence/iq/iq_receipt.json`
+- `cells/fusion/macos/GaiaFusion/evidence/oq/oq_receipt.json`
+- `cells/fusion/macos/GaiaFusion/evidence/pq/pq_receipt.json`
 
 **MacHealth (3):**
-- `GAIAOS/macos/MacHealth/evidence/iq/iq_receipt.json`
-- `GAIAOS/macos/MacHealth/evidence/oq/oq_receipt.json`
-- `GAIAOS/macos/MacHealth/evidence/pq/pq_receipt.json`
+- `cells/fusion/macos/MacHealth/evidence/iq/iq_receipt.json`
+- `cells/fusion/macos/MacHealth/evidence/oq/oq_receipt.json`
+- `cells/fusion/macos/MacHealth/evidence/pq/pq_receipt.json`
 
 **Unified (1):**
 - `evidence/TESTROBOT_RECEIPT.json`
@@ -204,7 +204,7 @@ swift build
 ## Run Clean Clone Test
 
 ```zsh
-cd GAIAOS/macos/CleanCloneTest
+cd cells/fusion/macos/CleanCloneTest
 swift build
 .build/debug/CleanCloneTest
 ```

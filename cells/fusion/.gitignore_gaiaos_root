@@ -1,0 +1,20 @@
+
+.env.philosophical
+
+# Phase 6 Discord / gateway local secrets (Mac observer)
+tests/discord_frontier/applescript/channel_ids.env
+tests/discord_frontier/applescript/phase6_gateway.env
+
+# Local NATS cell material (never commit seeds)
+evidence/nats_cell_forge/
+
+# Large artifacts — exceeds GitHub limits; fetch or restore out-of-band
+services/gaiaos_validation/registry_backup.tar.gz
+services/akg_gnn/models/**/*.onnx
+
+# Nested git checkouts (not submodules); break `git add cells/fusion/`
+avatar-gen/
+franklin_validator/
+gasm_runtime/
+quantum_substrate/
+mac-cell/consciousness_rust/
