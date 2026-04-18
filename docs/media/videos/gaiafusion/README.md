@@ -8,9 +8,9 @@ Settings → Pages → branch **`main`**, folder **`/docs`**. See also `docs/ind
 
 | File | Description |
 |------|-------------|
-| [`poster-architecting-8d.png`](./poster-architecting-8d.png) | Poster frame (~3s) for wiki/README image links |
-| [`architecting-8d-substrate-quantum-measurement-to-fusion.mp4`](./architecting-8d-substrate-quantum-measurement-to-fusion.mp4) | *Architecting the 8D Substrate — From Quantum Measurement to Fusion* |
+| [`poster-the-ai-validation-paradox.png`](./poster-the-ai-validation-paradox.png) | Poster frame (~3s) for wiki/README image links |
+| [`the-ai-validation-paradox.mp4`](./the-ai-validation-paradox.mp4) | *The AI Validation Paradox* — GaiaFusion walkthrough |
 
-**Raw MP4:** `https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4`  
+**Raw MP4:** `https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/the-ai-validation-paradox.mp4`  
 
-**Raw poster:** `https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/poster-architecting-8d.png`
+**Raw poster:** `https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/poster-the-ai-validation-paradox.png`

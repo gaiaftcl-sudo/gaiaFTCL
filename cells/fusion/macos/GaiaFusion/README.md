@@ -8,15 +8,15 @@
 
 ---
 
-## Media — Architecting the 8D substrate
+## Media — The AI Validation Paradox
 
 **Inline HTML5 player:** [gaiaftcl-sudo.github.io/gaiaFTCL#fusion](https://gaiaftcl-sudo.github.io/gaiaFTCL/#fusion) — GitHub Pages from `docs/` (enable **Settings → Pages →** **`main`** / **`/docs`**).
 
-Walkthrough: *Architecting the 8D Substrate — From Quantum Measurement to Fusion* — UUM-8D / vQbit measurement path into the fusion Mac surface. **Wiki:** [Architecting-8D-Substrate-GaiaFusion](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Architecting-8D-Substrate-GaiaFusion). *Repo Markdown strips `<video>` — poster below links to raw MP4.*
+Walkthrough: *The AI Validation Paradox* — UUM-8D / vQbit measurement path into the fusion Mac surface. **Wiki:** [Architecting-8D-Substrate-GaiaFusion](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Architecting-8D-Substrate-GaiaFusion) (page title matches this video). *Repo Markdown strips `<video>` — poster below links to raw MP4.*
 
-[![Architecting the 8D substrate — click poster to play MP4](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/poster-architecting-8d.png)](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4)
+[![The AI Validation Paradox — click poster to play MP4](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/poster-the-ai-validation-paradox.png)](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/the-ai-validation-paradox.mp4)
 
-**Play:** [MP4 (raw)](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4) · **Repo file:** [`docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4`](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4)
+**Play:** [MP4 (raw)](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/the-ai-validation-paradox.mp4) · **Repo file:** [`docs/media/videos/gaiafusion/the-ai-validation-paradox.mp4`](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/docs/media/videos/gaiafusion/the-ai-validation-paradox.mp4)
 
 ---
 
