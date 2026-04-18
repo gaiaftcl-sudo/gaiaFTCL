@@ -24,7 +24,7 @@ This document describes **communion UI** — how the **manifest layer (S4)** mee
 
 **Projection rule:** S4 measurements (sensors, files, models) **project** to scalar fields comparable against **C4 invariants**; disagreement is **Torsion** (S4≠C4) until witnessed closure. **`BioligitPrimitive` feeds MD projections; `vQbit` collapse is how those projections become substrate-grade truth.**
 
-**Related:** [GH-DS-001](DESIGN_SPECIFICATION.md), [GH-FS-001](FUNCTIONAL_SPECIFICATION.md), [`docs/GAIAFTCL_M8_S4_C4_SUBSTRATE_CONTEXT.md`](../../../GAIAOS/docs/GAIAFTCL_M8_S4_C4_SUBSTRATE_CONTEXT.md) (parent repo).
+**Related:** [GH-DS-001](DESIGN_SPECIFICATION.md), [GH-FS-001](FUNCTIONAL_SPECIFICATION.md), **[M8 substrate context — S4×C4](../../../docs/M8_S4_C4_SUBSTRATE_CONTEXT.md)** (canonical `docs/` copy; no GAIAOS path).
 
 ---
 
