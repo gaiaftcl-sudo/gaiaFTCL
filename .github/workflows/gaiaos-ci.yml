@@ -70,6 +70,9 @@ jobs:
       # marked @pytest.mark.integration — those require live services and
       # don't belong in a headless smoke tier. Add explicit ignores here
       # rather than re-introducing `|| true` / continue-on-error.
+      #
+      # ``services/test_ci_headless_smoke.py`` ensures at least one test is
+      # collected (pytest exits 5 when zero tests — previously a red CI).
       - name: Run Python tests (unit only)
         run: |
           python -m pytest services/ -v \

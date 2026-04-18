@@ -1,11 +1,8 @@
 # Mycelium Protocol workspace — shared NATS language + Apex Anchor (Discord) + Local Cell (worker).
 [workspace]
 resolver = "2"
+# Only list paths that exist in-repo. Missing members break `cargo fmt` / CI on a clean checkout.
 members = [
-    "crates/mycelium-protocol",
-    "apps/apex-anchor",
-    "apps/local-cell",
-    "services/bitcoin_heartbeat",
     "services/atc_physics_wasm",
 ]
 exclude = [

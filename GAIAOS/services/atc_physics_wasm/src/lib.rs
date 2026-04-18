@@ -13,11 +13,14 @@
 //! - D6: Compliance (ATC clearance, route deviation)
 //! - D7: Uncertainty (position accuracy, prediction confidence)
 
+// web-sys still exposes deprecated CanvasRenderingContext2d style setters; replacements are churny across targets.
+#![allow(deprecated)]
+
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::f64::consts::PI;
 use wasm_bindgen::prelude::*;
-use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement, MessageEvent, WebSocket};
+use web_sys::CanvasRenderingContext2d;
 
 #[wasm_bindgen]
 extern "C" {
@@ -43,6 +46,7 @@ pub struct Vec8D {
 }
 
 impl Vec8D {
+    #[allow(clippy::too_many_arguments)]
     pub fn new(d0: f64, d1: f64, d2: f64, d3: f64, d4: f64, d5: f64, d6: f64, d7: f64) -> Self {
         Self {
             d: [d0, d1, d2, d3, d4, d5, d6, d7],
@@ -66,8 +70,8 @@ impl Vec8D {
     /// Linear interpolation in 8D
     pub fn lerp(&self, other: &Vec8D, t: f64) -> Vec8D {
         let mut result = [0.0; 8];
-        for i in 0..8 {
-            result[i] = self.d[i] + (other.d[i] - self.d[i]) * t;
+        for (i, slot) in result.iter_mut().enumerate() {
+            *slot = self.d[i] + (other.d[i] - self.d[i]) * t;
         }
         Vec8D { d: result }
     }
@@ -216,14 +220,14 @@ pub struct PhysicsEngine {
 
     // vChip integration
     vchip_scale: f64, // Current quantum scale
-    vchip_coherence_threshold: f64,
+    _vchip_coherence_threshold: f64,
 
     // Rendering
     canvas_width: f64,
     canvas_height: f64,
 
-    // WebSocket for live streaming
-    ws_connected: bool,
+    // WebSocket for live streaming (reserved)
+    _ws_connected: bool,
 }
 
 #[wasm_bindgen]
@@ -247,10 +251,10 @@ impl PhysicsEngine {
             camera_lat: 39.0,
             camera_zoom: 4.0,
             vchip_scale: 1.0,
-            vchip_coherence_threshold: 0.5,
+            _vchip_coherence_threshold: 0.5,
             canvas_width,
             canvas_height,
-            ws_connected: false,
+            _ws_connected: false,
         }
     }
 
@@ -326,7 +330,7 @@ impl PhysicsEngine {
     #[wasm_bindgen]
     pub fn ingest_aircraft(&mut self, json_data: &str) -> Result<u32, JsValue> {
         let data: Vec<AircraftData> = serde_json::from_str(json_data)
-            .map_err(|e| JsValue::from_str(&format!("JSON parse error: {}", e)))?;
+            .map_err(|e| JsValue::from_str(&format!("JSON parse error: {e}")))?;
 
         let mut count = 0;
         for ac in data {
@@ -371,9 +375,7 @@ impl PhysicsEngine {
             // Update 8D vector from data if provided
             if let Some(d_vec) = ac.d_vec {
                 if d_vec.len() == 8 {
-                    for i in 0..8 {
-                        aircraft.state.d[i] = d_vec[i];
-                    }
+                    aircraft.state.d.copy_from_slice(&d_vec[..8]);
                 }
             }
 
@@ -642,6 +644,7 @@ impl PhysicsEngine {
 // ═══════════════════════════════════════════════════════════════════════════
 
 #[derive(Debug, Deserialize)]
+#[allow(dead_code)]
 struct AircraftData {
     icao24: String,
     callsign: Option<String>,
