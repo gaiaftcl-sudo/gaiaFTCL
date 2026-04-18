@@ -1,24 +1,25 @@
 #!/bin/bash
-# Install Franklin lockdown Git hooks
+# Install Franklin + M8 Git hooks (repo root = git toplevel, works from FoT8D monorepo)
 
 set -e
 
-REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-HOOKS_SOURCE="${REPO_ROOT}/scripts/git-hooks"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_ROOT="$(git -C "$SCRIPT_DIR/.." rev-parse --show-toplevel)"
+HOOKS_SOURCE="${REPO_ROOT}/GAIAOS/scripts/git-hooks"
 HOOKS_TARGET="${REPO_ROOT}/.git/hooks"
 
 echo "=========================================="
-echo "FRANKLIN LOCKDOWN — Installing Git Hooks"
+echo "GAIAFTCL — Installing Git Hooks (M8 + Franklin)"
 echo "=========================================="
 echo ""
 
 if [ ! -d "${HOOKS_TARGET}" ]; then
-    echo "❌ Error: .git/hooks directory not found"
-    echo "   Are you in a Git repository?"
+    echo "❌ Error: .git/hooks not found at ${HOOKS_TARGET}"
+    echo "   Run from a clone whose git root is FoT8D (not a subfolder-only checkout)."
     exit 1
 fi
 
-# Install pre-push hook
+echo "Repo root: ${REPO_ROOT}"
 echo "Installing pre-push hook..."
 cp "${HOOKS_SOURCE}/pre-push" "${HOOKS_TARGET}/pre-push"
 chmod +x "${HOOKS_TARGET}/pre-push"
@@ -29,18 +30,16 @@ echo "=========================================="
 echo "✅ Git hooks installed successfully"
 echo "=========================================="
 echo ""
-echo "ACTIVE HOOKS:"
-echo "  • pre-push: Validates canaries when protected paths change"
+echo "PHASE 1 — M8 remote guard (protected refs: main, develop)"
+echo "  • Blocks non-fast-forward (force-push) and delete of protected refs"
+echo "  • Bypass (emergency): GIT_M8_REMOTE_GUARD_BYPASS=1 git push ..."
 echo ""
-echo "PROTECTED PATHS:"
-echo "  • services/gaiaos_ui_tester_mcp/src/main.rs"
-echo "  • services/gaiaos_ui_tester_mcp/src/treasury/"
-echo "  • services/gaiaos_ui_tester_mcp/src/enforcement.rs"
-echo "  • services/gaiaos_ui_tester_mcp/src/uum8d_*"
-echo "  • evidence/closure_game/CANONICALS.SHA256"
-echo "  • services/gaiaos_ui_tester_mcp/tests/no_outflow_guard.sh"
-echo "  • services/gaiaos_ui_tester_mcp/tests/run_all_canaries.sh"
+echo "PHASE 2 — FRANKLIN LOCKDOWN (when treasury/MCP paths change)"
+echo "  • Validates canaries when protected paths change"
 echo ""
-echo "To bypass (NOT RECOMMENDED):"
+echo "PROTECTED PATHS (Franklin):"
+echo "  • services/gaiaos_ui_tester_mcp/… (see pre-push source)"
+echo ""
+echo "To bypass ALL hooks (NOT RECOMMENDED):"
 echo "  git push --no-verify"
 echo ""

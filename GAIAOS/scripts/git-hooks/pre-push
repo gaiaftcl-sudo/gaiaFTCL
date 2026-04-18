@@ -1,6 +1,31 @@
 #!/bin/bash
-# FRANKLIN LOCKDOWN GATE — Pre-push hook
-# Blocks push if protected paths changed and canaries fail
+# M8 REMOTE GUARD (phase 1) — refuse force / delete on protected refs (main, develop)
+# FRANKLIN LOCKDOWN GATE (phase 2) — pre-push if protected paths changed and canaries fail
+
+# --- M8: read stdin (refs being pushed); must run before Franklin ---
+if [[ "${GIT_M8_REMOTE_GUARD_BYPASS:-}" == "1" ]]; then
+  echo "WARN: M8 remote guard BYPASSED (GIT_M8_REMOTE_GUARD_BYPASS=1)" >&2
+  cat >/dev/null
+else
+  while read -r local_ref local_sha remote_ref remote_sha; do
+    case "$remote_ref" in
+      refs/heads/main|refs/heads/develop)
+        if [[ "$local_sha" == 0000000000000000000000000000000000000000 ]]; then
+          echo "REFUSED: delete of protected ref $remote_ref" >&2
+          exit 1
+        fi
+        if [[ "$remote_sha" == 0000000000000000000000000000000000000000 ]]; then
+          continue
+        fi
+        if ! git merge-base --is-ancestor "$remote_sha" "$local_sha" 2>/dev/null; then
+          echo "REFUSED: non-fast-forward to $remote_ref (force-push would overwrite history)." >&2
+          echo "Emergency only: GIT_M8_REMOTE_GUARD_BYPASS=1 git push ..." >&2
+          exit 1
+        fi
+        ;;
+    esac
+  done
+fi
 
 set -e
 
