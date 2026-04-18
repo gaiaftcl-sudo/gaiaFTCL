@@ -31,7 +31,15 @@ A `CURE` is only emitted when the binding free energy is validated at M (Measure
 
 ## Media — Code as Physics (kinematic pipeline)
 
-**Walkthrough (MP4):** *[Code as Physics — Validating the GaiaHealth Kinematic Pipeline](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Code-as-Physics-GaiaHealth-Kinematic-Pipeline)* — same embed as the [project wiki](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Home#gaiahealth-biologit-cell); raw file in repo: [`docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4`](https://github.com/gaiaftcl-sudo/gaiaFTCL/raw/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4).
+**Walkthrough:** *Code as Physics — Validating the GaiaHealth Kinematic Pipeline* — in-browser playback below (HTML5 `<video>`). Project wiki page with the same embed: [Code-as-Physics-GaiaHealth-Kinematic-Pipeline](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Code-as-Physics-GaiaHealth-Kinematic-Pipeline).
+
+<!-- GitHub renders this in the repo file view and on the wiki mirror; uses raw main-branch MP4 blob. -->
+<video controls playsinline width="100%" preload="metadata"
+  src="https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4">
+  <a href="https://github.com/gaiaftcl-sudo/gaiaFTCL/raw/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4">Download / open MP4</a>
+</video>
+
+**Direct file:** [`docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4`](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4) · [raw stream](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4)
 
 ---
 
