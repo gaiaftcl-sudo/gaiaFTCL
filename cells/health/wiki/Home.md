@@ -29,6 +29,12 @@ A `CURE` is only emitted when the binding free energy is validated at M (Measure
 
 ---
 
+## Media — Code as Physics (kinematic pipeline)
+
+**Walkthrough (MP4):** *[Code as Physics — Validating the GaiaHealth Kinematic Pipeline](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Code-as-Physics-GaiaHealth-Kinematic-Pipeline)* — same embed as the [project wiki](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Home#gaiahealth-biologit-cell); raw file in repo: [`docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4`](https://github.com/gaiaftcl-sudo/gaiaFTCL/raw/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4).
+
+---
+
 ## Repository Layout
 
 ```
@@ -64,6 +70,7 @@ FoT8D/
 | [State Machine](./State-Machine.md) | 11-state machine, transition matrix, forced layout modes |
 | [Zero-PII Wallet](./Zero-PII-Wallet.md) | `gaiahealth1` wallet, zero-PII mandate, enforcement layers |
 | [WASM Constitutional Substrate](./WASM-Constitutional-Substrate.md) | 8 mandatory WASM exports, operator visibility layer |
+| [Code as Physics — Kinematic pipeline (wiki)](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Code-as-Physics-GaiaHealth-Kinematic-Pipeline) | Video walkthrough; validates GaiaHealth kinematic pipeline |
 
 ---
 
