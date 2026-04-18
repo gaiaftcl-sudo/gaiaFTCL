@@ -8,6 +8,19 @@
 
 ---
 
+## Media — Architecting the 8D substrate
+
+Walkthrough: *Architecting the 8D Substrate — From Quantum Measurement to Fusion* — UUM-8D / vQbit measurement path into the fusion Mac surface. **Wiki page:** [Architecting-8D-Substrate-GaiaFusion](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Architecting-8D-Substrate-GaiaFusion).
+
+<video controls playsinline width="100%" preload="metadata"
+  src="https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4">
+  <a href="https://github.com/gaiaftcl-sudo/gaiaFTCL/raw/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4">Download / open MP4</a>
+</video>
+
+**Repo file:** [`docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4`](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/docs/media/videos/gaiafusion/architecting-8d-substrate-quantum-measurement-to-fusion.mp4)
+
+---
+
 ## Overview
 
 **GaiaFusion** is the macOS sovereign cell for the GaiaFTCL plasma control mesh. It provides hardware-accelerated 3D visualization of magnetic confinement fusion plant topologies, real-time telemetry ingestion via NATS, and cryptographically-sovereign mesh synchronization — driven by a zero-dependency Rust + Apple Metal rendering stack.
