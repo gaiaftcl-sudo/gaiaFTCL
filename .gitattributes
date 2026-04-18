@@ -4,7 +4,7 @@ evidence/**          text eol=lf
 Package.resolved     merge=ours
 GaiaFusion.xcworkspace/xcuserdata/**  export-ignore
 cell_identity.json   -merge -diff
-
 # Word/Office — binary (overrides evidence/** text eol=lf; .docx are ZIP).
 *.docx binary
 *.doc binary
+docs/media/**/*.mp4 filter=lfs diff=lfs merge=lfs -text
