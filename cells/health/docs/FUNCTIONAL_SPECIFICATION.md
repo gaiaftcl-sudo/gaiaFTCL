@@ -26,6 +26,8 @@ This Functional Specification (FS) defines **what** the GaiaHealth Biologit Cell
 - Patient data storage (zero-PII by design — no patient data is ever received)
 - Network connectivity (cell operates air-gapped; Owl identity is local secp256k1)
 
+**Related architecture (communion & extended modalities):** **[GH-S4C4-COMM-001](S4_C4_COMMUNION_UI_SPEC.md)** defines the **S4↔C4 Communion UI** vision (multi-modal ingest, C4 invariant registry baselines, projection workbench, epistemic ledger, **vQbit** settlement). It does **not** by itself expand GH-FS-001 functional requirements until adopted by change control; it is the **authoritative design target** for how future instrumentation maps onto `BioligitPrimitive` / **vQbit** closure.
+
 ---
 
 ## 2. System Overview

@@ -27,6 +27,7 @@ This document describes:
 - GH-FS-001 — Functional Specification (defines WHAT)
 - GH-RTM-001 — Requirements Traceability Matrix (maps FR → test)
 - FoT8D-VMP-001 — Validation Master Plan (governs the lifecycle)
+- **GH-S4C4-COMM-001** — [S4↔C4 Communion UI Specification](S4_C4_COMMUNION_UI_SPEC.md) (extended S4 ingest, C4 invariant baselines, projection workbench, epistemic ledger; **`BioligitPrimitive` + `vQbit` roles in §0**)
 
 ---
 

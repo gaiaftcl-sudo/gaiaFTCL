@@ -12,6 +12,8 @@
 
 `BioligitPrimitive` is the canonical vertex/data type for the GaiaHealth Biologit Cell. It is the biological analog to the `vQbitPrimitive` (76 bytes) of the GaiaFTCL Fusion Cell — but carries molecular dynamics data instead of plasma state.
 
+**Communion note:** Multi-modal S4 projections and C4 ledger settlement still flow through **`vQbit` semantics** (entropy delta / witness) at the envelope layer; see **[GH-S4C4-COMM-001](../docs/S4_C4_COMMUNION_UI_SPEC.md) §0.
+
 Every field in `BioligitPrimitive` is **purely mathematical or physical**. No field carries or can carry personally identifiable information.
 
 ---

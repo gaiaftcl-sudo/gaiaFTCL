@@ -14,6 +14,8 @@ The WASM Constitutional Substrate runs inside a WKWebView sandbox and exposes **
 
 **Important:** The WASM substrate is the **operator visibility layer** — it makes compliance checks observable and auditable. It is NOT the primary safety enforcer. Rust is. The Rust state machine enforces all hard boundaries independently. The WASM layer makes those checks **transparent to operators and regulators**.
 
+**See also:** **[GH-S4C4-COMM-001](../docs/S4_C4_COMMUNION_UI_SPEC.md)** — future global WASM shell / plugin composition for **S4↔C4 communion** (roadmap; does not replace the eight exports documented here unless change-controlled).
+
 ---
 
 ## Architecture

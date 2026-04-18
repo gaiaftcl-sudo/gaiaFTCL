@@ -8,6 +8,14 @@
 
 ---
 
+## Related architecture documents
+
+| ID | Document | Role |
+|----|----------|------|
+| **GH-S4C4-COMM-001** | [S4↔C4 Communion UI Specification](S4_C4_COMMUNION_UI_SPEC.md) | Extended S4 modalities, C4 invariant registry design, projection workbench, epistemic ledger vs GH-FS‑001 baseline |
+
+---
+
 ## How to Read This Matrix
 
 Each row is a functional requirement from `GH-FS-001`. Columns trace it through:

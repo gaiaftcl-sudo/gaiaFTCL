@@ -26,6 +26,8 @@ GaiaHealth is the direct biological analog to the GaiaFusion Fusion Cell, operat
 
 The foundational equation: **small molecule + protein + MD substrate = CURE**. All three elements are mandatory.
 
+**Communion architecture (S4↔C4 UI):** See **[GH-S4C4-COMM-001](docs/S4_C4_COMMUNION_UI_SPEC.md)** — multi-modal ingest, C4 invariant baselines, projection workbench, epistemic ledger, and explicit **`BioligitPrimitive` + `vQbit`** roles on the **UUM-8D** manifold.
+
 ---
 
 ## Zero-PII Wallet Mandate

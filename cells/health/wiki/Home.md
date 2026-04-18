@@ -37,6 +37,8 @@ small_molecule + protein + MD_substrate = CURE
 
 A `CURE` is only emitted when the binding free energy is validated at M (Measured) or I (Inferred) epistemic confidence and all ADMET and constitutional checks pass.
 
+**S4↔C4 Communion (extended UI / instrumentation vision):** **[GH-S4C4-COMM-001](../docs/S4_C4_COMMUNION_UI_SPEC.md)** — WASM shell, multi-modal S4 ingest, C4 invariant registry baselines, projection workbench, epistemic ledger with **M/T/I/A** and **vQbit** settlement. *Design target / roadmap; see document status banner.*
+
 ---
 
 ## Repository Layout
