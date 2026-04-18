@@ -1,0 +1,31 @@
+#!/bin/bash
+# M8 — refuse dangerous pushes to protected refs (main, develop).
+# Reads git pre-push stdin: <local_ref> <local_sha> <remote_ref> <remote_sha>
+# Bypass (emergency): GIT_M8_REMOTE_GUARD_BYPASS=1
+
+if [[ "${GIT_M8_REMOTE_GUARD_BYPASS:-}" == "1" ]]; then
+  echo "WARN: M8 remote guard BYPASSED (GIT_M8_REMOTE_GUARD_BYPASS=1)" >&2
+  cat >/dev/null
+  exit 0
+fi
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  case "$remote_ref" in
+    refs/heads/main|refs/heads/develop)
+      if [[ "$local_sha" == 0000000000000000000000000000000000000000 ]]; then
+        echo "REFUSED: delete of protected ref $remote_ref" >&2
+        exit 1
+      fi
+      if [[ "$remote_sha" == 0000000000000000000000000000000000000000 ]]; then
+        continue
+      fi
+      if ! git merge-base --is-ancestor "$remote_sha" "$local_sha" 2>/dev/null; then
+        echo "REFUSED: non-fast-forward to $remote_ref (force / lease-force / history rewrite)." >&2
+        echo "Emergency: GIT_M8_REMOTE_GUARD_BYPASS=1 git push ..." >&2
+        exit 1
+      fi
+      ;;
+  esac
+done
+
+exit 0

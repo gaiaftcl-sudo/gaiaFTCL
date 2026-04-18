@@ -1,7 +1,7 @@
 # Remote git — agent rules (committed copy)
 
-**GitHub branch protection on `main`** is authoritative (no force-push, no delete, required checks).  
-Local hook: `GAIAOS/scripts/git-hooks/pre-push` phase 1 (M8). Policy: `GAIAOS/scripts/git_invariant_policy.yaml`.
+**GitHub branch protection on `main`** is authoritative (no force-push, no delete, required checks). See [BRANCH_PROTECTION_CHECKLIST.md](BRANCH_PROTECTION_CHECKLIST.md).  
+Local: `pre-push` runs **Franklin** then **M8 refuse** (`pre-push-franklin`, `pre-push-m8-refuse`).
 
 ## Agent must not
 
