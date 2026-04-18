@@ -1,4 +1,14 @@
 # Hoisted from GAIAOS/.github/workflows/ci.yml — runs when repo root is FoT8D/gaiaFTCL.
+#
+# VALIDATION_TIER: CI_headless_smoke (Linux Rust/Python subset only).
+# This is NOT operator OQ. AppKit/Metal/Swift tests live in mac-cell-ci.yml
+# and still require operator-in-the-loop qualification under Aqua (see
+# .cursorrules KERNEL DEADLOCK PROTOCOL).
+#
+# Policy: no continue-on-error, no `|| true`. A green run means the Linux-side
+# Rust workspace and scoped Python unit tests actually pass. If this needs to
+# be loosened, add the exclusion to the pytest `-k`/`--ignore` scope instead
+# of masking the failure.
 
 name: GAIAOS CI
 
@@ -16,6 +26,7 @@ on:
 env:
   CARGO_TERM_COLOR: always
   RUST_BACKTRACE: 1
+  VALIDATION_TIER: CI_headless_smoke
 
 defaults:
   run:
@@ -23,7 +34,7 @@ defaults:
 
 jobs:
   test-rust:
-    name: Test Rust (GAIAOS tree)
+    name: Test Rust (GAIAOS tree — Linux subset)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,17 +47,15 @@ jobs:
           cache-on-failure: true
       - name: Check formatting
         run: cargo fmt --all -- --check
-      - name: Clippy
+      - name: Clippy (hard gate)
         run: cargo clippy --workspace --all-targets -- -D warnings
-        continue-on-error: true
       - name: Build
         run: cargo build --workspace --release
       - name: Test
         run: cargo test --workspace --release
-        continue-on-error: true
 
   test-python:
-    name: Test Python (GAIAOS tree)
+    name: Test Python (GAIAOS tree — unit scope)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -57,6 +66,14 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pytest pytest-asyncio httpx fastapi uvicorn pydantic
-      - name: Run Python tests
-        run: python -m pytest services/ -v --ignore=services/node_modules || true
-        continue-on-error: true
+      # Scope note: ignore node_modules, integration/, e2e/, and anything
+      # marked @pytest.mark.integration — those require live services and
+      # don't belong in a headless smoke tier. Add explicit ignores here
+      # rather than re-introducing `|| true` / continue-on-error.
+      - name: Run Python tests (unit only)
+        run: |
+          python -m pytest services/ -v \
+            --ignore=services/node_modules \
+            --ignore=services/integration \
+            --ignore=services/e2e \
+            -m "not integration"

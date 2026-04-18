@@ -23,7 +23,7 @@ targets:
       ENABLE_HARDENED_RUNTIME: YES
       CODE_SIGN_ENTITLEMENTS: "GaiaFTCLConsole.entitlements"
       SUFeedURL: "https://github.com/fortressai/gaiaftcl/releases/latest/download/appcast.xml"
-      SUPublicEDKey: "placeholder_public_key"
+      SUPublicEDKey: "E8vtRUECBcydt+dQkVTsGRM6cXaeTSIoGNKtFTrjRbU="
     postCompileScripts:
       - script: |
           mkdir -p "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/scripts"

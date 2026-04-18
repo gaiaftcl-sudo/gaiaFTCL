@@ -1,4 +1,15 @@
-name: GaiaFusion GAMP 5 Validation
+# GAIAOS-tree mirror — kept in sync with
+# /.github/workflows/gaiafusion-gamp5-validation.yml at repo root.
+#
+# VALIDATION_TIER: CI_headless_smoke
+#
+# This is NOT GAMP 5 qualification. See the root-mirror header comment.
+# Operator OQ requires Aqua + Metal launch + SSH-signed receipts.
+#
+# TO-DO (operator, requires git mv / git rm) — rename or delete both
+# mirrors together. See .cursorrules KERNEL DEADLOCK PROTOCOL.
+
+name: "GaiaFusion Build Smoke (was GAMP 5 Validation — renamed for honesty)"
 
 on:
   push:
@@ -6,43 +17,65 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  VALIDATION_TIER: CI_headless_smoke
+
 jobs:
-  validation:
-    name: GAMP 5 Validation CI
+  build-smoke:
+    name: GaiaFusion build smoke (CI headless — not operator OQ)
     runs-on: macos-14
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: '15.4'
-      
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Build config CLI
         working-directory: macos/GaiaFusion
         run: |
           cd tools/gaiafusion-config-cli
           cargo build --release
-      
-      - name: Run IQ Validation
+
+      - name: Run IQ script (headless smoke)
         working-directory: macos/GaiaFusion
         run: zsh scripts/run_iq_validation.sh
 
-      - name: Run OQ Validation
+      - name: Run OQ script (headless smoke)
         working-directory: macos/GaiaFusion
         run: zsh scripts/run_oq_validation.sh
 
-      - name: Upload Evidence
+      - name: Stamp VALIDATION_TIER.txt into evidence/
+        working-directory: macos/GaiaFusion
+        run: |
+          mkdir -p evidence
+          cat > evidence/VALIDATION_TIER.txt <<EOF
+          VALIDATION_TIER=CI_headless_smoke
+          workflow=GAIAOS/.github/workflows/gaiafusion-gamp5-validation.yml
+          runner=macos-14 (GitHub-hosted)
+          witnessed_by=github-actions (NO human operator, NO Aqua session)
+          metal_window_launched=false
+          receipt_signed=false
+          note=This artifact is NOT operator OQ and NOT GAMP 5 qualification.
+               Operator OQ requires Terminal.app Aqua + Metal launch + SSH-signed receipt.
+               See .cursorrules KERNEL DEADLOCK PROTOCOL.
+          commit=${GITHUB_SHA}
+          run_url=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
+          EOF
+          cat evidence/VALIDATION_TIER.txt
+
+      - name: Upload evidence (CI smoke tier)
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: gamp5-evidence
+          name: gaiafusion-build-smoke-evidence
           path: macos/GaiaFusion/evidence/
           retention-days: 90
