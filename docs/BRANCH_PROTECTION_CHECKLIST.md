@@ -1,6 +1,29 @@
-# Branch protection — one-time GitHub UI checklist
+# Branch protection — one-time setup (GitHub server, not a repo file)
 
-**Authoritative rule:** nothing in this repo replaces **GitHub branch/tag settings**. Local `pre-push` hooks are a convenience; the remote is the substrate.
+**Authoritative rule:** branch protection and tag rulesets live **on GitHub’s servers**, not in git — otherwise anyone who could push could turn protection off. Local `pre-push` hooks are optional; **Settings** are the substrate.
+
+## Option A — CLI (no browser)
+
+Requires `gh` and `gh auth login` with permission to change repo settings.
+
+```bash
+cd "$(git rev-parse --show-toplevel)"
+bash GAIAOS/scripts/set_branch_protection.sh
+```
+
+Preview JSON only:
+
+```bash
+DRY_RUN=1 bash GAIAOS/scripts/set_branch_protection.sh
+```
+
+If GitHub returns **422** on branch protection, the required check **names** may not match your Actions job names. Open a green PR, copy the exact check strings from the checks list, then:
+
+```bash
+GITHUB_REQUIRED_CONTEXTS='Exact One / Job A,Exact Two / Job B' bash GAIAOS/scripts/set_branch_protection.sh
+```
+
+## Option B — Web UI
 
 Tick these in **github.com → your repo → Settings**.
 
