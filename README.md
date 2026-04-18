@@ -13,7 +13,8 @@
 | Old path | New path |
 |----------|----------|
 | `GAIAOS/` | [`cells/fusion/`](cells/fusion/) |
-| Top-level `GaiaHealth/` | [`cells/health/`](cells/health/) |
+| Top-level `GaiaHealth/` | [`cells/health/`](cells/health/) (Rust/WASM/docs/wiki) |
+| `GaiaHealth` Mac app (Swift) | [`cells/fusion/macos/MacHealth/`](cells/fusion/macos/MacHealth/) |
 
 ---
 

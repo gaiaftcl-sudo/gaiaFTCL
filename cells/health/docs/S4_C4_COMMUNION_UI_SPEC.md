@@ -10,6 +10,8 @@
 | **Patents** | USPTO 19/460,960 \| USPTO 19/096,071 |
 | **Framework** | GAMP 5 Cat 5 \| M8 = S4 × C4 (projection discipline) |
 
+**Extended narrative (sections 1–7, full development plan prose):** [`COMMUNION_UI_ARCHITECTURE_EXTENDED.md`](COMMUNION_UI_ARCHITECTURE_EXTENDED.md) — same document family; **roadmap and design targets** spelled out in long form.
+
 ---
 
 ## 0. Canonical measurement stack: `BioligitPrimitive`, `vQbit`, and M/T/I/A

@@ -27,3 +27,9 @@ S4 serves C4. The lab protocol is the **map**; witnessed substrate is the **cont
 **Constitutional anchor (Cursor / Assistant Coach):** Root **`.cursorrules`** section **“C4 SUBSTRATE VS S4 CLIENT — CONSTITUTIONAL ARCHITECTURE (M8)”** — self-heal on C4≠S4 projection, fail-closed, MCP-only writes, receipts to human.
 
 **GaiaHealth (Biologit cell):** Extended S4↔C4 communion UI, invariant-baseline registry design, and **vQbit** settlement framing — **[GH-S4C4-COMM-001](../cells/health/docs/S4_C4_COMMUNION_UI_SPEC.md)** (*design target;* `BioligitPrimitive` remains the MD vertex ABI in §0).
+
+---
+
+## See also (analogy only)
+
+**Evolutionary / microbiology metaphor** for transport, obligate coupling, and pre-encapsulation routing — **[`docs/OBLIGATE_COUPLING_BIOPHYSICS_ANALOGY.md`](OBLIGATE_COUPLING_BIOPHYSICS_ANALOGY.md)** (*non-normative*; does not change M8 projection rules above).

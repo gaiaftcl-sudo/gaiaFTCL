@@ -88,10 +88,14 @@ cells/health/
 │   ├── iq_install.sh           # IQ + zero-PII sovereign wallet generation
 │   ├── oq_validate.sh          # OQ — full automated test suite
 │   └── run_full_cycle.sh       # build → test → evidence receipt
+├── docs/                       # GH-FS / GH-DS / GH-RTM + S4↔C4 communion specs
 ├── evidence/                   # GxP receipts (gitignored)
-└── wiki/
-    └── ZERO_PII_WALLET.md      # Wallet architecture specification
+└── wiki/                       # Biologit wiki mirror (see listing in repo)
 ```
+
+**macOS Swift UI (Biologit app):** [`cells/fusion/macos/MacHealth/`](../fusion/macos/MacHealth/) — SwiftUI shell, not under this `Cargo.toml` workspace.
+
+**Reviewer one-pager:** [`docs/REVIEWER_BRIEF.md`](docs/REVIEWER_BRIEF.md) — seven **CURE** gates (C-1…C-7) vs tests.
 
 ---
 

@@ -186,6 +186,14 @@ The numerical closure threshold is: **9.54 × 10⁻⁷**
 
 When the residual across all active telemetry channels across all nine cells drops below this threshold, the system transitions to CALORIE for the closure event. This is the computational analogue of scientific confidence: not certainty, but a formally bounded, constitutionally-validated probability that the physics is closed.
 
+### 3.6 Evolutionary analogy — obligate symbiosis (non-normative)
+
+**Epistemic status:** **[I] Inferred analogy** — pedagogical bridge to microbiology / materials, not a fusion engineering requirement.
+
+UUM-8D and cross-domain cells (including GaiaHealth) reuse the same constitutional substrate: quorum-validated closure, epistemic tags, and refusal when entropy has no computable value. A parallel drawn in-repo is **obligate coupling**: stable multi-species consortia (or material “wiring”) exchanging metabolites or signals through structurally constrained channels—conceptually similar to how S4 ingest, C4 invariants, and terminal emissions must chain evidence rather than assert free-floating claims.
+
+Canonical write-up (citations, boundaries): [`docs/OBLIGATE_COUPLING_BIOPHYSICS_ANALOGY.md`](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/docs/OBLIGATE_COUPLING_BIOPHYSICS_ANALOGY.md).
+
 ---
 
 ## 4. Fusion Domain
