@@ -12,6 +12,7 @@ Three Mac applications with IQ/OQ/PQ qualification workflow:
 |-----|----------|---------|
 | **MacFusion** | `GAIAOS/macos/GaiaFusion/` | GAIAFTCL fusion cell — 9 plant kinds, τ Metal renderer |
 | **MacHealth** | `GAIAOS/macos/MacHealth/` | GaiaHealth biologit cell — 11-state MD, M/I/A Metal renderer |
+| **GaiaFTCL Console** | `GAIAOS/macos/GaiaFTCLConsole/` | Terminal-only operator shell — launches cells via `Process`, NATS read-only, **no** GaiaFusion/MacHealth SPM deps ([`LOCKED.md`](GaiaFTCLConsole/LOCKED.md)) |
 | **TestRobot** | `GAIAOS/macos/TestRobot/` | Swift executable for PQ orchestration |
 
 ---
@@ -30,6 +31,7 @@ Verifies:
 **Scripts:**
 - `GAIAOS/macos/GaiaFusion/scripts/iq_install.sh` → `evidence/iq/macfusion_iq_receipt.json`
 - `GAIAOS/macos/MacHealth/scripts/iq_install.sh` → `evidence/iq/machealth_iq_receipt.json`
+- `GAIAOS/macos/GaiaFTCLConsole/scripts/iq_install.sh` → `evidence/iq/gaiaftclconsole_<timestamp>.json`
 
 ---
 
@@ -43,13 +45,17 @@ Runs fast unit tests only (no long-running tests, no PQ tests):
 - Receipt: `evidence/oq/macfusion_oq_receipt.json`
 
 **MacHealth OQ:**
-- 5 tests: FFI lifecycle, epistemic round-trip, frame count, null handle safety, out-of-range clamping
-- Excludes: Metal PQ test (handled by TestRobot)
-- Receipt: `evidence/oq/machealth_oq_receipt.json`
+- **SIL V2 clinical protocol (seven scenarios):** XCTest in `macos/MacHealth/Tests/SILV2/` validates §0 cross-cutting rails, §10 receipt-schema blocks, and per-scenario physics thresholds from the canonical report [`Scenarios_Physics_Frequencies_Assertions.md`](../../Scenarios_Physics_Frequencies_Assertions.md) (repo root). **MSL** = Mesenchymal Stem-Like TNBC (not Madelung's). Scenarios: inv(3) AML, Parkinson’s THz, MSL TNBC, breast (general THz), colon, lung, skin (BCC/melanoma). See [`MAC_HEALTH_SIL_V2_WIKI_DRAFT.md`](MAC_HEALTH_SIL_V2_WIKI_DRAFT.md) for a GitHub Wiki–ready matrix.
+- Renderer / wire tests: FFI lifecycle, epistemic round-trip, frame count, null handle safety, out-of-range clamping; ZMQ header; telemetry SIL tick `(M_SIL)`; GAMP5 games narrative (**narrative contract tier only**, not live validation).
+- Metal PQ offscreen test remains in `MacHealthTests`; headed PQ orchestration may also use TestRobot.
+- Receipt: `evidence/oq/machealth_oq_receipt.json` (legacy); SIL contract tier is validated by tests above (no PHI).
 
 **Scripts:**
 - `GAIAOS/macos/GaiaFusion/scripts/oq_validate.sh`
 - `GAIAOS/macos/MacHealth/scripts/oq_validate.sh`
+- `GAIAOS/macos/GaiaFTCLConsole/scripts/oq_validate.sh` → `evidence/oq/gaiaftclconsole_<timestamp>.json`
+
+**GaiaFTCL Console OQ (Xcode `GaiaFTCLConsoleTests`):** policy + signing + telemetry + Sparkle ordering + `InfoPlistTests` — run via `xcodebuild test` (see `oq_validate.sh`). Current suite: **15** XCTest cases (includes `NotificationOrderingTests`, `InfoPlistTests`).
 
 ---
 
@@ -70,10 +76,60 @@ cd GAIAOS/macos/TestRobot
 swift build
 ```
 
-**Run:**
+**Run (prefer Aqua / Terminal.app — KERNEL DEADLOCK PROTOCOL):**
 ```zsh
-.build/debug/TestRobot
+GAIAOS/scripts/run_testrobot_pq.sh
 ```
+
+**GaiaFTCL Console PQ:** headed smoke only — does **not** launch GaiaFusion or MacHealth (those stay per-cell).
+
+```zsh
+GAIAOS/macos/GaiaFTCLConsole/scripts/pq_smoke.sh
+```
+
+Receipt: `evidence/pq/gaiaftclconsole_<timestamp>.json`
+
+### Integration suite (composition receipt)
+
+The **only** artifact that binds Console + both cell apps is the integration receipt (composition, not embedding):
+
+```zsh
+GAIAOS/macos/IntegrationTest/scripts/integration_console_plus_cells.sh
+```
+
+Writes: `evidence/integration/<timestamp>.json` (template merges per-step hashes). See [`GaiaFTCLConsole/LOCKED.md`](GaiaFTCLConsole/LOCKED.md).
+
+---
+
+## Startup coordination (GaiaFTCL Console)
+
+**Agent limb:** Cursor must not run `bash`/`zsh`/`xcodebuild` against this Mac tree to “prove” builds — see `.cursor/rules/kernel-deadlock-agent-no-mac-shell.mdc`. Operators run qualification in **Terminal.app** (Aqua); drift-close handoffs use explicit **zsh** blocks.
+
+Sparkle must **not** initialize until the operator shell is allowed to run (signing key present, escape hatch, or first-run key generated). The app uses:
+
+| Mechanism | Role |
+|-----------|------|
+| `Notification.Name.gaiaftclOperatorShellReady` | Posted from `ContentView` when the shell is ready. `AppDelegate` observes it and calls `SparkleUpdaterController.startUpdater()` **once**. |
+| `AppDelegate.sparkleFactory` | Test seam (`SparkleUpdaterControlling`); defaults to `SparkleUpdaterController`. |
+| `checkForUpdatesFromMenu()` | Starts Sparkle on first use if the notification never fired (lazy path). |
+
+**Who posts:** `ContentView` — when no signing sheet is needed, when `GAIAFTCL_ALLOW_UNSIGNED_RELEASE_LAUNCH=1` allows launch without a key (once, with `first_run` receipt), or after **Generate key now** succeeds. **Quit Console** from the signing sheet does **not** post (writes `evidence/console/first_run_*.json` with `outcome: cancelled` and exits).
+
+**If the notification never fires:** the app stays usable; Sparkle starts on first **Check for Updates…** via `checkForUpdatesFromMenu()`.
+
+**Troubleshooting**
+
+| Symptom | Check |
+|--------|--------|
+| Sparkle: “Unable to Check For Updates” / updater failed to start | `CFBundleVersion` and `CFBundleShortVersionString` must be set — see `macos/GaiaFTCLConsole/project.yml` (`MARKETING_VERSION`, `CURRENT_PROJECT_VERSION`). |
+| Sparkle signature / appcast errors after startup | `SUPublicEDKey` must match the private key used to sign the appcast; run `zsh macos/GaiaFTCLConsole/scripts/lint_sparkle_release.sh`. |
+| PQ screenshot shows signing sheet instead of Launcher | Run `pq_smoke.sh` as-is — it sets a throwaway `GAIAFTCL_CONSOLE_SSH_SIGN_KEY` and stamps `pq_signing_mode: testfixture_ephemeral_key`. |
+
+### Release process — version numbers
+
+- **`MARKETING_VERSION`:** Semver visible to operators (`CFBundleShortVersionString`); align with git release tags when tagging Console releases.
+- **`CURRENT_PROJECT_VERSION`:** Monotonic integer string (`CFBundleVersion`); bump on every build you ship to testers, or bind to **CI build number** so Sparkle can compare builds reliably.
+- **Ownership:** Release engineer bumps both before tagging; CI may inject `CURRENT_PROJECT_VERSION` via `agvtool` / build setting if you adopt automated numbering.
 
 ---
 

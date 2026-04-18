@@ -162,21 +162,21 @@ final class MacHealthTests: XCTestCase {
                 "game_id": "OWL_PROTOCOL",
                 "name": "The OWL Protocol Game",
                 "narrative": "A clinical protocol game incentivizing adherence to circadian rhythms, light exposure, and metabolic timing. The human substrate acts as the player. The game measures daily adherence through epistemic (M) tags and rewards the substrate for maintaining the PREPARED and RUNNING states, avoiding the REFUSED state.",
-                "live_test_status": "SIMULATED_PASS",
+                "live_test_status": "NARRATIVE_CONTRACT_TIER_NOT_LIVE_VALIDATION",
                 "epistemic_requirement": "(M) Measured via spectrum analyzer or lab result"
             ],
             [
                 "game_id": "EARTH_SUBSTRATE_INGESTOR",
                 "name": "Earth Substrate Ingestor",
                 "narrative": "Every cell continuously ingests live Earth feeds (ADSB, weather, sea, ATC, satellite). Feed loss equals torsion increase. The game tests the cell's ability to maintain constitutional alignment. Sustained feed loss results in a DANGEROUS state.",
-                "live_test_status": "SIMULATED_PASS",
+                "live_test_status": "NARRATIVE_CONTRACT_TIER_NOT_LIVE_VALIDATION",
                 "epistemic_requirement": "(I) Inferred from continuous NATS JetStream ingestion"
             ],
             [
                 "game_id": "VIE_V2_VORTEX",
                 "name": "VIE-v2 Vortex Ingestion Engine",
                 "narrative": "Universal VqBit schema ingestion across ten domains (sports, chemistry, biology, market, law, governance, physics, technology, energy, safety). The game calculates entropy potential (ΔE) and triggers a HUNTER_STRIKE when Psb >= 0.85.",
-                "live_test_status": "SIMULATED_PASS",
+                "live_test_status": "NARRATIVE_CONTRACT_TIER_NOT_LIVE_VALIDATION",
                 "epistemic_requirement": "(T) Transformed via Franklin constitutional inference"
             ]
         ]

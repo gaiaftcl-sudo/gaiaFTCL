@@ -1,0 +1,31 @@
+# MacHealth SIL V2 clinical protocol contracts — swift test (see Tests/SILV2/).
+# Canonical spec: Scenarios_Physics_Frequencies_Assertions.md (repo root)
+
+name: MacHealth SIL V2
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - "GAIAOS/macos/MacHealth/**"
+      - "Scenarios_Physics_Frequencies_Assertions.md"
+      - ".github/workflows/machealth-sil-v2-ci.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "GAIAOS/macos/MacHealth/**"
+      - "Scenarios_Physics_Frequencies_Assertions.md"
+
+jobs:
+  swift-test-machealth:
+    name: Swift test — MacHealth (SIL V2 contracts)
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
+
+      - name: Run MacHealth tests
+        working-directory: GAIAOS/macos/MacHealth
+        run: swift test -v

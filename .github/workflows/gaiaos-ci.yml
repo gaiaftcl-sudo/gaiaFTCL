@@ -1,0 +1,62 @@
+# Hoisted from GAIAOS/.github/workflows/ci.yml — runs when repo root is FoT8D/gaiaFTCL.
+
+name: GAIAOS CI
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - "GAIAOS/**"
+      - ".github/workflows/gaiaos-ci.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "GAIAOS/**"
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+defaults:
+  run:
+    working-directory: GAIAOS
+
+jobs:
+  test-rust:
+    name: Test Rust (GAIAOS tree)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: GAIAOS
+          cache-on-failure: true
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+        continue-on-error: true
+      - name: Build
+        run: cargo build --workspace --release
+      - name: Test
+        run: cargo test --workspace --release
+        continue-on-error: true
+
+  test-python:
+    name: Test Python (GAIAOS tree)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+      - name: Install dependencies
+        run: |
+          pip install pytest pytest-asyncio httpx fastapi uvicorn pydantic
+      - name: Run Python tests
+        run: python -m pytest services/ -v --ignore=services/node_modules || true
+        continue-on-error: true
