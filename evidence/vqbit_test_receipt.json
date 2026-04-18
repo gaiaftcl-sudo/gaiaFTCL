@@ -1,0 +1,37 @@
+{
+  "spec": "GFTCL-TEST-RUST-001",
+  "phase": "IQ+OQ",
+  "component": "rust_fusion_usd_parser",
+  "struct": "vQbitPrimitive",
+  "fields": {
+    "vqbit_entropy": "maps to USDA custom_vQbit:entropy_delta",
+    "vqbit_truth":   "maps to USDA custom_vQbit:truth_threshold"
+  },
+  "expected_tests": [
+    "tests::iq_001_parser_compiles",
+    "tests::iq_003_vqbit_primitive_repr_c",
+    "tests::iq_004_field_offsets",
+    "tests::tp_001_parse_two_prims",
+    "tests::tp_002_parse_empty_world",
+    "tests::tp_003_parse_no_custom_attrs",
+    "tests::tp_004_file_not_found",
+    "tests::tp_005_header_only",
+    "tests::tp_006_nine_canonical_prims",
+    "tests::tp_007_mixed_format",
+    "tests::tp_008_extra_whitespace",
+    "tests::tp_009_reversed_attr_order",
+    "tests::tp_010_prim_id_sequence",
+    "tests::tn_001_malformed_float_no_panic",
+    "tests::tn_002_no_equals_sign_no_panic",
+    "tests::tn_003_empty_file_no_panic",
+    "tests::tn_004_scope_whitespace_only",
+    "iq_tests::iq_001_parser_compiles"
+  ],
+  "expected_total": 18,
+  "run_command": "cd ~/Documents/FoT8D/GAIAFTCL && cargo test -p rust_fusion_usd_parser -- --nocapture 2>&1",
+  "pass_criteria": "test result: ok. 18 passed; 0 failed; 0 ignored",
+  "status": "AWAITING_RUN",
+  "actual_output": null,
+  "witnessed_by": null,
+  "timestamp": null
+}

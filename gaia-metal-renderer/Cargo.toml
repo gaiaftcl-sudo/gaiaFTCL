@@ -1,0 +1,74 @@
+[package]
+name = "gaia-metal-renderer"
+version = "0.1.0"
+edition = "2024"
+description = "GaiaFTCL sovereign Metal renderer — zero bloat, direct GPU"
+
+[dependencies]
+# ── Window management ──
+winit = "0.30"
+
+# ── Metal bindings (objc2 ecosystem, NOT deprecated metal-rs) ──
+objc2 = "0.6"
+objc2-foundation = { version = "0.3", features = [
+    "NSString",
+    "NSError",
+    "NSData",
+    "NSGeometry",   # NSSize / NSRect / NSPoint structs
+] }
+objc2-metal = { version = "0.3", features = [
+    "MTLDevice",
+    "MTLCommandQueue",
+    "MTLCommandBuffer",
+    "MTLCommandEncoder",          # required for endEncoding() / trait import
+    "MTLRenderCommandEncoder",
+    "MTLRenderPipeline",
+    "MTLRenderPass",
+    "MTLBuffer",
+    "MTLLibrary",
+    "MTLResource",
+    "MTLDrawable",
+    "MTLPixelFormat",
+    "MTLTexture",
+    "MTLDepthStencil",
+    "MTLVertexDescriptor",
+    "MTLTypes",
+] }
+objc2-quartz-core = "0.3"
+
+# ── Window → CAMetalLayer bridge ──
+raw-window-handle = "0.6"
+raw-window-metal = "1"
+
+# ── Math (zero-cost, no_std capable) ──
+glam = "0.29"
+
+# ── GaiaFTCL USD parser (local path)
+rust_fusion_usd_parser = { path = "../rust_fusion_usd_parser" }
+
+# ── CoreGraphics link required for MTLCreateSystemDefaultDevice ──
+objc2-core-graphics = { version = "0.3", default-features = false }
+
+[profile.release]
+opt-level = "z"       # Size optimization — sovereign cell binary
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
+
+# ── Staticlib target — Swift FFI surface ─────────────────────────────────────
+# Produces: target/release/libgaia_metal_renderer.a
+# Swift TestRobit links against this lib for TauState FFI access.
+# The lib.rs (src/lib.rs) exports TauState + gaia_metal_renderer_* C functions.
+[lib]
+name = "gaia_metal_renderer"
+crate-type = ["staticlib"]
+path = "src/lib.rs"
+
+[[bin]]
+name = "gaia-metal-renderer"
+path = "src/main.rs"
+
+# This crate is a member of the GAIAFTCL root workspace (../Cargo.toml).
+# Do NOT define a [workspace] section here — that would create a nested
+# workspace and break `cargo test --workspace` from the repo root.
