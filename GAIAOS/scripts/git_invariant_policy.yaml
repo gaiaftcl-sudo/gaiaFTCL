@@ -1,5 +1,5 @@
 # Git invariant policy — explicit REFUSED rules (no "out of scope" for safety items).
-# Enforced by: GAIAOS/scripts/git-hooks/pre-push (M8 phase), GitHub branch protection (authoritative).
+# Enforced by: GitHub branch protection / repo Settings when configured (authoritative). No repo-shipped local M8 pre-push hook.
 # LLM-free; symbolic policy only.
 
 version: 1
@@ -7,8 +7,8 @@ version: 1
 refused:
   destructive_remote_from_automation:
     summary: "Force-push, lease-force, or delete that rewinds or removes protected refs without human emergency bypass."
-    enforcement: "pre-push M8 guard; GitHub branch protection"
-    emergency_bypass_env: "GIT_M8_REMOTE_GUARD_BYPASS=1"
+    enforcement: "GitHub branch protection / operator discipline (no local M8 hook in tree)"
+    emergency_bypass_env: null
 
   custom_merge_logic_in_daemon:
     summary: "No bespoke merge/rebase implementation in automation until specified; use GitHub merge API + Checks API."

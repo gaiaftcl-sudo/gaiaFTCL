@@ -1,7 +1,8 @@
 # Remote git — agent rules (committed copy)
 
-**GitHub branch protection on `main`** is authoritative (no force-push, no delete, required checks). See [BRANCH_PROTECTION_CHECKLIST.md](BRANCH_PROTECTION_CHECKLIST.md).  
-Local: `pre-push` runs **Franklin** then **M8 refuse** (`pre-push-franklin`, `pre-push-m8-refuse`).
+**GitHub server-side settings** on `main` (if enabled in the repo’s Settings) are authoritative for force-push / deletion / linear history — not anything in this file.
+
+**Local reality:** `core.hooksPath` is typically **`.githooks`** for **Git LFS**; that directory’s `pre-push` is the LFS hook. The old **`GAIAOS/scripts/git-hooks/*`** Franklin/M8 scripts were **never wired** when `hooksPath` points at `.githooks`, so they did not run; those files and the installer are **removed** from the tree to stop false confidence.
 
 ## Agent must not
 
@@ -33,10 +34,6 @@ bash GAIAOS/scripts/verify_remote_push_receipt.sh origin main
 ```
 
 Optional: paste **one line** of real `git ls-remote` / `git rev-parse` stdout from the machine that performed the push.
-
-## Emergency bypass (local hook only)
-
-`GIT_M8_REMOTE_GUARD_BYPASS=1 git push ...` — use only in emergencies; GitHub rules still apply.
 
 ## Cursor
 
