@@ -105,4 +105,8 @@ GAIAOS/Internal/
 GAIAOS/archive/
 GAIAOS/cursor_watchdog_*.log
 gaia-ftcl-dist/
+
+# Git LFS hooksPath — local only; never commit (not project source)
+.githooks/
+
 gaiaFTCL.wiki/
