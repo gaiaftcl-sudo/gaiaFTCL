@@ -13,7 +13,7 @@
 | macOS Swift app | [`cells/fusion/macos/MacHealth/`](../../fusion/macos/MacHealth/) |
 | GH-FS / GH-DS / GH-RTM | [`FUNCTIONAL_SPECIFICATION.md`](FUNCTIONAL_SPECIFICATION.md), [`DESIGN_SPECIFICATION.md`](DESIGN_SPECIFICATION.md), [`REQUIREMENTS_TRACEABILITY_MATRIX.md`](REQUIREMENTS_TRACEABILITY_MATRIX.md) |
 | S4↔C4 communion (abbrev + extended) | [`S4_C4_COMMUNION_UI_SPEC.md`](S4_C4_COMMUNION_UI_SPEC.md), [`COMMUNION_UI_ARCHITECTURE_EXTENDED.md`](COMMUNION_UI_ARCHITECTURE_EXTENDED.md) |
-| M8 substrate | [`docs/M8_S4_C4_SUBSTRATE_CONTEXT.md`](../../../docs/M8_S4_C4_SUBSTRATE_CONTEXT.md) |
+| M8 substrate | [`docs/M8_S4_C4_SUBSTRATE_CONTEXT.md`](../../../docs/M8_S4_C4_SUBSTRATE_CONTEXT.md) — ontology + tooling pointers only; **not** an LLM prompt; **`docs/prompts/` unused** for M8 on `main`. |
 | Obligate-coupling analogy | [`docs/OBLIGATE_COUPLING_BIOPHYSICS_ANALOGY.md`](../../../docs/OBLIGATE_COUPLING_BIOPHYSICS_ANALOGY.md) |
 
 ---

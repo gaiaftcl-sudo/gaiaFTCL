@@ -1,4 +1,8 @@
-# GaiaFTCL substrate context for Cursor agents — M8 = S4 × C4
+# GaiaFTCL substrate context — M8 = S4 × C4
+
+**Audience:** Integrators, substrate engineers, and reviewers working on S4↔C4 projection, INV3 tooling, and GaiaHealth cross-links.
+
+**This document is constitutional ontology and runnable pointers for the repository. It is not an LLM system prompt; M8 does not depend on anything under `docs/prompts/`.**
 
 **Location:** Canonical copy: **`docs/M8_S4_C4_SUBSTRATE_CONTEXT.md`** (trackable name; avoids legacy sandbox paths and `GAIA*.md` local exclude patterns).
 
@@ -24,12 +28,16 @@ Gateway unreachable → **BLOCKED**. No invented structures. No assuming the lab
 **Floor**  
 S4 serves C4. The lab protocol is the **map**; witnessed substrate is the **contract**. Clean the map to match the contract before wet lab.
 
-**Constitutional anchor (Cursor / Assistant Coach):** Root **`.cursorrules`** section **“C4 SUBSTRATE VS S4 CLIENT — CONSTITUTIONAL ARCHITECTURE (M8)”** — self-heal on C4≠S4 projection, fail-closed, MCP-only writes, receipts to human.
-
 **GaiaHealth (Biologit cell):** Extended S4↔C4 communion UI, invariant-baseline registry design, and **vQbit** settlement framing — **[GH-S4C4-COMM-001](../cells/health/docs/S4_C4_COMMUNION_UI_SPEC.md)** (*design target;* `BioligitPrimitive` remains the MD vertex ABI in §0).
+
+---
+
+### Constitutional anchor (repository rules)
+
+Self-heal on C4≠S4 projection, fail-closed, MCP-only writes, receipts to human — stated in root **`.cursorrules`** under **“C4 SUBSTRATE VS S4 CLIENT — CONSTITUTIONAL ARCHITECTURE (M8)”**. That section is **normative policy text** embedded in the repo; this M8 file states the **ontology** above.
 
 ---
 
 ## See also (analogy only)
 
-**Evolutionary / microbiology metaphor** for transport, obligate coupling, and pre-encapsulation routing — **[`docs/OBLIGATE_COUPLING_BIOPHYSICS_ANALOGY.md`](OBLIGATE_COUPLING_BIOPHYSICS_ANALOGY.md)** (*non-normative*; does not change M8 projection rules above).
+**Evolutionary / microbiology metaphor** for transport, obligate coupling, and pre-encapsulation routing — **[`docs/OBLIGATE_COUPLING_BIOPHYSICS_ANALOGY.md`](OBLIGATE_COUPLING_BIOPHYSICS_ANALOGY.md)** (*non-normative* **[I]**; no WASM export; does not change M8 projection rules above).
