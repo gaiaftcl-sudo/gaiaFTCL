@@ -45,6 +45,23 @@ final class ClinicalScenarioContractTests: XCTestCase {
         XCTAssertTrue(ReceiptSchemaValidator.validationErrors(receipt).contains { $0.contains("destructive_interference") })
     }
 
+    /// Golden fixture on disk — `evidence/oq/sil_v2_unit_protocol_contract_fixture.json` (§10 + validation_tier).
+    func testSilV2_diskFixture_passesReceiptSchema() throws {
+        let fixtureURL = URL(fileURLWithPath: #file)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent("evidence/oq/sil_v2_unit_protocol_contract_fixture.json")
+        let data = try Data(contentsOf: fixtureURL)
+        guard let obj = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            XCTFail("fixture must decode to dictionary")
+            return
+        }
+        XCTAssertEqual(obj["validation_tier"] as? String, "SIL_protocol_contract")
+        XCTAssertTrue(
+            ReceiptSchemaValidator.isIngestible(obj),
+            ReceiptSchemaValidator.validationErrors(obj).joined(separator: "; "))
+    }
+
     // MARK: - Seven scenarios
 
     func testInv3AML_contractPassesWithSyntheticPassingObservation() {

@@ -1,0 +1,55 @@
+# Hoisted for monorepo root — see GAIAOS/.github/workflows/gaiafusion-gamp5-validation.yml
+
+name: GaiaFusion GAMP 5 Validation
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - "GAIAOS/macos/GaiaFusion/**"
+      - ".github/workflows/gaiafusion-gamp5-validation.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "GAIAOS/macos/GaiaFusion/**"
+
+jobs:
+  validation:
+    name: GAMP 5 Validation CI
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: "15.4"
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Build config CLI
+        working-directory: GAIAOS/macos/GaiaFusion
+        run: |
+          cd tools/gaiafusion-config-cli
+          cargo build --release
+
+      - name: Run IQ Validation
+        working-directory: GAIAOS/macos/GaiaFusion
+        run: zsh scripts/run_iq_validation.sh
+
+      - name: Run OQ Validation
+        working-directory: GAIAOS/macos/GaiaFusion
+        run: zsh scripts/run_oq_validation.sh
+
+      - name: Upload Evidence
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gamp5-evidence
+          path: GAIAOS/macos/GaiaFusion/evidence/
+          retention-days: 90

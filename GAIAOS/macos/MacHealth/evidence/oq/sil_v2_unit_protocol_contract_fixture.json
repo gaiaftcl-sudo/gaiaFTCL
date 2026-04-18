@@ -1,0 +1,79 @@
+{
+  "validation_tier": "SIL_protocol_contract",
+  "spec_note": "Non-PHI unit fixture for OQ ingest schema checks — Scenarios §10",
+  "scenario": "breast_cancer_general_thz",
+  "run_id": "00000000-0000-4000-8000-0000000000ab",
+  "nonce_128bit_hex": "00112233445566778899aabbccddeeff",
+  "provenance_tag": "M_SIL",
+  "plant_config_sha256": "deadbeef01",
+  "substrate_sha256": "deadbeef02",
+  "engine_sha256": "deadbeef03",
+  "wasm_sha256": "deadbeef04",
+  "sweep_window_hz": [150000000000, 3500000000000],
+  "ri_lock": {
+    "n_real": 1.46,
+    "k_imag": 0.02,
+    "target_n": 1.46,
+    "target_k": 0.02,
+    "locked_duration_s": 70.0,
+    "passed": true
+  },
+  "resonance_detection": {
+    "f0_hz": 1000000000.0,
+    "fwhm_hz": 100000000.0,
+    "snr_db": 24.0,
+    "passed": true
+  },
+  "destructive_interference": {
+    "phase_deg_vs_f0": 180.0,
+    "anti_lock_margin_deg": 22.0,
+    "latched_duration_s": 65.0,
+    "passed": true
+  },
+  "arrhenius": {
+    "tissue": "healthy_fibroglandular_and_adipose",
+    "Ea_kJ_mol": 310,
+    "omega_max_observed": 0.35,
+    "predicted_vs_observed_delta": 0.04,
+    "throttle_events": 0,
+    "passed": true
+  },
+  "nonce_reconstruction": {
+    "pearson_rho": 0.97,
+    "rmse_over_peak": 0.06,
+    "window_s": [60, 300],
+    "passed": true
+  },
+  "filter_envelope": {
+    "amplitude_error_pct": 2.0,
+    "phase_error_deg": 4.0,
+    "rejection_60hz_db": 45.0,
+    "passed": true
+  },
+  "tx_envelope": {
+    "freq_err_hz": 0.05,
+    "phase_err_deg": 2.0,
+    "duty_err_pct": 0.5,
+    "amp_err_pct": 1.0,
+    "latency_p99_ms": 200.0,
+    "passed": true
+  },
+  "asserts": [
+    {
+      "name": "thz_window_lock",
+      "passed": true,
+      "observed": {},
+      "tolerance": {}
+    }
+  ],
+  "refusals": [],
+  "control_discrimination": [
+    {
+      "control": "fibroadenoma_benign",
+      "refused": true,
+      "reason": "control_discrimination"
+    }
+  ],
+  "parent_hash": "00aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "receipt_sig": "ed25519_placeholder_sil_v2_fixture"
+}

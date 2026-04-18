@@ -6,7 +6,7 @@ Paste into the GitHub Wiki for `gaiaFTCL` as a page such as **MacHealth SIL V2**
 |------|--------|
 | Canonical spec | `Scenarios_Physics_Frequencies_Assertions.md` at repository root |
 | Swift unit contracts | `GAIAOS/macos/MacHealth/Tests/SILV2/` |
-| CI workflow | `.github/workflows/machealth-sil-v2-ci.yml` → `swift test` in `GAIAOS/macos/MacHealth` |
+| CI workflow | `.github/workflows/mac-cell-ci.yml` job **MacHealth — SIL V2 swift test** → `swift test` in `GAIAOS/macos/MacHealth` |
 | Cross-cutting §0 | M_SIL provenance; nonce ρ ≥ 0.95 / RMSE ≤ 0.10; filter + TX envelopes; Nyquist; Arrhenius Ω_healthy < 1; RI lock; phase lock; control discrimination; receipt §10 mandatory blocks |
 | Receipt ingest gate | Missing any of `ri_lock`, `resonance_detection`, `destructive_interference`, `arrhenius`, `nonce_reconstruction`, `filter_envelope`, `tx_envelope` → REFUSED |
 
