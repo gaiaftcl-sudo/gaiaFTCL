@@ -15,6 +15,7 @@
 | `GAIAOS/` | [`cells/fusion/`](cells/fusion/) |
 | Top-level `GaiaHealth/` | [`cells/health/`](cells/health/) (Rust/WASM/docs/wiki) |
 | `GaiaHealth` Mac app (Swift) | [`cells/fusion/macos/MacHealth/`](cells/fusion/macos/MacHealth/) |
+| M8 silicon / lithography cell | [`cells/lithography/`](cells/lithography/) ([wiki](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/GaiaFTCL-Lithography-Silicon-Cell-Wiki), [IQ/OQ/PQ](cells/lithography/docs/IQ_OQ_PQ_LITHOGRAPHY_CELL.md)) |
 
 ---
 
