@@ -4,6 +4,8 @@ Sovereign silicon fabrication and die-stitching cell for the M8 vQbit chip. Sibl
 
 **Patents: USPTO 19/460,960 | USPTO 19/096,071 — © 2026 Richard Gillespie**
 
+**Walkthrough video (poster → MP4, same pattern as Fusion/Health):** [`docs/media/videos/gaialithography/`](../../docs/media/videos/gaialithography/) — inline player on [GitHub Pages **#lithography**](https://gaiaftcl-sudo.github.io/gaiaFTCL/#lithography); [wiki](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Silicon-Over-Software-Architecting-M8-Substrate).
+
 ---
 
 ## Silicon Cell Paradigm

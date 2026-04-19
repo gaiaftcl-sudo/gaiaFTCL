@@ -5,6 +5,12 @@
 
 > **Mirror:** Tracks the [GitHub Wiki page](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/GaiaFTCL-Lithography-Silicon-Cell-Wiki). Prefer **`main`** blob links below for authoritative specs.
 
+## Media — walkthrough (poster → MP4)
+
+[![Silicon Over Software — M8 substrate — click poster for MP4](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaialithography/poster-silicon-over-software-m8.png)](https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaialithography/silicon-over-software-architecting-m8-substrate.mp4)
+
+**Pages player:** [gaiaFTCL#lithography](https://gaiaftcl-sudo.github.io/gaiaFTCL/#lithography) · [Wiki video page](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Silicon-Over-Software-Architecting-M8-Substrate)
+
 ---
 
 ## 1. What this cell is
