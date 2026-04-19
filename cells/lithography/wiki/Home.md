@@ -4,6 +4,10 @@ Welcome to the **GaiaLithography** cell wiki. This cell designs, qualifies, and 
 
 **Patents:** USPTO 19/460,960 · USPTO 19/096,071 — © 2026 Richard Gillespie.
 
+## Walkthrough video (poster → MP4)
+
+Same pattern as Fusion / Health: **[Silicon Over Software — Architecting the M8 Substrate](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Silicon-Over-Software-Architecting-M8-Substrate)** · [GitHub Pages **#lithography**](https://gaiaftcl-sudo.github.io/gaiaFTCL/#lithography) · assets in [`docs/media/videos/gaialithography/`](../../../docs/media/videos/gaialithography/).
+
 ---
 
 ## Getting Started
