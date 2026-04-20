@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GaiaHealth — Qualified media artifacts (GAMP evidence narration)</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --bg: #0d1117;
+      --fg: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --border: #30363d;
+      --card: #161b22;
+      --ok: #3fb950;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f8fa;
+        --fg: #1f2328;
+        --muted: #656d76;
+        --accent: #0969da;
+        --border: #d0d7de;
+        --card: #ffffff;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.55;
+      max-width: 58rem;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 3rem;
+      background: var(--bg);
+      color: var(--fg);
+    }
+    h1 { font-size: 1.35rem; font-weight: 600; margin: 0 0 0.35rem; }
+    .doc-id { font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; }
+    .lead {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      padding: 0.75rem 1rem;
+      border-left: 3px solid var(--accent);
+      background: var(--card);
+      border-radius: 0 6px 6px 0;
+    }
+    .lead strong { color: var(--fg); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      margin-bottom: 2rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.5rem 0.65rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: var(--card); font-weight: 600; }
+    code { font-size: 0.8em; word-break: break-all; }
+    .thumb {
+      width: 160px;
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    .artifact {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .artifact h2 { font-size: 1.05rem; margin: 0 0 0.75rem; font-weight: 600; }
+    .artifact .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 0.75rem; }
+    video {
+      width: 100%;
+      max-height: min(70vh, 720px);
+      border-radius: 6px;
+      background: #000;
+    }
+    .btn-row { margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    a.btn {
+      display: inline-block;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    a.btn:hover { border-color: var(--accent); background: rgba(88, 166, 255, 0.08); }
+    a.btn.primary { background: var(--accent); color: #fff; border-color: transparent; }
+    a.btn.primary:hover { filter: brightness(1.08); }
+    footer { margin-top: 2rem; font-size: 0.8rem; color: var(--muted); }
+    .wiki-note { font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+  <h1>GaiaHealth — Qualified media artifacts</h1>
+  <p class="doc-id">Document: <strong>GH-MEDIA-HEALTH-001</strong> · GitHub Pages · Patents: USPTO 19/460,960 · USPTO 19/096,071 — © 2026 Richard Gillespie</p>
+
+  <p class="lead">
+    <strong>Controlled narration surface.</strong> The GitHub Wiki does not render HTML5 <code>&lt;video&gt;</code> and must not be treated as a media player.
+    This page (served from <code>/docs</code> on <code>main</code>) is the <strong>professional</strong> location for <strong>thumbnail + checksum + download + in-browser review</strong> aligned with GAMP 5 evidence discipline.
+    Videos load from <strong>same-origin</strong> paths under <code>docs/media/</code> (reliable playback); raw.githubusercontent hotlinks are offered only as optional direct downloads.
+  </p>
+
+  <h2 style="font-size:1rem; margin:1.5rem 0 0.5rem;">Artifact register (summary)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Thumbnail</th>
+        <th>Title</th>
+        <th>SHA-256 (MP4)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="row-kinematic">
+        <td><code>GH-VID-KINE-001</code></td>
+        <td><a href="#artifact-kinematic"><img class="thumb" src="media/videos/gaiahealth/poster-code-as-physics.png" alt="Poster: Code as physics"></a></td>
+        <td>Code as physics — GaiaHealth kinematic pipeline</td>
+        <td><code>c9f64c276a5f19d4ced52e599751322b61a261124b0586cf527b62fc453ec456</code></td>
+      </tr>
+      <tr id="row-cure">
+        <td><code>GH-VID-CURE-001</code></td>
+        <td><a href="#artifact-cure"><img class="thumb" src="media/videos/gaiahealth/poster-engineering-the-cure.png" alt="Poster: Engineering the CURE"></a></td>
+        <td>Engineering the CURE — The GaiaHealth State Machine</td>
+        <td><code>3e5cd07ef293952ce442ac943fbd7e0941ac5d7e5f41bd0e0d027775fb819b1b</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <article class="artifact" id="artifact-kinematic">
+    <h2>GH-VID-KINE-001 — Code as physics (kinematic pipeline)</h2>
+    <p class="meta">MP4 · <code>docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4</code></p>
+    <video controls playsinline preload="metadata" poster="media/videos/gaiahealth/poster-code-as-physics.png"
+      src="media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4">
+    </video>
+    <div class="btn-row">
+      <a class="btn primary" download href="media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4">Download MP4</a>
+      <a class="btn" href="https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiahealth/code-as-physics-gaiahealth-kinematic-pipeline.mp4">Raw URL (wget/curl)</a>
+      <a class="btn" href="https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Code-as-Physics-GaiaHealth-Kinematic-Pipeline">Related wiki</a>
+    </div>
+    <p class="wiki-note">Wiki: use the poster image + link to this anchor for reviewers; do not embed <code>&lt;video&gt;</code> in wiki Markdown.</p>
+  </article>
+
+  <article class="artifact" id="artifact-cure">
+    <h2>GH-VID-CURE-001 — Engineering the CURE (11-state machine)</h2>
+    <p class="meta">MP4 · <code>docs/media/videos/gaiahealth/Engineering_the_CURE__The_GaiaHealth_State_Machine.mp4</code></p>
+    <video controls playsinline preload="metadata" poster="media/videos/gaiahealth/poster-engineering-the-cure.png"
+      src="media/videos/gaiahealth/Engineering_the_CURE__The_GaiaHealth_State_Machine.mp4">
+    </video>
+    <div class="btn-row">
+      <a class="btn primary" download href="media/videos/gaiahealth/Engineering_the_CURE__The_GaiaHealth_State_Machine.mp4">Download MP4</a>
+      <a class="btn" href="https://raw.githubusercontent.com/gaiaftcl-sudo/gaiaFTCL/main/docs/media/videos/gaiahealth/Engineering_the_CURE__The_GaiaHealth_State_Machine.mp4">Raw URL (wget/curl)</a>
+      <a class="btn" href="https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/GaiaFTCL-Health-Mac-Cell-Wiki">GaiaFTCL Health Mac Cell Wiki</a>
+    </div>
+    <p class="wiki-note">SHA-256 verification (OQ evidence): <code>shasum -a 256</code> must match the table above after download.</p>
+  </article>
+
+  <p style="font-size:0.875rem;color:var(--muted);">
+    Index of all walkthroughs: <a href="index.html">docs/index.html</a> ·
+    Repository: <a href="https://github.com/gaiaftcl-sudo/gaiaFTCL">gaiaFTCL</a>
+  </p>
+
+  <footer>
+    GaiaHealth Biologit cell documentation: <code>cells/health/docs/</code> · GAMP validation: <code>cells/health/scripts/health_cell_gamp5_validate.sh</code>
+  </footer>
+</body>
+</html>
