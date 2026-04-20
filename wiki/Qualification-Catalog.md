@@ -11,6 +11,8 @@
 
 > **Thesis.** This page does not argue in prose what the substrate “does.” It **names** what is specified on `main` — functional requirements, plant surfaces, CURE gates, SIL scenario IDs, LithoPrimitive event classes, and NATS families — and maps them to qualification posture **honestly** (including explicit **N/A** where a framework is out of scope).
 
+> **GAMP 5 — automated catalog verification (local).** From the repository root: `bash cells/health/scripts/health_cell_gamp5_validate.sh` — runs wiki link lint (this directory’s top-level `*.md`), asserts §8 / OWL-NUTRITION / GAMP markers in this file, checks that every `github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/...` link resolves to a file on disk, runs OWL-NUTRITION IQ/OQ/PQ (`owl_nutrition_iqoqpq_validate.sh`), then `cargo test --workspace` under `cells/health/`. This is **documentation + test traceability**, not a substitute for a sponsor QMS sign-off.
+
 ---
 
 ## Table of contents

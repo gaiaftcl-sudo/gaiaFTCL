@@ -147,3 +147,11 @@ zsh scripts/iq_install.sh
 ```zsh
 zsh scripts/oq_validate.sh
 ```
+
+**Qualification Catalog (wiki) + full Health cell GAMP 5 check**
+
+Verifies `wiki/Qualification-Catalog.md` structure, blob-link → file existence, OWL-NUTRITION IQ/OQ/PQ, and all Rust crates in this workspace:
+
+```bash
+bash cells/health/scripts/health_cell_gamp5_validate.sh
+```
