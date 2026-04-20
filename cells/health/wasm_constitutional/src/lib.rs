@@ -26,6 +26,8 @@
 
 use wasm_bindgen::prelude::*;
 
+pub mod nutrition;
+
 // ── Result types ──────────────────────────────────────────────────────────────
 
 /// 0 = PASS, 1..N = specific fault codes

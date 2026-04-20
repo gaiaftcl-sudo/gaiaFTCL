@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0.0",
+  "filters": [
+    { "filter_id": "C4-NUTR-VEGETARIAN", "active": true },
+    { "filter_id": "C4-NUTR-HALAL", "active": true },
+    { "filter_id": "C4-NUTR-ALLERGY", "active": true, "params": { "allergens": ["tree_nuts"] } }
+  ]
+}

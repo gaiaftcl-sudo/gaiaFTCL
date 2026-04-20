@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaiaftcl.dev/schemas/nutrition/nutrition_monitoring_config.schema.json",
+  "title": "NutritionMonitoringConfig",
+  "version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "content_hash": { "type": "string" },
+    "per_invariant": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "invariant_id": { "type": "string" },
+          "enabled": { "type": "boolean" },
+          "cadence": {
+            "type": "string",
+            "enum": ["daily", "weekly", "monthly", "quarterly", "annually", "on_symptom"]
+          },
+          "measurement_method": {
+            "type": "string",
+            "enum": ["food_log", "cgm", "lab_panel", "home_test", "clinician_lab", "wearable_export"]
+          },
+          "alert_threshold_ref": { "type": "string", "description": "[I] CAB-backed token" }
+        },
+        "required": ["invariant_id", "enabled", "cadence"],
+        "additionalProperties": false
+      }
+    },
+    "alert_surface": {
+      "type": "string",
+      "enum": ["passive", "daily_digest", "immediate"]
+    }
+  },
+  "required": ["schema_version", "per_invariant"]
+}

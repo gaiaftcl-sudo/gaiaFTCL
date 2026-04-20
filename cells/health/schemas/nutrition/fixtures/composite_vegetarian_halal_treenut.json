@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0.0",
+  "ethical_framework": { "enum_id": "vegetarian", "custom_label": "" },
+  "religious_framework": { "enum_id": "halal", "custom_label": "" },
+  "allergens": ["tree_nuts"],
+  "medical_exclusions": [],
+  "cultural_preferences": []
+}

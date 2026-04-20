@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaiaftcl.dev/schemas/nutrition/user_nutrition_profile.schema.json",
+  "title": "UserNutritionProfile",
+  "version": "1.0.0",
+  "description": "Declared C4 constraint set per user. Schema shape only — no PII.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "content_hash": { "type": "string", "description": "SHA-256 of canonical JSON excluding this field" },
+    "ethical_framework": {
+      "type": "object",
+      "properties": {
+        "enum_id": {
+          "type": "string",
+          "enum": ["none", "vegetarian", "vegan", "plant_forward", "custom"]
+        },
+        "custom_label": { "type": "string", "maxLength": 256 }
+      },
+      "additionalProperties": false
+    },
+    "religious_framework": {
+      "type": "object",
+      "properties": {
+        "enum_id": {
+          "type": "string",
+          "enum": ["none", "kosher", "halal", "jain", "hindu_ahimsa", "adventist", "orthodox_christian_fasting", "ramadan", "custom"]
+        },
+        "custom_label": { "type": "string", "maxLength": 256 }
+      },
+      "additionalProperties": false
+    },
+    "allergens": {
+      "type": "array",
+      "items": { "type": "string", "maxLength": 128 }
+    },
+    "medical_exclusions": {
+      "type": "array",
+      "items": { "type": "string", "maxLength": 256 }
+    },
+    "cultural_preferences": {
+      "type": "array",
+      "items": { "type": "string", "maxLength": 256 }
+    },
+    "supplementation_disclosure": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "substance": { "type": "string" },
+          "dose_iu_or_text": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "personal_invariant_overrides": {
+      "type": "array",
+      "description": "User thresholds within CAB-approved bounds only [I]",
+      "items": {
+        "type": "object",
+        "properties": {
+          "invariant_id": { "type": "string" },
+          "override_json": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["schema_version"]
+}

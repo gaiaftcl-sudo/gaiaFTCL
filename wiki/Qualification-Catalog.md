@@ -26,7 +26,7 @@
 9. [Bounded pluralism](#9-bounded-pluralism)
 10. [See also](#10-see-also)
 
-Subsections: [§4.4 OWL-P53-INV1](#44-owl-p53-inv1--oncology-invariant-package-tumor-suppression) · [§8.1 OWL-P53 targets + ISO 9001](#81-owl-p53-inv1-v1--framework-targets--footnotes--iso-9001)
+Subsections: [§4.4 OWL-P53-INV1](#44-owl-p53-inv1--oncology-invariant-package-tumor-suppression) · [§4.5 OWL-NUTRITION](#45-owl-nutrition--nutrition-invariant-family) · [§8.1 OWL-P53 targets + ISO 9001](#81-owl-p53-inv1-v1--framework-targets--footnotes--iso-9001)
 
 ---
 
@@ -117,6 +117,38 @@ Documentation package on `main` under `cells/health/docs/invariants/OWL-P53/`. *
 | **PQ-v2 substrate** | **Humans only** — no non-human biological material for this invariant’s PQ-v2; evolutionary literature is background in [INVARIANT_SPEC.md (blob)](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-P53/INVARIANT_SPEC.md) §1, not a cohort arm. |
 
 Framework targets with footnotes (including **ISO 9001**): [§8.1](#81-owl-p53-inv1-v1--framework-targets--footnotes--iso-9001).
+
+### 4.5 OWL-NUTRITION — Nutrition invariant family
+
+Documentation on `main` under `cells/health/docs/invariants/OWL-NUTRITION/` — **12 mother invariants**, **3** example sub-invariants (rolling CAB cadence per family spec), JSON schemas, WASM nutrition exports (`wasm_constitutional` `nutrition` module), MacHealth Swift **viewport** stubs (`MacHealth/Views/Nutrition/`). **CAB** constitution required before PQ human numeric closure.
+
+| Field | Value |
+|-------|--------|
+| **Family ID** | `GH-OWL-NUTRITION-FAM-001` |
+| **Family spec** | [INVARIANT_FAMILY_SPEC.md (blob)](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-NUTRITION/INVARIANT_FAMILY_SPEC.md) |
+| **README** | [README.md (blob)](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-NUTRITION/README.md) |
+| **IQ / OQ / PQ** | [IQ](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-NUTRITION/IQ_PROTOCOL.md) · [OQ](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-NUTRITION/OQ_PROTOCOL.md) · [PQ](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-NUTRITION/PQ_PROTOCOL.md) |
+| **CAB** | [CAB_CONSTITUTION.md (blob)](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-NUTRITION/CAB_CONSTITUTION.md) |
+| **Communion UI** | [NUTRITION_UI_SPEC.md (blob)](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-NUTRITION/NUTRITION_UI_SPEC.md) — GaiaHealth-internal until CCR merges into Communion spec ([decision](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/docs/state/NUTRITION_COMMUNION_ARCH_DECISION.md)). |
+| **Framework row** | [§8.2](#82-owl-nutrition-v1--framework-targets) |
+
+### §8.2 OWL-NUTRITION v1 — framework targets
+
+| Field | OWL-NUTRITION v1 | Footnote |
+|-------|------------------|----------|
+| **GAMP 5** | **target** — doc + synthetic OQ | fn-n1 |
+| **Annex 11** | **target [I]** | fn-n2 |
+| **Part 11** | **target [I]** | fn-n2 |
+| **HIPAA** | **target [I]** PHI scrubber at ingest | fn-n3 |
+| **GDPR** | **target [I]** | fn-n3 |
+| **IEC 62304** | **N/A** v1 research instrument | fn-n4 |
+| **DO-178C** | **N/A** | fn-n4 |
+| **IATF 16949** | **N/A** | fn-n4 |
+
+**fn-n1:** Documentation-first package; full validation is downstream.  
+**fn-n2:** Electronic records posture **[I]** until CSV evidence.  
+**fn-n3:** BAA / DSAR templates **[I]**.  
+**fn-n4:** Out of scope for aviation/automotive/SaMD until productization.
 
 ---
 

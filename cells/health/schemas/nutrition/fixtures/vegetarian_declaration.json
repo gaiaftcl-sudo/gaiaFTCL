@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0.0",
+  "ethical_framework": { "enum_id": "vegetarian", "custom_label": "" },
+  "religious_framework": { "enum_id": "none", "custom_label": "" },
+  "allergens": [],
+  "medical_exclusions": []
+}

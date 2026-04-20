@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0.0",
+  "ethical_framework": { "enum_id": "none", "custom_label": "" },
+  "religious_framework": { "enum_id": "kosher", "custom_label": "" },
+  "allergens": ["sesame"],
+  "medical_exclusions": [],
+  "cultural_preferences": ["ramadan_observance"]
+}

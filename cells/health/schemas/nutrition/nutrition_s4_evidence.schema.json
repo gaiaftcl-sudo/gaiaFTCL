@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaiaftcl.dev/schemas/nutrition/nutrition_s4_evidence.schema.json",
+  "title": "NutritionS4Evidence",
+  "version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "content_hash": { "type": "string" },
+    "evidence_kind": {
+      "type": "string",
+      "enum": ["food_log_entry", "lab_panel", "cgm_stream", "microbiome_sample", "environmental_assay", "symptom_diary", "wearable_export"]
+    },
+    "epistemic_tag": {
+      "type": "string",
+      "enum": ["M", "T", "I", "A"]
+    },
+    "signature_hex": { "type": "string" },
+    "routing_target": { "type": "string", "description": "Invariant or mesh route [I]" },
+    "payload_ref": { "type": "string", "description": "Opaque handle — no PHI in schema" }
+  },
+  "required": ["schema_version", "evidence_kind", "epistemic_tag"]
+}

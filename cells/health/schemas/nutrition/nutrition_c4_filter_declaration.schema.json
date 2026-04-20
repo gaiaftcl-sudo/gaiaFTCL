@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaiaftcl.dev/schemas/nutrition/nutrition_c4_filter_declaration.schema.json",
+  "title": "NutritionC4FilterDeclaration",
+  "version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "content_hash": { "type": "string" },
+    "filters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "filter_id": { "type": "string" },
+          "active": { "type": "boolean" },
+          "valid_from": { "type": "string", "format": "date-time" },
+          "valid_to": { "type": "string", "format": "date-time" },
+          "params": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "required": ["filter_id", "active"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["schema_version", "filters"]
+}
