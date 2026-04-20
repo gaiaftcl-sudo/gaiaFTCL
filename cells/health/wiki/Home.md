@@ -80,6 +80,18 @@ FoT8D/
 
 ---
 
+## GaiaFTCL program wiki — Qualification Catalog
+
+The GitHub wiki **Qualification Catalog** lists cross-cell qualification packages with **`main` blob** links and a §8-style framework matrix (footnotes, no bare aspirational checks).
+
+- **Wiki page:** [Qualification-Catalog](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Qualification-Catalog)  
+- **OWL-P53-INV1 package (oncology / tumor suppression):** [README on `main`](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-P53/README.md) · [INVARIANT_SPEC](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-P53/INVARIANT_SPEC.md)  
+- **Design gate memo:** [OWL_P53_DESIGN_GATE_MEMO.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/OWL_P53_DESIGN_GATE_MEMO.md)  
+
+Repository mirror (for PRs): `wiki/Qualification-Catalog.md` at repo root.
+
+---
+
 ## Sister Cell
 
 - **[GaiaFTCL Fusion Cell](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Home)** — plasma physics domain, `vQbitPrimitive`, `gaia1` wallet prefix.
