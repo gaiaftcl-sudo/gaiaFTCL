@@ -72,6 +72,15 @@ mod tests {
         assert!(s.contains("nutrition_wasm_version"));
     }
 
+    /// PQ-N-MESH-001 — identical evidence → identical projection string (pre-mesh seal).
+    #[test]
+    fn pq_n_mesh_identical_evidence_identical_projection() {
+        let ev = r#"{"lab":{"b12_pg_ml":180}}"#;
+        let a = project_nutrition_invariant("OWL-NUTRITION-MICRO-001", ev);
+        let b = project_nutrition_invariant("OWL-NUTRITION-MICRO-001", ev);
+        assert_eq!(a, b);
+    }
+
     #[test]
     fn audit_digest_sha256_deterministic() {
         let payload = r#"{"event_class":"food_log","seq":1}"#;

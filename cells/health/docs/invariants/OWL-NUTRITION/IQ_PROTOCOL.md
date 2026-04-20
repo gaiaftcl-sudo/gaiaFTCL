@@ -19,3 +19,13 @@ Verify OWL-NUTRITION **documentation**, **JSON schemas**, **WASM exports** (when
 ## 3. Exit
 
 Signed receipt **[I]** — `evidence/iq/` when automation exists.
+
+## 4. Automation (local)
+
+Run from repository root:
+
+```bash
+bash cells/health/scripts/owl_nutrition_iqoqpq_validate.sh
+```
+
+Performs IQ (tree + schemas + WASM exports + `jsonschema` in a venv), then `cargo clean -p gaia-health-substrate` and `cargo test -p gaia-health-substrate` (OQ + synthetic PQ). Writes `evidence/owl_nutrition_iqoqpq_receipt.json` (gitignored — archive in your QMS if needed).

@@ -9,7 +9,8 @@
 
 ## Validation **[I]**
 
-Run `python3 validate_nutrition_schemas.py` from this directory (requires `jsonschema`).
+- **Schemas only:** `python3 validate_nutrition_schemas.py` from this directory (requires `pip install jsonschema`, or set `NUTRITION_SCHEMA_STRICT=1` to fail if missing).
+- **Full IQ + OQ + PQ (OWL-NUTRITION):** `bash ../../scripts/owl_nutrition_iqoqpq_validate.sh` from repo root — fresh `cargo clean`, all fixtures, WASM tests, receipt under `docs/invariants/OWL-NUTRITION/evidence/`.
 
 ## Fixtures
 

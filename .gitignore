@@ -86,6 +86,9 @@ target/
 ~/.gaiaftcl/
 *.keychain
 
+# OWL-NUTRITION local IQ/OQ/PQ run receipt (bash scripts/owl_nutrition_iqoqpq_validate.sh)
+cells/health/docs/invariants/OWL-NUTRITION/evidence/owl_nutrition_iqoqpq_receipt.json
+
 # Runtime evidence (generated each run)
 evidence/*.actual.json
 evidence/full_cycle_receipt.json
