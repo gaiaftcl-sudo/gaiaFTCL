@@ -13,6 +13,9 @@
 //!
 //! Patents: USPTO 19/460,960 | USPTO 19/096,071 — © 2026 Richard Gillespie
 
+// objc2-metal: some `unsafe { }` blocks wrap calls the bindings also mark safe; keep blocks for clarity.
+#![allow(unused_unsafe)]
+
 use std::mem;
 use core::ptr::NonNull;
 use core::ffi::c_void;
@@ -65,6 +68,8 @@ pub struct GaiaHealthUniforms {
 
 /// GaiaHealth Metal renderer — four pipelines (M/I/A/alarm).
 pub struct HealthMetalRenderer {
+    /// Retained `MTLDevice` for layer lifetime; not read after `new`.
+    #[allow(dead_code)]
     device:           Retained<ProtocolObject<dyn MTLDevice>>,
     command_queue:    Retained<ProtocolObject<dyn MTLCommandQueue>>,
     m_pipeline:       Retained<ProtocolObject<dyn MTLRenderPipelineState>>,

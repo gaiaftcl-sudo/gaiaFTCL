@@ -2,6 +2,8 @@
 
 ## Green
 - **OWL-NUTRITION** phased plan delivered on `main`: gap table + Communion decision (b), invariant family tree, JSON schemas (incl. composite C4 fixture), MacHealth Nutrition Swift sources (target membership manual), `wasm_constitutional` nutrition exports + SHA-256 audit digest tests, IQ/OQ/PQ + CAB + audit docs, wiki Qualification Catalog + Home link, Phase 9 dry-run receipt.
+- **GAMP5 gate:** `bash cells/health/scripts/health_cell_gamp5_validate.sh` — wiki lint, Qualification Catalog blob resolution, OWL-NUTRITION IQ/OQ/PQ, `cargo test --workspace` under `cells/health/` (last run **PASS**).
+- **gaia-health-renderer:** `#![allow(unused_unsafe)]` + `device` retention `#[allow(dead_code)]` — **clean** `cargo build` (no prior `unused_unsafe` / `dead_code` noise).
 - Substrate pulled (13 commits, Rust + Swift + evidence/ dirs).
 - Wiki stubbed.
 - Git hooks, Cursor rules, and docs skeleton installed.
