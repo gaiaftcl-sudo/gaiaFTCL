@@ -275,7 +275,7 @@ If after that you still think peptides, small molecules, frequency, and genotype
 
 - Repo: [`gaiaFTCL`](https://github.com/gaiaftcl-sudo/gaiaFTCL)
 - Wiki: [`gaiaFTCL wiki`](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki)
-- Health cell wiki (long-form narrative + SIL): [`GaiaFTCL-Health-Mac-Cell-Wiki`](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/GaiaFTCL-Health-Mac-Cell-Wiki)
+- Health cell wiki (substrate + SIL + qualification traceability): [`GaiaFTCL-Health-Mac-Cell-Wiki`](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/GaiaFTCL-Health-Mac-Cell-Wiki)
 - Lithography cell wiki (silicon substrate): [`GaiaFTCL-Lithography-Silicon-Cell-Wiki`](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/GaiaFTCL-Lithography-Silicon-Cell-Wiki)
 - Qualification Catalog: [`Qualification-Catalog.md`](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/wiki/Qualification-Catalog.md)
 - Peptide spec: [`PEPTIDE_INTEGRATION_SPEC.md`](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/PEPTIDE_INTEGRATION_SPEC.md)

@@ -3,7 +3,7 @@
 **FortressAI Research Institute | Norwich, Connecticut**  
 **Patents: USPTO 19/460,960 | USPTO 19/096,071 — © 2026 Richard Gillespie**
 
-**This wiki page is for humans.** It keeps the long-form **story**—substrate, SIL, scenarios, and mechanism-design narrative—**and** points to **normative** specs on branch **`main`** where qualification and code matter. If anything here conflicts with a linked spec or `REVIEWER_BRIEF`, **the spec wins**.
+**Complete reference** for the Health Mac Cell: long-form **substrate / SIL / scenario** material **and** **normative** links on branch **`main`** where qualification and code matter. If anything here conflicts with a linked spec or `REVIEWER_BRIEF`, **the spec wins**.
 
 *In-repo mirror:* edit in [`gaiaFTCL`](https://github.com/gaiaftcl-sudo/gaiaFTCL) on `main`, then push [`gaiaFTCL.wiki.git`](https://github.com/gaiaftcl-sudo/gaiaFTCL.wiki.git) so GitHub Wiki stays aligned.
 
@@ -69,9 +69,9 @@ Traceability mirrors **[Qualification-Catalog §4.6](https://github.com/gaiaftcl
 
 ---
 
-# Human narrative — substrate, SIL, and scenario suites
+## MacHealth — substrate, SIL, and scenario suites
 
-*The sections below are the long-form wiki voice: MacHealth / telemetry / SIL validation and the “human-as-substrate” design story. They sit **beside** the Biologit computational cell (GH-FS-001); see **Normative reference — Biologit cell on `main`** at the end of this page for the drug-discovery / MD / WASM scope.*
+*Below: MacHealth / telemetry / **SIL V2** validation and the “human-as-substrate” design story. This sits **beside** the Biologit computational cell (GH-FS-001); see **Normative reference — Biologit cell on `main`** at the end of this page for drug-discovery / MD / WASM scope.*
 
 ---
 
