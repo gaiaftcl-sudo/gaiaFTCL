@@ -4,15 +4,11 @@
 
 ## 1. Role of pharma / small molecules
 
-Approved or investigational **small-molecule** programs act as **S4 interventions** (inputs) that modulate proteomic and stress readouts. They **qualify** pathway hypotheses; they do **not** replace constitutional C4 closure or epistemic tagging.
+Approved or investigational **small-molecule** programs act as **S4 interventions** (inputs) that modulate proteomic and stress readouts in **human** cells and tissues. They **qualify** pathway hypotheses; they do **not** replace constitutional C4 closure or epistemic tagging.
 
-## 2. Related biology — elephant TP53 (not PQ cohort)
+## 2. Human TP53-pathway context
 
-**Abegglen et al., JAMA 2015** — elephants carry multiple TP53 retrogene copies; comparative cell biology supports **mechanistic curiosity** for p53 pathway resilience.  
-
-**Normative placement:** [`evidence/references/abegglen-2015-jama-elephant-tp53.md`](evidence/references/abegglen-2015-jama-elephant-tp53.md).  
-
-**Explicit:** This literature is **not** part of a **human oncology PQ-v2** cohort table for OWL-P53. Do not imply elephant data substitutes for human evidence.
+Drug programs targeting the **human** p53–MDM2 axis (and related effectors) are modeled as modulating the same proteomic and stress channels declared in [`INVARIANT_SPEC.md`](INVARIANT_SPEC.md) §3. Evolutionary literature cited in [`INVARIANT_SPEC.md`](INVARIANT_SPEC.md) §1 is **not** part of small-molecule qualification—only **human-relevant** pharmacology and human or human-cell evidence chains apply to release posture.
 
 ## 3. PharmaVoice / Bennett — direct-quote gate (closed for v1)
 

@@ -1,7 +1,7 @@
 # PQ — Performance Qualification — OWL-P53-INV1
 
 **Parent:** [INVARIANT_SPEC.md](INVARIANT_SPEC.md)  
-**Splits:** **PQ-v1** (synthetic / dry-run / DUA-safe) vs **PQ-v2** (IRB / human cohort)
+**Splits:** **PQ-v1** (synthetic / dry-run / DUA-safe) vs **PQ-v2** (IRB / **human** cohort)
 
 ## 1. PQ-v1 — Synthetic performance (shippable near term)
 
@@ -14,12 +14,23 @@
 
 **Excludes:**
 
-- **Elephant TP53 copy-number biology** (Abegglen et al., JAMA 2015) as a **human oncology cohort** requirement — that work belongs in [`evidence/references/abegglen-2015-jama-elephant-tp53.md`](evidence/references/abegglen-2015-jama-elephant-tp53.md) and [`SMALL_MOLECULE_INTEGRATION.md`](SMALL_MOLECULE_INTEGRATION.md) as **related biology only**.  
 - Claims that PQ-v1 substitutes for regulated clinical validation.
 
-## 2. PQ-v2 — IRB / biobank / Li-Fraumeni–class cohort (separate track)
+## 2. PQ-v2 — IRB / biobank — **humans only** (separate track)
 
-**Intent:** Pre-registered human-subjects or authenticated biobank pathway with **IRB**, **DUA**, and **12–24 month** class runway (order-of-magnitude planning; exact N and power in protocol, not here).
+**Intent:** Pre-registered **human-subjects** or authenticated **human** biobank pathway with **IRB**, **DUA**, and **12–24 month** class runway (order-of-magnitude planning; exact N and power in a separate protocol, not here).
+
+**Substrate:** GaiaHealth OWL-P53 is declared over **human** cellular/clinical context; Φ_master and the five channels are **human** research/clinical frames. **No non-human biological material** qualifies this invariant’s PQ-v2. Cross-species comparative biology is **out of scope** for PQ-v2 **cohort design** (evolutionary literature may appear in [`INVARIANT_SPEC.md`](INVARIANT_SPEC.md) §1 only as background — not as experimental arms).
+
+**Target cohort arms (all human — illustrative; arms locked in pre-registered protocol):**
+
+| Arm | Role |
+|-----|------|
+| **A — LFS-class germline** | Carriers of **pathogenic germline *TP53*** variants (Li–Fraumeni / LFS-class), ascertained per clinical genetics criteria. |
+| **B — Controls** | **Age-matched** (and protocol-defined matched) participants **without** pathogenic germline *TP53* per IRB-approved criteria. |
+| **C — Oncology (somatic)** | Patients with **somatic** p53-pathway–relevant malignancy (tumor/panel-defined), per pre-registered inclusion/exclusion. |
+
+**Sourcing posture:** Materials accessed through networks that routinely operate under **IRB + DUA** (e.g. dbGaP-accessible studies, NCI / European Li–Fraumeni consortia-class registries — **generic examples**, not guarantees of access or site approval).
 
 **Rules:**
 
@@ -27,13 +38,7 @@
 - **No** wiki text or catalog row implies PQ-v2 delivery is imminent.  
 - **HIPAA / GDPR** applicability follows real PHI entry — footnote in Qualification-Catalog matrix (PQ-v1 **N/A** for PHI).
 
-## 3. Elephant reference (normative exclusion)
-
-Abegglen LM, et al. Potential Mechanisms for Cancer Resistance in Elephants and Comparative Cellular Response to DNA Damage in African and Asian Elephant Cells. *JAMA.* 2015. DOI [10.1001/jama.2015.13134](https://doi.org/10.1001/jama.2015.13134).
-
-**Use:** Related species biology and **hypothesis context** only. **Do not** list under PQ-v2 human oncology cohort tables.
-
-## 4. PQ exit (PQ-v1)
+## 3. PQ exit — PQ-v1
 
 | ID | Criterion |
 |----|-----------|
@@ -41,4 +46,6 @@ Abegglen LM, et al. Potential Mechanisms for Cancer Resistance in Elephants and 
 | PQ1-2 | Reported coherence metrics with **(T)/(A)** discipline on frequency features. |
 | PQ1-3 | Limitations section signed by qualified author role (per QMS). |
 
-PQ-v2 exit criteria **[deferred]** — separate protocol revision.
+## 4. PQ exit — PQ-v2 **[deferred]**
+
+Full statistical and clinical endpoints belong in a **separate** IRB-aligned protocol. **Normative rule:** PQ-v2 success is defined only on **human** primary and secondary endpoints agreed pre-registration — not on comparative non-human biology.

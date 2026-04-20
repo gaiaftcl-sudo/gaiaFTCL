@@ -13,7 +13,7 @@ This directory is the **main** (repository) qualification package for the GaiaHe
 4. [`INVARIANT_SPEC.md`](INVARIANT_SPEC.md) — normative v1 spec (**no fixed Hz** in this file).  
 5. [`FREQUENCY_BAND_POLICY.md`](FREQUENCY_BAND_POLICY.md) + [`FREQUENCY_ADDENDUM.md`](FREQUENCY_ADDENDUM.md) — Option **B**; candidate Hz only in addendum with **(T)/(A)**.  
 6. [`IQ_PROTOCOL.md`](IQ_PROTOCOL.md) · [`OQ_PROTOCOL.md`](OQ_PROTOCOL.md) · [`PQ_PROTOCOL.md`](PQ_PROTOCOL.md) — **PQ-v1** synthetic vs **PQ-v2** IRB cohort split.  
-7. [`SMALL_MOLECULE_INTEGRATION.md`](SMALL_MOLECULE_INTEGRATION.md) — pharma as S4 intervention; elephant biology **not** PQ cohort.  
+7. [`SMALL_MOLECULE_INTEGRATION.md`](SMALL_MOLECULE_INTEGRATION.md) — human small-molecule / TP53-pathway context.  
 8. [`CODE_VS_SPEC_AUDIT.md`](CODE_VS_SPEC_AUDIT.md) — implementation vs documentation.  
 9. [`MAIN_READ_RECONCILE.md`](MAIN_READ_RECONCILE.md) — trace to GH-FS-001 and Communion specs.
 

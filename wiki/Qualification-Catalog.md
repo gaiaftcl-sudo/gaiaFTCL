@@ -113,8 +113,8 @@ Documentation package on `main` under `cells/health/docs/invariants/OWL-P53/`. *
 | **Core spec** | [INVARIANT_SPEC.md (blob)](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-P53/INVARIANT_SPEC.md) |
 | **Package index** | [README.md (blob)](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-P53/README.md) |
 | **IQ / OQ / PQ** | [IQ](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-P53/IQ_PROTOCOL.md) · [OQ](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-P53/OQ_PROTOCOL.md) · [PQ](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-P53/PQ_PROTOCOL.md) |
-| **PQ split** | **PQ-v1** = synthetic / dry-run / DUA-safe horizon. **PQ-v2** = IRB / biobank / LFS-class cohort — **separate** milestone (no near-term delivery claim). |
-| **Elephant TP53 (Abegglen 2015)** | [DOI 10.1001/jama.2015.13134](https://doi.org/10.1001/jama.2015.13134) — **related biology only**; not a human oncology PQ cohort row. |
+| **PQ split** | **PQ-v1** = synthetic / dry-run / DUA-safe horizon. **PQ-v2** = IRB / **human** biobank cohorts only (germline *TP53* / LFS-class, matched controls, somatic p53-pathway oncology) — **separate** milestone; see [PQ_PROTOCOL.md (blob)](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-P53/PQ_PROTOCOL.md). |
+| **PQ-v2 substrate** | **Humans only** — no non-human biological material for this invariant’s PQ-v2; evolutionary literature is background in [INVARIANT_SPEC.md (blob)](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-P53/INVARIANT_SPEC.md) §1, not a cohort arm. |
 
 Framework targets with footnotes (including **ISO 9001**): [§8.1](#81-owl-p53-inv1-v1--framework-targets--footnotes--iso-9001).
 

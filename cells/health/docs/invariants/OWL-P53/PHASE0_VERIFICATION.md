@@ -17,7 +17,7 @@
 | `s4_ingestor.swift` | (none under that name) | **n** | **n** | **[I]** — ingestor naming TBD. |
 | vQbit kinds `genetic`, `proteomic`, `cellular_stress`, `frequency`, `imaging` | Code search Health | **n** | **n** | **[I]** — kinds are **target schema** for OWL-P53; implement or map to existing `BioligitPrimitive` / envelope fields in Phase 2+ code. |
 | PharmaVoice — Bennett quote | Paraphrase path (see [`SMALL_MOLECULE_INTEGRATION.md`](SMALL_MOLECULE_INTEGRATION.md) §3) | **y** (policy) | **y** | **Closed for v1:** no direct quote in normative bodies; primary URL not required when paraphrase path is used per plan. |
-| Abegglen 2015 JAMA elephant TP53 | <https://doi.org/10.1001/jama.2015.13134> | **y** (external) | **y** | Use as **related biology** in `evidence/references/` — **not** human PQ cohort. |
+| Abegglen 2015 JAMA (evolutionary context) | <https://doi.org/10.1001/jama.2015.13134> | **y** (external) | **y** | Stub [`evidence/references/abegglen-2015-jama-tp53-evolutionary-context.md`](evidence/references/abegglen-2015-jama-tp53-evolutionary-context.md); **not** PQ cohort input. |
 | Cardilini et al. 2026 *Biol. Conserv.* | <https://doi.org/10.1016/j.biocon.2025.111593> | **y** (external) | **y** | Catalog methodology cross-reference only. |
 
 **UI-spec note:** [`S4_C4_COMMUNION_UI_SPEC.md`](../../S4_C4_COMMUNION_UI_SPEC.md) contains **§4** “C4 invariant registry” themes and **§5.1–5.2** projection workbench; it does **not** currently contain numbered §5.3 / §5.5 as separate headings. Extended UI narrative exists under **`GaiaHealth/docs/UI_SPEC_S4C4_COMMUNION_V1.md`**.

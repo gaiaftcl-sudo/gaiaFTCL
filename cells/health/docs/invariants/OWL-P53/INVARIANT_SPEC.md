@@ -8,6 +8,8 @@
 
 Define the **tumor-suppression pathway** composite invariant for GaiaHealth: **p53-pathway function** as a **C4 constraint** projected from **five simultaneous S4 measurement channels**, each with independent **M/T/I/A** epistemic tags, combined into a **coherence index** against a **master homeostasis phase** (denoted **Φ_master** in design docs).
 
+**Literature context (non-qualifying):** Comparative biology ties expanded *TP53*-family copy number and cancer-resistance phenotypes to specific lineages ([Abegglen et al., JAMA 2015](https://doi.org/10.1001/jama.2015.13134))—**background only**. This invariant is qualified on **human** substrate; **PQ-v2** cohort arms are **humans only** per [`PQ_PROTOCOL.md`](PQ_PROTOCOL.md).
+
 **v1 scope:** **Ordinary invariant** — see [`MOTHER_INVARIANT_CCR_DECISION.md`](MOTHER_INVARIANT_CCR_DECISION.md). “Mother invariant” topology (other invariants projecting against OWL-P53) is **deferred to v2** pending three-cell architectural CCR.
 
 ## 2. Identifier
@@ -41,7 +43,7 @@ Each projection emits a **signed receipt** artifact (format **[I]** — align wi
 
 - Li–Fraumeni syndrome — clinical definition (attach in `evidence/references/`).  
 - p53 pathway review literature — Vogelstein / Lane / Levine class (attach).  
-- Elephant 20× TP53 — **related biology only** — [Abegglen et al., JAMA 2015](https://doi.org/10.1001/jama.2015.13134) — **not** a human PQ cohort requirement (see [`PQ_PROTOCOL.md`](PQ_PROTOCOL.md)).
+- [Abegglen et al., JAMA 2015](https://doi.org/10.1001/jama.2015.13134) — **evolutionary / comparative context** (see stub [`evidence/references/abegglen-2015-jama-tp53-evolutionary-context.md`](evidence/references/abegglen-2015-jama-tp53-evolutionary-context.md)); **not** a PQ cohort input (see [`PQ_PROTOCOL.md`](PQ_PROTOCOL.md)).
 
 ## 7. Cross-links
 
