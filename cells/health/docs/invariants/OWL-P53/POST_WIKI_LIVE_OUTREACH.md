@@ -1,20 +1,19 @@
-# Post–wiki-live outreach checklist — OWL-P53
+# Post–wiki-live outreach — OWL-P53
 
-**Status:** Hold until Qualification-Catalog wiki page is live on `gaiaftcl-sudo/gaiaFTCL` wiki.
+**Repository state:** `main` includes `wiki/Qualification-Catalog.md` (wiki mirror) and `cells/health/docs/invariants/OWL-P53/*`. GitHub wiki page URL for the same title: `https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Qualification-Catalog` (content tracks the repo mirror when the wiki is synced from `main`).
 
-## Requirements (from reviewed plan)
+## Gates (from reviewed plan)
 
-1. **PharmaVoice / Bennett:** Do **not** paste a direct quote until a **primary URL** is captured (see [`SMALL_MOLECULE_INTEGRATION.md`](SMALL_MOLECULE_INTEGRATION.md)).  
-2. Link to **wiki anchor** for Qualification-Catalog / Oncology row, not raw `.md` file URLs.  
-3. Prefer **blob** links for `main` docs when pointing readers at the repository.
+1. **PharmaVoice / Bennett:** Satisfied by **no direct quotations** in normative docs — see [`SMALL_MOLECULE_INTEGRATION.md`](SMALL_MOLECULE_INTEGRATION.md) §3 (paraphrase path).  
+2. **Wiki pointer:** Use the **wiki** URL for the Qualification-Catalog page (slug, not raw `.md` file paths in user-facing links).  
+3. **Repository pointers:** Use **`/blob/main/...`** links for files on `main`.
 
-## Draft stub (fill when live)
+## Canonical links (copy-ready)
 
-- **Wiki:** `https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Qualification-Catalog`  
-- **Invariant blob:** `https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-P53/INVARIANT_SPEC.md`  
-- **PharmaVoice URL:** _TBD — [I]_
+- **Qualification-Catalog (wiki):** https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Qualification-Catalog  
+- **INVARIANT_SPEC (blob):** https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-P53/INVARIANT_SPEC.md  
+- **Package README (blob):** https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-P53/README.md  
 
-## Post body (template)
+## Post body (ready to use)
 
-> GaiaHealth OWL-P53-INV1 documentation is registered on `main` (see blob). The Qualification-Catalog **Oncology** row links the nested IQ/OQ/PQ package; PQ-v2 human cohort work is explicitly a **separate** milestone.  
-> _(Optional: one sentence on small-molecule S4 role — no clinical outcome claim.)_
+GaiaHealth **OWL-P53-INV1** tumor-suppression invariant documentation is on `main` ([INVARIANT_SPEC](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/OWL-P53/INVARIANT_SPEC.md)). The [Qualification-Catalog](https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Qualification-Catalog) wiki page lists the Oncology row with **PQ-v1** (synthetic / dry-run) vs **PQ-v2** (IRB / human cohort) as **separate** milestones. No clinical outcome or near-term cohort delivery is implied for PQ-v2.

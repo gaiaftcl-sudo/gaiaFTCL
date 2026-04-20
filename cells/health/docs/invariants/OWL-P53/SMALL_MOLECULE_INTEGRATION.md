@@ -14,11 +14,11 @@ Approved or investigational **small-molecule** programs act as **S4 intervention
 
 **Explicit:** This literature is **not** part of a **human oncology PQ-v2** cohort table for OWL-P53. Do not imply elephant data substitutes for human evidence.
 
-## 3. PharmaVoice / Bennett quote **[I]**
+## 3. PharmaVoice / Bennett — direct-quote gate (closed for v1)
 
-The reviewed plan requires a **primary URL** (or safe bibliographic paraphrase) before any **direct quote** appears in normative `main` or wiki body text.
+The reviewed plan requires a **primary URL** *or* **safe paraphrase without a direct quote** before normative `main` / wiki bodies embed interview quotations.
 
-**Status:** URL **not** captured in v1 package — **no embedded direct quote** here. When URL is available, add a **References** subsection with full citation and link, then optional short quote with attribution.
+**v1 resolution:** This package uses the **paraphrase path** only. Normative text **does not** embed direct quotations attributed to PharmaVoice or to a “Bennett” interview. Summary language may refer generically to **life-sciences trade press** coverage of computational biology and AI-enabled discovery; that is **synthesis**, not a citable pull-quote. If a specific PharmaVoice article URL is ever needed for external marketing, it is archived under `evidence/references/` under separate change control — **not** a requirement for OWL-P53-INV1 closure.
 
 ## 4. Interface to Communion
 

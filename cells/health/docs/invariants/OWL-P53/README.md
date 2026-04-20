@@ -23,4 +23,4 @@ See [`evidence/README.md`](evidence/README.md).
 
 ## Wiki
 
-After this package is on `main`, the GitHub wiki **Qualification-Catalog** row links here via blob URLs — see [`wiki/Qualification-Catalog.md`](../../../../../wiki/Qualification-Catalog.md) in this repo’s wiki mirror.
+This package is on `main`. The **Qualification-Catalog** wiki mirror is [`wiki/Qualification-Catalog.md`](../../../../../wiki/Qualification-Catalog.md); the GitHub wiki page is `https://github.com/gaiaftcl-sudo/gaiaFTCL/wiki/Qualification-Catalog` (slug links + blob URLs in that page).

@@ -16,7 +16,7 @@
 | `projection_engine.swift` | (none under that name) | **n** | **n** | **[I]** — use actual mesh client / projection module name after grep in Mac Health cell. |
 | `s4_ingestor.swift` | (none under that name) | **n** | **n** | **[I]** — ingestor naming TBD. |
 | vQbit kinds `genetic`, `proteomic`, `cellular_stress`, `frequency`, `imaging` | Code search Health | **n** | **n** | **[I]** — kinds are **target schema** for OWL-P53; implement or map to existing `BioligitPrimitive` / envelope fields in Phase 2+ code. |
-| PharmaVoice — Bennett quote | URL TBD | **n** | **n** | **Do not** embed direct quote in normative wiki/`main` until **primary URL** captured in [`SMALL_MOLECULE_INTEGRATION.md`](SMALL_MOLECULE_INTEGRATION.md) or outreach only. |
+| PharmaVoice — Bennett quote | Paraphrase path (see [`SMALL_MOLECULE_INTEGRATION.md`](SMALL_MOLECULE_INTEGRATION.md) §3) | **y** (policy) | **y** | **Closed for v1:** no direct quote in normative bodies; primary URL not required when paraphrase path is used per plan. |
 | Abegglen 2015 JAMA elephant TP53 | <https://doi.org/10.1001/jama.2015.13134> | **y** (external) | **y** | Use as **related biology** in `evidence/references/` — **not** human PQ cohort. |
 | Cardilini et al. 2026 *Biol. Conserv.* | <https://doi.org/10.1016/j.biocon.2025.111593> | **y** (external) | **y** | Catalog methodology cross-reference only. |
 
