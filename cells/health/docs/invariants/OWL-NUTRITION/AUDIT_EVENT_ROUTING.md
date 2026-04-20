@@ -38,4 +38,5 @@ sequenceDiagram
 
 ## 6. Code
 
-Implementation in `cells/health/**` with tests **[I]** — Phase 6 delivery tracked in `evidence/oq/`.
+- **Hasher (normative subset):** `nutrition_audit_event_digest` in [`wasm_constitutional/src/nutrition.rs`](../../../../wasm_constitutional/src/nutrition.rs) — SHA-256 over canonical UTF-8 bytes; JSON with `digest_kind` + `hex`. Unit tests in the same module.
+- **Signer / mesh / ledger append:** MacHealth + mesh **[I]** — traceability in `evidence/oq/`.

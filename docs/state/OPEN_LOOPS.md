@@ -1,1 +1,3 @@
 - [CALORIE] Removed Xcode Cloud Dispatcher in favor of 100% code-defined GitHub Actions `xcodebuild` pipeline.
+- [I] Push `main` to origin; mirror `wiki/Qualification-Catalog.md` and `cells/health/wiki/Home.md` into **gaiaFTCL.wiki** when credentials available.
+- [I] Add new MacHealth Nutrition Swift files to the Xcode app target (no `pbxproj` edits in-repo for this program).

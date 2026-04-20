@@ -1,4 +1,6 @@
 //! OWL-NUTRITION projection exports — versioned, deterministic stubs [I full DRI/CAB integration].
+use hex;
+use sha2::{Digest, Sha256};
 use wasm_bindgen::prelude::*;
 
 const VERSION: &str = "0.1.0";
@@ -34,11 +36,16 @@ pub fn nutrition_c4_violation_check(filters_json: &str, food_event_json: &str) -
     0
 }
 
-/// Shadow log for audit pipeline — append-only consumer [I mesh seal].
+/// Deterministic SHA-256 over canonical UTF-8 bytes — audit pipeline pre-sign digest (see `AUDIT_EVENT_ROUTING.md`).
 #[wasm_bindgen]
 pub fn nutrition_audit_event_digest(canonical_event_json: &str) -> String {
-    let n = canonical_event_json.len();
-    format!("{{\"digest_kind\":\"sha256_stub\",\"input_len\":{}}}", n)
+    let mut h = Sha256::new();
+    h.update(canonical_event_json.as_bytes());
+    let out = h.finalize();
+    format!(
+        r#"{{"digest_kind":"sha256","hex":"{}"}}"#,
+        hex::encode(out)
+    )
 }
 
 #[cfg(test)]
@@ -63,5 +70,27 @@ mod tests {
     fn projection_json_includes_version() {
         let s = project_nutrition_invariant("OWL-NUTRITION-MACRO-001", "{}");
         assert!(s.contains("nutrition_wasm_version"));
+    }
+
+    #[test]
+    fn audit_digest_sha256_deterministic() {
+        let payload = r#"{"event_class":"food_log","seq":1}"#;
+        let a = nutrition_audit_event_digest(payload);
+        let b = nutrition_audit_event_digest(payload);
+        assert_eq!(a, b);
+        assert!(a.contains("digest_kind\":\"sha256"));
+    }
+
+    #[test]
+    fn audit_digest_known_empty_vector() {
+        let s = nutrition_audit_event_digest("");
+        assert!(s.contains("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"));
+    }
+
+    #[test]
+    fn audit_digest_changes_with_payload() {
+        let x = nutrition_audit_event_digest("a");
+        let y = nutrition_audit_event_digest("b");
+        assert_ne!(x, y);
     }
 }
