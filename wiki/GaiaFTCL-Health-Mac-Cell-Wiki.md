@@ -43,6 +43,32 @@ bash cells/health/scripts/health_cell_gamp5_validate.sh
 
 ---
 
+## Peptide / LIGAND-CLASS — HEALTH-PEPTIDE-SPEC-V1 (what we built on `main`)
+
+**Peptide therapy is not a side quest.** It is a **first-class ligand class** on the same Biologit MD stack as small molecules: same **BioligitPrimitive**, same **WASM** constitutional gates (now **class-aware** for ADMET, selectivity, and force-field routing), same **CURE** closure story — with **PGx** and **consent** rules that match peptide biology (hashed features, separate scope — see [PGX_POLICY.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/LIGAND-CLASS/PGX_POLICY.md)).
+
+**Normative story (one sentence):** peptides ride **inside** the MD pipeline as `ligand_class` at ABI offset **88**; they are **not** a parallel unpublished “M_bio / ω_kine” kinematic track. The long **§9** frequency narrative on *this* page is **SIL / pedagogy**; **HEALTH-PEPTIDE-SPEC-V1** is the qualification story for computational peptide scope — see [PEPTIDE_INTEGRATION_SPEC.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/PEPTIDE_INTEGRATION_SPEC.md) §1 and §10.
+
+Traceability mirrors **[Qualification-Catalog §4.6](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/wiki/Qualification-Catalog.md#46-ligand-class--peptide-therapy-integration)** and **[§8.3 framework targets](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/wiki/Qualification-Catalog.md#83-peptide-ligand-class--framework-targets)**:
+
+| Field | Value |
+|-------|--------|
+| **Spec ID** | `HEALTH-PEPTIDE-SPEC-V1` |
+| **Integration spec** | [PEPTIDE_INTEGRATION_SPEC.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/PEPTIDE_INTEGRATION_SPEC.md) |
+| **Change control** | [CCR-HEALTH-PEPTIDE-V1.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/ccr/CCR-HEALTH-PEPTIDE-V1.md) — three-of-three Lithography + Fusion + Health signatures **[I]** until signed |
+| **Invariants** | [LIGAND-CLASS/README.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/LIGAND-CLASS/README.md) — **INV-HEALTH-LC-01..06** |
+| **IQ / OQ / PQ** | [OQ_PEPTIDE_V1.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/qualification/OQ_PEPTIDE_V1.md) · [PQ_PEPTIDE_V1.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/qualification/PQ_PEPTIDE_V1.md) |
+| **Automated evidence** | `bash cells/health/scripts/peptide_ligand_class_gamp5_evidence.sh` → [`peptide_ligand_class_gamp5_receipt.json`](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/LIGAND-CLASS/evidence/peptide_ligand_class_gamp5_receipt.json) |
+| **Communion UI** | [S4_C4_COMMUNION_UI_SPEC.md §5.3](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/S4_C4_COMMUNION_UI_SPEC.md) — **MOL/PEP** ligand-class badge (**[I]** until UI ships) |
+
+**Engineering hooks (for readers who open the repo):**
+
+- **`BioligitPrimitive` v1.1:** `ligand_class` **u8** @ byte offset **88** (96-byte struct unchanged) — [BioligitPrimitive-ABI](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/wiki/BioligitPrimitive-ABI.md).
+- **`wasm_constitutional`:** class-aware **ADMET**, **selectivity**, **force_field_bounds_check** (peptide vs small-molecule paths per policy); **PGx** auxiliary exports follow [PGX_POLICY.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/LIGAND-CLASS/PGX_POLICY.md).
+- **`biologit_md_engine`:** docking dispatch (peptide does **not** select Vina blindly), **ff14SB/CHARMM36m** peptide FF selection where applicable — all governed by the same state machine and receipt discipline as small molecules.
+
+---
+
 # Human narrative — substrate, SIL, and scenario suites
 
 *The sections below are the long-form wiki voice: MacHealth / telemetry / SIL validation and the “human-as-substrate” design story. They sit **beside** the Biologit computational cell (GH-FS-001); see **Normative reference — Biologit cell on `main`** at the end of this page for the drug-discovery / MD / WASM scope.*
@@ -291,7 +317,7 @@ Per Scenarios **§11**: this material is **substrate-correctness and validation*
 
 - **GAMP 5 Category 5** research instrument: **computational drug discovery** — PDB ingest (PHI-scrubbed), molecular dynamics, Metal rendering, **11-state** lifecycle, **CURE** emission when constitutional gates pass.
 - **Epistemic spine:** **M / I / A** only (Measured, Inferred, Assumed) on computational outputs — see [State-Machine](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/wiki/State-Machine.md).
-- **Ligand scope:** small molecule **or** **peptide** as **`ligand_class`** on `BioligitPrimitive` — [PEPTIDE_INTEGRATION_SPEC.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/PEPTIDE_INTEGRATION_SPEC.md).
+- **Ligand scope:** small molecule **or** **peptide** as **`ligand_class`** on `BioligitPrimitive` — [PEPTIDE_INTEGRATION_SPEC.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/PEPTIDE_INTEGRATION_SPEC.md). Peptides are a **ligand class inside the MD pipeline**, not a separate “M_bio / ω-kine” kinematic track (that language is **out of scope** for normative peptide scope; see **Peptide / LIGAND-CLASS** section above and §9 narrative scope guard).
 - **WASM:** **eight core** constitutional exports + **two auxiliary** PGx-related exports — [WASM-Constitutional-Substrate](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/wiki/WASM-Constitutional-Substrate.md), `wasm_constitutional/src/lib.rs`.
 
 ### N.1.B — **MacHealth** SIL harness (`cells/fusion/macos/MacHealth/`)
@@ -342,6 +368,11 @@ Mesh-wide Fusion **C-001…C-010** live in the Fusion product. GaiaHealth **CURE
 | IQ / OQ / PQ (wiki) | [IQ](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/wiki/IQ-Installation-Qualification.md) · [OQ](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/wiki/OQ-Operational-Qualification.md) · [PQ](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/wiki/PQ-Performance-Qualification.md) |
 | SIL scenarios (repo) | [Scenarios_Physics_Frequencies_Assertions.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/Scenarios_Physics_Frequencies_Assertions.md) |
 | S4↔C4 Communion (design target) | [S4_C4_COMMUNION_UI_SPEC.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/S4_C4_COMMUNION_UI_SPEC.md) |
+| Peptide integration (HEALTH-PEPTIDE-SPEC-V1) | [PEPTIDE_INTEGRATION_SPEC.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/PEPTIDE_INTEGRATION_SPEC.md) |
+| LIGAND-CLASS invariants (INV-HEALTH-LC-01..06) | [LIGAND-CLASS/README.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/LIGAND-CLASS/README.md) |
+| Peptide OQ / PQ protocols | [OQ_PEPTIDE_V1.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/qualification/OQ_PEPTIDE_V1.md) · [PQ_PEPTIDE_V1.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/qualification/PQ_PEPTIDE_V1.md) |
+| Peptide CCR | [CCR-HEALTH-PEPTIDE-V1.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/ccr/CCR-HEALTH-PEPTIDE-V1.md) |
+| PGx policy (peptide / hashed features) | [PGX_POLICY.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/invariants/LIGAND-CLASS/PGX_POLICY.md) |
 
 ---
 
@@ -352,6 +383,7 @@ Mesh-wide Fusion **C-001…C-010** live in the Fusion product. GaiaHealth **CURE
 | **C-1…C-7** | Boolean gates for **CURE** emission (WASM, consent, epistemic, selectivity, …) | [REVIEWER_BRIEF.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/REVIEWER_BRIEF.md), GH-FS-001 |
 | **Seven SIL scenario IDs** | Cohort-level **validation suites** (`inv3_aml`, …) | This page §11 + MacHealth `ClinicalScenario` |
 | **M_bio → ω_kine** (§9 above) | Pedagogical / scenario narrative | **Not** peptide MD scope; see [PEPTIDE_INTEGRATION_SPEC.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/PEPTIDE_INTEGRATION_SPEC.md) |
+| **HEALTH-PEPTIDE-SPEC-V1 / LIGAND-CLASS** | Peptide as **`ligand_class`** on MD+WASM; INV-HEALTH-LC-01..06; GAMP scripts | [Qualification-Catalog §4.6](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/wiki/Qualification-Catalog.md#46-ligand-class--peptide-therapy-integration); **Peptide / LIGAND-CLASS** section above |
 | **Cross-domain obligate analogy** | Pedagogical **[I]** only | [OBLIGATE_COUPLING_BIOPHYSICS_ANALOGY.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/docs/OBLIGATE_COUPLING_BIOPHYSICS_ANALOGY.md) — no WASM export |
 
 **S4↔C4 Communion** (product narrative): see [S4_C4_COMMUNION_UI_SPEC.md](https://github.com/gaiaftcl-sudo/gaiaFTCL/blob/main/cells/health/docs/S4_C4_COMMUNION_UI_SPEC.md) (and extended doc if present on `main`).
