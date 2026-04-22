@@ -5,8 +5,19 @@
 *.swo
 *~
 
-# Cursor/IDE
+# Cursor / IDE / local editor — do not commit (operator machine only)
 .cursor/
+**/.cursor/
+.cursorrules
+**/.cursorrules
+.cursorignore
+**/.cursorignore
+.vscode/
+**/.vscode/
+.idea/
+**/.idea/
+*.code-workspace
+cells/fusion/gaiaos_dot_cursor/
 
 # Build artifacts
 target/
