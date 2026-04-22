@@ -1,3 +1,6 @@
 - [CALORIE] Removed Xcode Cloud Dispatcher in favor of 100% code-defined GitHub Actions `xcodebuild` pipeline.
+- [CALORIE] **MacFranklin** operator `.app` under `cells/health/swift/MacFranklin/`; full **pack + test** from repo root: `zsh cells/franklin/scripts/franklin_mac_full_package_validate.sh` (also runs GAMP5 validate, fo_cell_substrate release, then builds the `.app`). Single-step app build: `zsh cells/health/swift/MacFranklin/build_macfranklin_app.sh`.
+- [CALORIE] `cells/franklin/pins.json` + `cells/health/.admincell-expected/orchestrator.sha256` must be refreshed with `zsh cells/franklin/scripts/refresh_franklin_pins.sh` whenever orchestrator or Franklin driver scripts change (AdminCellRunner `testFranklinPinnedScriptsMatch` enforces this).
 - [I] Push `main` to origin; mirror `wiki/Qualification-Catalog.md` and `cells/health/wiki/Home.md` into **gaiaFTCL.wiki** when credentials available. (Latest Health + GAMP5 catalog validation: **PASS** locally.)
 - [I] Add new MacHealth Nutrition Swift files to the Xcode app target (no `pbxproj` edits in-repo for this program).
+- See [`NARRATIVE_RTM_MAP.md`](NARRATIVE_RTM_MAP.md) for narrative-to-test mapping; do not leave P0 “open” items untracked.

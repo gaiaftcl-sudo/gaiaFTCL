@@ -1,0 +1,15 @@
+{
+  "franklin_mac_admin_cell_role": "self_heal_mesh_head_game_loop",
+  "final_exit": 0,
+  "git_short_sha": "abc1234",
+  "note": "fixture for conformance tests",
+  "phases": [
+    { "exit": 0, "name": "admin_cell_self_test" },
+    { "exit": 0, "name": "gamp5_orchestrator_dry_run" }
+  ],
+  "repo_root": "/tmp/fo",
+  "schema": "franklin_mac_admin_gamp5_receipt_v1",
+  "smoke_mode": true,
+  "ts_utc": "2026-04-22T120000Z",
+  "zero_human_automation": true
+}

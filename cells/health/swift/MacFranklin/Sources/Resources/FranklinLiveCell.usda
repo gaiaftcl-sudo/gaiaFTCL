@@ -1,0 +1,22 @@
+#usda 1.0
+(
+    defaultPrim = "LiveCell"
+    upAxis = "Y"
+    metersPerUnit = 1
+)
+
+def Xform "LiveCell" (
+    kind = "component"
+) {
+    color3f[] primvars:displayColor = [(0.1, 0.55, 0.95)] (
+        interpolation = "constant"
+    )
+    def Sphere "Plasma" {
+        double radius = 0.5
+    }
+    def Xform "Puck" {
+        double3 xformOp:translate = (0.75, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+        def Sphere "G" { double radius = 0.12 }
+    }
+}

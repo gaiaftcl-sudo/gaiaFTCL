@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fo.t8d/cells/franklin/franklin_mac_admin_gamp5_receipt_v1",
+  "title": "Franklin Mac Admin GAMP5 receipt (v1)",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema",
+    "ts_utc",
+    "git_short_sha",
+    "repo_root",
+    "zero_human_automation",
+    "franklin_mac_admin_cell_role",
+    "smoke_mode",
+    "final_exit",
+    "phases",
+    "note"
+  ],
+  "properties": {
+    "schema": {
+      "const": "franklin_mac_admin_gamp5_receipt_v1"
+    },
+    "ts_utc": { "type": "string", "minLength": 1 },
+    "git_short_sha": { "type": "string" },
+    "repo_root": { "type": "string", "minLength": 1 },
+    "zero_human_automation": { "const": true },
+    "franklin_mac_admin_cell_role": { "const": "self_heal_mesh_head_game_loop" },
+    "smoke_mode": { "type": "boolean" },
+    "final_exit": { "type": "integer" },
+    "phases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "exit"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "exit": { "type": "integer" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "note": { "type": "string" },
+    "tau_block_height": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Optional. Bitcoin mainnet block height (τ) when FRANKLIN_INCLUDE_TAU=1 and bitcoin-cli succeeds."
+    }
+  }
+}

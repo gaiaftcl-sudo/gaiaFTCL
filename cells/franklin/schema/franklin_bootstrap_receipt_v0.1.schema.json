@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fo.t8d/cells/franklin/franklin_bootstrap_receipt_v0.1",
+  "title": "Franklin Father bootstrap receipt (v0.1 dev)",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema",
+    "ts_utc",
+    "repo_root",
+    "curve",
+    "public_key_pem",
+    "public_key_commitment_sha256",
+    "private_key_storage",
+    "pre_mother",
+    "note"
+  ],
+  "properties": {
+    "schema": { "const": "franklin_bootstrap_receipt_v0.1" },
+    "ts_utc": { "type": "string", "minLength": 1 },
+    "repo_root": { "type": "string", "minLength": 1 },
+    "curve": { "const": "secp256k1" },
+    "public_key_pem": { "type": "string", "minLength": 1 },
+    "public_key_commitment_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "private_key_storage": { "type": "string", "minLength": 1 },
+    "pre_mother": { "type": "boolean" },
+    "note": { "type": "string" }
+  }
+}
