@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaiaftcl.local/schemas/genesys_record.schema.json",
+  "title": "genesys_record",
+  "description": "Per-cell Genesys: first green GAMP5 games + link to mesh genesis (operator authority).",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "cell_id",
+    "created_utc",
+    "git_short_sha",
+    "mesh_genesis_id",
+    "mesh_genesis_hash",
+    "receipt_families"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "cell_id": { "type": "string", "minLength": 1 },
+    "created_utc": { "type": "string", "format": "date-time" },
+    "git_short_sha": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+    "mesh_genesis_id": { "type": "string", "minLength": 1 },
+    "mesh_genesis_hash": {
+      "type": "string",
+      "description": "SHA-256 of canonical mesh_genesis.json (hex lowercase).",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "first_green_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path_rel", "receipt_kind"],
+        "properties": {
+          "path_rel": { "type": "string" },
+          "receipt_kind": { "type": "string" }
+        }
+      }
+    },
+    "receipt_families": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "e.g. franklin_mac_admin_gamp5_receipt_v1"
+    },
+    "tau_note": { "type": "string", "description": "Optional block height or policy τ tag." }
+  },
+  "additionalProperties": true
+}

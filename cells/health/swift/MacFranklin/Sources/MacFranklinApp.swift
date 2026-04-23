@@ -19,6 +19,26 @@ struct MacFranklinApp: App {
 
 @MainActor
 final class MacFranklinModel: ObservableObject {
+    enum RuntimeState: String, Codable {
+        case bootstrap = "BOOTSTRAP"
+        case ready = "READY"
+        case runningGames = "RUNNING_GAMES"
+        case refused = "REFUSED"
+        case cure = "CURE"
+        case alive = "ALIVE"
+    }
+
+    struct RuntimeStateSnapshot: Codable {
+        let schema: String
+        let tsUTC: String
+        let state: String
+        let lifeGameStatus: String
+        let lifeGamePassed: Bool
+        let running: Bool
+        let lastExit: Int32?
+        let repoPath: String
+    }
+
     fileprivate static let userDefaultsKey = "macfranklin_repo_root_v1"
     fileprivate static let usdSnippetName = "FranklinLiveCell"
 
@@ -30,6 +50,11 @@ final class MacFranklinModel: ObservableObject {
     @Published var didAutoBindRepo = false
     @Published var bundledUsdaPath: String = ""
     @Published var usdaSnippet: String = ""
+    @Published var lifeGameRunning = false
+    @Published var lifeGamePassed = false
+    @Published var lifeGameStatus: String = "LIFE game not started."
+    @Published var didAutoStartLifeGame = false
+    @Published var runtimeState: RuntimeState = .bootstrap
 
     var repoURL: URL? {
         let p = repoPath.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -124,19 +149,77 @@ final class MacFranklinModel: ObservableObject {
     func runGamp5Smoke() {
         guard let err = validateRepo() else {
             lastLog = ""
+            runtimeState = .runningGames
+            persistRuntimeStateSnapshot()
             runDriver(smoke: true)
             return
         }
+        runtimeState = .refused
         lastLog = err
+        persistRuntimeStateSnapshot()
     }
 
     func runGamp5Full() {
         guard let err = validateRepo() else {
             lastLog = ""
+            runtimeState = .runningGames
+            persistRuntimeStateSnapshot()
             runDriver(smoke: false)
             return
         }
+        runtimeState = .refused
         lastLog = err
+        persistRuntimeStateSnapshot()
+    }
+
+    /// Boot-time, fail-closed runtime chain for a live cell.
+    /// The app is not considered "alive" unless this chain exits green.
+    func runLifeGameChain() {
+        guard !lifeGameRunning else { return }
+        if let err = validateRepo() {
+            lifeGamePassed = false
+            lifeGameStatus = "REFUSED: \(err)"
+            runtimeState = .refused
+            lastLog = err
+            persistRuntimeStateSnapshot()
+            return
+        }
+        guard let r = repoURL else { return }
+        lifeGameRunning = true
+        lifeGamePassed = false
+        lifeGameStatus = "LIFE game running…"
+        runtimeState = .runningGames
+        running = true
+        lastExit = nil
+        persistRuntimeStateSnapshot()
+        lastLog = """
+        [LIFE] Boot chain start (fail-closed)
+        [LIFE] 1) Klein narrative lock
+        [LIFE] 2) Health catalog/game validate (--skip-cargo-test)
+        [LIFE] 3) Franklin canonical driver smoke
+
+        """
+
+        let rPath = r.path
+        Task { @MainActor in
+            let (ok, code, out, status) = await Task.detached {
+                MacFranklinModel.runLifeGameChainSync(repoPath: rPath)
+            }.value
+            self.running = false
+            self.lifeGameRunning = false
+            self.lastExit = code
+            self.lastLog += out
+            self.lifeGamePassed = ok
+            self.lifeGameStatus = status
+            if ok {
+                self.runtimeState = .alive
+                self.lastLog += "\n[LIFE] ALIVE: chain green. Evidence in cells/health/evidence/\n"
+            } else {
+                self.runtimeState = .refused
+                self.lastLog += "\n[LIFE] REFUSED: chain failed. Cell not alive.\n"
+            }
+            self.persistRuntimeStateSnapshot()
+        }
     }
 
     private func runDriver(smoke: Bool) {
@@ -161,10 +244,13 @@ final class MacFranklinModel: ObservableObject {
             self.lastExit = code
             self.lastLog = prefix + out
             if code != 0 {
+                self.runtimeState = .refused
                 self.lastLog += "\n(exit \(code))\n"
             } else {
+                self.runtimeState = .cure
                 self.lastLog += "\nOK (exit 0) — see cells/health/evidence/franklin_mac_admin_gamp5_*.json\n"
             }
+            self.persistRuntimeStateSnapshot()
         }
     }
 
@@ -192,10 +278,184 @@ final class MacFranklinModel: ObservableObject {
         }
     }
 
+    private nonisolated static func runLifeGameChainSync(repoPath: String) -> (Bool, Int32, String, String) {
+        let root = URL(fileURLWithPath: repoPath)
+        var fullLog = ""
+
+        // 1) Klein lock test
+        let lockScript = root.appendingPathComponent("cells/franklin/tests/test_mac_mesh_cell_narrative_lock.sh").path
+        let (lockCode, lockOut) = runScriptSync(
+            executable: "/bin/zsh",
+            arguments: [lockScript],
+            repoPath: repoPath,
+            envExtra: [:]
+        )
+        fullLog += "\n[LIFE][1/3] Klein lock exit \(lockCode)\n\(lockOut)\n"
+        if lockCode != 0 {
+            return (false, lockCode, fullLog, "REFUSED: Klein lock failed (exit \(lockCode))")
+        }
+
+        // 2) Health catalog/game validator (script includes Qualification-Catalog checks)
+        let healthValidate = root.appendingPathComponent("cells/health/scripts/health_cell_gamp5_validate.sh").path
+        let (healthCode, healthOut) = runScriptSync(
+            executable: "/bin/zsh",
+            arguments: [healthValidate, "--skip-cargo-test"],
+            repoPath: repoPath,
+            envExtra: [:]
+        )
+        fullLog += "\n[LIFE][2/3] Health catalog validate exit \(healthCode)\n\(healthOut)\n"
+        if healthCode != 0 {
+            return (false, healthCode, fullLog, "REFUSED: health catalog/game validate failed (exit \(healthCode))")
+        }
+
+        // 3) Franklin canonical driver smoke
+        let driver = root.appendingPathComponent("cells/health/scripts/franklin_mac_admin_gamp5_zero_human.sh").path
+        let (driverCode, driverOut) = runScriptSync(
+            executable: "/bin/sh",
+            arguments: [driver],
+            repoPath: repoPath,
+            envExtra: ["FRANKLIN_GAMP5_SMOKE": "1"]
+        )
+        fullLog += "\n[LIFE][3/3] Franklin smoke exit \(driverCode)\n\(driverOut)\n"
+        if driverCode != 0 {
+            return (false, driverCode, fullLog, "REFUSED: Franklin smoke failed (exit \(driverCode))")
+        }
+
+        return (true, 0, fullLog, "ALIVE: LIFE game chain green")
+    }
+
+    private nonisolated static func runScriptSync(
+        executable: String,
+        arguments: [String],
+        repoPath: String,
+        envExtra: [String: String]
+    ) -> (Int32, String) {
+        let r = URL(fileURLWithPath: repoPath)
+        let p = Process()
+        p.executableURL = URL(fileURLWithPath: executable)
+        p.arguments = arguments
+        p.currentDirectoryURL = r
+        var env = RunEnvironment.baseline(for: r, inheritPath: true)
+        env["GAIAFTCL_REPO_ROOT"] = r.path
+        env["GAIAHEALTH_REPO_ROOT"] = r.path
+        for (k, v) in envExtra {
+            env[k] = v
+        }
+        p.environment = env
+        let pipe = Pipe()
+        p.standardOutput = pipe
+        p.standardError = pipe
+        do {
+            try p.run()
+            p.waitUntilExit()
+            let data = try pipe.fileHandleForReading.readToEnd() ?? Data()
+            let s = String(data: data, encoding: .utf8) ?? ""
+            return (p.terminationStatus, s)
+        } catch {
+            return (1, "Process error: \(error)\n")
+        }
+    }
+
     func openEvidenceFolder() {
         guard let r = repoURL else { return }
         let ev = r.appendingPathComponent("cells/health/evidence", isDirectory: true)
         NSWorkspace.shared.open(ev)
+    }
+
+    /// Rust stdio MCP server binary path in-repo build output.
+    var mcpRustServerBinaryPath: String? {
+        guard let r = repoURL else { return nil }
+        return r
+            .appendingPathComponent("target/release/macfranklin_mcp_server", isDirectory: false)
+            .path
+    }
+
+    var mcpRustServerExists: Bool {
+        guard let p = mcpRustServerBinaryPath else { return false }
+        return FileManager.default.isExecutableFile(atPath: p)
+    }
+
+    /// Paste into `~/.cursor/mcp.json` (see `mcp/MCP_CURSOR.md`)
+    var cursorMcpConfigJSON: String {
+        guard let r = repoURL, let bin = mcpRustServerBinaryPath else {
+            return ""
+        }
+        let root = MacFranklinModel.jsonEscapeForJSON(r.path)
+        let be = MacFranklinModel.jsonEscapeForJSON(bin)
+        return """
+        {
+          "mcpServers": {
+            "macfranklin": {
+              "command": "\(be)",
+              "args": [],
+              "env": {
+                "GAIAFTCL_REPO_ROOT": "\(root)"
+              }
+            }
+          }
+        }
+        """
+    }
+
+    fileprivate static func jsonEscapeForJSON(_ s: String) -> String {
+        s
+            .replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "\"", with: "\\\"")
+    }
+
+    func copyCursorMcpConfigToPasteboard() {
+        let j = cursorMcpConfigJSON.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !j.isEmpty else { return }
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(j, forType: .string)
+        lastLog += "\n[MacFranklin] Copied Cursor MCP config JSON to pasteboard. Merge into ~/.cursor/mcp.json — see mcp/MCP_CURSOR.md\n"
+    }
+
+    func openMcpCursorDoc() {
+        guard let r = repoURL else { return }
+        let u = r.appendingPathComponent("cells/health/swift/MacFranklin/mcp/MCP_CURSOR.md", isDirectory: false)
+        NSWorkspace.shared.open(u)
+    }
+
+    func persistRuntimeStateSnapshot() {
+        guard let r = repoURL else { return }
+        let dir = r.appendingPathComponent("cells/health/evidence/macfranklin_state", isDirectory: true)
+        do {
+            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            let ts = iso8601UTCNowFilenameSafe()
+            let out = dir.appendingPathComponent("state_\(ts).json", isDirectory: false)
+            let snap = RuntimeStateSnapshot(
+                schema: "macfranklin_runtime_state_v1",
+                tsUTC: iso8601UTCNow(),
+                state: runtimeState.rawValue,
+                lifeGameStatus: lifeGameStatus,
+                lifeGamePassed: lifeGamePassed,
+                running: running,
+                lastExit: lastExit,
+                repoPath: r.path
+            )
+            let enc = JSONEncoder()
+            enc.outputFormatting = [.prettyPrinted, .sortedKeys]
+            let data = try enc.encode(snap)
+            try data.write(to: out, options: .atomic)
+        } catch {
+            lastLog += "\n[MacFranklin] snapshot write error: \(error)\n"
+        }
+    }
+
+    private func iso8601UTCNow() -> String {
+        let f = ISO8601DateFormatter()
+        f.timeZone = TimeZone(secondsFromGMT: 0)
+        f.formatOptions = [.withInternetDateTime]
+        return f.string(from: Date())
+    }
+
+    private func iso8601UTCNowFilenameSafe() -> String {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: "en_US_POSIX")
+        f.timeZone = TimeZone(secondsFromGMT: 0)
+        f.dateFormat = "yyyy-MM-dd'T'HHmmss'Z'"
+        return f.string(from: Date())
     }
 }
 
@@ -339,12 +599,46 @@ struct ContentView: View {
                         Button("Override repository…") { model.pickRepo() }
                     }
                     HStack(spacing: 8) {
+                        Button("Run LIFE game chain") { model.runLifeGameChain() }
+                            .disabled(model.running || model.lifeGameRunning)
                         Button("Run GAMP5 smoke") { model.runGamp5Smoke() }
-                            .disabled(model.running)
+                            .disabled(model.running || model.lifeGameRunning)
                         Button("Run full GAMP5") { model.runGamp5Full() }
-                            .disabled(model.running)
+                            .disabled(model.running || model.lifeGameRunning)
                     }
                     Button("Open evidence folder") { model.openEvidenceFolder() }
+                    Text(model.lifeGameStatus)
+                        .font(.caption2)
+                        .foregroundStyle(model.lifeGamePassed ? .green : .secondary)
+                    Text("Runtime state: \(model.runtimeState.rawValue)")
+                        .font(.caption2)
+                        .foregroundStyle(model.runtimeState == .alive ? .green : .secondary)
+
+                    GroupBox {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("Co-work with Cursor (MCP)")
+                                .font(.subheadline.weight(.semibold))
+                            if model.mcpRustServerExists {
+                                Text("Rust stdio MCP server present — use Copy, then merge into Cursor MCP config.")
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            } else {
+                                Text("Build Rust MCP server: cargo build -p macfranklin_mcp_server --release (see MCP_CURSOR.md).")
+                                    .font(.caption2)
+                                    .foregroundStyle(.orange)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                            HStack {
+                                Button("Copy Cursor MCP config JSON") { model.copyCursorMcpConfigToPasteboard() }
+                                    .disabled(!model.mcpRustServerExists)
+                                Button("Open MCP_CURSOR.md") { model.openMcpCursorDoc() }
+                            }
+                        }
+                    } label: {
+                        Text("MCP (Cursor agent)")
+                    }
+
                     if let e = model.lastExit {
                         Text("Last exit: \(e)")
                             .font(.caption2)
@@ -370,6 +664,12 @@ struct ContentView: View {
         .onAppear {
             model.loadBundledOpenUSD()
             model.ensureLiveRepo()
+            model.runtimeState = model.liveCellPathOK ? .ready : .bootstrap
+            model.persistRuntimeStateSnapshot()
+            if !model.didAutoStartLifeGame {
+                model.didAutoStartLifeGame = true
+                model.runLifeGameChain()
+            }
         }
     }
 }

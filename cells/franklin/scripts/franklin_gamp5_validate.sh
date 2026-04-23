@@ -47,4 +47,9 @@ echo "== 3) Shell: receipt v1 conformance (fixture + negative test; optional E2E
 echo "== 4) Evidence: audit_trail_verify (all franklin v1 receipts in cells/health/evidence/)"
 ( cd "$REPO" && zsh "$FRANKLIN/scripts/audit_trail_verify.sh" )
 
+if [[ "${RUN_MAC_GAMP5_EXTERNAL_LOOP:-0}" == "1" ]]; then
+  echo "== 5) External loop (owner-Mac) — clone/build/run + core games"
+  ( cd "$REPO" && zsh "$FRANKLIN/scripts/mac_gamp5_external_loop.sh" )
+fi
+
 echo "== Franklin GAMP5 validate: OK"

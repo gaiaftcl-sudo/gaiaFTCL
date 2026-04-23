@@ -3,4 +3,8 @@ resolver = "2"
 members = [
     "rust_fusion_usd_parser",
     "gaia-metal-renderer",
+    "cells/shared/rust/fo_cell_substrate",
+    "cells/franklin/services/mac_cell_bridge",
+    "cells/franklin/services/mac_gamp5_observer",
+    "cells/health/swift/MacFranklin/mcp-rust",
 ]

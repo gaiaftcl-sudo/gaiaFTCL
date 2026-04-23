@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaiaftcl.local/schemas/cell_identity.schema.json",
+  "title": "cell_identity",
+  "description": "Pinned tool and script paths for a Mac / Franklin expert cell (GAMP5 governance).",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "cell_id",
+    "franklin_gamp5_driver_rel",
+    "franklin_gamp5_validate_rel"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "cell_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable id (e.g. mac_expert, franklin)."
+
+    },
+    "git_short_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{7,40}$",
+      "description": "Optional pin of the tree this identity was sealed against."
+    },
+    "franklin_gamp5_driver_rel": {
+      "type": "string",
+      "const": "cells/health/scripts/franklin_mac_admin_gamp5_zero_human.sh"
+    },
+    "franklin_gamp5_validate_rel": {
+      "type": "string",
+      "const": "cells/franklin/scripts/franklin_gamp5_validate.sh"
+    },
+    "health_cell_gamp5_validate_rel": {
+      "type": "string",
+      "const": "cells/health/scripts/health_cell_gamp5_validate.sh"
+    },
+    "mesh_narrative_lock_rel": {
+      "type": "string",
+      "const": "cells/franklin/tests/test_mac_mesh_cell_narrative_lock.sh"
+    },
+    "fo_health_binary_rel": {
+      "type": "string",
+      "const": "target/release/fo-health",
+      "description": "Binary from `cargo build -p fo_cell_substrate --release` at repo root."
+    },
+    "tool_path_digests": {
+      "type": "object",
+      "description": "Optional sha256:hex of file contents (when operator pins for audit).",
+      "additionalProperties": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+    }
+  },
+  "additionalProperties": true
+}

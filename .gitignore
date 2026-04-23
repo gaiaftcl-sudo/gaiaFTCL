@@ -20,6 +20,8 @@
 cells/fusion/gaiaos_dot_cursor/
 
 # Build artifacts
+**/.next/
+.next/
 target/
 /target
 **/target/
@@ -114,11 +116,20 @@ evidence/vqbit_test_receipt.json
 # Local-only trees / side clones — do not commit (GAMP hygiene)
 .claude/
 BenOS/
+BenOSUniversal/
+BenStack_VM/
 GAIAFTCL/
+GaiaHealth/
+GAIAOS_ARCHIVE/
+GAIAOS_models_EXCLUDED/
+UUM_OS_Package/
+archive/
 cells/fusion/Internal/
 cells/fusion/archive/
 cells/fusion/cursor_watchdog_*.log
 gaia-ftcl-dist/
+gaiaFTCL.wiki.backup-wrong-remote-*/
+GAIAOS/cursor_watchdog_*.log
 
 # Git LFS hooksPath — local only; never commit (not project source)
 .githooks/
