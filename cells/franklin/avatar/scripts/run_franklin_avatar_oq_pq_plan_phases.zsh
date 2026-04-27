@@ -78,7 +78,7 @@ case "${PHASE}" in
       exit 127
     }
     [[ -f "${ROOT}/build/bundle_pubkey.bin" && -d "${ROOT}/build/avatar_bundle" ]] || {
-      print -u2 "[plan_phases] missing bundle build (run build_bundle.sh / Gate E)"
+      print -u2 "[plan_phases] missing bundle build (run scripts/build_bundle.zsh / Gate E)"
       exit 14
     }
     "${VB}" --pubkey "${ROOT}/build/bundle_pubkey.bin" "${ROOT}/build/avatar_bundle"

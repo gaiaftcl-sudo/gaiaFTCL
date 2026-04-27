@@ -1,9 +1,10 @@
-#!/usr/bin/env bash
-# Build signed avatar bundle + pubkey for sprout Gate E.
-# Inputs: bundle_assets/ (committed). Output: build/avatar_bundle/, build/bundle_pubkey.bin (gitignored).
-set -euo pipefail
+#!/usr/bin/env zsh
+# Build signed avatar bundle + pubkey for sprout Gate E (macOS — zsh only).
+# Inputs: bundle_assets/. Output: build/avatar_bundle/, build/bundle_pubkey.bin (gitignored).
+emulate -L zsh
+set -o pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT="$(cd "$(dirname "${(%):-%x}")/.." && pwd)"
 KEY="${FRANKLIN_KEY:?FRANKLIN_KEY must point to a 32-byte Ed25519 private key}"
 IN="${ROOT}/bundle_assets"
 OUT="${ROOT}/build/avatar_bundle"
@@ -11,12 +12,12 @@ PUB="${ROOT}/build/bundle_pubkey.bin"
 BUNDLE_ID="${FRANKLIN_BUNDLE_ID:-franklin.passy.v1}"
 
 [[ -d "${IN}" ]] || {
-  echo >&2 "[build_bundle] missing ${IN}"
+  print -u2 "[build_bundle] missing ${IN}"
   exit 2
 }
 
 pick_sign_bundle() {
-  local -a candidates=()
+  local candidates=()
   case "$(uname -s)/$(uname -m)" in
     Darwin/arm64)
       candidates=(
@@ -47,8 +48,8 @@ pick_sign_bundle() {
 }
 
 SB="$(pick_sign_bundle)" || {
-  echo >&2 "[build_bundle] no sign_bundle binary found."
-  echo >&2 "  Expected host-tools/darwin-arm64/sign_bundle (Apple Silicon) or target/release/sign_bundle after cargo build."
+  print -u2 "[build_bundle] no sign_bundle binary found."
+  print -u2 "  Expected host-tools/darwin-arm64/sign_bundle (Apple Silicon) or target/release/sign_bundle after cargo build."
   exit 127
 }
 
@@ -63,8 +64,8 @@ rm -rf "${OUT}"
   --pubkey-out "${PUB}"
 
 [[ -d "${OUT}" && -f "${PUB}" ]] || {
-  echo >&2 "[build_bundle] missing output dir or pubkey"
+  print -u2 "[build_bundle] missing output dir or pubkey"
   exit 8
 }
 
-echo "[build_bundle] ok bundle=${OUT} pubkey=${PUB}"
+print -r -- "[build_bundle] ok bundle=${OUT} pubkey=${PUB}"

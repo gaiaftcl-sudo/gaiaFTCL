@@ -250,8 +250,8 @@ heal_D() {
 
 try_E() {
   local attempt="$1"
-  [[ -f "${CLONE_AVATAR}/scripts/build_bundle.sh" ]] || return 126
-  ( cd "${CLONE_AVATAR}" && FRANKLIN_KEY="${FRANKLIN_KEY}" ./scripts/build_bundle.sh ) \
+  [[ -f "${CLONE_AVATAR}/scripts/build_bundle.zsh" ]] || return 126
+  ( cd "${CLONE_AVATAR}" && FRANKLIN_KEY="${FRANKLIN_KEY}" zsh scripts/build_bundle.zsh ) \
     2>&1 | tee "${LOG_DIR}/E_bundle.log" >&2
   (( pipestatus[1] != 0 )) && return "${pipestatus[1]}"
   [[ -d "${CLONE_AVATAR}/build/avatar_bundle" && -f "${CLONE_AVATAR}/build/bundle_pubkey.bin" ]] || return 8

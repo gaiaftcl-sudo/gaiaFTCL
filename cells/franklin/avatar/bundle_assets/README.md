@@ -5,7 +5,7 @@ Spec authority: `wiki/AVATAR_CELL_SPEC.md` §2 + §8.
 This directory is the *source* of the bundle that gets signed by
 `tools/sign_bundle/` and shipped to the app. The shipped bundle lives at
 `Contents/Resources/avatar_bundle/` inside the app and is constructed at
-build time by `scripts/build_bundle.sh`.
+build time by `scripts/build_bundle.zsh`.
 
 ```
 assets/
