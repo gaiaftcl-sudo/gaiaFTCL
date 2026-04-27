@@ -16,10 +16,11 @@
 #    cells/fusion/macos/GaiaFusion/evidence/iq/iq_receipt.json   (MacFusion)
 #    cells/fusion/macos/MacHealth/evidence/iq/iq_receipt.json    (MacHealth)
 #
-#  Non-brittle / automation:
+#  Non-brittle:
 #    FOT_IQ_SOFT=1              — prerequisite/structure failures warn, do not abort
-#    FOT_IQ_HEADLESS=1          — skip GUI dialogs & human bell (CI / ssh)
-#    FOT_IQ_LICENSE_ACCEPT=1    — accept license without dialog (use with HEADLESS)
+#
+#  Visibility: no headless IQ — operator witness uses the real console (/dev/tty).
+#  Run from Terminal.app or ssh -t; piped stdin is OK if /dev/tty exists.
 #
 #  Gold laptop only (your machine + write access to origin — not CI/read-only clones):
 #    FOT_IQ_GOLD_LAPTOP_SYNC=1  — after PASS, commit IQ receipts & push to origin
@@ -65,14 +66,13 @@ ask_yesno() {
 }
 
 human_bell() {
-    if [[ -n "${FOT_IQ_HEADLESS:-}" ]] || [[ ! -t 0 ]]; then
-        warn "Skipping human bell (FOT_IQ_HEADLESS or non-interactive)"
-        return 0
+    print -u 2 "\n${BOLD}${YLW}🔔 OPERATOR WITNESS (visible)${NC}"
+    print -u 2 "${YLW}Review the output above on this machine — nothing headless.${NC}"
+    if [[ ! -r /dev/tty ]]; then
+        die "No /dev/tty — IQ refuses to run without a visible console (use Terminal or ssh -t)."
     fi
-    print -u 2 "\n${BOLD}${YLW}🔔 HUMAN VERIFICATION REQUIRED${NC}"
-    print -u 2 "${YLW}Please review the real execution output above.${NC}"
-    print -u 2 -n "${YLW}Press [Enter] to confirm and proceed... ${NC}"
-    read -r || true
+    print -u 2 -n "${YLW}Press Enter on the console to proceed… ${NC}"
+    read -r </dev/tty || die "Witness not confirmed."
 }
 
 # ── Parse CLI args ────────────────────────────────────────────────────────────
@@ -412,14 +412,9 @@ LICENSE_CELLS=""
 [[ "${INSTALL_MACFUSION}" == "true" ]] && LICENSE_CELLS="${LICENSE_CELLS}MacFusion (GAIAFTCL Fusion Cell)\n"
 [[ "${INSTALL_MACHEALTH}" == "true" ]] && LICENSE_CELLS="${LICENSE_CELLS}MacHealth (GaiaHealth Biologit Cell)\n"
 
-if [[ "${FOT_IQ_LICENSE_ACCEPT:-}" == "1" ]]; then
-    ACCEPT="yes"
-    pass "License accepted (FOT_IQ_LICENSE_ACCEPT=1)"
-else
-    ACCEPT=$(ask_yesno "Sovereign Cell License Agreement\n\nInstalling: ${LICENSE_CELLS}\nBy accepting you confirm:\n1. The generated wallet is this cell's sovereign identity\n2. The wallet key is SECRET — never commit to git\n3. This Mac is a qualified sovereign cell under your control\n4. Zero PII is stored — wallet is purely mathematical\n5. Patents USPTO 19/460,960 | 19/096,071 apply\n\nAccept?")
-    [[ "${ACCEPT}" == "yes" ]] || die "License not accepted. IQ cancelled."
-    pass "License accepted"
-fi
+ACCEPT=$(ask_yesno "Sovereign Cell License Agreement\n\nInstalling: ${LICENSE_CELLS}\nBy accepting you confirm:\n1. The generated wallet is this cell's sovereign identity\n2. The wallet key is SECRET — never commit to git\n3. This Mac is a qualified sovereign cell under your control\n4. Zero PII is stored — wallet is purely mathematical\n5. Patents USPTO 19/460,960 | 19/096,071 apply\n\nAccept?")
+[[ "${ACCEPT}" == "yes" ]] || die "License not accepted. IQ cancelled."
+pass "License accepted"
 
 # ══════════════════════════════════════════════════════════════════════════════
 # IQ-6: WRITE IQ RECEIPTS

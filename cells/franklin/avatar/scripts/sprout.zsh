@@ -277,7 +277,7 @@ try_F() {
   (( pipestatus[1] != 0 )) && return "${pipestatus[1]}"
   local p rc
   for p in 0 1 2; do
-    ( cd "${CLONE_AVATAR}" && FOT_AVATAR_IQ_SKIP_VISIBLE=1 FOT_GENESIS_RECORD_PATH="${FOT_GENESIS_RECORD_PATH}" \
+    ( cd "${CLONE_AVATAR}" && FOT_GENESIS_RECORD_PATH="${FOT_GENESIS_RECORD_PATH}" \
       zsh scripts/run_franklin_avatar_oq_pq_plan_phases.zsh --phase "${p}" ) 2>&1 | tee "${LOG_DIR}/F_plan_${p}.log" >&2
     rc="${pipestatus[1]}"
     (( rc != 0 )) && return $(( 100 + p ))
