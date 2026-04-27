@@ -113,6 +113,26 @@ esac
 print "  Installing: MacFusion=${INSTALL_MACFUSION}  MacHealth=${INSTALL_MACHEALTH}"
 
 # ══════════════════════════════════════════════════════════════════════════════
+# IQ-0b: GENESIS RECORD — inception anchor (vQbit sprout seals this before IQ continues)
+# ══════════════════════════════════════════════════════════════════════════════
+section "IQ-0b: Genesis record (inception)"
+if [[ -n "${FOT_GENESIS_RECORD_PATH:-}" && -f "${FOT_GENESIS_RECORD_PATH}" ]]; then
+    pass "Genesis record bound for this IQ run"
+    print "  Path: ${FOT_GENESIS_RECORD_PATH}"
+    if command -v jq >/dev/null 2>&1; then
+        jq . "${FOT_GENESIS_RECORD_PATH}" 2>/dev/null | head -24
+    else
+        head -12 "${FOT_GENESIS_RECORD_PATH}"
+    fi
+elif [[ -f "${REPO_ROOT}/cells/franklin/avatar/evidence/iq/genesis_record.json" ]]; then
+    export FOT_GENESIS_RECORD_PATH="${REPO_ROOT}/cells/franklin/avatar/evidence/iq/genesis_record.json"
+    pass "Genesis record found under Franklin avatar evidence"
+    head -12 "${FOT_GENESIS_RECORD_PATH}"
+else
+    warn "No genesis_record.json — IQ continues (standalone run or pre-inception)"
+fi
+
+# ══════════════════════════════════════════════════════════════════════════════
 # IQ-1: OLD APP / DATA CHECK
 # ══════════════════════════════════════════════════════════════════════════════
 section "IQ-1: Old App / Data Check"

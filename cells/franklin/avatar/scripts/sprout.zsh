@@ -1,38 +1,22 @@
 #!/usr/bin/env zsh
 # ══════════════════════════════════════════════════════════════════════════════
-# sprout.zsh — vQbit sprout (entropy reduction under invariants). FIRE, not rumor.
+# sprout.zsh — vQbit sprout: one continuous regulation loop until receipts close.
 #
-# Same execution as the former “spine” runner: real git push, clone, sign_bundle,
-# gamp5 IQ/OQ/PQ receipts, FranklinApp, heal ledger JSONL.
+# Axis: FOT_VQBIT_SPROUT=1 from the first line of execution. Inception is Gate D:
+# seal genesis_record.json from substrate/HASH_LOCKS.yaml + clone HEAD — the IQ
+# axis opens there; bundle (E) and gamp5 IQ (F) follow without pretending the run
+# “started” at bundle time.
 #
-# Metaphor: a **sprout** — regulation loops, not a waterfall. vQbit names the
-# substrate witness/entropy contract the cell grows toward; gates **collapse**
-# uncertainty until receipts close.
+# Rings: outer convergence · tmp workspace recycle · gates A–J with heal backoff
+# (not brittle exit-on-whim — HALT file or exhaustion only stops).
 #
-# Model (rings, gates, loops — not a phase ladder):
-#   • Outer ring: convergence until PASS or budget exhausted; each iteration
-#     opens on a fresh **tmp install workspace** (deleted/recreated).
-#   • Gates A–D: remote + clone + bundle in tmp until substrate exists.
-#   • Inner ring (“breath”): IQ → living Franklin → OQ → PQ — gates E–H.
-#   • Gate I: klein-close aggregates receipts from the clone.
-#   • Gate J: honest ledger summary.
-#
-# Tmp policy (install tree only — logs/transcript stay under run/ for this τ):
-#   …/workspace → clone, build — **burned** at each outer iteration start and
-#   after full success through Gate I. Persistent: ${SPROUT_TMP}/run/…
-#
-# Required env:
-#   FRANKLIN_KEY  FRANKLIN_OPERATOR_KEY  FOT_AVATAR_PQ_VISIBLE_OPERATOR_PRESENT=1
-#
-# Optional:
-#   FRANKLIN_SPROUT_TMP   tmp root (default: ${TMPDIR:-/tmp}/gaiaftcl_vqbit_sprout_<TAU>)
-#   FRANKLIN_SPINE_TMP    legacy alias for FRANKLIN_SPROUT_TMP if unset
-#   FRANKLIN_GATE_MAX_ATTEMPTS  FRANKLIN_OUTER_MAX_ITERATIONS  FRANKLIN_HALT_FLAG
-#   FRANKLIN_SPROUT_STRICT_DIRTY=1  require zero untracked files (default: allow vendor/.worktrees noise)
-#
-# Exit: 0 converged · 2 HALT · 10–90 gate exhaustion (see tail).
+# Required: FRANKLIN_KEY FRANKLIN_OPERATOR_KEY FOT_AVATAR_PQ_VISIBLE_OPERATOR_PRESENT=1
+# Optional: FRANKLIN_SPROUT_TMP FRANKLIN_SPINE_TMP FRANKLIN_GATE_MAX_ATTEMPTS
+#           FRANKLIN_OUTER_MAX_ITERATIONS FRANKLIN_HALT_FLAG FRANKLIN_SPROUT_STRICT_DIRTY
+# Exit: 0 converged · 2 HALT · else gate exhaustion code.
 # ══════════════════════════════════════════════════════════════════════════════
 
+emulate -L zsh
 set -o pipefail
 
 SPROUT_SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -57,12 +41,15 @@ HALT_FLAG="${FRANKLIN_HALT_FLAG:-${RUN_ROOT}/HALT}"
 OQ_DEADLINE="${FRANKLIN_OQ_DEADLINE_SEC:-1200}"
 PQ_DEADLINE="${FRANKLIN_PQ_DEADLINE_SEC:-1800}"
 GATE_MAX_ATTEMPTS="${FRANKLIN_GATE_MAX_ATTEMPTS:-${FRANKLIN_PHASE_MAX_ATTEMPTS:-100}}"
-OUTER_MAX_ITER="${FRANKLIN_OUTER_MAX_ITERATIONS:-32}"
+OUTER_MAX_ITER="${FRANKLIN_OUTER_MAX_ITERATIONS:-128}"
 BACKOFF_BASE="${FRANKLIN_BACKOFF_BASE_SEC:-2}"
 BACKOFF_MAX="${FRANKLIN_BACKOFF_MAX_SEC:-60}"
 
 mkdir -p "${RUN_ROOT}" "${LOG_DIR}"
 : > "${HEAL_LEDGER}"
+
+export FOT_VQBIT_SPROUT=1
+export FOT_SPROUT_TAU="${TAU}"
 
 RED=$'\033[0;31m'; GRN=$'\033[0;32m'; YLW=$'\033[1;33m'; BLD=$'\033[1m'; CYN=$'\033[0;36m'; MAG=$'\033[0;35m'; NC=$'\033[0m'
 
@@ -145,7 +132,7 @@ pass_gate_with_heal() {
 }
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# Gates A–I  (implementations try_A / heal_A … keep stable hook names)
+# Gates A–J  (try_* / heal_* — D genesis → E bundle → F IQ … → J close)
 # ═══════════════════════════════════════════════════════════════════════════════
 
 try_A() {
@@ -233,49 +220,81 @@ heal_C() {
   [[ -n "${url}" ]] && git ls-remote "${url}" "${BRANCH}" 2>&1 | tee -a "${LOG_DIR}/C_heal.log" || true
 }
 
+# Gate D — genesis inception (IQ axis opens here; vQbit-marked record on disk).
 try_D() {
   local attempt="$1"
-  [[ -f "${CLONE_AVATAR}/scripts/build_bundle.sh" ]] || {
-    hot "missing ${CLONE_AVATAR}/scripts/build_bundle.sh — push the full avatar cell (Rust crate + bundle script), not sprout alone"
-    return 126
-  }
+  local locks="${CLONE_DIR}/substrate/HASH_LOCKS.yaml"
+  [[ -f "${locks}" ]] || { hot "substrate/HASH_LOCKS.yaml missing in clone"; return 31; }
+  mkdir -p "${CLONE_EVIDENCE}/iq"
+  local gr="${CLONE_EVIDENCE}/iq/genesis_record.json"
+  local hlocks sha_head
+  hlocks="$(shasum -a 256 "${locks}" | awk '{print $1}')"
+  sha_head="$(git -C "${CLONE_DIR}" rev-parse HEAD 2>/dev/null || print unknown)"
+  jq -n \
+    --arg tau "${TAU}" \
+    --arg git_head "${sha_head}" \
+    --arg hash_locks_sha256 "${hlocks}" \
+    '{axis:"vqbit",sprout_tau:$tau,clone_git_head:$git_head,hash_locks_sha256:$hash_locks_sha256,inception:"genesis_record",iq_first:true}' > "${gr}"
+  export FOT_GENESIS_RECORD_PATH="${gr}"
+  export FOT_VQBIT_INCEPTION=1
+  ok "genesis record sealed — inception"
+}
+
+heal_D() {
+  rm -f "${CLONE_EVIDENCE}/iq/genesis_record.json" 2>/dev/null || true
+  git -C "${CLONE_DIR}" fetch origin "${BRANCH}" 2>/dev/null || true
+  git -C "${CLONE_DIR}" reset --hard "origin/${BRANCH}" 2>/dev/null || true
+}
+
+try_E() {
+  local attempt="$1"
+  [[ -f "${CLONE_AVATAR}/scripts/build_bundle.sh" ]] || return 126
   ( cd "${CLONE_AVATAR}" && FRANKLIN_KEY="${FRANKLIN_KEY}" ./scripts/build_bundle.sh ) \
-    2>&1 | tee "${LOG_DIR}/D_bundle.log" >&2
+    2>&1 | tee "${LOG_DIR}/E_bundle.log" >&2
   (( pipestatus[1] != 0 )) && return "${pipestatus[1]}"
   [[ -d "${CLONE_AVATAR}/build/avatar_bundle" && -f "${CLONE_AVATAR}/build/bundle_pubkey.bin" ]] || return 8
   ok "bundle signed in tmp clone"
 }
 
-heal_D() {
+heal_E() {
+  case "$2" in
+    126)
+      git -C "${CLONE_DIR}" fetch origin "${BRANCH}" 2>&1 | tee -a "${LOG_DIR}/E_heal.log" || true
+      git -C "${CLONE_DIR}" merge --ff-only "origin/${BRANCH}" 2>&1 | tee -a "${LOG_DIR}/E_heal.log" || true
+      ;;
+  esac
   rm -rf "${CLONE_AVATAR}/build" 2>/dev/null || true
-  ( cd "${CLONE_AVATAR}" && cargo clean ) 2>&1 | tee -a "${LOG_DIR}/D_heal.log" || true
+  ( cd "${CLONE_AVATAR}" && cargo clean ) 2>&1 | tee -a "${LOG_DIR}/E_heal.log" || true
   (( $1 % 3 == 0 )) && rm -rf "${CLONE_DIR}/target" 2>/dev/null || true
 }
 
-try_E() {
+try_F() {
   local attempt="$1"
-  ( cd "${CLONE_DIR}" && zsh scripts/gamp5_iq.sh --cell both ) 2>&1 | tee "${LOG_DIR}/E_iq.log" >&2
+  [[ -n "${FOT_GENESIS_RECORD_PATH:-}" ]] || export FOT_GENESIS_RECORD_PATH="${CLONE_EVIDENCE}/iq/genesis_record.json"
+  ( cd "${CLONE_DIR}" && \
+    FOT_VQBIT_SPROUT=1 FOT_GENESIS_RECORD_PATH="${FOT_GENESIS_RECORD_PATH}" FOT_SPROUT_TAU="${TAU}" \
+    zsh scripts/gamp5_iq.sh --cell both ) 2>&1 | tee "${LOG_DIR}/F_iq.log" >&2
   (( pipestatus[1] != 0 )) && return "${pipestatus[1]}"
   local p rc
   for p in 0 1 2; do
-    ( cd "${CLONE_AVATAR}" && FOT_AVATAR_IQ_SKIP_VISIBLE=1 \
-      zsh scripts/run_franklin_avatar_oq_pq_plan_phases.zsh --phase "${p}" ) 2>&1 | tee "${LOG_DIR}/E_plan_${p}.log" >&2
+    ( cd "${CLONE_AVATAR}" && FOT_AVATAR_IQ_SKIP_VISIBLE=1 FOT_GENESIS_RECORD_PATH="${FOT_GENESIS_RECORD_PATH}" \
+      zsh scripts/run_franklin_avatar_oq_pq_plan_phases.zsh --phase "${p}" ) 2>&1 | tee "${LOG_DIR}/F_plan_${p}.log" >&2
     rc="${pipestatus[1]}"
     (( rc != 0 )) && return $(( 100 + p ))
   done
   ok "IQ + plan gates 0–2 PASS (fire)"
 }
 
-heal_E() {
+heal_F() {
   case "$2" in
     100|101|102) rm -rf "${CLONE_AVATAR}/build/iq_phase_$(( $2 - 100 ))" 2>/dev/null || true ;;
-    *) ( cd "${CLONE_DIR}" && cargo clean ) 2>&1 | tee -a "${LOG_DIR}/E_heal.log" || true ;;
+    *) ( cd "${CLONE_DIR}" && cargo clean ) 2>&1 | tee -a "${LOG_DIR}/F_heal.log" || true ;;
   esac
   mkdir -p "${CLONE_EVIDENCE}/iq"
 }
 
 APP_PID=""
-APP_LAUNCH_LOG="${LOG_DIR}/F_launch.log"
+APP_LAUNCH_LOG="${LOG_DIR}/G_launch.log"
 
 cleanup_app() {
   [[ -n "${APP_PID}" ]] && kill -0 "${APP_PID}" 2>/dev/null && kill "${APP_PID}" 2>/dev/null; sleep 1
@@ -283,7 +302,7 @@ cleanup_app() {
   APP_PID=""
 }
 
-try_F() {
+try_G() {
   local attempt="$1"
   rm -f "${CLONE_EVIDENCE}/iq/visible.json"
   ( cd "${CLONE_DIR}/GAIAOS/macos/Franklin" && swift build -c release ) 2>&1 | tee -a "${APP_LAUNCH_LOG}" >&2
@@ -305,9 +324,9 @@ try_F() {
   ok "Franklin visible — living surface (visible.json)"
 }
 
-heal_F() {
+heal_G() {
   cleanup_app
-  case "$2" in 11|12) tail -80 "${APP_LAUNCH_LOG}" >> "${LOG_DIR}/F_heal.log" 2>/dev/null || true ;; esac
+  case "$2" in 11|12) tail -80 "${APP_LAUNCH_LOG}" >> "${LOG_DIR}/G_heal.log" 2>/dev/null || true ;; esac
   rm -rf "${CLONE_DIR}/GAIAOS/macos/Franklin/.build" 2>/dev/null || true
 }
 
@@ -317,7 +336,7 @@ write_oq_env() {
 EOF
 }
 
-try_G() {
+try_H() {
   local attempt="$1"
   local done="${CLONE_EVIDENCE}/oq/oq_complete.json"
   rm -f "${done}"
@@ -332,7 +351,7 @@ try_G() {
   ok "OQ envelope consumed — oq_complete.json present"
 }
 
-heal_G() {
+heal_H() {
   case "$2" in
     13|14|15|16) mkdir -p "${CLONE_EVIDENCE}/oq/.heal/$1"; mv "${CLONE_EVIDENCE}/oq/"*.receipt.json "${CLONE_EVIDENCE}/oq/.heal/$1/" 2>/dev/null || true ;;
   esac
@@ -345,7 +364,7 @@ write_pq_env() {
 EOF
 }
 
-try_H() {
+try_I() {
   local attempt="$1"
   local pq="${CLONE_EVIDENCE}/pq/pq_receipt.json"
   rm -f "${pq}"
@@ -361,16 +380,16 @@ try_H() {
   ok "PQ receipt PASS — breath complete (IQ→OQ→PQ felt)"
 }
 
-heal_H() {
+heal_I() {
   mkdir -p "${CLONE_EVIDENCE}/pq/.heal/$1"
   mv "${CLONE_EVIDENCE}/pq/pq_receipt.json" "${CLONE_EVIDENCE}/pq/.heal/$1/" 2>/dev/null || true
   cleanup_app
 }
 
 EVIDENCE_RUN=""
-try_I() {
+try_J() {
   local attempt="$1"
-  ( cd "${CLONE_DIR}" && zsh scripts/gamp5_full.zsh --tau "${TAU}" --close-only ) 2>&1 | tee "${LOG_DIR}/I_close.log" >&2
+  ( cd "${CLONE_DIR}" && zsh scripts/gamp5_full.zsh --tau "${TAU}" --close-only ) 2>&1 | tee "${LOG_DIR}/J_close.log" >&2
   (( pipestatus[1] != 0 )) && return "${pipestatus[1]}"
   EVIDENCE_RUN="${CLONE_DIR}/evidence/runs/${TAU}"
   [[ -f "${EVIDENCE_RUN}/epilogue.json" ]] || return 23
@@ -380,11 +399,11 @@ try_I() {
   ok "CLOSE — epilogue sealed"
 }
 
-heal_I() {
+heal_J() {
   local attempt="$1" _rc="$2"
   local inv
   inv="$( ( cd "${CLONE_DIR}" 2>/dev/null && find evidence -maxdepth 8 \( -name '*.receipt.json' -o -name 'epilogue.json' \) ) 2>/dev/null | sort | head -400 )"
-  ledger "I" "${attempt}" "receipt_inventory" "${inv:-empty}"
+  ledger "J" "${attempt}" "receipt_inventory" "${inv:-empty}"
 }
 
 sprout_snapshot_evidence() {
@@ -398,11 +417,11 @@ sprout_snapshot_evidence() {
 trap 'cleanup_app; sprout_snapshot_evidence' EXIT
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# Outer ring — convergence. Inner breath — gates E–H (IQ→living→OQ→PQ).
+# Outer ring · inner breath — genesis (D) then bundle · IQ · surface · OQ · PQ · close
 # ═══════════════════════════════════════════════════════════════════════════════
 
-print "${BLD}vQbit sprout — FIRE run (Franklin avatar cell)${NC}" | tee -a "${TRANSCRIPT}"
-print "  tau=${TAU}  tmp=${SPROUT_TMP}  install_workspace=${INSTALL_ROOT}" | tee -a "${TRANSCRIPT}"
+print "${BLD}vQbit sprout — axis live${NC}" | tee -a "${TRANSCRIPT}"
+print "  tau=${TAU}  tmp=${SPROUT_TMP}  workspace=${INSTALL_ROOT}  FOT_VQBIT_SPROUT=1" | tee -a "${TRANSCRIPT}"
 
 OUTER_ITER=0
 SPROUT_RC=0
@@ -420,15 +439,16 @@ while (( OUTER_ITER < OUTER_MAX_ITER )); do
   pass_gate_with_heal A 10 "preflight · tools · keys · operator witness" || { SPROUT_RC=$?; continue; }
   pass_gate_with_heal B 20 "remote · push branch" || { SPROUT_RC=$?; continue; }
   pass_gate_with_heal C 30 "clone into tmp workspace" || { SPROUT_RC=$?; continue; }
-  pass_gate_with_heal D 40 "sign_bundle · avatar substrate in tmp" || { SPROUT_RC=$?; continue; }
+  pass_gate_with_heal D 40 "genesis · HASH_LOCKS inception (IQ axis)" || { SPROUT_RC=$?; continue; }
+  pass_gate_with_heal E 45 "sign_bundle · avatar substrate in tmp" || { SPROUT_RC=$?; continue; }
 
-  say "${BLD}Inner ring · breath — sprout toward living Franklin (IQ→launch→OQ→PQ)${NC}"
-  pass_gate_with_heal E 50 "IQ (gamp5_iq both + plan 0–2)" || { SPROUT_RC=$?; continue; }
-  pass_gate_with_heal F 60 "FranklinApp · visible.json" || { SPROUT_RC=$?; continue; }
-  pass_gate_with_heal G 70 "OQ · Franklin-driven catalog" || { SPROUT_RC=$?; continue; }
-  pass_gate_with_heal H 80 "PQ · lifelike co-sign" || { SPROUT_RC=$?; continue; }
+  say "${BLD}Inner breath · IQ after genesis — living Franklin → OQ → PQ → close${NC}"
+  pass_gate_with_heal F 50 "IQ · gamp5_iq + plan 0–2" || { SPROUT_RC=$?; continue; }
+  pass_gate_with_heal G 60 "FranklinApp · visible.json" || { SPROUT_RC=$?; continue; }
+  pass_gate_with_heal H 70 "OQ · Franklin-driven catalog" || { SPROUT_RC=$?; continue; }
+  pass_gate_with_heal I 80 "PQ · lifelike co-sign" || { SPROUT_RC=$?; continue; }
 
-  pass_gate_with_heal I 90 "CLOSE · klein aggregate" || { SPROUT_RC=$?; continue; }
+  pass_gate_with_heal J 90 "CLOSE · klein aggregate" || { SPROUT_RC=$?; continue; }
 
   SPROUT_RC=0
   ledger "OUTER" "${OUTER_ITER}" "converged" "PASS"
@@ -437,7 +457,7 @@ while (( OUTER_ITER < OUTER_MAX_ITER )); do
   break
 done
 
-gate_banner "J · ledger (honest)"
+gate_banner "K · ledger"
 {
   print "tau=${TAU} sprout_rc=${SPROUT_RC} clone=${CLONE_DIR}"
   print "heal ledger: ${HEAL_LEDGER}"
