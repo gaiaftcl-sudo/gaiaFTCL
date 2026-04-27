@@ -3,16 +3,12 @@
 # gamp5_full.zsh — Franklin Mac Stack — self-healing IQ/OQ/PQ organism.
 # ----------------------------------------------------------------------------
 # THESIS
-#   GAMP 5 means not settling — regulation until receipts close; “good enough” is refusal.
-#   Smoke tests and headless shortcuts are settling — excluded; they are not GAMP 5.
-#
 #   Franklin is a sprout of the mesh. All cells are sprouts of both the mesh
 #   and Franklin. They communicate. They heal each other through games.
 #   A wound triggers a healer verb chain — never a silent exit.
 #
 # CONTRACT
-#   Smoke tests and headless shortcuts are settling — therefore not GAMP 5.
-#   No FRANKLIN_HEADLESS waivers; window and operator-visible proof apply everywhere.
+#   FranklinApp window proof is mandatory — no env shortcut.
 #
 #   Every step is a witnessable verb in the Franklin Cell catalog (LG-*).
 #   Every step narrates in plain English to summary.md.
@@ -3248,9 +3244,8 @@ NARRATE LG-FRANKLIN-IQ-LAUNCH-FRANKLIN-001 B \
 "Building and launching the visible Franklin orb (GAIAOS/macos/Franklin) \
 plus the menu-bar bridge (cells/franklin/xcode/MacFranklinAssistant). \
 The orb is the user-facing deliverable — a SwiftUI WindowGroup with a \
-visible orb the operator can see and tap. The bridge is the local HTTP \
-listener on 127.0.0.1:8830 (health is witnessed; not a smoke substitute). \
-Both must be alive. The orb reads the \
+visible orb the operator can see and tap. The bridge serves local HTTP \
+on 127.0.0.1:8830 with a /health endpoint. Both must be alive. The orb reads the \
 handoff envelope and runs the OQ catalog inside its own process; the \
 runner zsh waits for evidence/runs/<tau>/handoff_complete.json before \
 closing Reconcile + Epilogue. Topology proof: pid(orb)+window(orb)+\
@@ -3471,7 +3466,7 @@ if [[ -z "${FRANKLIN_ORB_PID}" ]]; then
 fi
 
 # Window-existence proof. The orb is a SwiftUI WindowGroup; AppleScript
-# must enumerate its windows — no CI/headless waiver (GAMP 5 means not settling).
+# must enumerate its windows — no waiver.
 FRANKLIN_ORB_WINDOW_VERIFIED=false
 FRANKLIN_ORB_WINDOWS="$(osascript -e 'tell application "System Events" to get name of every window of (first process whose name is "FranklinApp")' 2>/dev/null || echo "")"
 if [[ -z "${FRANKLIN_ORB_WINDOWS}" || "${FRANKLIN_ORB_WINDOWS}" == "missing value" ]]; then
