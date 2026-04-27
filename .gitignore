@@ -94,8 +94,10 @@ evidence/iq_receipt.json
 evidence/testrobit_receipt.json
 evidence/vqbit_test_receipt.json
 
-# Finder duplicates (already deleted, ensure they stay gone)
+# macOS Finder duplicate filenames ("copy 2", etc.) — never track
 *\ 2.*
+*\ 3.*
+*\ 4.*
 
 # Local-only trees / side clones — do not commit (GAMP hygiene)
 .claude/

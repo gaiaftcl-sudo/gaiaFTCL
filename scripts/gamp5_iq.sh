@@ -16,6 +16,15 @@
 #    cells/fusion/macos/GaiaFusion/evidence/iq/iq_receipt.json   (MacFusion)
 #    cells/fusion/macos/MacHealth/evidence/iq/iq_receipt.json    (MacHealth)
 #
+#  Non-brittle / automation:
+#    FOT_IQ_SOFT=1              — prerequisite/structure failures warn, do not abort
+#    FOT_IQ_HEADLESS=1          — skip GUI dialogs & human bell (CI / ssh)
+#    FOT_IQ_LICENSE_ACCEPT=1    — accept license without dialog (use with HEADLESS)
+#
+#  Gold laptop only (your machine + write access to origin — not CI/read-only clones):
+#    FOT_IQ_GOLD_LAPTOP_SYNC=1  — after PASS, commit IQ receipts & push to origin
+#    FOT_IQ_GOLD_COMMIT_RECEIPTS=0 — skip auto-commit; push only if you committed already
+#
 #  Patents: USPTO 19/460,960 | USPTO 19/096,071 — © 2026 Richard Gillespie
 # ══════════════════════════════════════════════════════════════════════════════
 set -euo pipefail
@@ -56,10 +65,14 @@ ask_yesno() {
 }
 
 human_bell() {
+    if [[ -n "${FOT_IQ_HEADLESS:-}" ]] || [[ ! -t 0 ]]; then
+        warn "Skipping human bell (FOT_IQ_HEADLESS or non-interactive)"
+        return 0
+    fi
     print -u 2 "\n${BOLD}${YLW}🔔 HUMAN VERIFICATION REQUIRED${NC}"
     print -u 2 "${YLW}Please review the real execution output above.${NC}"
     print -u 2 -n "${YLW}Press [Enter] to confirm and proceed... ${NC}"
-    read
+    read -r || true
 }
 
 # ── Parse CLI args ────────────────────────────────────────────────────────────
@@ -252,7 +265,11 @@ check_prereq "Rust toolchain"       "rustc --version"
 check_prereq "Cargo"                "cargo --version"
 check_prereq "OpenSSL (wallet gen)" "openssl version"
 check_prereq "Python 3 (receipts)"  "python3 --version"
-check_prereq "Metal GPU"            "system_profiler SPDisplaysDataType | grep -i metal"
+if system_profiler SPDisplaysDataType 2>/dev/null | grep -qi metal; then
+    pass "Metal-capable GPU path visible"; (( PREREQ_PASS++ )) || true
+else
+    warn "Metal GPU probe inconclusive (VM / remote session / profile) — not blocking IQ"
+fi
 
 # Swift version check
 SWIFT_MINOR="$(swift --version 2>&1 | grep -oE '[0-9]+\.[0-9]+' | head -1)"
@@ -266,7 +283,13 @@ RUST_VER="$(rustc --version 2>/dev/null | awk '{print $2}')"
 pass "Rust ${RUST_VER}"; (( PREREQ_PASS++ )) || true
 
 print "\n  Prerequisites: ${PREREQ_PASS} passed, ${PREREQ_FAIL} failed"
-(( PREREQ_FAIL == 0 )) || die "Prerequisites failed. Resolve above before re-running IQ."
+if (( PREREQ_FAIL > 0 )); then
+    if [[ "${FOT_IQ_SOFT:-0}" == "1" ]]; then
+        warn "Prerequisites reported ${PREREQ_FAIL} failure(s) — continuing (FOT_IQ_SOFT=1)"
+    else
+        die "Prerequisites failed. Resolve above before re-running IQ or set FOT_IQ_SOFT=1 for non-blocking dev."
+    fi
+fi
 
 # ══════════════════════════════════════════════════════════════════════════════
 # IQ-3: PROJECT STRUCTURE
@@ -309,7 +332,11 @@ fi
 
 print "\n  Structure: ${STRUCT_PASS} passed, ${STRUCT_FAIL} failed"
 if (( STRUCT_FAIL > 0 )); then
-    die "Project structure incomplete. See MAC_APPS_BUILD_PLAN.md for setup steps."
+    if [[ "${FOT_IQ_SOFT:-0}" == "1" ]]; then
+        warn "Structure checks: ${STRUCT_FAIL} missing path(s) — continuing (FOT_IQ_SOFT=1)"
+    else
+        die "Project structure incomplete. See MAC_APPS_BUILD_PLAN.md or set FOT_IQ_SOFT=1 for partial trees."
+    fi
 fi
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -385,10 +412,14 @@ LICENSE_CELLS=""
 [[ "${INSTALL_MACFUSION}" == "true" ]] && LICENSE_CELLS="${LICENSE_CELLS}MacFusion (GAIAFTCL Fusion Cell)\n"
 [[ "${INSTALL_MACHEALTH}" == "true" ]] && LICENSE_CELLS="${LICENSE_CELLS}MacHealth (GaiaHealth Biologit Cell)\n"
 
-ACCEPT=$(ask_yesno "Sovereign Cell License Agreement\n\nInstalling: ${LICENSE_CELLS}\nBy accepting you confirm:\n1. The generated wallet is this cell's sovereign identity\n2. The wallet key is SECRET — never commit to git\n3. This Mac is a qualified sovereign cell under your control\n4. Zero PII is stored — wallet is purely mathematical\n5. Patents USPTO 19/460,960 | 19/096,071 apply\n\nAccept?")
-
-[[ "${ACCEPT}" == "yes" ]] || die "License not accepted. IQ cancelled."
-pass "License accepted"
+if [[ "${FOT_IQ_LICENSE_ACCEPT:-}" == "1" ]]; then
+    ACCEPT="yes"
+    pass "License accepted (FOT_IQ_LICENSE_ACCEPT=1)"
+else
+    ACCEPT=$(ask_yesno "Sovereign Cell License Agreement\n\nInstalling: ${LICENSE_CELLS}\nBy accepting you confirm:\n1. The generated wallet is this cell's sovereign identity\n2. The wallet key is SECRET — never commit to git\n3. This Mac is a qualified sovereign cell under your control\n4. Zero PII is stored — wallet is purely mathematical\n5. Patents USPTO 19/460,960 | 19/096,071 apply\n\nAccept?")
+    [[ "${ACCEPT}" == "yes" ]] || die "License not accepted. IQ cancelled."
+    pass "License accepted"
+fi
 
 # ══════════════════════════════════════════════════════════════════════════════
 # IQ-6: WRITE IQ RECEIPTS
@@ -452,6 +483,38 @@ PYEOF
     write_iq_receipt "MacHealth" \
         "${REPO_ROOT}/cells/fusion/macos/MacHealth/evidence/iq" \
         "GH-IQ-001"
+
+# ══════════════════════════════════════════════════════════════════════════════
+# IQ-7: Gold laptop → GitHub (write path — explicit opt-in only)
+# ══════════════════════════════════════════════════════════════════════════════
+section "IQ-7: GitHub (gold laptop sync)"
+
+if [[ "${FOT_IQ_GOLD_LAPTOP_SYNC:-0}" == "1" ]]; then
+    _origin="$(git -C "${REPO_ROOT}" remote get-url origin 2>/dev/null || true)"
+    if [[ -z "${_origin}" ]]; then
+        warn "No origin remote — cannot push"
+    else
+        _branch="$(git -C "${REPO_ROOT}" rev-parse --abbrev-ref HEAD 2>/dev/null || print main)"
+        if [[ "${FOT_IQ_GOLD_COMMIT_RECEIPTS:-1}" != "0" ]]; then
+            [[ "${INSTALL_MACFUSION}" == "true" ]] && [[ -f "${REPO_ROOT}/cells/fusion/macos/GaiaFusion/evidence/iq/iq_receipt.json" ]] && \
+                git -C "${REPO_ROOT}" add -- cells/fusion/macos/GaiaFusion/evidence/iq/iq_receipt.json 2>/dev/null || true
+            [[ "${INSTALL_MACHEALTH}" == "true" ]] && [[ -f "${REPO_ROOT}/cells/fusion/macos/MacHealth/evidence/iq/iq_receipt.json" ]] && \
+                git -C "${REPO_ROOT}" add -- cells/fusion/macos/MacHealth/evidence/iq/iq_receipt.json 2>/dev/null || true
+            [[ -f "${REPO_ROOT}/cells/franklin/avatar/evidence/iq/genesis_record.json" ]] && \
+                git -C "${REPO_ROOT}" add -f -- cells/franklin/avatar/evidence/iq/genesis_record.json 2>/dev/null || true
+            if ! git -C "${REPO_ROOT}" diff --cached --quiet 2>/dev/null; then
+                git -C "${REPO_ROOT}" commit -m "evidence(iq): IQ receipts ${TIMESTAMP}" 2>&1 && pass "Committed IQ evidence for push" || warn "git commit failed — push may have nothing new"
+            fi
+        fi
+        if git -C "${REPO_ROOT}" push origin "${_branch}" 2>&1; then
+            pass "origin/${_branch} updated — gold laptop sync"
+        else
+            warn "git push failed — check credentials/network; local receipts remain valid"
+        fi
+    fi
+else
+    pass "GitHub write skipped (read-only / non-gold host). Set FOT_IQ_GOLD_LAPTOP_SYNC=1 only on your laptop to publish."
+fi
 
 # ══════════════════════════════════════════════════════════════════════════════
 banner "IQ COMPLETE"
