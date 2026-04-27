@@ -7,6 +7,8 @@
 #         2. Whether to clean up any old app data / wallets
 #  Then:  Verifies toolchain, generates sovereign wallet, writes IQ receipt.
 #
+#  Cell / vQbit substrate meaning: substrate/CELL_VQBIT_PARADIGM.yaml
+#
 #  Run:  zsh scripts/gamp5_iq.sh
 #  Or:   zsh scripts/gamp5_iq.sh --cell macfusion   (skip dialog)
 #  Or:   zsh scripts/gamp5_iq.sh --cell machealth
@@ -19,7 +21,7 @@
 #  Non-brittle:
 #    FOT_IQ_SOFT=1              — prerequisite/structure failures warn, do not abort
 #
-#  Visibility: operator witness on /dev/tty (required).
+#  Visibility: operator witness on /dev/tty. Sprout sets FOT_QUAL_VISIBLE_TESTS_ONLY=1 for the stack.
 #  Run from Terminal.app or ssh -t; piped stdin is OK if /dev/tty exists.
 #
 #  Gold laptop only (your machine + write access to origin — not CI/read-only clones):

@@ -19,6 +19,9 @@ swift_testrobit/libgaia_metal_renderer.a
 swift_testrobit/.build/
 .build/
 
+# Franklin local .app drop (rebuild; do not track the built binary)
+GAIAOS/macos/Franklin/dist/
+
 # Dependencies
 node_modules/
 

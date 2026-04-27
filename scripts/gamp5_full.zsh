@@ -10,6 +10,9 @@
 # CONTRACT
 #   FranklinApp window proof is mandatory — no env shortcut.
 #
+#   Cell ontology + vQbit paradigm (invariants, proof across contexts): substrate/CELL_VQBIT_PARADIGM.yaml
+#   Sprout gate chain (Franklin avatar): cells/franklin/avatar/scripts/sprout.zsh
+#
 #   Every step is a witnessable verb in the Franklin Cell catalog (LG-*).
 #   Every step narrates in plain English to summary.md.
 #   Every step emits a witness OR a refusal receipt — never silent.

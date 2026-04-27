@@ -1,0 +1,41 @@
+# Canonical meaning: what a GaiaFTCL cell is and becomes — not narrative in shell headers.
+# vQbit is the substrate abstraction this stack proves in use (replacement-class layer).
+schema_version: 1
+kind: gaiaftcl.substrate.cell_vqbit_paradigm
+
+cell:
+  is: >-
+    A cell is an invariant-bearing organism on the vQbit substrate: persistent identity
+    plus obligations that may change only through witnessed state transitions (receipts,
+    refusals, heals). It is defined by what must remain true, not by a name alone.
+  becomes: >-
+    A cell becomes what its receipts prove over time. There is no fixed endpoint — only
+    successive closures. Operational runners (GAMP 5, sprout gates A–J) exist to
+    materialize that becoming as auditable evidence.
+
+vqbit_substrate:
+  role: foundational_abstraction
+  analogy: >-
+    vQbit is the intended replacement-class substrate for this architecture — analogous to
+    the transistor displacing the vacuum tube: the surrounding problems persist; the basis
+    for reliable switching and composition changes. Claims without substrate proof are
+    outside the paradigm.
+  proof_obligation: >-
+    Demonstrate vQbit use across abstractions and contexts the stack touches (IQ/OQ/PQ,
+    cells, tooling, observable surfaces). Each context is a distinct proof burden; skipping
+    one leaves the paradigm unproved.
+
+operational_witness:
+  description: >-
+    Scripts do not define the cell; they witness invariants against the substrate. Bind
+    operational paths here for navigation and tooling only.
+  sprout:
+    path: cells/franklin/avatar/scripts/sprout.zsh
+    gates: A-J
+  gamp5_full:
+    path: scripts/gamp5_full.zsh
+  gamp5_iq:
+    path: scripts/gamp5_iq.sh
+
+references:
+  hash_locks: substrate/HASH_LOCKS.yaml

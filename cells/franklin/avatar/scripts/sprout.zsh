@@ -1,14 +1,15 @@
 #!/usr/bin/env zsh
 # ══════════════════════════════════════════════════════════════════════════════
-# sprout.zsh — vQbit sprout: one continuous regulation loop until receipts close.
+# sprout.zsh — Franklin avatar cell: tmp workspace + gates A→J (IQ → surface → OQ/PQ → close).
+# Meaning (what a cell is, vQbit substrate, proof obligation): substrate/CELL_VQBIT_PARADIGM.yaml
 #
-# Axis: FOT_VQBIT_SPROUT=1 from the first line of execution. Inception is Gate D:
-# seal genesis_record.json from substrate/HASH_LOCKS.yaml + clone HEAD — the IQ
-# axis opens there; bundle (E) and gamp5 IQ (F) follow without pretending the run
-# “started” at bundle time.
+# Gates A→J: push · clone · genesis · bundle · MacFusion+MacHealth IQ (gamp5_iq) ·
+# avatar plan 0–2 · FranklinApp + visible.json · OQ/PQ envelopes · gamp5_full --close-only.
+# Gate J is the klein close leg of that same envelope after the breath above.
 #
-# Rings: outer convergence · tmp workspace recycle · gates A–J with heal backoff
-# (not brittle exit-on-whim — HALT file or exhaustion only stops).
+# Visibility: FOT_QUAL_VISIBLE_TESTS_ONLY=1 (default) — Gate F refuses if /dev/tty is
+# missing; gamp5_iq is fed from /dev/tty when present. Set FOT_QUAL_VISIBLE_TESTS_ONLY=0
+# only if you accept non-interactive failure modes yourself.
 #
 # Required: FRANKLIN_KEY FRANKLIN_OPERATOR_KEY FOT_AVATAR_PQ_VISIBLE_OPERATOR_PRESENT=1
 # Optional: FRANKLIN_SPROUT_TMP FRANKLIN_SPINE_TMP FRANKLIN_GATE_MAX_ATTEMPTS
@@ -50,12 +51,13 @@ mkdir -p "${RUN_ROOT}" "${LOG_DIR}"
 
 export FOT_VQBIT_SPROUT=1
 export FOT_SPROUT_TAU="${TAU}"
+export FOT_QUAL_VISIBLE_TESTS_ONLY="${FOT_QUAL_VISIBLE_TESTS_ONLY:-1}"
 
 RED=$'\033[0;31m'; GRN=$'\033[0;32m'; YLW=$'\033[1;33m'; BLD=$'\033[1m'; CYN=$'\033[0;36m'; MAG=$'\033[0;35m'; NC=$'\033[0m'
 
 now() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 say() { print "${CYN}[$(now)]${NC} $*" | tee -a "${TRANSCRIPT}"; }
-ok()  { print "${GRN}[$(now)] 🔥 PASS${NC} $*" | tee -a "${TRANSCRIPT}"; }
+ok()  { print "${GRN}[$(now)] PASS${NC} $*" | tee -a "${TRANSCRIPT}"; }
 warn(){ print "${YLW}[$(now)] WARN${NC} $*" | tee -a "${TRANSCRIPT}"; }
 hot() { print -u2 "${RED}[$(now)] FAIL${NC} $*"; print "[FAIL] $*" >> "${TRANSCRIPT}"; }
 heal_say() { print "${MAG}[$(now)] HEAL${NC} $*" | tee -a "${TRANSCRIPT}"; }
@@ -86,7 +88,7 @@ halt_requested() { [[ -f "${HALT_FLAG}" ]] }
 
 # Burn tmp install workspace (clone/build). Logs/transcript path unchanged for this tau.
 recycle_install_workspace() {
-  say "🔥 FIRE: recycle install workspace → rm -rf ${INSTALL_ROOT}"
+  say "Recycle tmp install workspace (temporal reset) → rm -rf ${INSTALL_ROOT}"
   rm -rf "${INSTALL_ROOT}"
   mkdir -p "${INSTALL_ROOT}"
 }
@@ -211,7 +213,7 @@ try_C() {
     for f in "${CLONE_AVATAR}/scripts/"*.sh "${CLONE_AVATAR}/scripts/"*.zsh; do [[ -f "$f" ]] && chmod +x "$f"; done
     for f in "${CLONE_DIR}/scripts/"gamp5_*.sh "${CLONE_DIR}/scripts/"*.zsh; do [[ -f "$f" ]] && chmod +x "$f"; done
   }
-  ok "clone lives under tmp workspace: ${CLONE_DIR}"
+  ok "clone workspace for this run: ${CLONE_DIR}"
 }
 
 heal_C() {
@@ -271,9 +273,21 @@ heal_E() {
 try_F() {
   local attempt="$1"
   [[ -n "${FOT_GENESIS_RECORD_PATH:-}" ]] || export FOT_GENESIS_RECORD_PATH="${CLONE_EVIDENCE}/iq/genesis_record.json"
-  ( cd "${CLONE_DIR}" && \
-    FOT_VQBIT_SPROUT=1 FOT_GENESIS_RECORD_PATH="${FOT_GENESIS_RECORD_PATH}" FOT_SPROUT_TAU="${TAU}" \
-    zsh scripts/gamp5_iq.sh --cell both ) 2>&1 | tee "${LOG_DIR}/F_iq.log" >&2
+  if [[ "${FOT_QUAL_VISIBLE_TESTS_ONLY:-1}" == "1" ]] && [[ ! -r /dev/tty ]]; then
+    hot "Gate F: no /dev/tty — IQ must be operator-visible (Terminal or ssh -t)"
+    return 41
+  fi
+  if [[ -r /dev/tty ]]; then
+    ( cd "${CLONE_DIR}" && \
+      FOT_VQBIT_SPROUT=1 FOT_QUAL_VISIBLE_TESTS_ONLY="${FOT_QUAL_VISIBLE_TESTS_ONLY:-1}" \
+      FOT_GENESIS_RECORD_PATH="${FOT_GENESIS_RECORD_PATH}" FOT_SPROUT_TAU="${TAU}" \
+      zsh scripts/gamp5_iq.sh --cell both ) </dev/tty 2>&1 | tee "${LOG_DIR}/F_iq.log" >&2
+  else
+    ( cd "${CLONE_DIR}" && \
+      FOT_VQBIT_SPROUT=1 FOT_QUAL_VISIBLE_TESTS_ONLY="${FOT_QUAL_VISIBLE_TESTS_ONLY:-1}" \
+      FOT_GENESIS_RECORD_PATH="${FOT_GENESIS_RECORD_PATH}" FOT_SPROUT_TAU="${TAU}" \
+      zsh scripts/gamp5_iq.sh --cell both ) 2>&1 | tee "${LOG_DIR}/F_iq.log" >&2
+  fi
   (( pipestatus[1] != 0 )) && return "${pipestatus[1]}"
   local p rc
   for p in 0 1 2; do
@@ -282,7 +296,7 @@ try_F() {
     rc="${pipestatus[1]}"
     (( rc != 0 )) && return $(( 100 + p ))
   done
-  ok "IQ + plan gates 0–2 PASS (fire)"
+  ok "IQ + plan phases 0–2 completed in order"
 }
 
 heal_F() {
@@ -377,7 +391,7 @@ try_I() {
     sleep 5
   done
   [[ "$(jq -r '.result // empty' "${pq}" 2>/dev/null)" == "PASS" ]] || return 19
-  ok "PQ receipt PASS — breath complete (IQ→OQ→PQ felt)"
+  ok "PQ receipt PASS — IQ→OQ→PQ sequence closed for this wait"
 }
 
 heal_I() {
@@ -389,7 +403,9 @@ heal_I() {
 EVIDENCE_RUN=""
 try_J() {
   local attempt="$1"
-  ( cd "${CLONE_DIR}" && zsh scripts/gamp5_full.zsh --tau "${TAU}" --close-only ) 2>&1 | tee "${LOG_DIR}/J_close.log" >&2
+  ( cd "${CLONE_DIR}" && \
+    FOT_QUAL_VISIBLE_TESTS_ONLY="${FOT_QUAL_VISIBLE_TESTS_ONLY:-1}" \
+    zsh scripts/gamp5_full.zsh --tau "${TAU}" --close-only ) 2>&1 | tee "${LOG_DIR}/J_close.log" >&2
   (( pipestatus[1] != 0 )) && return "${pipestatus[1]}"
   EVIDENCE_RUN="${CLONE_DIR}/evidence/runs/${TAU}"
   [[ -f "${EVIDENCE_RUN}/epilogue.json" ]] || return 23
@@ -420,7 +436,7 @@ trap 'cleanup_app; sprout_snapshot_evidence' EXIT
 # Outer ring · inner breath — genesis (D) then bundle · IQ · surface · OQ · PQ · close
 # ═══════════════════════════════════════════════════════════════════════════════
 
-print "${BLD}vQbit sprout — axis live${NC}" | tee -a "${TRANSCRIPT}"
+print "${BLD}Baby cell (sprout) — temporal run · gates A→J${NC}" | tee -a "${TRANSCRIPT}"
 print "  tau=${TAU}  tmp=${SPROUT_TMP}  workspace=${INSTALL_ROOT}  FOT_VQBIT_SPROUT=1" | tee -a "${TRANSCRIPT}"
 
 OUTER_ITER=0
@@ -442,7 +458,7 @@ while (( OUTER_ITER < OUTER_MAX_ITER )); do
   pass_gate_with_heal D 40 "genesis · HASH_LOCKS inception (IQ axis)" || { SPROUT_RC=$?; continue; }
   pass_gate_with_heal E 45 "sign_bundle · avatar substrate in tmp" || { SPROUT_RC=$?; continue; }
 
-  say "${BLD}Inner breath · IQ after genesis — living Franklin → OQ → PQ → close${NC}"
+  say "${BLD}Inner breath · IQ after genesis — Franklin surface → OQ → PQ → close (ordered in time)${NC}"
   pass_gate_with_heal F 50 "IQ · gamp5_iq + plan 0–2" || { SPROUT_RC=$?; continue; }
   pass_gate_with_heal G 60 "FranklinApp · visible.json" || { SPROUT_RC=$?; continue; }
   pass_gate_with_heal H 70 "OQ · Franklin-driven catalog" || { SPROUT_RC=$?; continue; }
@@ -452,7 +468,7 @@ while (( OUTER_ITER < OUTER_MAX_ITER )); do
 
   SPROUT_RC=0
   ledger "OUTER" "${OUTER_ITER}" "converged" "PASS"
-  say "🔥 Full IQ→OQ→PQ breath + close PASS — shedding tmp install workspace"
+  say "This outer ring finished in order (IQ→OQ→PQ + close) — shedding tmp install workspace"
   recycle_install_workspace
   break
 done
@@ -461,7 +477,7 @@ gate_banner "K · ledger"
 {
   print "tau=${TAU} sprout_rc=${SPROUT_RC} clone=${CLONE_DIR}"
   print "heal ledger: ${HEAL_LEDGER}"
-  (( SPROUT_RC == 0 )) && print "${GRN}CONVERGED — fire left receipts${NC}" || print "${RED}EXHAUSTED rc=${SPROUT_RC}${NC}"
+  (( SPROUT_RC == 0 )) && print "${GRN}CONVERGED — receipts written this run${NC}" || print "${RED}EXHAUSTED rc=${SPROUT_RC}${NC}"
   [[ -s "${HEAL_LEDGER}" ]] && command -v jq >/dev/null && jq -s '
     group_by(.gate) |
     map({
