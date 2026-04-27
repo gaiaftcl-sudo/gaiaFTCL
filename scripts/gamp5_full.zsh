@@ -12,6 +12,7 @@
 #
 #   Cell ontology + vQbit paradigm (invariants, proof across contexts): substrate/CELL_VQBIT_PARADIGM.yaml
 #   Sprout gate chain (Franklin avatar): cells/franklin/avatar/scripts/sprout.zsh
+#   Sprout sets GAMP5_TAU_FS so evidence/runs/<tau>/ matches the sprout ring τ (optional env).
 #
 #   Every step is a witnessable verb in the Franklin Cell catalog (LG-*).
 #   Every step narrates in plain English to summary.md.
@@ -72,6 +73,15 @@ cd "${FRANKLIN_ROOT}"
 TAU_HUMAN="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 TAU_FS="$(date -u +%Y%m%dT%H%M%SZ)"
 TAU_MICROS="$(python3 -c 'import time;print(int(time.time()*1_000_000))')"
+# Sprout passes GAMP5_TAU_FS so epilogue lands under the same τ as the outer ring (default: fresh wall clock).
+if [[ -n "${GAMP5_TAU_FS:-}" ]]; then
+  typeset -g TAU_FS="${GAMP5_TAU_FS}"
+fi
+if [[ -n "${GAMP5_TAU_HUMAN:-}" ]]; then
+  typeset -g TAU_HUMAN="${GAMP5_TAU_HUMAN}"
+elif [[ -n "${GAMP5_TAU_FS:-}" ]]; then
+  typeset -g TAU_HUMAN="${TAU_FS:0:4}-${TAU_FS:4:2}-${TAU_FS:6:2}T${TAU_FS:9:2}:${TAU_FS:11:2}:${TAU_FS:13:2}Z"
+fi
 
 EVIDENCE_ROOT="${FRANKLIN_ROOT}/evidence/runs/${TAU_FS}"
 RECEIPTS_DIR="${EVIDENCE_ROOT}/receipts"

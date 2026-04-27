@@ -8,8 +8,8 @@
 # Gate J is the klein close leg of that same envelope after the breath above.
 #
 # Visibility: FOT_QUAL_VISIBLE_TESTS_ONLY=1 (default) — Gate F refuses if /dev/tty is
-# missing; gamp5_iq is fed from /dev/tty when present. Set FOT_QUAL_VISIBLE_TESTS_ONLY=0
-# only if you accept non-interactive failure modes yourself.
+# missing unless FOT_SPROUT_ALLOW_HEADLESS_IQ=1 (automation opt-in). gamp5_iq is fed from
+# /dev/tty when present. Set FOT_QUAL_VISIBLE_TESTS_ONLY=0 for fully non-interactive IQ.
 #
 # Required: FRANKLIN_KEY FRANKLIN_OPERATOR_KEY FOT_AVATAR_PQ_VISIBLE_OPERATOR_PRESENT=1
 # Optional: FRANKLIN_SPROUT_TMP FRANKLIN_SPINE_TMP FRANKLIN_GATE_MAX_ATTEMPTS
@@ -85,6 +85,21 @@ gate_banner() {
 }
 
 halt_requested() { [[ -f "${HALT_FLAG}" ]] }
+
+# Swift PM may place FranklinApp under .build/release or an arch directory.
+franklin_release_bin() {
+  local franklin_root="$1"
+  local c
+  local -a cand=(
+    "${franklin_root}/.build/release/FranklinApp"
+    "${franklin_root}/.build/arm64-apple-macosx/release/FranklinApp"
+    "${franklin_root}/.build/x86_64-apple-macosx/release/FranklinApp"
+  )
+  for c in "${cand[@]}"; do
+    [[ -x "${c}" ]] && { print -r -- "${c}"; return 0 }
+  done
+  return 1
+}
 
 # Burn tmp install workspace (clone/build). Logs/transcript path unchanged for this tau.
 recycle_install_workspace() {
@@ -266,15 +281,15 @@ heal_E() {
       ;;
   esac
   rm -rf "${CLONE_AVATAR}/build" 2>/dev/null || true
-  ( cd "${CLONE_AVATAR}" && cargo clean ) 2>&1 | tee -a "${LOG_DIR}/E_heal.log" || true
+  [[ -f "${CLONE_AVATAR}/Cargo.toml" ]] && ( cd "${CLONE_AVATAR}" && cargo clean ) 2>&1 | tee -a "${LOG_DIR}/E_heal.log" || true
   (( $1 % 3 == 0 )) && rm -rf "${CLONE_DIR}/target" 2>/dev/null || true
 }
 
 try_F() {
   local attempt="$1"
   [[ -n "${FOT_GENESIS_RECORD_PATH:-}" ]] || export FOT_GENESIS_RECORD_PATH="${CLONE_EVIDENCE}/iq/genesis_record.json"
-  if [[ "${FOT_QUAL_VISIBLE_TESTS_ONLY:-1}" == "1" ]] && [[ ! -r /dev/tty ]]; then
-    hot "Gate F: no /dev/tty — IQ must be operator-visible (Terminal or ssh -t)"
+  if [[ "${FOT_QUAL_VISIBLE_TESTS_ONLY:-1}" == "1" ]] && [[ ! -r /dev/tty ]] && [[ "${FOT_SPROUT_ALLOW_HEADLESS_IQ:-0}" != "1" ]]; then
+    hot "Gate F: no /dev/tty — use Terminal or ssh -t, or set FOT_SPROUT_ALLOW_HEADLESS_IQ=1"
     return 41
   fi
   if [[ -r /dev/tty ]]; then
@@ -302,7 +317,7 @@ try_F() {
 heal_F() {
   case "$2" in
     100|101|102) rm -rf "${CLONE_AVATAR}/build/iq_phase_$(( $2 - 100 ))" 2>/dev/null || true ;;
-    *) ( cd "${CLONE_DIR}" && cargo clean ) 2>&1 | tee -a "${LOG_DIR}/F_heal.log" || true ;;
+    *) [[ -f "${CLONE_DIR}/Cargo.toml" ]] && ( cd "${CLONE_DIR}" && cargo clean ) 2>&1 | tee -a "${LOG_DIR}/F_heal.log" || true ;;
   esac
   mkdir -p "${CLONE_EVIDENCE}/iq"
 }
@@ -319,13 +334,20 @@ cleanup_app() {
 try_G() {
   local attempt="$1"
   rm -f "${CLONE_EVIDENCE}/iq/visible.json"
-  ( cd "${CLONE_DIR}/GAIAOS/macos/Franklin" && swift build -c release ) 2>&1 | tee -a "${APP_LAUNCH_LOG}" >&2
+  local fp="${CLONE_DIR}/GAIAOS/macos/Franklin"
+  [[ -f "${fp}/Package.swift" ]] || { hot "GAIAOS/macos/Franklin missing — pull branch with GAIAOS"; return 9; }
+  ( cd "${fp}" && swift build -c release ) 2>&1 | tee -a "${APP_LAUNCH_LOG}" >&2
   (( pipestatus[1] != 0 )) && return "${pipestatus[1]}"
-  local bin="${CLONE_DIR}/GAIAOS/macos/Franklin/.build/release/FranklinApp"
-  [[ -x "${bin}" ]] || return 9
+  local bin=""
+  bin="$(franklin_release_bin "${fp}")" || {
+    hot "FranklinApp not found after swift build — check .build/**/release/FranklinApp"
+    return 9
+  }
   export FRANKLIN_AVATAR_BUNDLE="${CLONE_AVATAR}/build/avatar_bundle"
   export FRANKLIN_BUNDLE_PUBKEY="${CLONE_AVATAR}/build/bundle_pubkey.bin"
   export FRANKLIN_AVATAR_EVIDENCE="${CLONE_EVIDENCE}"
+  export FOT_SPROUT_TAU="${TAU}"
+  export FOT_VQBIT_SPROUT=1
   cleanup_app
   "${bin}" >> "${APP_LAUNCH_LOG}" 2>&1 &
   APP_PID=$!
@@ -404,8 +426,9 @@ EVIDENCE_RUN=""
 try_J() {
   local attempt="$1"
   ( cd "${CLONE_DIR}" && \
+    GAMP5_TAU_FS="${TAU}" \
     FOT_QUAL_VISIBLE_TESTS_ONLY="${FOT_QUAL_VISIBLE_TESTS_ONLY:-1}" \
-    zsh scripts/gamp5_full.zsh --tau "${TAU}" --close-only ) 2>&1 | tee "${LOG_DIR}/J_close.log" >&2
+    zsh scripts/gamp5_full.zsh ) 2>&1 | tee "${LOG_DIR}/J_close.log" >&2
   (( pipestatus[1] != 0 )) && return "${pipestatus[1]}"
   EVIDENCE_RUN="${CLONE_DIR}/evidence/runs/${TAU}"
   [[ -f "${EVIDENCE_RUN}/epilogue.json" ]] || return 23
