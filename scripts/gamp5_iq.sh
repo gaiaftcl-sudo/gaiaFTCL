@@ -3,6 +3,7 @@
 #  gamp5_iq.sh — Installation Qualification (IQ)
 #  FoT8D | GAMP 5 Category 5 | FDA 21 CFR Part 11 | EU Annex 11
 #  GAMP 5 means not settling — IQ refuses “installed” without witnessed proof.
+#  Smoke or headless shortcuts are settling — excluded from GAMP 5 by definition.
 #
 #  Asks:  1. Which cell to qualify (MacFusion / MacHealth / Both)
 #         2. Whether to clean up any old app data / wallets
@@ -20,7 +21,7 @@
 #  Non-brittle:
 #    FOT_IQ_SOFT=1              — prerequisite/structure failures warn, do not abort
 #
-#  Visibility: no headless IQ — operator witness uses the real console (/dev/tty).
+#  Visibility: operator witness on /dev/tty only — smoke/headless IQ is refusal (not GAMP 5).
 #  Run from Terminal.app or ssh -t; piped stdin is OK if /dev/tty exists.
 #
 #  Gold laptop only (your machine + write access to origin — not CI/read-only clones):
@@ -68,7 +69,7 @@ ask_yesno() {
 
 human_bell() {
     print -u 2 "\n${BOLD}${YLW}🔔 OPERATOR WITNESS (visible)${NC}"
-    print -u 2 "${YLW}Review the output above on this machine — nothing headless.${NC}"
+    print -u 2 "${YLW}Review the output above — witnessed here, not settled.${NC}"
     if [[ ! -r /dev/tty ]]; then
         die "No /dev/tty — IQ refuses to run without a visible console (use Terminal or ssh -t)."
     fi

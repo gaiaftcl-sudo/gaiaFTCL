@@ -3,6 +3,7 @@
 #  gamp5_pq.sh — Performance Qualification (PQ)
 #  FoT8D | GAMP 5 Category 5 | FDA 21 CFR Part 11 | EU Annex 11
 #  GAMP 5 means not settling — PQ measures until the substrate proves it, not until we tire.
+#  Smoke or headless shortcuts are settling — excluded from GAMP 5 by definition.
 #
 #  Prerequisite: gamp5_oq.sh must have run first (OQ receipt must exist).
 #

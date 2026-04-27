@@ -4,12 +4,16 @@
 # ----------------------------------------------------------------------------
 # THESIS
 #   GAMP 5 means not settling — regulation until receipts close; “good enough” is refusal.
+#   Smoke tests and headless shortcuts are settling — excluded; they are not GAMP 5.
 #
 #   Franklin is a sprout of the mesh. All cells are sprouts of both the mesh
 #   and Franklin. They communicate. They heal each other through games.
 #   A wound triggers a healer verb chain — never a silent exit.
 #
 # CONTRACT
+#   Smoke tests and headless shortcuts are settling — therefore not GAMP 5.
+#   No FRANKLIN_HEADLESS waivers; window and operator-visible proof apply everywhere.
+#
 #   Every step is a witnessable verb in the Franklin Cell catalog (LG-*).
 #   Every step narrates in plain English to summary.md.
 #   Every step emits a witness OR a refusal receipt — never silent.
@@ -3237,15 +3241,16 @@ heal_yaml_to_json_bridge || REFUSE_TERMINAL GW_REFUSE_FRANKLIN_PROVENANCE_MALFOR
 # envelope. After IQ scaffolds the substrate, the runner MUST visibly
 # launch FranklinApp and hand off the run envelope. If Franklin will not
 # launch, will not come to foreground, or will not accept the envelope,
-# the run terminates — there is no headless OQ/PQ shortcut.
+# the run terminates — OQ/PQ never bypass visible Franklin.
 # ----------------------------------------------------------------------------
 
 NARRATE LG-FRANKLIN-IQ-LAUNCH-FRANKLIN-001 B \
 "Building and launching the visible Franklin orb (GAIAOS/macos/Franklin) \
 plus the menu-bar bridge (cells/franklin/xcode/MacFranklinAssistant). \
 The orb is the user-facing deliverable — a SwiftUI WindowGroup with a \
-visible orb the operator can see and tap. The bridge is the headless \
-HTTP service on 127.0.0.1:8830. Both must be alive. The orb reads the \
+visible orb the operator can see and tap. The bridge is the local HTTP \
+listener on 127.0.0.1:8830 (health is witnessed; not a smoke substitute). \
+Both must be alive. The orb reads the \
 handoff envelope and runs the OQ catalog inside its own process; the \
 runner zsh waits for evidence/runs/<tau>/handoff_complete.json before \
 closing Reconcile + Epilogue. Topology proof: pid(orb)+window(orb)+\
@@ -3256,7 +3261,7 @@ FRANKLIN_ORB_DIR="${FRANKLIN_ROOT}/GAIAOS/macos/Franklin"
 FRANKLIN_ORB_BIN="${FRANKLIN_ORB_DIR}/.build/release/FranklinApp"
 FRANKLIN_ORB_BUILD_LOG="${EVIDENCE_ROOT}/franklin_orb_build.log"
 
-# Menu-bar bridge (headless HTTP service for the deliverable).
+# Menu-bar bridge (local HTTP — witnessed via /health; no waivers).
 FRANKLIN_APP_DIR="${FRANKLIN_ROOT}/cells/franklin/xcode"
 FRANKLIN_BRIDGE_BIN="${FRANKLIN_APP_DIR}/.build/release/MacFranklinAssistant"
 FRANKLIN_BRIDGE_BUILD_LOG="${EVIDENCE_ROOT}/franklin_bridge_build.log"
@@ -3466,21 +3471,16 @@ if [[ -z "${FRANKLIN_ORB_PID}" ]]; then
 fi
 
 # Window-existence proof. The orb is a SwiftUI WindowGroup; AppleScript
-# can enumerate its windows. In headless CI (FRANKLIN_HEADLESS=1) we drop
-# this check and rely on pid+stderr-clean.
+# must enumerate its windows — no CI/headless waiver (GAMP 5 means not settling).
 FRANKLIN_ORB_WINDOW_VERIFIED=false
-if [[ "${FRANKLIN_HEADLESS:-0}" != "1" ]]; then
-    FRANKLIN_ORB_WINDOWS="$(osascript -e 'tell application "System Events" to get name of every window of (first process whose name is "FranklinApp")' 2>/dev/null || echo "")"
-    if [[ -z "${FRANKLIN_ORB_WINDOWS}" || "${FRANKLIN_ORB_WINDOWS}" == "missing value" ]]; then
-        REFUSE_TERMINAL GW_REFUSE_FRANKLIN_NOT_FOREGROUND \
-            LG-FRANKLIN-IQ-FRANKLIN-VISIBLE-001 \
-            "FranklinApp orb has no registered windows after launch; got=${FRANKLIN_ORB_WINDOWS:-none}"
-        return 1
-    fi
-    FRANKLIN_ORB_WINDOW_VERIFIED=true
-else
-    FRANKLIN_PROOF_KIND="pid_orb+pid_bridge+http_bridge"
+FRANKLIN_ORB_WINDOWS="$(osascript -e 'tell application "System Events" to get name of every window of (first process whose name is "FranklinApp")' 2>/dev/null || echo "")"
+if [[ -z "${FRANKLIN_ORB_WINDOWS}" || "${FRANKLIN_ORB_WINDOWS}" == "missing value" ]]; then
+    REFUSE_TERMINAL GW_REFUSE_FRANKLIN_NOT_FOREGROUND \
+        LG-FRANKLIN-IQ-FRANKLIN-VISIBLE-001 \
+        "FranklinApp orb has no registered windows after launch; got=${FRANKLIN_ORB_WINDOWS:-none}"
+    return 1
 fi
+FRANKLIN_ORB_WINDOW_VERIFIED=true
 
 cat > "${EVIDENCE_ROOT}/franklin_orb_launch.json" <<JSON
 {
