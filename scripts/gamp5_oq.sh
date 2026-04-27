@@ -2,6 +2,7 @@
 # ══════════════════════════════════════════════════════════════════════════════
 #  gamp5_oq.sh — Operational Qualification (OQ)
 #  FoT8D | GAMP 5 Category 5 | FDA 21 CFR Part 11 | EU Annex 11
+#  GAMP 5 means not settling — OQ is operation under evidence, not comfort.
 #
 #  Prerequisite: gamp5_iq.sh must have run first (IQ receipt must exist).
 #

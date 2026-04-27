@@ -2,6 +2,7 @@
 # ══════════════════════════════════════════════════════════════════════════════
 #  gamp5_iq.sh — Installation Qualification (IQ)
 #  FoT8D | GAMP 5 Category 5 | FDA 21 CFR Part 11 | EU Annex 11
+#  GAMP 5 means not settling — IQ refuses “installed” without witnessed proof.
 #
 #  Asks:  1. Which cell to qualify (MacFusion / MacHealth / Both)
 #         2. Whether to clean up any old app data / wallets
