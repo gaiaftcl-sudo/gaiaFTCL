@@ -218,8 +218,12 @@ try_C() {
   CLONE_EVIDENCE="${CLONE_AVATAR}/evidence"
   [[ ! -d "${CLONE_AVATAR}" ]] && { hot "clone missing avatar cell"; return 7; }
   mkdir -p "${CLONE_EVIDENCE}/iq" "${CLONE_EVIDENCE}/oq" "${CLONE_EVIDENCE}/pq"
-  chmod +x "${CLONE_AVATAR}/scripts/"*.sh "${CLONE_AVATAR}/scripts/"*.zsh 2>/dev/null || true
-  chmod +x "${CLONE_DIR}/scripts/"gamp5_*.sh "${CLONE_DIR}/scripts/"*.zsh 2>/dev/null || true
+  () {
+    setopt local_options nullglob
+    local f
+    for f in "${CLONE_AVATAR}/scripts/"*.sh "${CLONE_AVATAR}/scripts/"*.zsh; do [[ -f "$f" ]] && chmod +x "$f"; done
+    for f in "${CLONE_DIR}/scripts/"gamp5_*.sh "${CLONE_DIR}/scripts/"*.zsh; do [[ -f "$f" ]] && chmod +x "$f"; done
+  }
   ok "clone lives under tmp workspace: ${CLONE_DIR}"
 }
 
@@ -231,6 +235,10 @@ heal_C() {
 
 try_D() {
   local attempt="$1"
+  [[ -f "${CLONE_AVATAR}/scripts/build_bundle.sh" ]] || {
+    hot "missing ${CLONE_AVATAR}/scripts/build_bundle.sh — push the full avatar cell (Rust crate + bundle script), not sprout alone"
+    return 126
+  }
   ( cd "${CLONE_AVATAR}" && FRANKLIN_KEY="${FRANKLIN_KEY}" ./scripts/build_bundle.sh ) \
     2>&1 | tee "${LOG_DIR}/D_bundle.log" >&2
   (( pipestatus[1] != 0 )) && return "${pipestatus[1]}"
