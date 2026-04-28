@@ -1,6 +1,50 @@
 import SwiftUI
 import FranklinUIKit
 
+private struct FranklinMeshFallbackView: View {
+    let meshLoaded: Bool
+
+    var body: some View {
+        GeometryReader { geo in
+            let w = geo.size.width
+            let h = geo.size.height
+            let c = CGPoint(x: w * 0.5, y: h * 0.52)
+            let head = [
+                CGPoint(x: c.x, y: c.y - h * 0.28),
+                CGPoint(x: c.x + w * 0.16, y: c.y - h * 0.03),
+                CGPoint(x: c.x, y: c.y + h * 0.18),
+                CGPoint(x: c.x - w * 0.16, y: c.y - h * 0.03),
+            ]
+            ZStack {
+                LinearGradient(
+                    colors: meshLoaded ? [Color.brown.opacity(0.35), Color.gray.opacity(0.2)] : [Color.red.opacity(0.35), Color.black.opacity(0.2)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+
+                Path { p in
+                    p.move(to: head[0]); p.addLines([head[1], head[2], head[3], head[0]])
+                }
+                .stroke(meshLoaded ? .white.opacity(0.9) : .red.opacity(0.95), lineWidth: 2)
+
+                Circle()
+                    .fill(.white.opacity(0.8))
+                    .frame(width: 6, height: 6)
+                    .offset(x: -16, y: -8)
+                Circle()
+                    .fill(.white.opacity(0.8))
+                    .frame(width: 6, height: 6)
+                    .offset(x: 16, y: -8)
+                Capsule()
+                    .fill(.white.opacity(0.7))
+                    .frame(width: 30, height: 3)
+                    .offset(y: 12)
+            }
+        }
+    }
+}
+
 struct CanvasView: View {
     @EnvironmentObject var model: OperatorSurfaceModel
     @State private var didInitialGuide = false
@@ -251,6 +295,11 @@ struct FranklinAvatarStage: View {
                 FranklinAvatarRuntimeView(controller: avatarRuntime)
                     .clipShape(RoundedRectangle(cornerRadius: 18))
                     .padding(12)
+                FranklinMeshFallbackView(meshLoaded: avatarRuntime.assetBinding.meshLoaded)
+                    .clipShape(RoundedRectangle(cornerRadius: 18))
+                    .padding(12)
+                    .allowsHitTesting(false)
+                    .opacity(avatarRuntime.bridgeVersion == "unavailable" ? 1.0 : 0.35)
                 Circle()
                     .stroke(terminalColor.opacity(0.55), lineWidth: 2)
                     .frame(width: 166, height: 166)
@@ -275,6 +324,11 @@ struct FranklinAvatarStage: View {
                 Text("Bridge: \(avatarRuntime.bridgeVersion) · Viseme: \(avatarRuntime.activeViseme)")
                     .font(.system(size: 10, weight: .semibold, design: .monospaced))
                     .foregroundStyle(.secondary)
+                if avatarRuntime.bridgeVersion == "unavailable" {
+                    Text("REFUSED: bridge unavailable, running mesh fallback projection")
+                        .font(.system(size: 10, weight: .bold, design: .monospaced))
+                        .foregroundStyle(.red)
+                }
                 Text("Rig: v=\(avatarRuntime.assetBinding.visemeCount) e=\(avatarRuntime.assetBinding.expressionCount) p=\(avatarRuntime.assetBinding.postureCount)")
                     .font(.system(size: 10, weight: .semibold, design: .monospaced))
                     .foregroundStyle(.secondary)

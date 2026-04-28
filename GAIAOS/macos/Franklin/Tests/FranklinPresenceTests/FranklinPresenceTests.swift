@@ -500,6 +500,7 @@ final class FranklinPresenceTests: XCTestCase {
             .appendingPathComponent("Sources/FranklinApp/CanvasView.swift")
         let source = try String(contentsOf: sourcePath, encoding: .utf8)
         XCTAssertTrue(source.contains("REFUSED: missing Passy mesh asset"))
+        XCTAssertTrue(source.contains("REFUSED: bridge unavailable, running mesh fallback projection"))
     }
 
     func testVisibleContractBuilderResolvesBundleAndCountsMaterialRigAssets() throws {
