@@ -2478,7 +2478,24 @@ AUTH
 
 app: ${cell}
 contract_version: ${EXPECTED_CONTRACT_VERSION}
-surfaces: []
+surfaces:
+  - id: ${cell}_main
+    title: "Overview"
+    primary_cta: open_overview
+    elements:
+      - kind: button
+        role: primary
+        action_id: open_overview
+        label: "Open overview"
+        text: "Open overview"
+        accessibility_label: "Open overview"
+        fg_color: "#FFFFFF"
+        bg_color: "#005BBB"
+      - kind: value
+        label: "Status"
+        value: "Ready"
+        fg_color: "#111111"
+        bg_color: "#FFFFFF"
 YAML
         printf '    ✓ stub %s\n' "${stub}" >&2
     done
@@ -3125,7 +3142,24 @@ YAML
                 cat > "${cdir}/Surfaces.yaml" <<YAML
 contract_version: "1.2.0"
 cell: ${cell}
-surfaces: []
+surfaces:
+  - id: ${cell}_main
+    title: "Overview"
+    primary_cta: open_overview
+    elements:
+      - kind: button
+        role: primary
+        action_id: open_overview
+        label: "Open overview"
+        text: "Open overview"
+        accessibility_label: "Open overview"
+        fg_color: "#FFFFFF"
+        bg_color: "#005BBB"
+      - kind: value
+        label: "Status"
+        value: "Ready"
+        fg_color: "#111111"
+        bg_color: "#FFFFFF"
 YAML
                 ;;
             TREASURY.yaml-missing)
