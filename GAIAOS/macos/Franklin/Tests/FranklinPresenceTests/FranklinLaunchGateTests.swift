@@ -70,7 +70,7 @@ final class FranklinLaunchGateTests: XCTestCase {
         let tmp = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true)
             .appendingPathComponent("franklin-launch-gate-test-\(UUID().uuidString)", isDirectory: true)
         try fm.createDirectory(at: tmp, withIntermediateDirectories: true)
-        addTeardownBlock { try? fm.removeItem(at: tmp) }
+        addTeardownBlock { try? FileManager.default.removeItem(at: tmp) }
 
         // Write the assets.
         var manifestEntries: [[String: Any]] = []

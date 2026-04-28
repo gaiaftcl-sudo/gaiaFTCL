@@ -186,8 +186,9 @@ enum FranklinLaunchGate {
         if let vp = manifest.voiceProfile {
             let vpURL = workspaceRoot.appendingPathComponent(vp.relativePath)
             if let data = try? Data(contentsOf: vpURL),
-               let profile = try? JSONDecoder().decode(FranklinVoiceProfile.self, from: data) {
-                if let required = vp.requiredPersonaID, profile.personaID != required {
+               let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let personaID = object["personaID"] as? String {
+                if let required = vp.requiredPersonaID, personaID != required {
                     failures.append("GW_REFUSE_FRANKLIN_VOICE_PROFILE_INVALID_PERSONA")
                 }
             } else {
