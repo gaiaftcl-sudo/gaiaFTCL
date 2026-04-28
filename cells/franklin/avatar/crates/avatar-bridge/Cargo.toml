@@ -1,0 +1,13 @@
+[package]
+name = "avatar-bridge"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+avatar-core = { path = "../avatar-core" }
+avatar-render = { path = "../avatar-render" }
+avatar-tts = { path = "../avatar-tts" }
