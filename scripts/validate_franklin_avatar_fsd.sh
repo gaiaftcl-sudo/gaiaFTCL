@@ -40,6 +40,11 @@ must_dir() {
   [[ -d "${path}" ]] || fail "${code}" "${msg}: ${path}" 215
 }
 
+[[ -f "scripts/self_heal_franklin_fsd_preflight.sh" ]] || \
+  fail "GW_REFUSE_FRANKLIN_FSD_SELF_HEAL_SCRIPT_MISSING" "Missing scripts/self_heal_franklin_fsd_preflight.sh" 219
+zsh "scripts/self_heal_franklin_fsd_preflight.sh" "${ROOT}" >/dev/null 2>&1 || \
+  fail "GW_REFUSE_FRANKLIN_FSD_SELF_HEAL_FAILED" "Preflight self-heal did not converge" 220
+
 if [[ -f "scripts/require_franklin_passy_assets.sh" ]]; then
   zsh "scripts/require_franklin_passy_assets.sh" "${ROOT}" >/dev/null 2>&1 || \
     fail "GW_REFUSE_FRANKLIN_FSD_PASSY_ASSETS_MISSING" "Required Passy assets are missing or undersized" 216

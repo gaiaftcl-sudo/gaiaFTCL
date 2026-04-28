@@ -1,65 +1,5 @@
 import SwiftUI
 import FranklinUIKit
-import AppKit
-
-private struct FranklinMeshFallbackView: View {
-    let meshLoaded: Bool
-
-    var body: some View {
-        GeometryReader { geo in
-            let w = geo.size.width
-            let h = geo.size.height
-            let c = CGPoint(x: w * 0.5, y: h * 0.52)
-            let head = [
-                CGPoint(x: c.x, y: c.y - h * 0.28),
-                CGPoint(x: c.x + w * 0.16, y: c.y - h * 0.03),
-                CGPoint(x: c.x, y: c.y + h * 0.18),
-                CGPoint(x: c.x - w * 0.16, y: c.y - h * 0.03),
-            ]
-            ZStack {
-                LinearGradient(
-                    colors: meshLoaded ? [Color.brown.opacity(0.35), Color.gray.opacity(0.2)] : [Color.red.opacity(0.35), Color.black.opacity(0.2)],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-
-                Path { p in
-                    p.move(to: head[0]); p.addLines([head[1], head[2], head[3], head[0]])
-                }
-                .stroke(meshLoaded ? .white.opacity(0.9) : .red.opacity(0.95), lineWidth: 2)
-
-                Circle()
-                    .fill(.white.opacity(0.8))
-                    .frame(width: 6, height: 6)
-                    .offset(x: -16, y: -8)
-                Circle()
-                    .fill(.white.opacity(0.8))
-                    .frame(width: 6, height: 6)
-                    .offset(x: 16, y: -8)
-                Capsule()
-                    .fill(.white.opacity(0.7))
-                    .frame(width: 30, height: 3)
-                    .offset(y: 12)
-            }
-        }
-    }
-}
-
-private struct FranklinPortraitFallbackView: View {
-    let imagePath: String
-
-    var body: some View {
-        if let image = NSImage(contentsOfFile: imagePath) {
-            Image(nsImage: image)
-                .resizable()
-                .scaledToFill()
-                .clipShape(RoundedRectangle(cornerRadius: 18))
-        } else {
-            FranklinMeshFallbackView(meshLoaded: false)
-        }
-    }
-}
 
 struct CanvasView: View {
     @EnvironmentObject var model: OperatorSurfaceModel
@@ -297,17 +237,6 @@ struct FranklinAvatarStage: View {
         model.conversationColumn.last?.message ?? "I am present. Route a command and I will answer in-facet."
     }
 
-    private var portraitPath: String {
-        let fm = FileManager.default
-        var cursor = URL(fileURLWithPath: fm.currentDirectoryPath, isDirectory: true)
-        for _ in 0..<10 {
-            let candidate = cursor.appendingPathComponent("cells/franklin/avatar/build/reality/Franklin_preview.png")
-            if fm.fileExists(atPath: candidate.path) { return candidate.path }
-            cursor.deleteLastPathComponent()
-        }
-        return ""
-    }
-
     var body: some View {
         HStack(spacing: 18) {
             ZStack {
@@ -322,14 +251,15 @@ struct FranklinAvatarStage: View {
                 FranklinAvatarRuntimeView(controller: avatarRuntime)
                     .clipShape(RoundedRectangle(cornerRadius: 18))
                     .padding(12)
-                FranklinPortraitFallbackView(imagePath: portraitPath)
-                    .padding(12)
-                    .allowsHitTesting(false)
-                    .opacity(avatarRuntime.bridgeVersion == "unavailable" ? 1.0 : 0.35)
-                Circle()
-                    .stroke(terminalColor.opacity(0.55), lineWidth: 2)
-                    .frame(width: 166, height: 166)
-                    .scaleEffect(1 + (sin(pulse) * 0.02))
+                if avatarRuntime.bridgeVersion == "unavailable" || !avatarRuntime.assetBinding.meshLoaded {
+                    RoundedRectangle(cornerRadius: 18)
+                        .fill(Color.black.opacity(0.70))
+                        .padding(12)
+                    Text("REFUSED\nLIVE AVATAR UNAVAILABLE")
+                        .font(.system(size: 12, weight: .bold, design: .monospaced))
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.red)
+                }
             }
             .frame(width: 220, height: 190)
 

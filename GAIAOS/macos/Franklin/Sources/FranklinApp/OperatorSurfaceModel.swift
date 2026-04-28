@@ -207,13 +207,11 @@ final class OperatorSurfaceModel: ObservableObject {
                 applyOutcome(.terminal(.refused, "(\(code))\(refusalCode.map { ":\($0)" } ?? ""): \(body)"), prompt: trimmed, refusalCode: refusalCode)
             }
         } catch {
-            let localReply = await FranklinFoundationDialogService.shared.composeReply(for: trimmed)
-            if !localReply.isEmpty, !localReply.hasPrefix("REFUSED") {
-                appendConversation(speaker: "Franklin", facet: activeFacet, message: localReply)
-                applyOutcome(.terminal(.calorie, ": local_franklin_fallback"), prompt: trimmed, refusalCode: nil)
-            } else {
-                applyOutcome(.terminal(.refused, ": \(error.localizedDescription)"), prompt: trimmed, refusalCode: nil)
-            }
+            applyOutcome(
+                .terminal(.refused, ": live Franklin route unavailable (\(error.localizedDescription))"),
+                prompt: trimmed,
+                refusalCode: "GW_REFUSE_LIVE_ROUTE_UNAVAILABLE"
+            )
         }
     }
 

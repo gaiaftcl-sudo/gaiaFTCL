@@ -11,7 +11,6 @@ struct FranklinVoiceProfile: Codable {
     let personaID: String
     let locale: String
     let preferredVoiceIdentifier: String
-    let fallbackVoiceIdentifier: String
     let speakingRate: Float
     let pitchMultiplier: Float
 
@@ -19,7 +18,6 @@ struct FranklinVoiceProfile: Codable {
         personaID: "franklin.guide.v1",
         locale: "en_US",
         preferredVoiceIdentifier: "com.apple.ttsbundle.siri_male_en-US_compact",
-        fallbackVoiceIdentifier: "com.apple.ttsbundle.Alex-compact",
         speakingRate: 0.43,
         pitchMultiplier: 0.84
     )
@@ -54,13 +52,10 @@ final class FranklinSpeechLoopService {
         let utterance = AVSpeechUtterance(string: text)
         utterance.rate = voiceProfile.speakingRate
         utterance.pitchMultiplier = voiceProfile.pitchMultiplier
-        if let preferred = AVSpeechSynthesisVoice(identifier: voiceProfile.preferredVoiceIdentifier) {
-            utterance.voice = preferred
-        } else if let fallback = AVSpeechSynthesisVoice(identifier: voiceProfile.fallbackVoiceIdentifier) {
-            utterance.voice = fallback
-        } else {
-            utterance.voice = AVSpeechSynthesisVoice(language: voiceProfile.locale)
+        guard let preferred = AVSpeechSynthesisVoice(identifier: voiceProfile.preferredVoiceIdentifier) else {
+            return
         }
+        utterance.voice = preferred
         synthesizer.speak(utterance)
     }
 

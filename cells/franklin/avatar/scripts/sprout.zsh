@@ -186,6 +186,11 @@ try_A() {
     command -v "$tool" >/dev/null 2>&1 || missing+=("$tool")
   done
   (( ${#missing[@]} > 0 )) && { hot "missing tools: ${missing[*]}"; return 1; }
+  [[ -f "${GAIAFTCL_DIR}/scripts/self_heal_franklin_fsd_preflight.sh" ]] || { hot "missing scripts/self_heal_franklin_fsd_preflight.sh"; return 28; }
+  ( cd "${GAIAFTCL_DIR}" && zsh "scripts/self_heal_franklin_fsd_preflight.sh" "${GAIAFTCL_DIR}" ) >/dev/null 2>&1 || {
+    hot "Franklin FSD self-heal preflight failed"
+    return 28
+  }
   [[ -z "${FRANKLIN_KEY:-}" || ! -f "${FRANKLIN_KEY:-}" ]] && { hot "FRANKLIN_KEY missing"; return 2; }
   [[ -z "${FRANKLIN_OPERATOR_KEY:-}" || ! -f "${FRANKLIN_OPERATOR_KEY:-}" ]] && { hot "FRANKLIN_OPERATOR_KEY missing"; return 3; }
   [[ "${FOT_AVATAR_PQ_VISIBLE_OPERATOR_PRESENT:-0}" != "1" ]] && { hot "operator presence flag must be 1"; return 4; }
@@ -242,6 +247,12 @@ heal_A() {
     24|25) warn "owner prerequisite failed: push origin/main before sprout can continue." ;;
     26) warn "missing Franklin Passy gate script in repo" ;;
     27) warn "Franklin Passy assets missing/undersized; sprout blocked at preflight" ;;
+    28)
+      if [[ -f "${GAIAFTCL_DIR}/scripts/self_heal_franklin_fsd_preflight.sh" ]]; then
+        ( cd "${GAIAFTCL_DIR}" && zsh "scripts/self_heal_franklin_fsd_preflight.sh" "${GAIAFTCL_DIR}" ) 2>&1 | tee -a "${LOG_DIR}/A_heal.log" || true
+      fi
+      warn "Franklin FSD self-heal preflight failed; inspect realitytool/usd gates."
+      ;;
     6) warn "remove tracked *.key/*.pem manually" ;;
   esac
 }
