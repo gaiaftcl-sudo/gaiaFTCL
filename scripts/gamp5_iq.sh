@@ -294,7 +294,7 @@ fi
 
 if [[ "${INSTALL_MACHEALTH}" == "true" ]]; then
     MH_ROOT="${REPO_ROOT}/cells/fusion/macos/MacHealth"
-    GH_ROOT="${REPO_ROOT}/GaiaHealth"
+    GH_ROOT="${REPO_ROOT}/cells/health"
     check_path "MacHealth dir"                    "${MH_ROOT}"
     check_path "MacHealth Package.swift"          "${MH_ROOT}/Package.swift"
     check_path "GaiaHealth Rust workspace"        "${GH_ROOT}/Cargo.toml"
@@ -400,7 +400,7 @@ write_iq_receipt() {
     local cell_label="$1"
     local evidence_dir="$2"
     local document_id="$3"
-    local identity_dir="$4"
+    local next_step_cell="${(L)cell_label}"
 
     section "IQ-6: Writing IQ Receipt — ${cell_label}"
 
@@ -431,7 +431,7 @@ receipt = {
     "license_accepted":  True,
     "clean_install":     "${CLEAN_OLD}" == "yes",
     "status":            "PASS",
-    "next_step":         "zsh scripts/gamp5_oq.sh --cell ${cell_label,,}"
+    "next_step":         "zsh scripts/gamp5_oq.sh --cell ${next_step_cell}"
 }
 path = "${evidence_dir}/iq_receipt.json"
 with open(path, "w") as f:
