@@ -26,6 +26,12 @@ final class FranklinAvatarSceneController: ObservableObject {
         assetBinding = FranklinAvatarAssetBinding.load()
         if !assetBinding.meshLoaded {
             lastRefusal = "GW_REFUSE_AVATAR_MESH_ASSET_MISSING"
+        } else if assetBinding.visemeCount < 11 {
+            lastRefusal = "GW_REFUSE_AVATAR_RIG_VISEME_CARDINALITY"
+        } else if assetBinding.expressionCount < 12 {
+            lastRefusal = "GW_REFUSE_AVATAR_RIG_EXPRESSION_CARDINALITY"
+        } else if assetBinding.postureCount < 6 {
+            lastRefusal = "GW_REFUSE_AVATAR_RIG_POSTURE_CARDINALITY"
         }
     }
 
@@ -35,6 +41,7 @@ final class FranklinAvatarSceneController: ObservableObject {
 
     func updateSpeech(text: String) {
         guard assetBinding.meshLoaded else { return }
+        guard lastRefusal.isEmpty || !lastRefusal.hasPrefix("GW_REFUSE_AVATAR_RIG_") else { return }
         activeViseme = FranklinRustBridge.shared.firstViseme(for: text)
     }
 
@@ -158,7 +165,7 @@ final class FranklinMetalRenderer: NSObject, MTKViewDelegate {
         commandBuffer.present(drawable)
         commandBuffer.commit()
         let elapsed = Float((CFAbsoluteTimeGetCurrent() - start) * 1000)
-        controller.registerFrame(frameMs: elapsed, targetHz: 60)
+        controller.registerFrame(frameMs: elapsed, targetHz: 120)
     }
 }
 
@@ -173,7 +180,7 @@ struct FranklinAvatarRuntimeView: NSViewRepresentable {
     func makeNSView(context: Context) -> MTKView {
         let view = MTKView()
         view.device = MTLCreateSystemDefaultDevice()
-        view.preferredFramesPerSecond = 60
+        view.preferredFramesPerSecond = 120
         view.clearColor = MTLClearColor(red: 0.48, green: 0.42, blue: 0.33, alpha: 1.0)
         view.colorPixelFormat = .bgra8Unorm
         view.enableSetNeedsDisplay = false

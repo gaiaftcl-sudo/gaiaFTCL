@@ -1,0 +1,8 @@
+{
+  "personaID": "franklin.guide.v1",
+  "locale": "en_US",
+  "preferredVoiceIdentifier": "com.apple.ttsbundle.siri_male_en-US_compact",
+  "fallbackVoiceIdentifier": "com.apple.ttsbundle.Alex-compact",
+  "speakingRate": 0.43,
+  "pitchMultiplier": 0.84
+}

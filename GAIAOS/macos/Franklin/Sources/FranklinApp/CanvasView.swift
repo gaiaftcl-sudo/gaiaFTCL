@@ -305,7 +305,7 @@ struct FranklinAvatarStage: View {
                 pulse += 0.9
                 avatarRuntime.apply(posture: postureState())
                 avatarRuntime.updateSpeech(text: speakingLine)
-                try? await Task.sleep(for: .milliseconds(700))
+                try? await Task.sleep(for: .milliseconds(16))
             }
         }
     }

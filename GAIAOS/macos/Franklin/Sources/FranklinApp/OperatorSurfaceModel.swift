@@ -349,7 +349,7 @@ final class OperatorSurfaceModel: ObservableObject {
         let classABlock = requiresClassAConfirmation(prompt: prompt) && !justification.isEmpty
             ? "|class_a_justification=\(justification.replacingOccurrences(of: "|", with: "/"))"
             : ""
-        let query = "[target=\(facet.rawValue)|app=FranklinApp|mode=presence\(classABlock)] \(prompt)"
+        let query = "[target=\(facet.rawValue)|app=FranklinApp|mode=presence|guide=franklin_avatar\(classABlock)] \(prompt)"
         return FranklinDispatchPayload(
             query: query,
             presence_evidence: PresenceEvidencePayload(

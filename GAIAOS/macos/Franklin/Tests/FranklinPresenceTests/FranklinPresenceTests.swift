@@ -38,6 +38,7 @@ final class FranklinPresenceTests: XCTestCase {
             modality: .type
         )
         XCTAssertTrue(payload.query.contains("target=Fusion"))
+        XCTAssertTrue(payload.query.contains("guide=franklin_avatar"))
         XCTAssertEqual(payload.presence_evidence.facet_at_invocation, "fusion")
         XCTAssertEqual(payload.presence_evidence.invocation_modality, "type")
         XCTAssertEqual(payload.presence_evidence.confirmation_modality, "chip_tap_only_class_b")
@@ -413,6 +414,9 @@ final class FranklinPresenceTests: XCTestCase {
         XCTAssertTrue(source.contains("pose_templates/expression"))
         XCTAssertTrue(source.contains("pose_templates/posture"))
         XCTAssertTrue(source.contains("GW_REFUSE_AVATAR_MESH_ASSET_MISSING"))
+        XCTAssertTrue(source.contains("GW_REFUSE_AVATAR_RIG_VISEME_CARDINALITY"))
+        XCTAssertTrue(source.contains("GW_REFUSE_AVATAR_RIG_EXPRESSION_CARDINALITY"))
+        XCTAssertTrue(source.contains("GW_REFUSE_AVATAR_RIG_POSTURE_CARDINALITY"))
     }
 
     func testSproutVisibleReceiptCarriesLifelikeInvariantFields() throws {
@@ -466,6 +470,8 @@ final class FranklinPresenceTests: XCTestCase {
         XCTAssertTrue(source.contains("SFSpeechRecognizer"))
         XCTAssertTrue(source.contains("VNDetectFaceLandmarksRequest"))
         XCTAssertTrue(source.contains("LanguageModelSession"))
+        XCTAssertTrue(source.contains("franklin_voice_profile.json"))
+        XCTAssertTrue(source.contains("AVSpeechSynthesisVoice(identifier: voiceProfile.preferredVoiceIdentifier)"))
     }
 
     func testAvatarSourceContainsNoSimulationLanguage() throws {
