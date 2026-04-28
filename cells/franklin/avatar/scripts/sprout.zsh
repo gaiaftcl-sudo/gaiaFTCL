@@ -412,7 +412,7 @@ try_G() {
     hot "visible.json missing avatar control coverage"
     return 27
   }
-  jq -e '.render_invariants.frame_budget_60hz_ms == 16.6 and .render_invariants.frame_budget_120hz_ms == 8.3' "${vis}" >/dev/null 2>&1 || {
+  jq -e '(.render_invariants.frame_budget_60hz_ms >= 16.59 and .render_invariants.frame_budget_60hz_ms <= 16.61) and (.render_invariants.frame_budget_120hz_ms >= 8.29 and .render_invariants.frame_budget_120hz_ms <= 8.31)' "${vis}" >/dev/null 2>&1 || {
     hot "visible.json missing render invariant budgets"
     return 30
   }

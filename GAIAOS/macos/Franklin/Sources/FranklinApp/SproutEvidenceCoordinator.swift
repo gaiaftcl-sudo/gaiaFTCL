@@ -37,17 +37,16 @@ final class SproutEvidenceCoordinator: @unchecked Sendable {
         let tau = ProcessInfo.processInfo.environment["FOT_SPROUT_TAU"] ?? ""
         let iso = ISO8601DateFormatter()
         iso.formatOptions = [.withInternetDateTime]
+        let avatarRoot = resolveAvatarRoot(from: root)
 
         let visible = iq.appendingPathComponent("visible.json")
         let illuminantCount = countJSON(
-            at: root
-                .deletingLastPathComponent()
-                .appendingPathComponent("cells/franklin/avatar/bundle_assets/illuminants")
+            at: avatarRoot.appendingPathComponent("bundle_assets/illuminants")
         )
         let rigSummary = [
-            "visemes": countJSON(at: root.deletingLastPathComponent().appendingPathComponent("cells/franklin/avatar/bundle_assets/pose_templates/viseme")),
-            "expressions": countJSON(at: root.deletingLastPathComponent().appendingPathComponent("cells/franklin/avatar/bundle_assets/pose_templates/expression")),
-            "postures": countJSON(at: root.deletingLastPathComponent().appendingPathComponent("cells/franklin/avatar/bundle_assets/pose_templates/posture")),
+            "visemes": countJSON(at: avatarRoot.appendingPathComponent("bundle_assets/pose_templates/viseme")),
+            "expressions": countJSON(at: avatarRoot.appendingPathComponent("bundle_assets/pose_templates/expression")),
+            "postures": countJSON(at: avatarRoot.appendingPathComponent("bundle_assets/pose_templates/posture")),
         ]
         let visibleBody: [String: Any] = [
             "surface": "FranklinApp",
@@ -123,5 +122,13 @@ final class SproutEvidenceCoordinator: @unchecked Sendable {
     private func countJSON(at dir: URL) -> Int {
         guard let names = try? FileManager.default.contentsOfDirectory(atPath: dir.path) else { return 0 }
         return names.filter { $0.hasSuffix(".json") }.count
+    }
+
+    private func resolveAvatarRoot(from evidenceRoot: URL) -> URL {
+        if let bundleRaw = ProcessInfo.processInfo.environment["FRANKLIN_AVATAR_BUNDLE"], !bundleRaw.isEmpty {
+            let bundleURL = URL(fileURLWithPath: bundleRaw, isDirectory: true)
+            return bundleURL.deletingLastPathComponent()
+        }
+        return evidenceRoot.deletingLastPathComponent()
     }
 }
