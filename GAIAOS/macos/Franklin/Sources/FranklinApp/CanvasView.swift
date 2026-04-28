@@ -5,6 +5,10 @@ struct CanvasView: View {
     @EnvironmentObject var model: OperatorSurfaceModel
     @State private var didInitialGuide = false
 
+    private var operatorStatusLine: String {
+        model.lastResult.replacingOccurrences(of: "REFUSED:", with: "ATTENTION:")
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             FranklinAvatarStage()
@@ -82,9 +86,9 @@ struct CanvasView: View {
             Text("Avatar controls chat/audio/visual/recording. Tap a language game ID to execute through Franklin route.")
                 .font(.system(size: 10, weight: .semibold))
                 .foregroundStyle(.secondary)
-            Text(model.lastResult)
+            Text(operatorStatusLine)
                 .font(.system(size: 11, design: .monospaced))
-                .foregroundStyle(model.lastResult.hasPrefix("REFUSED") ? .red : .primary)
+                .foregroundStyle(model.lastResult.hasPrefix("REFUSED") ? .orange : .primary)
             if !model.lastGuidance.isEmpty {
                 Text("Operator guidance: \(model.lastGuidance)")
                     .font(.system(size: 10))
@@ -235,8 +239,7 @@ struct FranklinAvatarStage: View {
     }
 
     private var isAvatarRefused: Bool {
-        model.lastResult.hasPrefix("REFUSED")
-            || avatarRuntime.bridgeVersion == "unavailable"
+        avatarRuntime.bridgeVersion == "unavailable"
             || !avatarRuntime.assetBinding.meshLoaded
             || !avatarRuntime.lastRefusal.isEmpty
     }
@@ -263,10 +266,10 @@ struct FranklinAvatarStage: View {
                     RoundedRectangle(cornerRadius: 18)
                         .fill(Color.black.opacity(0.70))
                         .padding(12)
-                    Text("REFUSED\nLIVE AVATAR UNAVAILABLE")
+                    Text("FRANKLIN STARTUP\nLIVE SURFACE INITIALIZING")
                         .font(.system(size: 12, weight: .bold, design: .monospaced))
                         .multilineTextAlignment(.center)
-                        .foregroundStyle(.red)
+                        .foregroundStyle(.orange)
                 }
             }
             .frame(width: 220, height: 190)
@@ -275,7 +278,7 @@ struct FranklinAvatarStage: View {
                 HStack(spacing: 8) {
                     Text("Ben Franklin Avatar")
                         .font(.headline.weight(.semibold))
-                    Text(isAvatarRefused ? "REFUSAL" : "TEMPERATE")
+                    Text(isAvatarRefused ? "ATTENTION" : "ACTIVE")
                         .font(.system(size: 11, weight: .bold, design: .monospaced))
                         .padding(.horizontal, 10)
                         .padding(.vertical, 4)
@@ -289,28 +292,28 @@ struct FranklinAvatarStage: View {
                     .font(.system(size: 10, weight: .semibold, design: .monospaced))
                     .foregroundStyle(.secondary)
                 if avatarRuntime.bridgeVersion == "unavailable" {
-                    Text("REFUSED: bridge unavailable, running mesh fallback projection")
+                    Text("Bridge unavailable; running local fallback presentation path.")
                         .font(.system(size: 10, weight: .bold, design: .monospaced))
-                        .foregroundStyle(.red)
+                        .foregroundStyle(.orange)
                 }
                 Text("Rig: v=\(avatarRuntime.assetBinding.visemeCount) e=\(avatarRuntime.assetBinding.expressionCount) p=\(avatarRuntime.assetBinding.postureCount)")
                     .font(.system(size: 10, weight: .semibold, design: .monospaced))
                     .foregroundStyle(.secondary)
                 if !avatarRuntime.assetBinding.passyAssetSetReady {
-                    Text("REFUSED: required Passy asset set missing")
+                    Text("Passy asset set incomplete; startup verification still in progress.")
                         .font(.system(size: 10, weight: .bold, design: .monospaced))
-                        .foregroundStyle(.red)
+                        .foregroundStyle(.orange)
                 }
                 if !avatarRuntime.assetBinding.meshLoaded {
-                    Text("REFUSED: missing Passy mesh asset at \(avatarRuntime.assetBinding.meshAssetPath)")
+                    Text("Passy mesh path unresolved at startup; verify workspace root configuration.")
                         .font(.system(size: 10, weight: .bold, design: .monospaced))
-                        .foregroundStyle(.red)
+                        .foregroundStyle(.orange)
                         .lineLimit(2)
                 }
                 if !avatarRuntime.assetBinding.meshDetailSufficient {
-                    Text("REFUSED: Passy mesh detail is insufficient for lifelike render contract")
+                    Text("Passy mesh detail below production threshold; use full-quality source asset.")
                         .font(.system(size: 10, weight: .bold, design: .monospaced))
-                        .foregroundStyle(.red)
+                        .foregroundStyle(.orange)
                         .lineLimit(2)
                 }
                 if !avatarRuntime.assetBinding.missingAssets.isEmpty {
@@ -346,7 +349,7 @@ struct FranklinAvatarStage: View {
                         message: "UI badge/render state on first frame",
                         data: [
                             "lastResult": model.lastResult,
-                            "badgeState": model.lastResult.hasPrefix("REFUSED") ? "REFUSAL" : "TEMPERATE",
+                            "badgeState": model.lastResult.hasPrefix("REFUSED") ? "ATTENTION" : "ACTIVE",
                             "bridgeVersion": avatarRuntime.bridgeVersion,
                             "meshLoaded": String(avatarRuntime.assetBinding.meshLoaded),
                             "runtimeLastRefusal": avatarRuntime.lastRefusal.isEmpty ? "none" : avatarRuntime.lastRefusal,

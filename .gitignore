@@ -109,9 +109,16 @@ evidence/oq_receipt.json
 evidence/iq_receipt.json
 evidence/testrobit_receipt.json
 evidence/vqbit_test_receipt.json
+evidence/runs/
+runtime/local-run/
+runtime/sprout-cells/
 
 # Finder duplicates (already deleted, ensure they stay gone)
 *\ 2.*
+*\ 2
+
+# Local operator key material
+local-fot-key
 
 # Local-only trees / side clones — do not commit (GAMP hygiene)
 .claude/

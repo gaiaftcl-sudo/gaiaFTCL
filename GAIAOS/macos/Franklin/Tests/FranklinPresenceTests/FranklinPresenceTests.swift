@@ -501,15 +501,15 @@ final class FranklinPresenceTests: XCTestCase {
         }
     }
 
-    func testCanvasShowsExplicitMissingMeshRefusal() throws {
+    func testCanvasShowsStartupAttentionMessaging() throws {
         let sourcePath = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
             .deletingLastPathComponent()
             .appendingPathComponent("Sources/FranklinApp/CanvasView.swift")
         let source = try String(contentsOf: sourcePath, encoding: .utf8)
-        XCTAssertTrue(source.contains("REFUSED: missing Passy mesh asset"))
-        XCTAssertTrue(source.contains("REFUSED: bridge unavailable, running mesh fallback projection"))
+        XCTAssertTrue(source.contains("Passy mesh path unresolved at startup; verify workspace root configuration."))
+        XCTAssertTrue(source.contains("Bridge unavailable; running local fallback presentation path."))
     }
 
     func testVisibleContractBuilderResolvesBundleAndCountsMaterialRigAssets() throws {
