@@ -2277,7 +2277,8 @@ RUST
     # Build the binary. Cargo will fetch crates.io on first run unless a
     # vendor/ + .cargo/config.toml is present (operator-vendored offline mode).
     local build_log="${EVIDENCE_ROOT}/cargo_build.log"
-    if ( cd "${crate}" && cargo build --release ) >"${build_log}" 2>&1; then
+    if CARGO_TARGET_DIR="${crate}/target" \
+       cargo build --release --manifest-path "${crate}/Cargo.toml" >"${build_log}" 2>&1; then
         HEAL_RECEIPT LG-FRANKLIN-HEAL-RUST-BUILD-001 LG-FRANKLIN-IQ-RUST-VERIFIER-001 CALORIE \
             "cargo build --release succeeded; binary at tools/franklin_verify/target/release/franklin_verify"
     else
