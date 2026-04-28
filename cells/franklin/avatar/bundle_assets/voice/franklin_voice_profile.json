@@ -1,8 +1,58 @@
 {
+  "schema": "GFTCL-FRANKLIN-VOICE-PROFILE-001",
+  "doc_authority": "wiki/Franklin-Avatar-Asset-Gate.md",
   "personaID": "franklin.guide.v1",
-  "locale": "en_US",
-  "preferredVoiceIdentifier": "com.apple.ttsbundle.siri_male_en-US_compact",
-  "fallbackVoiceIdentifier": "com.apple.ttsbundle.Alex-compact",
-  "speakingRate": 0.43,
-  "pitchMultiplier": 0.84
+  "persona": {
+    "name": "Benjamin Franklin",
+    "period": "Passy 1776-1785",
+    "age_range_years": [70, 79],
+    "register": "elder statesman, Enlightenment-era English with Pennsylvania colloquial undertones",
+    "lexicon_lock": "1776-1785",
+    "forbidden_anachronisms": [
+      "calorie",
+      "watt",
+      "joule",
+      "cellphone",
+      "internet",
+      "computer"
+    ]
+  },
+  "voice_model": {
+    "voice_id": "styletts2_franklin_v1",
+    "engine": "styletts2",
+    "format": "coreml.mlmodelc",
+    "compute_units": "cpuAndNeuralEngine",
+    "language": "en-US",
+    "reference_audio_relative_path": "voice/reference_audio/franklin_passy_reference_30s.wav",
+    "produced_by_script": "cells/franklin/avatar/scripts/produce_styletts2_coreml.zsh"
+  },
+  "latency_contract": {
+    "speech_to_mouth_ms_max": 120,
+    "phoneme_to_viseme_jitter_ms_max": 8,
+    "first_audio_sample_ms_max": 80
+  },
+  "audio_contract": {
+    "sample_rate_hz": 48000,
+    "channels": 1,
+    "bit_depth": 24,
+    "speech_rate_wpm_default": 180,
+    "speech_rate_wpm_range": [150, 210]
+  },
+  "privacy_contract": {
+    "on_device_only": true,
+    "retain_voice_audio": false,
+    "no_cloud_synthesis": true,
+    "no_telemetry": true
+  },
+  "language_games_owned": [
+    "LG-FRANKLIN-EMBODY-AVATAR-BREATHE-001",
+    "LG-FRANKLIN-OQ-AVATAR-RECORD-001",
+    "LG-FRANKLIN-PQ-AVATAR-LIFELIKE-001"
+  ],
+  "production_acceptance_criteria": {
+    "must_be_produced_by_script": "cells/franklin/avatar/scripts/produce_styletts2_coreml.zsh",
+    "must_carry_provenance_receipt": "cells/franklin/avatar/build/voice_provenance.json",
+    "must_pass_lipsync_smoke_test": "tools/voice_smoke/",
+    "must_refuse_at_signer_if_placeholder": true
+  }
 }

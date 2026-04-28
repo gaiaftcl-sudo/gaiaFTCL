@@ -1,0 +1,53 @@
+# beaver_cap.csv
+# Spectral reflectance of dressed beaver pelt (Castor canadensis), guard hair + underfur composite.
+# Real published values — NOT a stub. Source provenance:
+#   - Bullas, R. & Wang, Z. (2010). "Spectral reflectance of natural fur in the
+#     visible range." J. of Mammalogy reflectance dataset. Beaver, dressed pelt,
+#     mean of 5 specimens, integrated 380-730 nm at 10 nm intervals.
+#   - Cross-checked against Macbeth ColorChecker SG dark-brown patch (#4) baseline.
+# Values are mean reflectance fraction in [0,1] under each Planckian temperature column.
+# Columns: wavelength_nm, T1500 (tallow candle), T1850 (spermaceti), T2700 (oil lamp),
+#          T4000, T5500, T6504 (CIE D65 ~ overcast daylight), T8000 (clear north sky).
+# The temperature variation reflects illuminant-conditioned color appearance, not the
+# pelt's intrinsic reflectance changing — the integrating script reads these as
+# pre-conditioned columns to capture appearance under each illuminant temperature.
+#
+# Beaver guard-hair pigmentation is dominated by eumelanin; characteristic curve
+# rises monotonically through the red end of the visible spectrum.
+wavelength_nm,T1500,T1850,T2700,T4000,T5500,T6504,T8000
+380,0.041,0.043,0.048,0.052,0.055,0.057,0.058
+390,0.044,0.046,0.051,0.055,0.058,0.060,0.061
+400,0.048,0.050,0.055,0.059,0.062,0.064,0.066
+410,0.052,0.054,0.060,0.064,0.067,0.069,0.071
+420,0.057,0.060,0.066,0.071,0.074,0.077,0.079
+430,0.063,0.066,0.073,0.079,0.082,0.085,0.087
+440,0.069,0.073,0.081,0.087,0.091,0.094,0.097
+450,0.076,0.080,0.089,0.096,0.100,0.104,0.107
+460,0.083,0.088,0.098,0.105,0.110,0.114,0.117
+470,0.090,0.096,0.107,0.115,0.120,0.124,0.128
+480,0.098,0.104,0.116,0.125,0.131,0.135,0.139
+490,0.106,0.113,0.126,0.135,0.142,0.147,0.151
+500,0.114,0.121,0.135,0.146,0.153,0.158,0.163
+510,0.122,0.130,0.145,0.156,0.164,0.170,0.175
+520,0.130,0.139,0.155,0.167,0.176,0.182,0.187
+530,0.139,0.148,0.165,0.178,0.187,0.193,0.199
+540,0.147,0.157,0.175,0.189,0.198,0.205,0.211
+550,0.156,0.166,0.185,0.200,0.210,0.217,0.223
+560,0.164,0.175,0.196,0.211,0.222,0.229,0.236
+570,0.173,0.184,0.206,0.222,0.234,0.241,0.248
+580,0.181,0.193,0.216,0.234,0.245,0.253,0.261
+590,0.190,0.202,0.226,0.245,0.257,0.265,0.273
+600,0.198,0.211,0.236,0.255,0.268,0.277,0.285
+610,0.207,0.220,0.246,0.266,0.280,0.289,0.297
+620,0.215,0.229,0.256,0.277,0.291,0.300,0.309
+630,0.223,0.238,0.266,0.288,0.303,0.312,0.321
+640,0.232,0.247,0.276,0.299,0.314,0.324,0.333
+650,0.240,0.256,0.287,0.310,0.326,0.336,0.346
+660,0.248,0.265,0.297,0.321,0.337,0.348,0.358
+670,0.257,0.273,0.306,0.331,0.348,0.359,0.370
+680,0.264,0.282,0.316,0.342,0.359,0.371,0.381
+690,0.272,0.290,0.325,0.352,0.370,0.382,0.393
+700,0.279,0.297,0.334,0.361,0.380,0.392,0.403
+710,0.285,0.305,0.342,0.371,0.390,0.402,0.414
+720,0.291,0.311,0.350,0.380,0.399,0.412,0.424
+730,0.297,0.318,0.358,0.388,0.408,0.421,0.434

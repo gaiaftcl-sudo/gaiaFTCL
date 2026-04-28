@@ -1,0 +1,77 @@
+{
+  "schema": "GFTCL-AVATAR-REQUIRED-ASSETS-001",
+  "doc_authority": "wiki/Franklin-Avatar-Asset-Gate.md",
+  "purpose": "Single source of truth for the Passy-Franklin asset gate. Read by (a) the SwiftPM build-tool plugin so `swift build` refuses to produce an app without these assets, (b) the Swift FranklinLaunchGate so the running app refuses to render a violated state, (c) the XCTest suite so CI fails before either layer ships. All three layers MUST agree on this list.",
+  "policy": {
+    "missing_asset": "GW_REFUSE_ASSET_MISSING:<label>",
+    "too_small_asset": "GW_REFUSE_ASSET_TOO_SMALL:<label>",
+    "hash_mismatch": "GW_REFUSE_ASSET_HASH_MISMATCH:<label>",
+    "voice_profile_missing": "GW_REFUSE_FRANKLIN_VOICE_PROFILE_MISSING",
+    "voice_profile_invalid": "GW_REFUSE_FRANKLIN_VOICE_PROFILE_INVALID_PERSONA",
+    "workspace_unresolved": "GW_REFUSE_AVATAR_WORKSPACE_ROOT_UNRESOLVED",
+    "placeholder_marker": "GW_REFUSE_ASSET_PLACEHOLDER_MARKER:<label>"
+  },
+  "forbidden_substrings": [
+    "\"kind\":\"placeholder\"",
+    "\"kind\": \"placeholder\"",
+    "\"origin\":\"dev_stub\"",
+    "\"origin\": \"dev_stub\"",
+    "PLACEHOLDER:",
+    "dev_stub"
+  ],
+  "forbid_placeholder_marker": true,
+  "voice_profile": {
+    "relative_path": "cells/franklin/avatar/bundle_assets/voice/franklin_voice_profile.json",
+    "required_persona_id": "franklin.guide.v1"
+  },
+  "required_assets": [
+    {
+      "label": "Franklin_Passy_V2.fblob",
+      "relative_path": "cells/franklin/avatar/bundle_assets/meshes/Franklin_Passy_V2.fblob",
+      "min_bytes": 1000000,
+      "kind": "mesh",
+      "purpose": "1.5M-tri Passy mesh with FACS-52 blendshape rig (Duplessis 1778 reference)",
+      "sha256": null
+    },
+    {
+      "label": "Franklin_Z3_Materials.metallib",
+      "relative_path": "cells/franklin/avatar/bundle_assets/materials/Franklin_Z3_Materials.metallib",
+      "min_bytes": 50000,
+      "kind": "metal_library",
+      "purpose": "Compiled Metal shaders for the Z3 7-pass pipeline",
+      "sha256": null
+    },
+    {
+      "label": "beaver_cap_spectral_lut.exr",
+      "relative_path": "cells/franklin/avatar/bundle_assets/spectral_luts/beaver_cap_spectral_lut.exr",
+      "min_bytes": 10000,
+      "kind": "spectral_lut",
+      "purpose": "Spectral reflectance LUT for Franklin's beaver-fur Passy cap",
+      "sha256": null
+    },
+    {
+      "label": "anisotropic_flow_map.exr",
+      "relative_path": "cells/franklin/avatar/bundle_assets/spectral_luts/anisotropic_flow_map.exr",
+      "min_bytes": 10000,
+      "kind": "spectral_lut",
+      "purpose": "Anisotropic strand-flow map for hair + cap shader",
+      "sha256": null
+    },
+    {
+      "label": "claret_silk_degradation.exr",
+      "relative_path": "cells/franklin/avatar/bundle_assets/spectral_luts/claret_silk_degradation.exr",
+      "min_bytes": 10000,
+      "kind": "spectral_lut",
+      "purpose": "Period-aged claret silk reflectance LUT (frock coat lining)",
+      "sha256": null
+    },
+    {
+      "label": "styletts2_franklin_v1.coreml.mlmodelc/Manifest.json",
+      "relative_path": "cells/franklin/avatar/bundle_assets/voice/styletts2_franklin_v1.coreml.mlmodelc/Manifest.json",
+      "min_bytes": 100,
+      "kind": "coreml_manifest",
+      "purpose": "StyleTTS 2 CoreML manifest — production voice model on Apple Neural Engine",
+      "sha256": null
+    }
+  ]
+}

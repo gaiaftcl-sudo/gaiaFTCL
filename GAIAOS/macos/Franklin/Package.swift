@@ -21,11 +21,21 @@ let package = Package(
         ),
         .executableTarget(
             name: "FranklinApp",
-            dependencies: ["FranklinUIKit"]
+            dependencies: ["FranklinUIKit"],
+            plugins: ["CheckFranklinAvatarAssets"]
         ),
         .testTarget(
             name: "FranklinPresenceTests",
             dependencies: ["FranklinUIKit", "FranklinApp"]
+        ),
+        // Build-time gate. Runs scripts/check_franklin_avatar_assets.zsh and
+        // refuses to compile FranklinApp if any of the 6 required Passy
+        // assets are missing, undersized, or hash-mismatched. The runtime
+        // FranklinLaunchGate.swift reads the same required_assets.json so
+        // build-time and runtime cannot disagree.
+        .plugin(
+            name: "CheckFranklinAvatarAssets",
+            capability: .buildTool()
         ),
     ]
 )

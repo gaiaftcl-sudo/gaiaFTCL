@@ -1,0 +1,52 @@
+{
+  "schema": "GFTCL-AVATAR-REFUSAL-ASSET-001",
+  "doc_authority": "wiki/Franklin-Avatar-Asset-Gate.md",
+  "purpose": "Refusal-code registry slice for the Passy-Franklin asset gate. The same codes are emitted by three layers in lockstep: scripts/check_franklin_avatar_assets.zsh (build time, refuses xcodebuild/swift build), Plugins/CheckFranklinAvatarAssets/ (SwiftPM build-tool plugin), and Sources/FranklinApp/FranklinLaunchGate.swift (runtime, refuses to render the avatar). The single source of truth for the asset list is cells/franklin/avatar/required_assets.json.",
+  "codes": [
+    {
+      "id": "GW_REFUSE_ASSET_MISSING",
+      "summary": "A required Passy asset listed in required_assets.json is absent from the workspace.",
+      "emitter_layers": ["build", "plugin", "runtime", "test"],
+      "exit_code": 215,
+      "source_of_truth": "cells/franklin/avatar/required_assets.json",
+      "user_visible_text": "Required Passy assets are not present. Build refused."
+    },
+    {
+      "id": "GW_REFUSE_ASSET_TOO_SMALL",
+      "summary": "Asset is present but below the min_bytes floor declared in required_assets.json.",
+      "emitter_layers": ["build", "plugin", "runtime", "test"],
+      "exit_code": 216,
+      "source_of_truth": "cells/franklin/avatar/required_assets.json"
+    },
+    {
+      "id": "GW_REFUSE_ASSET_HASH_MISMATCH",
+      "summary": "Asset is present and sized but its sha256 does not match the pin in required_assets.json (only checked when sha256 is non-null).",
+      "emitter_layers": ["build", "plugin", "runtime", "test"],
+      "exit_code": 217
+    },
+    {
+      "id": "GW_REFUSE_FRANKLIN_VOICE_PROFILE_MISSING",
+      "summary": "bundle_assets/voice/franklin_voice_profile.json is missing or unparseable.",
+      "emitter_layers": ["build", "plugin", "runtime", "test"],
+      "exit_code": 218
+    },
+    {
+      "id": "GW_REFUSE_FRANKLIN_VOICE_PROFILE_INVALID_PERSONA",
+      "summary": "Voice profile is parseable but personaID does not equal the required value (default: franklin.guide.v1).",
+      "emitter_layers": ["build", "plugin", "runtime", "test"],
+      "exit_code": 219
+    },
+    {
+      "id": "GW_REFUSE_AVATAR_WORKSPACE_ROOT_UNRESOLVED",
+      "summary": "Could not locate gaiaFTCL/ root from the launch directory or build context.",
+      "emitter_layers": ["plugin", "runtime"],
+      "exit_code": 220
+    },
+    {
+      "id": "GW_REFUSE_AVATAR_REQUIRED_ASSETS_JSON_MISSING",
+      "summary": "cells/franklin/avatar/required_assets.json is absent or unparseable.",
+      "emitter_layers": ["build", "plugin", "runtime", "test"],
+      "exit_code": 221
+    }
+  ]
+}

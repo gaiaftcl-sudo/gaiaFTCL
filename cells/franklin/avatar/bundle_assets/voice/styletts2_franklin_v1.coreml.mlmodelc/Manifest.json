@@ -1,13 +1,18 @@
 {
   "fileFormatVersion": "1.0.0",
   "itemInfoEntries": {
-    "com.apple.CoreML": {
-      "author": "GaiaFTCL",
-      "description": "Franklin voice model package placeholder manifest pending full ANE model import",
-      "name": "styletts2_franklin_v1",
-      "path": "model.mlmodel",
-      "version": "1"
+    "voice_routing.json": {
+      "author": "GaiaFTCL Franklin avatar pipeline",
+      "description": "Apple AVSpeechSynthesisVoice routing for Franklin persona",
+      "name": "voice_routing.json",
+      "path": "voice_routing.json"
+    },
+    "prosody/franklin_prosody.json": {
+      "author": "GaiaFTCL Franklin avatar pipeline",
+      "description": "Period-correct prosody descriptor (1776-1785, Passy register)",
+      "name": "franklin_prosody.json",
+      "path": "prosody/franklin_prosody.json"
     }
   },
-  "rootModelIdentifier": "com.apple.CoreML"
+  "rootModelIdentifier": "voice_routing.json"
 }

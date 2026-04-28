@@ -45,6 +45,21 @@ final class FranklinRustBridge {
         versionFn = loadSymbol("franklin_avatar_bridge_version", as: FranklinBridgeVersionFn.self)
         validateFrameFn = loadSymbol("franklin_avatar_validate_frame", as: FranklinBridgeValidateFrameFn.self)
         visemeFn = loadSymbol("franklin_avatar_first_viseme", as: FranklinBridgeVisemeFn.self)
+        // #region agent log
+        FranklinDebugLogger.log(
+            runId: "pre-fix",
+            hypothesisId: "H2",
+            location: "FranklinRustBridge.swift:load",
+            message: "Bridge dylib and symbol load result",
+            data: [
+                "dylibPath": dylib.path,
+                "handleLoaded": String(self.handle != nil),
+                "hasVersionFn": String(self.versionFn != nil),
+                "hasValidateFn": String(self.validateFrameFn != nil),
+                "hasVisemeFn": String(self.visemeFn != nil),
+            ]
+        )
+        // #endregion
     }
 
     private func resolveBridgeDylibPath() -> URL? {

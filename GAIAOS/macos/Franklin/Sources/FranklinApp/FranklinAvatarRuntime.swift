@@ -36,6 +36,23 @@ final class FranklinAvatarSceneController: ObservableObject {
         } else if assetBinding.postureCount < 6 {
             lastRefusal = "GW_REFUSE_AVATAR_RIG_POSTURE_CARDINALITY"
         }
+        // #region agent log
+        FranklinDebugLogger.log(
+            runId: "pre-fix",
+            hypothesisId: "H3",
+            location: "FranklinAvatarRuntime.swift:init",
+            message: "Avatar runtime initial contract state",
+            data: [
+                "bridgeVersion": bridgeVersion,
+                "meshLoaded": String(assetBinding.meshLoaded),
+                "passyAssetSetReady": String(assetBinding.passyAssetSetReady),
+                "visemeCount": String(assetBinding.visemeCount),
+                "expressionCount": String(assetBinding.expressionCount),
+                "postureCount": String(assetBinding.postureCount),
+                "lastRefusal": lastRefusal.isEmpty ? "none" : lastRefusal,
+            ]
+        )
+        // #endregion
     }
 
     func apply(posture: FranklinAvatarPosture) {

@@ -69,4 +69,9 @@ mesh_exists || fail "GW_REFUSE_TSD_MAC_003" "missing Passy mesh asset (usdz/usda
 [[ -f "wiki/M8_Lithography_Silicon_Cell_Wiki.md" ]] || fail "GW_REFUSE_TSD_MAC_006" "missing M8_Lithography_Silicon_Cell_Wiki.md" 106
 [[ -f "wiki/Qualification-Catalog.md" ]] || fail "GW_REFUSE_TSD_MAC_006" "missing Qualification-Catalog.md" 106
 
+# TSD-MAC-007
+[[ -f "Cargo.toml" ]] || fail "GW_REFUSE_TSD_MAC_007" "missing root Cargo.toml" 107
+cargo metadata --no-deps --manifest-path "Cargo.toml" >/dev/null 2>&1 || \
+  fail "GW_REFUSE_TSD_MAC_007" "root Cargo workspace is unresolved (missing/invalid workspace member)" 107
+
 print "CALORIE:TSD-MAC-STACKS:all contracts satisfied"

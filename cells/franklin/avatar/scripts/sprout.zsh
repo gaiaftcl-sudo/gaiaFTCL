@@ -280,6 +280,12 @@ try_C() {
   CLONE_AVATAR="${CLONE_DIR}/cells/franklin/avatar"
   CLONE_EVIDENCE="${CLONE_AVATAR}/evidence"
   [[ ! -d "${CLONE_AVATAR}" ]] && { hot "clone missing avatar cell"; return 7; }
+  if [[ -f "${CLONE_DIR}/Cargo.toml" ]]; then
+    ( cd "${CLONE_DIR}" && cargo metadata --no-deps --manifest-path "Cargo.toml" >/dev/null 2>&1 ) || {
+      hot "clone cargo workspace unresolved (missing/invalid workspace member)"
+      return 34
+    }
+  fi
   mkdir -p "${CLONE_EVIDENCE}/iq" "${CLONE_EVIDENCE}/oq" "${CLONE_EVIDENCE}/pq"
   () {
     setopt local_options nullglob
@@ -292,6 +298,7 @@ try_C() {
 
 heal_C() {
   rm -rf "${CLONE_DIR}"
+  [[ "$2" == "34" ]] && warn "clone integrity failed: root Cargo workspace unresolved; fix missing members before sprout"
   local url; url="$(git remote get-url "${REMOTE}" 2>/dev/null || true)"
   [[ -n "${url}" ]] && git ls-remote "${url}" "${BRANCH}" 2>&1 | tee -a "${LOG_DIR}/C_heal.log" || true
 }

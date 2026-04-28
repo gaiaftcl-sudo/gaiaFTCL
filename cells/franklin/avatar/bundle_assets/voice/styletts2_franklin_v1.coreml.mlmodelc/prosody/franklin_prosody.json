@@ -1,0 +1,12 @@
+{
+  "schema": "GFTCL-FRANKLIN-PROSODY-001",
+  "persona": "Benjamin Franklin, Passy 1776-1785",
+  "rate": 0.43,
+  "pitch_multiplier": 0.84,
+  "volume": 1.0,
+  "pre_utterance_delay": 0.18,
+  "post_utterance_delay": 0.22,
+  "punctuation_pacing": {"comma_extra_ms": 80, "semicolon_extra_ms": 140, "period_extra_ms": 240},
+  "lexicon_lock_period": "1776-1785",
+  "anachronism_blocklist": ["calorie","watt","joule","kilogram","centimeter","telephone","telegraph","computer","internet","email","gigabyte","wifi","online","podcast"]
+}

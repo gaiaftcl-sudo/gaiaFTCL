@@ -227,6 +227,7 @@ private struct AvatarLanguageGameChip: View {
 struct FranklinAvatarStage: View {
     @EnvironmentObject var model: OperatorSurfaceModel
     @State private var pulse: Double = 0
+    @State private var didLogUiState = false
     @StateObject private var avatarRuntime = FranklinAvatarSceneController()
 
     private var terminalColor: Color {
@@ -323,6 +324,24 @@ struct FranklinAvatarStage: View {
         )
         .task {
             while true {
+                if !didLogUiState {
+                    // #region agent log
+                    FranklinDebugLogger.log(
+                        runId: "pre-fix",
+                        hypothesisId: "H4",
+                        location: "CanvasView.swift:FranklinAvatarStage.task",
+                        message: "UI badge/render state on first frame",
+                        data: [
+                            "lastResult": model.lastResult,
+                            "badgeState": model.lastResult.hasPrefix("REFUSED") ? "REFUSAL" : "TEMPERATE",
+                            "bridgeVersion": avatarRuntime.bridgeVersion,
+                            "meshLoaded": String(avatarRuntime.assetBinding.meshLoaded),
+                            "runtimeLastRefusal": avatarRuntime.lastRefusal.isEmpty ? "none" : avatarRuntime.lastRefusal,
+                        ]
+                    )
+                    // #endregion
+                    didLogUiState = true
+                }
                 pulse += 0.9
                 avatarRuntime.apply(posture: postureState())
                 avatarRuntime.updateSpeech(text: speakingLine)

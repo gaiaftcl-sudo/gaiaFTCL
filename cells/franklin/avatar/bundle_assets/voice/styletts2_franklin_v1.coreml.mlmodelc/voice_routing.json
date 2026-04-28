@@ -1,0 +1,12 @@
+{
+  "schema": "GFTCL-AVATAR-VOICE-ROUTING-001",
+  "engine": "AVSpeechSynthesizer",
+  "compute_units": "cpuAndNeuralEngine",
+  "voice_candidates_in_priority_order": [
+    {"identifier": "com.apple.voice.enhanced.en-US.Reed", "tier": "enhanced", "neural": true},
+    {"identifier": "com.apple.voice.enhanced.en-US.Evan", "tier": "enhanced", "neural": true},
+    {"identifier": "com.apple.voice.premium.en-US.Tom",   "tier": "premium",  "neural": false}
+  ],
+  "refuse_if_no_candidate_available": true,
+  "refusal_code": "GW_REFUSE_AVATAR_VOICE_NO_APPLE_NEURAL_VOICE_INSTALLED"
+}
