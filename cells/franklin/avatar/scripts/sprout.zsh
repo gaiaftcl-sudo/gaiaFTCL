@@ -416,6 +416,14 @@ try_G() {
     hot "visible.json missing render invariant budgets"
     return 30
   }
+  jq -e '.material_system.illuminants >= 4 and .material_system.period_profile == "passy_1778"' "${vis}" >/dev/null 2>&1 || {
+    hot "visible.json missing material science readiness contract"
+    return 32
+  }
+  jq -e '.lithography_contract.required_games | index("LG-LITHOGRAPHY-ROUTE-001") and index("LG-LITHO-EXPOSE-001") and index("LG-FRANKLIN-OQ-LITHO-TESTS-001")' "${vis}" >/dev/null 2>&1 || {
+    hot "visible.json missing lithography contract games"
+    return 33
+  }
   jq -e '.rig_channels.visemes >= 11 and .rig_channels.expressions >= 12 and .rig_channels.postures >= 6' "${vis}" >/dev/null 2>&1 || {
     hot "visible.json rig channel counts below minimum contract"
     return 31
@@ -425,7 +433,7 @@ try_G() {
 
 heal_G() {
   cleanup_app
-  case "$2" in 11|12|26|27|28|29|30|31) tail -80 "${APP_LAUNCH_LOG}" >> "${LOG_DIR}/G_heal.log" 2>/dev/null || true ;; esac
+  case "$2" in 11|12|26|27|28|29|30|31|32|33) tail -80 "${APP_LAUNCH_LOG}" >> "${LOG_DIR}/G_heal.log" 2>/dev/null || true ;; esac
   rm -rf "${CLONE_DIR}/GAIAOS/macos/Franklin/.build" 2>/dev/null || true
 }
 

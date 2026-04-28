@@ -424,6 +424,20 @@ final class FranklinPresenceTests: XCTestCase {
         XCTAssertTrue(source.contains("\"avatar_mode\": \"lifelike_3d_runtime\""))
         XCTAssertTrue(source.contains("\"avatar_controls\""))
         XCTAssertTrue(source.contains("\"language_game_launcher\""))
+        XCTAssertTrue(source.contains("\"material_system\""))
+        XCTAssertTrue(source.contains("\"period_profile\": \"passy_1778\""))
+        XCTAssertTrue(source.contains("\"lithography_contract\""))
+        XCTAssertTrue(source.contains("LG-LITHO-EXPOSE-001"))
+    }
+
+    @MainActor
+    func testLithographyCatalogIncludesMaterialScienceGames() {
+        let games = FranklinLanguageGameCatalog.byFacet[.lithography] ?? []
+        let ids = games.map(\.id)
+        XCTAssertTrue(ids.contains("LG-LITHOGRAPHY-ROUTE-001"))
+        XCTAssertTrue(ids.contains("LG-LITHO-EXPOSE-001"))
+        XCTAssertTrue(ids.contains("LG-FRANKLIN-OQ-LITHO-TESTS-001"))
+        XCTAssertTrue(games.contains(where: { $0.title.lowercased().contains("characterization") }))
     }
 
     func testRustBridgeLoadsDeterministicSymbols() throws {

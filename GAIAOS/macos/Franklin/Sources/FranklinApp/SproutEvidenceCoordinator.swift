@@ -39,6 +39,11 @@ final class SproutEvidenceCoordinator: @unchecked Sendable {
         iso.formatOptions = [.withInternetDateTime]
 
         let visible = iq.appendingPathComponent("visible.json")
+        let illuminantCount = countJSON(
+            at: root
+                .deletingLastPathComponent()
+                .appendingPathComponent("cells/franklin/avatar/bundle_assets/illuminants")
+        )
         let rigSummary = [
             "visemes": countJSON(at: root.deletingLastPathComponent().appendingPathComponent("cells/franklin/avatar/bundle_assets/pose_templates/viseme")),
             "expressions": countJSON(at: root.deletingLastPathComponent().appendingPathComponent("cells/franklin/avatar/bundle_assets/pose_templates/expression")),
@@ -58,6 +63,17 @@ final class SproutEvidenceCoordinator: @unchecked Sendable {
             "render_invariants": [
                 "frame_budget_60hz_ms": 16.6,
                 "frame_budget_120hz_ms": 8.3,
+            ],
+            "material_system": [
+                "illuminants": illuminantCount,
+                "period_profile": "passy_1778",
+            ],
+            "lithography_contract": [
+                "required_games": [
+                    "LG-LITHOGRAPHY-ROUTE-001",
+                    "LG-LITHO-EXPOSE-001",
+                    "LG-FRANKLIN-OQ-LITHO-TESTS-001",
+                ],
             ],
             "rig_channels": rigSummary,
             "sprout_tau": tau,
