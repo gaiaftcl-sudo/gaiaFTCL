@@ -22,6 +22,12 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 TIMESTAMP="$(date -u +%Y%m%dT%H%M%SZ)"
+IQ_NON_INTERACTIVE=0
+if [[ "${FOT_VQBIT_SPROUT:-0}" == "1" || "${FOT_IQ_NON_INTERACTIVE:-0}" == "1" ]]; then
+    IQ_NON_INTERACTIVE=1
+fi
+IQ_CLEAN_OLD_DEFAULT="${FOT_IQ_CLEAN_OLD_DEFAULT:-no}"
+IQ_LICENSE_ACCEPT_DEFAULT="${FOT_IQ_LICENSE_ACCEPT_DEFAULT:-yes}"
 
 # ── Colours ───────────────────────────────────────────────────────────────────
 RED=$'\033[0;31m'; GRN=$'\033[0;32m'; BLU=$'\033[0;34m'
@@ -56,6 +62,10 @@ ask_yesno() {
 }
 
 human_bell() {
+    if (( IQ_NON_INTERACTIVE == 1 )); then
+        print "  Non-interactive IQ mode: human bell acknowledged by sprout policy."
+        return 0
+    fi
     print -u 2 "\n${BOLD}${YLW}🔔 HUMAN VERIFICATION REQUIRED${NC}"
     print -u 2 "${YLW}Please review the real execution output above.${NC}"
     print -u 2 -n "${YLW}Press [Enter] to confirm and proceed... ${NC}"
@@ -145,7 +155,12 @@ else
         print "    • ${item}"
     done
     print ""
-    CLEAN_OLD=$(ask_yesno "Existing app data was found (listed in Terminal).\n\nBack up and remove old wallets and receipts before installing?\n\n(Wallets will be moved to ~/.fot8d_backup_${TIMESTAMP}/)\n(Old app bundles will be trashed — NOT deleted permanently)")
+    if (( IQ_NON_INTERACTIVE == 1 )); then
+        CLEAN_OLD="${IQ_CLEAN_OLD_DEFAULT}"
+        warn "Non-interactive IQ mode: CLEAN_OLD=${CLEAN_OLD}"
+    else
+        CLEAN_OLD=$(ask_yesno "Existing app data was found (listed in Terminal).\n\nBack up and remove old wallets and receipts before installing?\n\n(Wallets will be moved to ~/.fot8d_backup_${TIMESTAMP}/)\n(Old app bundles will be trashed — NOT deleted permanently)")
+    fi
 fi
 
 if [[ "${CLEAN_OLD}" == "yes" ]]; then
@@ -365,7 +380,12 @@ LICENSE_CELLS=""
 [[ "${INSTALL_MACFUSION}" == "true" ]] && LICENSE_CELLS="${LICENSE_CELLS}MacFusion (GAIAFTCL Fusion Cell)\n"
 [[ "${INSTALL_MACHEALTH}" == "true" ]] && LICENSE_CELLS="${LICENSE_CELLS}MacHealth (GaiaHealth Biologit Cell)\n"
 
-ACCEPT=$(ask_yesno "Sovereign Cell License Agreement\n\nInstalling: ${LICENSE_CELLS}\nBy accepting you confirm:\n1. The generated wallet is this cell's sovereign identity\n2. The wallet key is SECRET — never commit to git\n3. This Mac is a qualified sovereign cell under your control\n4. Zero PII is stored — wallet is purely mathematical\n5. Patents USPTO 19/460,960 | 19/096,071 apply\n\nAccept?")
+if (( IQ_NON_INTERACTIVE == 1 )); then
+    ACCEPT="${IQ_LICENSE_ACCEPT_DEFAULT}"
+    warn "Non-interactive IQ mode: LICENSE_ACCEPT=${ACCEPT}"
+else
+    ACCEPT=$(ask_yesno "Sovereign Cell License Agreement\n\nInstalling: ${LICENSE_CELLS}\nBy accepting you confirm:\n1. The generated wallet is this cell's sovereign identity\n2. The wallet key is SECRET — never commit to git\n3. This Mac is a qualified sovereign cell under your control\n4. Zero PII is stored — wallet is purely mathematical\n5. Patents USPTO 19/460,960 | 19/096,071 apply\n\nAccept?")
+fi
 
 [[ "${ACCEPT}" == "yes" ]] || die "License not accepted. IQ cancelled."
 pass "License accepted"
