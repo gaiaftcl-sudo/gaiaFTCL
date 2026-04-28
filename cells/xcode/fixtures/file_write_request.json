@@ -1,0 +1,5 @@
+{
+  "target_path": "cells/xcode/LANGUAGE_GAMES.yaml",
+  "operation": "read_only_check",
+  "expect_terminal_state": "CALORIE"
+}

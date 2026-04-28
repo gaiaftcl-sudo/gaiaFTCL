@@ -1,0 +1,421 @@
+ M Cargo.toml
+ M README.md
+ M Scenarios_Physics_Frequencies_Assertions.md
+ M cells/fusion/apps/gaiaos_browser_cell/scripts/check_no_remote_ui_deps.sh
+ M cells/fusion/apps/gaiaos_browser_cell/scripts/refresh_latest_evidence.sh
+ M cells/fusion/apps/gaiaos_browser_cell/tests/playwright/helpers/run_iqoqpq_with_index.sh
+ M cells/fusion/docs/specs/skin/deploy_mailcow_fleet.sh
+ M cells/fusion/docs/specs/skin/deploy_v11.sh
+ M cells/fusion/docs/specs/skin/install_gaiaftcl_theme.sh
+ M cells/fusion/evidence/agent_census/honeypot_to_gaiaftcl.sh
+ M cells/fusion/evidence/agent_census/monitor_honeypot.sh
+ M cells/fusion/evidence/agent_census/setup_honeypot.sh
+ M cells/fusion/evidence/agent_census/test_blackhole_detection.sh
+ M cells/fusion/evidence/agent_census/test_manual_violation.sh
+ M cells/fusion/evidence/agent_census/verify_agent_census_v1.sh
+ M cells/fusion/evidence/agent_census/verify_certificate_and_scoreboard.sh
+ M cells/fusion/evidence/agent_census/verify_detector_fixtures.sh
+ M cells/fusion/evidence/closure_game/verify_closure_game_v1.sh
+ M cells/fusion/evidence/domain_tubes/verify_domain_tubes_v1.sh
+ M cells/fusion/evidence/ui_contract/verify_phase3.sh
+ M cells/fusion/macos/GaiaFTCLConsole/GaiaFTCLConsole.xcodeproj/project.pbxproj
+ M cells/fusion/macos/GaiaFTCLConsole/Sources/GaiaFTCLConsole/Views/ContentView.swift
+ M cells/fusion/macos/GaiaFTCLConsole/project.yml
+ M cells/fusion/macos/GaiaFusion/GaiaFusion/FusionCellStateMachine.swift
+ M cells/fusion/macos/GaiaFusion/GaiaFusionIntegrationTests/Resources/disconnect_test_nats.sh
+ M cells/fusion/macos/GaiaFusion/MetalRenderer/lib/libgaia_metal_renderer.a
+ M cells/fusion/macos/GaiaFusion/MetalRenderer/rust/src/renderer.rs
+ M cells/fusion/macos/GaiaFusion/Tests/AuthorizationTests.swift
+ M cells/fusion/macos/GaiaFusion/Tests/ConstitutionalBridgeTests.swift
+ M cells/fusion/macos/GaiaFusion/scripts/lib/visual_test_helpers.sh
+ M cells/fusion/macos/MacHealth/Package.swift
+ M cells/fusion/macos/MacHealth/evidence/pq/machealth_pq_receipt.json
+ M cells/fusion/scripts/apply_constitutional_firewall.sh
+ M cells/fusion/scripts/audit_c4_invariants.sh
+ M cells/fusion/scripts/backup_founder_wallet.sh
+ M cells/fusion/scripts/best_control_test_ever.sh
+ M cells/fusion/scripts/build_and_push_all.sh
+ M cells/fusion/scripts/build_fusion_control_mac_app.sh
+ M cells/fusion/scripts/build_fusion_plasma_app_release.sh
+ M cells/fusion/scripts/build_fusion_sidecar_host_dmg.sh
+ M cells/fusion/scripts/build_gaiaftcl_facade_dmg.sh
+ M cells/fusion/scripts/build_gaiafusion_composite_assets.sh
+ M cells/fusion/scripts/build_gaiafusion_metal_lib.sh
+ M cells/fusion/scripts/build_gaiafusion_release.sh
+ M cells/fusion/scripts/build_gaiafusion_wasm_pack.sh
+ M cells/fusion/scripts/build_metal_lib.sh
+ M cells/fusion/scripts/build_test_dmg.sh
+ M cells/fusion/scripts/build_usd_core_xcframework.sh
+ M cells/fusion/scripts/cell_auto_deploy.sh
+ M cells/fusion/scripts/cell_onboard_founder_mac.sh
+ M cells/fusion/scripts/check_all_cells.sh
+ M cells/fusion/scripts/check_ingestion_status.sh
+ M cells/fusion/scripts/chess_planetary_gate.sh
+ M cells/fusion/scripts/clear_release_deck.sh
+ M cells/fusion/scripts/crystal_remote_deploy.sh
+ M cells/fusion/scripts/deploy_cell.sh
+ M cells/fusion/scripts/deploy_crystal_nine_cells.sh
+ M cells/fusion/scripts/deploy_dmg_to_mesh.sh
+ M cells/fusion/scripts/deploy_founder_wallet_system.sh
+ M cells/fusion/scripts/deploy_mailcow_with_mesh.sh
+ M cells/fusion/scripts/deploy_mcp_all_cells_final.sh
+ M cells/fusion/scripts/deploy_mcp_docker_all_cells.sh
+ M cells/fusion/scripts/deploy_mcp_from_local_binary.sh
+ M cells/fusion/scripts/deploy_mcp_simple.sh
+ M cells/fusion/scripts/deploy_mcp_standard.sh
+ M cells/fusion/scripts/deploy_mcp_to_all_cells.sh
+ M cells/fusion/scripts/deploy_mcp_to_cell.sh
+ M cells/fusion/scripts/deploy_mcp_to_cells_final.sh
+ M cells/fusion/scripts/deploy_mcp_via_registry.sh
+ M cells/fusion/scripts/deploy_secrets.sh
+ M cells/fusion/scripts/deploy_streamlit_fixed.sh
+ M cells/fusion/scripts/deploy_streamlit_to_cell.sh
+ M cells/fusion/scripts/deploy_wallet_fix_to_cells.sh
+ M cells/fusion/scripts/diagnose_gaiafusion_swift_test_stall.sh
+ M cells/fusion/scripts/discord_forest_merge_on_head.sh
+ M cells/fusion/scripts/discord_mac_focus_for_topology.sh
+ M cells/fusion/scripts/discord_open_bot_invite_mac.sh
+ M cells/fusion/scripts/dual_user_phase2_hook.sh
+ M cells/fusion/scripts/emergency_wallet_update.sh
+ M cells/fusion/scripts/ensure_gaiafusion_dmg.sh
+ M cells/fusion/scripts/exploit_additional_tools.sh
+ M cells/fusion/scripts/feed_nstxu.sh
+ M cells/fusion/scripts/feed_pcssp.sh
+ M cells/fusion/scripts/fetch_gaiafusion_self_probe.sh
+ M cells/fusion/scripts/fix_arangodb_d2.sh
+ M cells/fusion/scripts/fix_gaiaftcl_mcp_root.sh
+ M cells/fusion/scripts/franklin_check_verification.sh
+ M cells/fusion/scripts/fusion_cell_long_run_runner.sh
+ M cells/fusion/scripts/fusion_cell_long_run_stop.sh
+ M cells/fusion/scripts/fusion_cell_status_nats_publish.sh
+ M cells/fusion/scripts/fusion_challenge_ledger_cli.sh
+ M cells/fusion/scripts/fusion_challenge_nats_publish_team.sh
+ M cells/fusion/scripts/fusion_context_validate.sh
+ M cells/fusion/scripts/fusion_control_dmg_gate.sh
+ M cells/fusion/scripts/fusion_discord_challenge_digest.sh
+ M cells/fusion/scripts/fusion_feeder_service.sh
+ M cells/fusion/scripts/fusion_fill_soak_aux_evidence.sh
+ M cells/fusion/scripts/fusion_fleet_digest_loop.sh
+ M cells/fusion/scripts/fusion_leaf_publish_chain.sh
+ M cells/fusion/scripts/fusion_moor_preflight.sh
+ M cells/fusion/scripts/fusion_phase0_gate.sh
+ M cells/fusion/scripts/fusion_plant_forensic.sh
+ M cells/fusion/scripts/fusion_playwright_watch.sh
+ M cells/fusion/scripts/fusion_sidecar_stack_smoke.sh
+ M cells/fusion/scripts/fusion_soak_nstxu_virtual.sh
+ M cells/fusion/scripts/fusion_soak_report.sh
+ M cells/fusion/scripts/fusion_stack_launch.sh
+ M cells/fusion/scripts/fusion_stack_supervise.sh
+ M cells/fusion/scripts/fusion_surface.sh
+ M cells/fusion/scripts/fusion_turbo_ide.sh
+ M cells/fusion/scripts/gaiaftcl_gate_identity_preflight.sh
+ M cells/fusion/scripts/gaiaftcl_multi_turn_placeholder_audit.sh
+ M cells/fusion/scripts/gaiafusion_internal_cli.sh
+ M cells/fusion/scripts/gaiafusion_kernel_purge.sh
+ M cells/fusion/scripts/generate_gaiafusion_branding_assets.sh
+ M cells/fusion/scripts/great_owl_closure_mcp.sh
+ M cells/fusion/scripts/heal_discord_bot.sh
+ M cells/fusion/scripts/init_sovereign_game_room_mailboxes.sh
+ M cells/fusion/scripts/install_clt_headless.sh
+ M cells/fusion/scripts/integration_tests.sh
+ M cells/fusion/scripts/invariant_mesh_green_probe.sh
+ M cells/fusion/scripts/iq_mac_cell_hardware_lock.sh
+ M cells/fusion/scripts/lib/gaiafusion_host_c4_lock.sh
+ M cells/fusion/scripts/lib/sudo_from_env.sh
+ M cells/fusion/scripts/lib/turbo_frames.sh
+ M cells/fusion/scripts/lib/turbo_keys.sh
+ M cells/fusion/scripts/limb_devportal_capture_chain_mac.sh
+ M cells/fusion/scripts/limb_devportal_capture_wait.sh
+ M cells/fusion/scripts/mac_cell_provision.sh
+ M cells/fusion/scripts/mesh_health_snapshot.sh
+ M cells/fusion/scripts/mesh_ssh_ring.sh
+ M cells/fusion/scripts/migrate_founder_wallet_address.sh
+ M cells/fusion/scripts/mount_gaiafusion_dmg.sh
+ M cells/fusion/scripts/nstxu_benchmark_feeder.sh
+ M cells/fusion/scripts/oq_mac_cell_physics_gate.sh
+ M cells/fusion/scripts/package_gaiafusion_app.sh
+ M cells/fusion/scripts/playwright_discord_onboarding_wrap.sh
+ M cells/fusion/scripts/playwright_discord_profile_cleanup.sh
+ M cells/fusion/scripts/playwright_discord_test_wrap.sh
+ M cells/fusion/scripts/playwright_discord_witness_preflight.sh
+ M cells/fusion/scripts/pq_mac_cell_package_gate.sh
+ M cells/fusion/scripts/preflight_fusion_ui_live.sh
+ M cells/fusion/scripts/preflight_mcp_gateway.sh
+ M cells/fusion/scripts/rebuild_and_distribute.sh
+ M cells/fusion/scripts/remediate_fusion_visual_mac.sh
+ M cells/fusion/scripts/remove-watchtower.sh
+ M cells/fusion/scripts/retrieve_key_from_keychain.sh
+ M cells/fusion/scripts/run_audit_on_mesh.sh
+ M cells/fusion/scripts/run_axiom_audit.sh
+ M cells/fusion/scripts/run_cell_pq_interactive.sh
+ M cells/fusion/scripts/run_cell_qualification_headless.sh
+ M cells/fusion/scripts/run_closure_battery.sh
+ M cells/fusion/scripts/run_closure_battery_mac.sh
+ M cells/fusion/scripts/run_devportal_provision_terminal_mac.sh
+ M cells/fusion/scripts/run_discord_dev_portal_playwright.sh
+ M cells/fusion/scripts/run_discord_membrane_playwright.sh
+ M cells/fusion/scripts/run_dual_user_validation.sh
+ M cells/fusion/scripts/run_full_release_session.sh
+ M cells/fusion/scripts/run_full_test_suite.sh
+ M cells/fusion/scripts/run_fusion_invariant.sh
+ M cells/fusion/scripts/run_fusion_new_user_playwright.sh
+ M cells/fusion/scripts/run_gaiafusion_gate_packaged.sh
+ M cells/fusion/scripts/run_gaiafusion_release_smoke.sh
+ M cells/fusion/scripts/run_gaiafusion_swift_tests.sh
+ M cells/fusion/scripts/run_in_terminal_mac.sh
+ M cells/fusion/scripts/run_mac_cell_autonomous_closure.sh
+ M cells/fusion/scripts/run_operator_fusion_mesh_closure.sh
+ M cells/fusion/scripts/run_pcssp_fault_injection.sh
+ M cells/fusion/scripts/run_substrate_on_cell.sh
+ M cells/fusion/scripts/run_substrate_test_suite.sh
+ M cells/fusion/scripts/run_usd_probe_cli.sh
+ M cells/fusion/scripts/scope_fortress_scan.sh
+ M cells/fusion/scripts/seed_founder_wallet_arangosh.sh
+ M cells/fusion/scripts/set_branch_protection.sh
+ M cells/fusion/scripts/setup_sudoers.sh
+ M cells/fusion/scripts/sovereign_bid_execute.sh
+ M cells/fusion/scripts/sovereign_bid_zero_drift.sh
+ M cells/fusion/scripts/start_fusion_local.sh
+ M cells/fusion/scripts/stop_mac_cell_gaiafusion.sh
+ M cells/fusion/scripts/store_key_in_keychain.sh
+ M cells/fusion/scripts/test_discord_forest_all_domains.sh
+ M cells/fusion/scripts/test_fusion_all_with_sidecar.sh
+ M cells/fusion/scripts/test_fusion_cli.sh
+ M cells/fusion/scripts/test_fusion_discord_tier_a.sh
+ M cells/fusion/scripts/test_fusion_mesh_mooring_stack.sh
+ M cells/fusion/scripts/test_fusion_plant_stack_all.sh
+ M cells/fusion/scripts/test_wallet_signature.sh
+ M cells/fusion/scripts/type1_s4c4_projection_execute.sh
+ M cells/fusion/scripts/validate_discord_game_rooms.sh
+ M cells/fusion/scripts/validate_ui.sh
+ M cells/fusion/scripts/verify_all_cells_mcp.sh
+ M cells/fusion/scripts/verify_fusion_operator_surface.sh
+ M cells/fusion/scripts/verify_fusion_sidecar_bundle.sh
+ M cells/fusion/scripts/verify_gaiafusion_dmg_sealed.sh
+ M cells/fusion/scripts/verify_gaiafusion_internal_surface_suite.sh
+ M cells/fusion/scripts/verify_gaiafusion_usd_playback.sh
+ M cells/fusion/scripts/verify_gaiafusion_usd_runtime_link.sh
+ M cells/fusion/scripts/verify_gaiafusion_working_app.sh
+ M cells/fusion/scripts/verify_manifold_projection.sh
+ M cells/fusion/scripts/verify_nine_cell_release.sh
+ M cells/fusion/scripts/verify_plant_adapters_contract.sh
+ M cells/fusion/scripts/verify_remote_push_receipt.sh
+ M cells/fusion/scripts/verify_secrets.sh
+ M cells/fusion/scripts/verify_sovereign_ui_panels.sh
+ M cells/fusion/scripts/witness_gaiaftcl_dmg_mount.sh
+ M cells/fusion/scripts/witness_mac_cell_fleet_health.sh
+ M cells/fusion/scripts/witness_mac_vqbit_substrate_ingest.sh
+ M cells/fusion/services/akg_gnn/download_model_prebuilt.sh
+ M cells/fusion/services/arango_backup/run_backup.sh
+ M cells/fusion/services/deploy_real_oauth.sh
+ M cells/fusion/services/dns_authority/install.sh
+ M cells/fusion/services/franklin_guardian/systemd/install_timer.sh
+ M cells/fusion/services/gaiaos-atc-turbulence-test/scripts/run_atc_turbulence_test.sh
+ M cells/fusion/services/gaiaos_founder_channel/start.sh
+ M cells/fusion/services/mailcow_bridge/deploy.sh
+ M cells/fusion/tests/discord_frontier/applescript/curl_claims_count.sh
+ M cells/fusion/tests/discord_frontier/applescript/curl_torsion_state.sh
+ M cells/fusion/tests/discord_frontier/applescript/gaia_jump.sh
+ M cells/fusion/tests/discord_frontier/applescript/gaia_observer_poll.sh
+ M cells/fusion/tests/discord_frontier/applescript/gaia_vortex_heartbeat_daemon.sh
+ M cells/fusion/tests/discord_frontier/run_phase6_live.sh
+ M cells/fusion/tests/run_all.sh
+ M cells/fusion/tests/substrate/test_constitutional_firewall.sh
+ M cells/fusion/tests/test_closure_game_fail_closed.sh
+ M cells/fusion/tests/test_uum8d_fail_closed.sh
+ M cells/fusion/tests/test_uum8d_permission_gate.sh
+ M cells/fusion/tools/batch_submit.sh
+ M cells/fusion/tools/extract_batch.sh
+ M cells/fusion/tools/ingest.sh
+ M cells/fusion/tools/live_probe_v1.sh
+ M cells/fusion/tools/prove_scheduler_lima.sh
+ M cells/fusion/tools/prove_scheduler_remote_one_cell.sh
+ M cells/fusion/tools/show_progress.sh
+ M cells/health/Cargo.toml
+ M cells/health/README.md
+ M cells/health/biologit_md_engine/src/force_field.rs
+ M cells/health/biologit_md_engine/src/lib.rs
+ M cells/health/biologit_usd_parser/src/lib.rs
+ M cells/health/docs/DESIGN_SPECIFICATION.md
+ M cells/health/docs/FUNCTIONAL_SPECIFICATION.md
+ M cells/health/docs/REQUIREMENTS_TRACEABILITY_MATRIX.md
+ M cells/health/docs/REVIEWER_BRIEF.md
+ M cells/health/docs/S4_C4_COMMUNION_UI_SPEC.md
+ M cells/health/docs/invariants/OWL-NUTRITION/IQ_PROTOCOL.md
+ M cells/health/docs/invariants/OWL-P53/README.md
+ M cells/health/schemas/nutrition/README.md
+ M cells/health/scripts/gamp5_qualification_catalog_check.py
+ M cells/health/scripts/health_cell_gamp5_validate.sh
+ M cells/health/scripts/iq_install.sh
+ M cells/health/scripts/owl_nutrition_iqoqpq_validate.sh
+ M cells/health/swift/MacFranklin/README.md
+ M cells/health/swift/MacFranklin/Sources/MacFranklinApp.swift
+ M cells/health/swift/MacFranklin/mcp-rust/src/main.rs
+ M cells/health/swift/MacFranklin/mcp/MCP_CURSOR.md
+ M cells/health/swift_testrobit/Sources/SwiftTestRobit/ConstitutionalTests.swift
+ M cells/health/swift_testrobit/Sources/SwiftTestRobit/WalletTests.swift
+ M cells/health/swift_testrobit/Sources/SwiftTestRobit/main.swift
+ M cells/health/wasm_constitutional/Cargo.toml
+ M cells/health/wasm_constitutional/src/lib.rs
+ M cells/health/wasm_constitutional_gaiaos_nested/src/lib.rs
+ M cells/health/wasm_constitutional_gaiaos_nested/src/primitives.rs
+ M cells/health/wiki/BioligitPrimitive-ABI.md
+ M cells/health/wiki/GAMP5-Lifecycle.md
+ M cells/health/wiki/Home.md
+ M cells/health/wiki/IQ-Installation-Qualification.md
+ M cells/health/wiki/OQ-Operational-Qualification.md
+ M cells/health/wiki/PQ-Performance-Qualification.md
+ M cells/health/wiki/State-Machine.md
+ M cells/health/wiki/Swift-TestRobit.md
+ M cells/health/wiki/WASM-Constitutional-Substrate.md
+ M docs/index.html
+ M rust-toolchain.toml
+ M scripts/gamp5_iq.sh
+ M scripts/gamp5_oq.sh
+ M scripts/gamp5_pq.sh
+ M scripts/publish_wiki.sh
+ M scripts/run_full_cycle.sh
+ M wiki/GaiaFTCL-Fusion-Mac-Cell-Wiki.md
+ M wiki/GaiaFTCL-Health-Mac-Cell-Wiki.md
+ M wiki/The-Unified-Measurement-Substrate.md
+ M wiki/lint_wiki.sh
+?? AppleAdditionalTools/
+?? GAIAOS/Internal/
+?? GAIAOS/WORKSPACE_GIT_ROOT.md
+?? GAIAOS/apps/
+?? GAIAOS/avatar-gen/
+?? GAIAOS/dist/
+?? GAIAOS/docs/
+?? GAIAOS/evidence/
+?? GAIAOS/franklin_validator/
+?? GAIAOS/ftcl/
+?? GAIAOS/gaiaos-web/
+?? GAIAOS/gaiaos_atc_ui/
+?? GAIAOS/gasm_runtime/
+?? GAIAOS/mac-cell/
+?? GAIAOS/mac_cell/FranklinGAMP5Admin/com.fortressai.franklin.mac.admin.gamp5.example.plist
+?? GAIAOS/mac_cell/FranklinGAMP5Admin/run_franklin_mac_admin_gamp5.sh
+?? GAIAOS/macos/
+?? GAIAOS/mcp-servers/
+?? GAIAOS/playwright-report/
+?? GAIAOS/quantum_substrate/
+?? GAIAOS/sandbox/
+?? GAIAOS/scripts/
+?? GAIAOS/services/
+?? GAIAOS/tests/
+?? cells/franklin/config/
+?? cells/franklin/services/macfranklin_devcell_host/
+?? cells/fusion/LANGUAGE_GAMES.md
+?? cells/fusion/LANGUAGE_GAMES.yaml
+?? cells/fusion/macos/GaiaFTCLConsole/GaiaFTCLConsole.xcodeproj/project.xcworkspace/xcshareddata/
+?? cells/fusion/macos/GaiaFTCLConsole/GaiaFTCLConsole.xcodeproj/xcshareddata/
+?? cells/fusion/macos/GaiaFTCLConsole/Sources/GaiaFTCLConsole/AdminCellQualification.swift
+?? cells/fusion/macos/GaiaFTCLConsole/Sources/GaiaFTCLConsole/Views/TestRobotPanelView.swift
+?? cells/fusion/macos/GaiaFTCLConsole/Tests/
+?? cells/fusion/macos/GaiaFTCLConsole/scripts/com.gaiaftcl.testrobot.admin-cell.example.plist
+?? cells/fusion/macos/GaiaFTCLConsole/scripts/run_testrobot_admin_cell.sh
+?? cells/fusion/macos/GaiaFTCLConsole/scripts/verify_build_and_test.sh
+?? cells/fusion/macos/GaiaFusion/evidence/
+?? cells/fusion/macos/MacHealth/.xcode-version
+?? cells/fusion/macos/MacHealth/Tests/MacHealthUITests/
+?? cells/fusion/macos/MacHealth/Tests/Unit/
+?? cells/fusion/macos/MacHealth/evidence/iq/iq_receipt.json
+?? cells/fusion/macos/MacHealth/evidence/oq/machealth_games_narrative_receipt.json
+?? cells/fusion/macos/MacHealth/evidence/oq/oq_receipt.json
+?? cells/fusion/macos/MacHealth/evidence/oq/sil_v2_observational_protocol_contract_fixture.json
+?? cells/fusion/macos/MacHealth/evidence/pq/pq_receipt.json
+?? cells/fusion/scripts/_fo_fusion_bin.zsh
+?? cells/fusion/tests/fixtures/
+?? cells/health/.admincell-expected/
+?? cells/health/CHANGELOG.md
+?? cells/health/LANGUAGE_GAMES.md
+?? cells/health/LANGUAGE_GAMES.yaml
+?? cells/health/biologit_md_engine/src/docking.rs
+?? cells/health/biologit_md_engine/src/ligand_class.rs
+?? cells/health/biologit_md_engine/src/pgx.rs
+?? cells/health/docs/GAMP5_RING2_REPO_SCRIPTS.md
+?? cells/health/docs/LOCAL_IQOQPQ_ORCHESTRATOR_V3.1_EXECUTION_PLAN.md
+?? cells/health/docs/LOCAL_IQOQPQ_ORCHESTRATOR_V3.md
+?? cells/health/docs/PEPTIDE_INTEGRATION_SPEC.md
+?? cells/health/docs/TESTROBOT_VS_HEALTH_IQOQPQ.md
+?? cells/health/docs/ccr/
+?? cells/health/docs/invariants/LIGAND-CLASS/
+?? cells/health/docs/invariants/OWL-MITO/
+?? cells/health/docs/invariants/REGISTRY_TIERS.md
+?? cells/health/docs/qualification/
+?? cells/health/fixtures/
+?? cells/health/schemas/orchestrator_receipt_1.0.0.schema.json
+?? cells/health/schemas/teardown_receipt_1.0.1.schema.json
+?? cells/health/scripts/_fo_health_bin.zsh
+?? cells/health/scripts/franklin_mac_admin_gamp5_zero_human.sh
+?? cells/health/scripts/gaiahealth_part11_regulated_claim_grep.sh
+?? cells/health/scripts/gaiahealth_provision_wallet_only.sh
+?? cells/health/scripts/health_full_local_iqoqpq_gamp.sh
+?? cells/health/scripts/iq_license_provision.sh
+?? cells/health/scripts/iq_preflight.sh
+?? cells/health/scripts/owl_mito_docs_gate.sh
+?? cells/health/scripts/peptide_ligand_class_gamp5_evidence.sh
+?? cells/health/scripts/run_iqoqpq_fresh_clone_gui_witness.zsh
+?? cells/health/scripts/run_iqoqpq_orchestrator_clean.sh
+?? cells/health/swift/AdminCellRunner/Package.swift
+?? cells/health/swift/AdminCellRunner/README.md
+?? cells/health/swift/AdminCellRunner/Sources/AdminCellCore/ArgDeviation.swift
+?? cells/health/swift/AdminCellRunner/Sources/AdminCellCore/Attribution.swift
+?? cells/health/swift/AdminCellRunner/Sources/AdminCellCore/Checksum.swift
+?? cells/health/swift/AdminCellRunner/Sources/AdminCellCore/CodesignInfo.swift
+?? cells/health/swift/AdminCellRunner/Sources/AdminCellCore/FranklinInventory.swift
+?? cells/health/swift/AdminCellRunner/Sources/AdminCellCore/OrchestratorLaunch.swift
+?? cells/health/swift/AdminCellRunner/Sources/AdminCellCore/ParentProcessIDE.swift
+?? cells/health/swift/AdminCellRunner/Sources/AdminCellCore/RepoRootResolver.swift
+?? cells/health/swift/AdminCellRunner/Sources/AdminCellCore/RunEnvironment.swift
+?? cells/health/swift/AdminCellRunner/Sources/AdminCellCore/TauResolver.swift
+?? cells/health/swift/AdminCellRunner/Sources/AdminCellCore/Version.swift
+?? cells/health/swift/AdminCellRunner/Sources/AdminCellRunnerCLI/
+?? cells/health/swift/AdminCellRunner/Tests/AdminCellRunnerTests/FranklinInventoryTests.swift
+?? cells/health/swift/AdminCellRunner/Tests/AdminCellRunnerTests/TauResolverTests.swift
+?? cells/health/swift/MacFranklin/mcp/LOCAL_DEVELOPER_CONTROL_PLANE.md
+?? cells/health/swift/README_PHASE4.md
+?? cells/health/swift_testrobit/Sources/SwiftTestRobit/IdentityPaths.swift
+?? cells/health/wasm_constitutional/tests/
+?? cells/lithography/LANGUAGE_GAMES.md
+?? cells/lithography/LANGUAGE_GAMES.yaml
+?? cells/lithography/docs/VQBIT_SIZING_SPEC.md
+?? cells/lithography/evidence/
+?? cells/shared/
+?? cells/xcode/
+?? docs/audit/
+?? docs/concepts/constitutional-invariants.md
+?? docs/concepts/gamp5-alignment.md
+?? docs/concepts/receipt-lifecycle.md
+?? docs/concepts/uum-8d.md
+?? docs/concepts/vqbit-surface.md
+?? docs/franklin-wiki-refresh/
+?? docs/gamp5/
+?? evidence/_closure/
+?? evidence/_gateway_refusals/
+?? evidence/_index/
+?? evidence/_path_manifests/
+?? evidence/fusion/
+?? evidence/gamp5_local/
+?? evidence/health/
+?? evidence/lithography/
+?? evidence/xcode/
+?? minio_data/
+?? scripts/build_composite_dmg.sh
+?? scripts/com.gaiaftcl.gateway.plist
+?? scripts/evidence_index_refresh.sh
+?? scripts/gamp5_add_domain_surface.sh
+?? scripts/gamp5_gate1_catalog_path_integrity.sh
+?? scripts/gamp5_gate2_doc_coverage.sh
+?? scripts/gamp5_gate3_test_coverage.sh
+?? scripts/gamp5_gate4_execute_official.sh
+?? scripts/gamp5_gate5_finalize_pack.sh
+?? scripts/gamp5_generate_waivers.sh
+?? scripts/gamp5_lithography_validate.sh
+?? scripts/gamp5_local_catalog.json
+?? scripts/gamp5_local_stack_closure.sh
+?? scripts/gamp5_materialize_closure_evidence.sh
+?? scripts/path_discovery.sh
+?? scripts/path_discovery_resolvers.md
+?? scripts/start_closure_window.sh
+?? substrate/

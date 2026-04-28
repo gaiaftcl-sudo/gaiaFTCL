@@ -116,6 +116,7 @@ runtime/sprout-cells/
 # Finder duplicates (already deleted, ensure they stay gone)
 *\ 2.*
 *\ 2
+**/GaiaFTCLConsole [0-9]*.xcodeproj/
 
 # Local operator key material
 local-fot-key
