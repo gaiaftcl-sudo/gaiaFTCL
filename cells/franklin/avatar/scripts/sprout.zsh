@@ -178,9 +178,9 @@ try_A() {
   [[ "${FOT_AVATAR_PQ_VISIBLE_OPERATOR_PRESENT:-0}" != "1" ]] && { hot "operator presence flag must be 1"; return 4; }
   # Tracked/index only — local vendor/ .worktrees/ etc. must not block qualification.
   if [[ "${FRANKLIN_SPROUT_STRICT_DIRTY:-0}" == "1" ]]; then
-    [[ -n "$(git status --porcelain)" ]] && { hot "working tree dirty"; return 5; }
+    [[ -n "$(git status --porcelain --ignore-submodules=dirty)" ]] && { hot "working tree dirty"; return 5; }
   else
-    [[ -n "$(git status --porcelain --untracked-files=no)" ]] && { hot "working tree dirty (tracked/index)"; return 5; }
+    [[ -n "$(git status --porcelain --untracked-files=no --ignore-submodules=dirty)" ]] && { hot "working tree dirty (tracked/index)"; return 5; }
   fi
   # Owner-only prerequisite: require an external push to origin/main every run.
   if [[ "${REQUIRE_OWNER_MAIN_PUSH}" == "1" ]]; then
