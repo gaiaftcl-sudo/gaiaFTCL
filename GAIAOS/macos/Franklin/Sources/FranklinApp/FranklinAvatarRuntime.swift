@@ -1,7 +1,7 @@
 import AppKit
 import Foundation
 import Metal
-import MetalKit
+import SceneKit
 import SwiftUI
 
 enum FranklinAvatarPosture {
@@ -21,6 +21,7 @@ final class FranklinAvatarSceneController: ObservableObject {
     @Published private(set) var lastRefusal: String = ""
     @Published private(set) var assetBinding = FranklinAvatarAssetBinding.empty
     let invariants = FranklinInvariants()
+    private var lastFrameTick: CFAbsoluteTime?
 
     init() {
         bridgeVersion = FranklinRustBridge.shared.version
@@ -29,6 +30,8 @@ final class FranklinAvatarSceneController: ObservableObject {
             lastRefusal = "GW_REFUSE_AVATAR_PASSY_ASSET_SET_MISSING"
         } else if !assetBinding.meshLoaded {
             lastRefusal = "GW_REFUSE_AVATAR_MESH_ASSET_MISSING"
+        } else if !assetBinding.meshDetailSufficient {
+            lastRefusal = "GW_REFUSE_AVATAR_MESH_DETAIL_INSUFFICIENT"
         } else if assetBinding.visemeCount < 11 {
             lastRefusal = "GW_REFUSE_AVATAR_RIG_VISEME_CARDINALITY"
         } else if assetBinding.expressionCount < 12 {
@@ -76,12 +79,23 @@ final class FranklinAvatarSceneController: ObservableObject {
             lastRefusal = "GW_REFUSE_AVATAR_MESH_ASSET_MISSING"
             return
         }
+        if !assetBinding.meshDetailSufficient {
+            lastRefusal = "GW_REFUSE_AVATAR_MESH_DETAIL_INSUFFICIENT"
+            return
+        }
         lastFrameMs = frameMs
         if !FranklinRustBridge.shared.validateFrame(frameMs: frameMs, targetHz: targetHz) {
             lastRefusal = "GW_REFUSE_AVATAR_FRAME_BUDGET_OVERRUN"
         } else {
             lastRefusal = ""
         }
+    }
+
+    func registerFrameTick(now: CFAbsoluteTime = CFAbsoluteTimeGetCurrent()) {
+        defer { lastFrameTick = now }
+        guard let previous = lastFrameTick else { return }
+        let frameMs = Float((now - previous) * 1000.0)
+        registerFrame(frameMs: frameMs, targetHz: invariants.targetFPS)
     }
 }
 
@@ -97,6 +111,7 @@ struct FranklinAvatarAssetBinding {
     let expressionCount: Int
     let postureCount: Int
     let meshLoaded: Bool
+    let meshDetailSufficient: Bool
     let passyAssetSetReady: Bool
     let missingAssets: [String]
 
@@ -106,6 +121,7 @@ struct FranklinAvatarAssetBinding {
         expressionCount: 0,
         postureCount: 0,
         meshLoaded: false,
+        meshDetailSufficient: false,
         passyAssetSetReady: false,
         missingAssets: []
     )
@@ -122,6 +138,7 @@ struct FranklinAvatarAssetBinding {
             let expressions = (try? fm.contentsOfDirectory(atPath: expressionPath.path).filter { $0.hasSuffix(".json") }.count) ?? 0
             let postures = (try? fm.contentsOfDirectory(atPath: posturePath.path).filter { $0.hasSuffix(".json") }.count) ?? 0
             let mesh = resolveMeshAsset(in: bundlePath)
+            let meshDetailSufficient = mesh.flatMap { isMeshDetailSufficient(at: $0) } ?? false
             let required = requiredAssets()
             let missing = required.compactMap { asset in
                 let file = cursor.appendingPathComponent(asset.relativePath)
@@ -141,6 +158,7 @@ struct FranklinAvatarAssetBinding {
                     expressionCount: expressions,
                     postureCount: postures,
                     meshLoaded: mesh != nil && missing.isEmpty,
+                    meshDetailSufficient: meshDetailSufficient,
                     passyAssetSetReady: missing.isEmpty,
                     missingAssets: missing
                 )
@@ -197,12 +215,14 @@ struct FranklinAvatarAssetBinding {
         let fm = FileManager.default
         let meshes = bundlePath.appendingPathComponent("meshes", isDirectory: true)
         let candidates = [
+            "Franklin_Passy_V2.usdz",
+            "Franklin_Passy_V2.usdc",
+            "Franklin_Passy_V2.usda",
             "franklin_passy_v1.usdz",
             "franklin_passy_v1.usda",
             "franklin_passy_v1.usdc",
             "franklin_passy_v1.obj",
             "franklin_passy_v1.gltf",
-            "franklin_passy_v1.glb",
         ]
         for name in candidates {
             let path = meshes.appendingPathComponent(name)
@@ -212,77 +232,182 @@ struct FranklinAvatarAssetBinding {
         }
         return nil
     }
+
+    private static func isMeshDetailSufficient(at url: URL) -> Bool {
+        guard let bytes = fileSize(path: url.path), bytes >= 5_000_000 else { return false }
+        guard let scene = try? SCNScene(url: url, options: nil) else { return false }
+        var geometryNodeCount = 0
+        scene.rootNode.enumerateChildNodes { node, _ in
+            if node.geometry != nil {
+                geometryNodeCount += 1
+            }
+        }
+        return geometryNodeCount >= 6
+    }
 }
 
-final class FranklinMetalRenderer: NSObject, MTKViewDelegate {
-    private weak var controller: FranklinAvatarSceneController?
-    private var queue: MTLCommandQueue?
-    private var pulse: Double = 0
+struct FranklinPostureTemplate: Decodable {
+    let id: String
+    let geometry_pin: [Float]
+}
 
-    init(controller: FranklinAvatarSceneController, device: MTLDevice) {
-        self.controller = controller
-        self.queue = device.makeCommandQueue()
-    }
+final class FranklinSceneRenderer: NSObject {
+    private(set) var postureTemplates: [String: FranklinPostureTemplate] = [:]
 
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {}
-
-    func draw(in view: MTKView) {
-        guard let descriptor = view.currentRenderPassDescriptor,
-              let drawable = view.currentDrawable,
-              let commandBuffer = queue?.makeCommandBuffer(),
-              let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor),
-              let controller
-        else { return }
-
-        let start = CFAbsoluteTimeGetCurrent()
-        pulse += 0.04
-        let glow = 0.06 * (sin(pulse) + 1.0)
-        switch controller.currentPosture {
-        case .idle:
-            if controller.assetBinding.meshLoaded {
-                view.clearColor = MTLClearColor(red: 0.44 + glow, green: 0.40 + glow * 0.6, blue: 0.32 + glow * 0.2, alpha: 1)
-            } else {
-                view.clearColor = MTLClearColor(red: 0.46, green: 0.14, blue: 0.14, alpha: 1)
-            }
-        case .listening:
-            view.clearColor = MTLClearColor(red: 0.30, green: 0.40 + glow, blue: 0.52, alpha: 1)
-        case .speaking:
-            view.clearColor = MTLClearColor(red: 0.25, green: 0.44 + glow, blue: 0.44, alpha: 1)
-        case .refusing:
-            view.clearColor = MTLClearColor(red: 0.56 + glow * 0.3, green: 0.20, blue: 0.20, alpha: 1)
-        case .recording:
-            view.clearColor = MTLClearColor(red: 0.52 + glow * 0.3, green: 0.36 + glow * 0.4, blue: 0.20, alpha: 1)
+    func loadPostureTemplates(from binding: FranklinAvatarAssetBinding) {
+        guard !binding.meshAssetPath.isEmpty else { return }
+        let meshURL = URL(fileURLWithPath: binding.meshAssetPath)
+        let postureDir = meshURL.deletingLastPathComponent()
+            .appendingPathComponent("../pose_templates/posture")
+            .standardizedFileURL
+        guard let files = try? FileManager.default.contentsOfDirectory(at: postureDir, includingPropertiesForKeys: nil) else {
+            return
         }
-
-        encoder.endEncoding()
-        commandBuffer.present(drawable)
-        commandBuffer.commit()
-        let elapsed = Float((CFAbsoluteTimeGetCurrent() - start) * 1000)
-        controller.registerFrame(frameMs: elapsed, targetHz: controller.invariants.targetFPS)
+        let decoder = JSONDecoder()
+        for file in files where file.pathExtension == "json" {
+            guard
+                let data = try? Data(contentsOf: file),
+                let template = try? decoder.decode(FranklinPostureTemplate.self, from: data)
+            else { continue }
+            let key = file.deletingPathExtension().lastPathComponent
+            postureTemplates[key] = template
+        }
     }
 }
 
 struct FranklinAvatarRuntimeView: NSViewRepresentable {
     @ObservedObject var controller: FranklinAvatarSceneController
 
-    func makeCoordinator() -> FranklinMetalRenderer? {
-        guard let device = MTLCreateSystemDefaultDevice() else { return nil }
-        return FranklinMetalRenderer(controller: controller, device: device)
+    func makeCoordinator() -> FranklinSceneRenderer {
+        let renderer = FranklinSceneRenderer()
+        renderer.loadPostureTemplates(from: controller.assetBinding)
+        return renderer
     }
 
-    func makeNSView(context: Context) -> MTKView {
-        let view = MTKView()
-        view.device = MTLCreateSystemDefaultDevice()
+    func makeNSView(context: Context) -> SCNView {
+        let view = SCNView()
         view.preferredFramesPerSecond = Int(controller.invariants.targetFPS)
-        view.clearColor = MTLClearColor(red: 0.48, green: 0.42, blue: 0.33, alpha: 1.0)
-        view.colorPixelFormat = .bgra8Unorm
-        view.enableSetNeedsDisplay = false
-        view.isPaused = false
-        view.delegate = context.coordinator
+        view.backgroundColor = NSColor(calibratedRed: 0.12, green: 0.10, blue: 0.08, alpha: 1.0)
+        view.rendersContinuously = true
+        view.autoenablesDefaultLighting = false
+        view.scene = makeScene(context: context)
         return view
     }
 
-    func updateNSView(_ nsView: MTKView, context: Context) {
-        // MTKView redraws continuously via preferredFramesPerSecond.
+    func updateNSView(_ nsView: SCNView, context: Context) {
+        if nsView.scene == nil {
+            nsView.scene = makeScene(context: context)
+        }
+        applyPosture(controller.currentPosture, to: nsView.scene, using: context.coordinator.postureTemplates)
+    }
+
+    private func makeScene(context: Context) -> SCNScene {
+        let scene = SCNScene()
+        scene.background.contents = NSColor(calibratedRed: 0.12, green: 0.10, blue: 0.08, alpha: 1.0)
+
+        let cameraNode = SCNNode()
+        cameraNode.camera = SCNCamera()
+        cameraNode.position = SCNVector3(0, 0, 6.0)
+        scene.rootNode.addChildNode(cameraNode)
+
+        let keyLight = SCNNode()
+        keyLight.light = SCNLight()
+        keyLight.light?.type = .omni
+        keyLight.light?.intensity = 1000
+        keyLight.position = SCNVector3(1.5, 1.8, 4.0)
+        scene.rootNode.addChildNode(keyLight)
+
+        let fillLight = SCNNode()
+        fillLight.light = SCNLight()
+        fillLight.light?.type = .ambient
+        fillLight.light?.intensity = 300
+        scene.rootNode.addChildNode(fillLight)
+
+        if let avatarRoot = loadAvatarNode() {
+            avatarRoot.name = "franklin-avatar-root"
+            scene.rootNode.addChildNode(avatarRoot)
+        }
+        _ = loadPassyMaterialLibrary()
+        return scene
+    }
+
+    private func applyPosture(
+        _ posture: FranklinAvatarPosture,
+        to scene: SCNScene?,
+        using templates: [String: FranklinPostureTemplate]
+    ) {
+        guard let node = scene?.rootNode.childNode(withName: "franklin-avatar-root", recursively: true) else { return }
+        let templateName = switch posture {
+        case .idle: "greet_aside"
+        case .listening: "lean_forward_listen"
+        case .speaking: "write_quill_pause"
+        case .refusing: "refuse_terminal"
+        case .recording: "recline_consider"
+        }
+        guard let template = templates[templateName] else { return }
+        let pin = template.geometry_pin
+        if pin.count >= 3 {
+            node.position = SCNVector3(pin[0], pin[1], pin[2])
+        }
+        if pin.count >= 4 {
+            node.eulerAngles = SCNVector3(0, pin[3], 0)
+        }
+    }
+
+    private func loadAvatarNode() -> SCNNode? {
+        let path = controller.assetBinding.meshAssetPath
+        guard !path.isEmpty else { return nil }
+        let url = URL(fileURLWithPath: path)
+        if let scene = try? SCNScene(url: url, options: nil) {
+            let root = SCNNode()
+            for child in scene.rootNode.childNodes {
+                root.addChildNode(child)
+            }
+            applyPassyMaterials(to: root)
+            root.scale = SCNVector3(1.2, 1.2, 1.2)
+            return root
+        }
+        return nil
+    }
+
+    private func applyPassyMaterials(to root: SCNNode) {
+        guard let bundleRoot = URL(fileURLWithPath: controller.assetBinding.meshAssetPath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .standardizedFileURL as URL?
+        else { return }
+        let capLUT = bundleRoot.appendingPathComponent("spectral_luts/beaver_cap_spectral_lut.exr")
+        let flowMap = bundleRoot.appendingPathComponent("spectral_luts/anisotropic_flow_map.exr")
+        let silkLUT = bundleRoot.appendingPathComponent("spectral_luts/claret_silk_degradation.exr")
+        let material = SCNMaterial()
+        material.lightingModel = .physicallyBased
+        material.diffuse.contents = NSColor(calibratedRed: 0.40, green: 0.34, blue: 0.28, alpha: 1.0)
+        if FileManager.default.fileExists(atPath: capLUT.path) {
+            material.metalness.contents = capLUT.path
+        }
+        if FileManager.default.fileExists(atPath: flowMap.path) {
+            material.normal.contents = flowMap.path
+        }
+        if FileManager.default.fileExists(atPath: silkLUT.path) {
+            material.roughness.contents = silkLUT.path
+        }
+        root.enumerateChildNodes { node, _ in
+            guard let geometry = node.geometry else { return }
+            geometry.materials = [material]
+        }
+    }
+
+    private func loadPassyMaterialLibrary() -> MTLLibrary? {
+        guard
+            let device = MTLCreateSystemDefaultDevice(),
+            !controller.assetBinding.meshAssetPath.isEmpty
+        else { return nil }
+        let bundleRoot = URL(fileURLWithPath: controller.assetBinding.meshAssetPath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .standardizedFileURL
+        let libraryURL = bundleRoot.appendingPathComponent("materials/Franklin_Z3_Materials.metallib")
+        guard FileManager.default.fileExists(atPath: libraryURL.path) else { return nil }
+        return try? device.makeLibrary(URL: libraryURL)
     }
 }

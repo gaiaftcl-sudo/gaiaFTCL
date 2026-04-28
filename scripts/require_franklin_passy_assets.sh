@@ -41,7 +41,7 @@ require_not_contains() {
 
 # Real asset gates: these thresholds prevent proxy/stub files from passing.
 require_file_size "cells/franklin/avatar/bundle_assets/meshes/Franklin_Passy_V2.fblob" 1000000 "GW_REFUSE_FRANKLIN_PASSY_FLOB_MISSING"
-require_file_size "cells/franklin/avatar/bundle_assets/meshes/Franklin_Passy_V2.usdz" 1000 "GW_REFUSE_FRANKLIN_PASSY_USDZ_MISSING"
+require_file_size "cells/franklin/avatar/bundle_assets/meshes/Franklin_Passy_V2.usdz" 5000000 "GW_REFUSE_FRANKLIN_PASSY_USDZ_MISSING"
 require_file_size "cells/franklin/avatar/bundle_assets/meshes/Franklin_Passy_V2.ztl" 1000000 "GW_REFUSE_FRANKLIN_PASSY_ZTL_MISSING"
 require_file_size "cells/franklin/avatar/bundle_assets/materials/Franklin_Z3_Materials.metallib" 50000 "GW_REFUSE_FRANKLIN_Z3_METALLIB_MISSING"
 require_file_size "cells/franklin/avatar/bundle_assets/spectral_luts/beaver_cap_spectral_lut.exr" 10000 "GW_REFUSE_FRANKLIN_BEAVER_LUT_MISSING"

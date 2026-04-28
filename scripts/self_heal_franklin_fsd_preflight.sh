@@ -27,18 +27,30 @@ PY
 }
 
 MESH_DIR="cells/franklin/avatar/bundle_assets/meshes"
+SOURCE_USDZ="${MESH_DIR}/sources/Franklin_Passy_V2.usdz"
+SOURCE_GLB="${MESH_DIR}/Franklin_Passy_V2.glb"
 RKASSETS_DIR="cells/franklin/avatar/bundle_assets/Franklin.rkassets"
 BUILD_DIR="cells/franklin/avatar/build/reality"
 
 mkdir -p "${MESH_DIR}" "${RKASSETS_DIR}" "${BUILD_DIR}"
 
-# Rebuild USDZ package from authoritative USDA if needed.
-if [[ -f "${MESH_DIR}/Franklin_Passy_V2.usda" ]]; then
+# Prefer the real production source USDZ when available. Only fall back to
+# USDA packaging when no production source exists.
+if [[ -f "${SOURCE_USDZ}" ]]; then
+  cp "${SOURCE_USDZ}" "${MESH_DIR}/Franklin_Passy_V2.usdz"
+elif [[ -f "${SOURCE_GLB}" ]]; then
+  run_with_timeout 120 zsh "cells/franklin/avatar/scripts/produce_franklin_runtime_usdz.zsh" >/dev/null 2>&1 || \
+    fail "GW_REFUSE_SELF_HEAL_USDZ_BUILD_FAILED" "unable to build Franklin_Passy_V2.usdz from glb source"
+elif [[ ! -f "${MESH_DIR}/Franklin_Passy_V2.usdz" && -f "${MESH_DIR}/Franklin_Passy_V2.usda" ]]; then
   run_with_timeout 45 usdzip -r "${MESH_DIR}/Franklin_Passy_V2.usdz" "${MESH_DIR}/Franklin_Passy_V2.usda" >/dev/null 2>&1 || \
     fail "GW_REFUSE_SELF_HEAL_USDZ_PACK_FAILED" "unable to package Franklin_Passy_V2.usdz from usda"
 fi
 
 [[ -f "${MESH_DIR}/Franklin_Passy_V2.usdz" ]] || fail "GW_REFUSE_SELF_HEAL_USDZ_MISSING" "missing Franklin_Passy_V2.usdz"
+
+# Refuse tiny non-production USDZ payloads.
+USDZ_BYTES="$(/usr/bin/stat -f %z "${MESH_DIR}/Franklin_Passy_V2.usdz" 2>/dev/null || /usr/bin/stat -c %s "${MESH_DIR}/Franklin_Passy_V2.usdz")"
+(( USDZ_BYTES >= 5000000 )) || fail "GW_REFUSE_SELF_HEAL_USDZ_TOO_SMALL" "Franklin_Passy_V2.usdz is ${USDZ_BYTES} bytes (<5MB production floor)"
 
 # Keep rkassets in sync with latest usdz.
 cp "${MESH_DIR}/Franklin_Passy_V2.usdz" "${RKASSETS_DIR}/Franklin_Passy_V2.usdz"

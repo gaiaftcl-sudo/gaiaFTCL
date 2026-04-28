@@ -231,7 +231,14 @@ struct FranklinAvatarStage: View {
     @StateObject private var avatarRuntime = FranklinAvatarSceneController()
 
     private var terminalColor: Color {
-        model.lastResult.hasPrefix("REFUSED") ? .red : .green
+        isAvatarRefused ? .red : .green
+    }
+
+    private var isAvatarRefused: Bool {
+        model.lastResult.hasPrefix("REFUSED")
+            || avatarRuntime.bridgeVersion == "unavailable"
+            || !avatarRuntime.assetBinding.meshLoaded
+            || !avatarRuntime.lastRefusal.isEmpty
     }
 
     private var speakingLine: String {
@@ -268,7 +275,7 @@ struct FranklinAvatarStage: View {
                 HStack(spacing: 8) {
                     Text("Ben Franklin Avatar")
                         .font(.headline.weight(.semibold))
-                    Text(model.lastResult.hasPrefix("REFUSED") ? "REFUSAL" : "TEMPERATE")
+                    Text(isAvatarRefused ? "REFUSAL" : "TEMPERATE")
                         .font(.system(size: 11, weight: .bold, design: .monospaced))
                         .padding(.horizontal, 10)
                         .padding(.vertical, 4)
@@ -296,6 +303,12 @@ struct FranklinAvatarStage: View {
                 }
                 if !avatarRuntime.assetBinding.meshLoaded {
                     Text("REFUSED: missing Passy mesh asset at \(avatarRuntime.assetBinding.meshAssetPath)")
+                        .font(.system(size: 10, weight: .bold, design: .monospaced))
+                        .foregroundStyle(.red)
+                        .lineLimit(2)
+                }
+                if !avatarRuntime.assetBinding.meshDetailSufficient {
+                    Text("REFUSED: Passy mesh detail is insufficient for lifelike render contract")
                         .font(.system(size: 10, weight: .bold, design: .monospaced))
                         .foregroundStyle(.red)
                         .lineLimit(2)
@@ -345,7 +358,9 @@ struct FranklinAvatarStage: View {
                 pulse += 0.9
                 avatarRuntime.apply(posture: postureState())
                 avatarRuntime.updateSpeech(text: speakingLine)
-                try? await Task.sleep(for: .milliseconds(34))
+                avatarRuntime.registerFrameTick()
+                let sleepNanos = UInt64(avatarRuntime.invariants.targetInterval * 1_000_000_000.0)
+                try? await Task.sleep(nanoseconds: sleepNanos)
             }
         }
     }

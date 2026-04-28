@@ -37,6 +37,9 @@ final class FranklinLaunchGateTests: XCTestCase {
         .init(label: "Franklin_Passy_V2.fblob",
               relativePath: "cells/franklin/avatar/bundle_assets/meshes/Franklin_Passy_V2.fblob",
               minBytes: 64, sha256: nil),
+        .init(label: "Franklin_Passy_V2.usdz",
+              relativePath: "cells/franklin/avatar/bundle_assets/meshes/Franklin_Passy_V2.usdz",
+              minBytes: 64, sha256: nil),
         .init(label: "Franklin_Z3_Materials.metallib",
               relativePath: "cells/franklin/avatar/bundle_assets/materials/Franklin_Z3_Materials.metallib",
               minBytes: 64, sha256: nil),
@@ -208,9 +211,9 @@ final class FranklinLaunchGateTests: XCTestCase {
         )
     }
 
-    func test_canonicalManifestEnumeratesSixAssets() throws {
+    func test_canonicalManifestEnumeratesRequiredAssets() throws {
         // Locking the contract: the live required_assets.json must list exactly
-        // these six labels, in any order. If you add or remove an asset, this
+        // these labels, in any order. If you add or remove an asset, this
         // test must be updated in the same commit as the JSON.
         let canonical = Self.canonicalAssets.map(\.label).sorted()
         let url = URL(fileURLWithPath: #filePath)

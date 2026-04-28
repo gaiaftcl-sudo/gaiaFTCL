@@ -5,6 +5,7 @@ final class FranklinInvariants: ObservableObject {
     private(set) var lastVQbit: Float = 0
     let targetFPS: UInt16 = 29
     let targetInterval: TimeInterval = 1.0 / 29.0
+    let targetIntervalMs: Float = 1000.0 / 29.0
     let minDelta: Float = 0.001
 
     func allowStateTransition(currentVQbit: Float) -> Bool {

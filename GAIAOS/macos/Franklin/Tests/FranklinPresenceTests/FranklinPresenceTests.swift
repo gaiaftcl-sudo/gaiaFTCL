@@ -390,7 +390,7 @@ final class FranklinPresenceTests: XCTestCase {
         XCTAssertTrue(source.contains("Greet + Guide"))
     }
 
-    func testAvatarRuntimeUsesMetalHostAndNoSceneKitPrimitives() throws {
+    func testAvatarRuntimeUsesSceneKitMeshHostAndNoPrimitiveFallbacks() throws {
         let sourcePath = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -398,9 +398,10 @@ final class FranklinPresenceTests: XCTestCase {
             .appendingPathComponent("Sources/FranklinApp/FranklinAvatarRuntime.swift")
         let source = try String(contentsOf: sourcePath, encoding: .utf8)
         XCTAssertTrue(source.contains("import Metal"))
-        XCTAssertTrue(source.contains("import MetalKit"))
-        XCTAssertTrue(source.contains("MTKView"))
-        XCTAssertFalse(source.contains("import SceneKit"))
+        XCTAssertTrue(source.contains("import SceneKit"))
+        XCTAssertTrue(source.contains("SCNView"))
+        XCTAssertTrue(source.contains("SCNScene(url:"))
+        XCTAssertTrue(source.contains("Franklin_Passy_V2.usdz"))
         XCTAssertFalse(source.contains("SCNSphere"))
         XCTAssertFalse(source.contains("SCNTorus"))
         XCTAssertFalse(source.contains("SCNCapsule"))
@@ -551,5 +552,63 @@ final class FranklinPresenceTests: XCTestCase {
         XCTAssertEqual(rig?["expressions"], 12)
         XCTAssertEqual(rig?["postures"], 6)
         XCTAssertTrue(required?.contains("LG-LITHO-EXPOSE-001") == true)
+    }
+
+    func testIpaVisemeMapContractHas11Entries() throws {
+        let visemePath = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent("cells/franklin/avatar/bundle_assets/voice/ipa_viseme_map.json")
+        let data = try Data(contentsOf: visemePath)
+        let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        let entries = json?["entries"] as? [[String: Any]]
+        XCTAssertEqual(entries?.count, 11)
+    }
+
+    func testAssetBindingRejectsTinyUSDZFixture() throws {
+        let fm = FileManager.default
+        let tmp = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
+        try fm.createDirectory(at: tmp, withIntermediateDirectories: true)
+        defer { try? fm.removeItem(at: tmp) }
+
+        let oldCwd = fm.currentDirectoryPath
+        _ = fm.changeCurrentDirectoryPath(tmp.path)
+        defer { _ = fm.changeCurrentDirectoryPath(oldCwd) }
+
+        let root = tmp.appendingPathComponent("cells/franklin/avatar/bundle_assets", isDirectory: true)
+        let meshDir = root.appendingPathComponent("meshes", isDirectory: true)
+        let matDir = root.appendingPathComponent("materials", isDirectory: true)
+        let lutDir = root.appendingPathComponent("spectral_luts", isDirectory: true)
+        let visDir = root.appendingPathComponent("pose_templates/viseme", isDirectory: true)
+        let expDir = root.appendingPathComponent("pose_templates/expression", isDirectory: true)
+        let postDir = root.appendingPathComponent("pose_templates/posture", isDirectory: true)
+        let voiceDir = root.appendingPathComponent("voice/styletts2_franklin_v1.coreml.mlmodelc", isDirectory: true)
+        try fm.createDirectory(at: meshDir, withIntermediateDirectories: true)
+        try fm.createDirectory(at: matDir, withIntermediateDirectories: true)
+        try fm.createDirectory(at: lutDir, withIntermediateDirectories: true)
+        try fm.createDirectory(at: visDir, withIntermediateDirectories: true)
+        try fm.createDirectory(at: expDir, withIntermediateDirectories: true)
+        try fm.createDirectory(at: postDir, withIntermediateDirectories: true)
+        try fm.createDirectory(at: voiceDir, withIntermediateDirectories: true)
+
+        try Data(repeating: 0xAA, count: 2_818).write(to: meshDir.appendingPathComponent("Franklin_Passy_V2.usdz"))
+        try Data(repeating: 0xAA, count: 1_100_000).write(to: meshDir.appendingPathComponent("Franklin_Passy_V2.fblob"))
+        try Data(repeating: 0xAA, count: 70_000).write(to: matDir.appendingPathComponent("Franklin_Z3_Materials.metallib"))
+        try Data(repeating: 0xAA, count: 20_000).write(to: lutDir.appendingPathComponent("beaver_cap_spectral_lut.exr"))
+        try Data(repeating: 0xAA, count: 20_000).write(to: lutDir.appendingPathComponent("anisotropic_flow_map.exr"))
+        try Data(repeating: 0xAA, count: 20_000).write(to: lutDir.appendingPathComponent("claret_silk_degradation.exr"))
+        try Data(repeating: 0xAA, count: 256).write(to: voiceDir.appendingPathComponent("Manifest.json"))
+
+        for i in 0..<11 { fm.createFile(atPath: visDir.appendingPathComponent("v\(i).json").path, contents: Data(#"{}"#.utf8)) }
+        for i in 0..<12 { fm.createFile(atPath: expDir.appendingPathComponent("e\(i).json").path, contents: Data(#"{}"#.utf8)) }
+        for i in 0..<6 { fm.createFile(atPath: postDir.appendingPathComponent("p\(i).json").path, contents: Data(#"{"id":"p","geometry_pin":[0,0,0,0]}"#.utf8)) }
+
+        let binding = FranklinAvatarAssetBinding.load()
+        XCTAssertTrue(binding.meshLoaded, "fixture should satisfy required asset presence")
+        XCTAssertFalse(binding.meshDetailSufficient, "tiny USDZ must fail structural mesh-quality gate")
     }
 }
