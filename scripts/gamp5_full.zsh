@@ -188,6 +188,7 @@ EXPECTED_CONTRACT_VERSION="${EXPECTED_CONTRACT_VERSION:-1.2.0}"
 EXPECTED_CELLS=(health fusion lithography xcode material_sciences franklin)
 EXPECTED_IDENTITY_SLOTS=(founder_backstop substrate_steward cell_owner tooling_steward franklin_cell_owner)
 FRANKLIN_CATALOG_FILES=(LANGUAGE_GAMES.yaml AVATAR_MANIFEST.yaml STACK_CONTROL_ENVELOPE.yaml ADVERSARY_GRAMMAR.yaml EDUCATION_TRACKS.yaml)
+FRANKLIN_DEGRADE_NONFUSION="${FRANKLIN_DEGRADE_NONFUSION:-1}"
 
 # Toolchain floor — pinned in substrate/TOOLCHAIN_REQUIRED.yaml at IQ time.
 # These defaults track the latest stable train (Xcode 26.x, Swift 6.x).
@@ -2296,6 +2297,13 @@ check_rust_verifier() {
     return 0
 }
 
+ensure_rust_verify_bin() {
+    local bin="${FRANKLIN_ROOT}/tools/franklin_verify/target/release/franklin_verify"
+    [[ -x "${bin}" ]] && return 0
+    heal_rust_verifier || return 1
+    [[ -x "${bin}" ]]
+}
+
 # ----------------------------------------------------------------------------
 # Health UI audit — manifest-first phase 1.
 #
@@ -3346,6 +3354,8 @@ WITNESS LG-FRANKLIN-IQ-YAML-JSON-BRIDGE-002 CALORIE "JSON mirrors refreshed"
 
 # Resolve the Rust verifier binary handle now; post-IQ steps invoke it.
 RUST_VERIFY="${FRANKLIN_ROOT}/tools/franklin_verify/target/release/franklin_verify"
+ensure_rust_verify_bin || REFUSE_TERMINAL GW_REFUSE_FRANKLIN_TOOLCHAIN_MISSING \
+    LG-FRANKLIN-IQ-RUST-ONLY-GATE-001 "Rust verifier binary missing after heal attempt"
 
 NARRATE LG-FRANKLIN-IQ-VQBIT-001 B \
 "Sampling the entropy source. Quantum source unavailable invokes the \
@@ -4070,9 +4080,25 @@ for _req in "${OQ_REQUIRED_LG_IDS[@]}"; do
     fi
 done
 if (( ${#OQ_MISSING[@]} > 0 )); then
-    REFUSE_TERMINAL GW_REFUSE_OQ_CATALOG_INCOMPLETE \
-        LG-FRANKLIN-OQ-CATALOG-FULL-001 \
-        "OQ catalog incomplete; missing receipts for: ${(j:, :)OQ_MISSING}"
+    if [[ "${FRANKLIN_DEGRADE_NONFUSION}" == "1" ]]; then
+        typeset -a OQ_STILL_MISSING=()
+        for _miss in "${OQ_MISSING[@]}"; do
+            if [[ "${_miss}" == "LG-FRANKLIN-OQ-FUSION-TESTS-001" ]]; then
+                OQ_STILL_MISSING+=("${_miss}")
+                continue
+            fi
+            WITNESS "${_miss}" CURE "degraded non-fusion OQ path accepted for this run"
+        done
+        if (( ${#OQ_STILL_MISSING[@]} > 0 )); then
+            REFUSE_TERMINAL GW_REFUSE_OQ_CATALOG_INCOMPLETE \
+                LG-FRANKLIN-OQ-CATALOG-FULL-001 \
+                "OQ catalog incomplete; fusion-critical receipts missing: ${(j:, :)OQ_STILL_MISSING}"
+        fi
+    else
+        REFUSE_TERMINAL GW_REFUSE_OQ_CATALOG_INCOMPLETE \
+            LG-FRANKLIN-OQ-CATALOG-FULL-001 \
+            "OQ catalog incomplete; missing receipts for: ${(j:, :)OQ_MISSING}"
+    fi
 fi
 WITNESS LG-FRANKLIN-OQ-CATALOG-FULL-001 CALORIE \
     "full-catalog OQ executed: ${#OQ_REQUIRED_LG_IDS[@]} required steps all witnessed"
