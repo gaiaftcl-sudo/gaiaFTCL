@@ -1,0 +1,19 @@
+{"ts":"2026-04-28T11:30:52Z","gate":"OUTER","attempt":1,"event":"begin","detail":"open ring\n"}
+{"ts":"2026-04-28T11:30:52Z","gate":"A","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:30:53Z","gate":"A","attempt":1,"event":"fail","detail":"rc=5\n"}
+{"ts":"2026-04-28T11:30:53Z","gate":"A","attempt":1,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T11:30:59Z","gate":"A","attempt":2,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:30:59Z","gate":"A","attempt":2,"event":"fail","detail":"rc=5\n"}
+{"ts":"2026-04-28T11:30:59Z","gate":"A","attempt":2,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T11:31:10Z","gate":"A","attempt":3,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:31:10Z","gate":"A","attempt":3,"event":"fail","detail":"rc=5\n"}
+{"ts":"2026-04-28T11:31:10Z","gate":"A","attempt":3,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T11:31:28Z","gate":"A","attempt":4,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:31:28Z","gate":"A","attempt":4,"event":"fail","detail":"rc=5\n"}
+{"ts":"2026-04-28T11:31:28Z","gate":"A","attempt":4,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T11:32:12Z","gate":"A","attempt":5,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:32:12Z","gate":"A","attempt":5,"event":"fail","detail":"rc=5\n"}
+{"ts":"2026-04-28T11:32:12Z","gate":"A","attempt":5,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T11:33:34Z","gate":"A","attempt":6,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:33:34Z","gate":"A","attempt":6,"event":"fail","detail":"rc=5\n"}
+{"ts":"2026-04-28T11:33:34Z","gate":"A","attempt":6,"event":"heal_ok","detail":"heal completed\n"}

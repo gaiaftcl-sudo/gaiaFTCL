@@ -1,0 +1,23 @@
+{"ts":"2026-04-28T11:27:49Z","gate":"OUTER","attempt":1,"event":"begin","detail":"open ring\n"}
+{"ts":"2026-04-28T11:27:49Z","gate":"A","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:27:50Z","gate":"A","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T11:27:50Z","gate":"B","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:27:51Z","gate":"B","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T11:27:51Z","gate":"C","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:27:53Z","gate":"C","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T11:27:54Z","gate":"D","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:27:54Z","gate":"D","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T11:27:54Z","gate":"E","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:27:54Z","gate":"E","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T11:27:54Z","gate":"F","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:27:55Z","gate":"F","attempt":1,"event":"fail","detail":"rc=1\n"}
+{"ts":"2026-04-28T11:27:55Z","gate":"F","attempt":1,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T11:28:01Z","gate":"F","attempt":2,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:28:02Z","gate":"F","attempt":2,"event":"fail","detail":"rc=1\n"}
+{"ts":"2026-04-28T11:28:02Z","gate":"F","attempt":2,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T11:28:11Z","gate":"F","attempt":3,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:28:12Z","gate":"F","attempt":3,"event":"fail","detail":"rc=1\n"}
+{"ts":"2026-04-28T11:28:12Z","gate":"F","attempt":3,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T11:28:33Z","gate":"F","attempt":4,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:28:33Z","gate":"F","attempt":4,"event":"fail","detail":"rc=1\n"}
+{"ts":"2026-04-28T11:28:34Z","gate":"F","attempt":4,"event":"heal_ok","detail":"heal completed\n"}

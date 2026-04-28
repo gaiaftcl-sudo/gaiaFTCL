@@ -1,0 +1,13 @@
+{"ts":"2026-04-28T11:17:11Z","gate":"OUTER","attempt":1,"event":"begin","detail":"open ring\n"}
+{"ts":"2026-04-28T11:17:11Z","gate":"A","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:17:12Z","gate":"A","attempt":1,"event":"fail","detail":"rc=25\n"}
+{"ts":"2026-04-28T11:17:12Z","gate":"A","attempt":1,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T11:17:18Z","gate":"A","attempt":2,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:17:19Z","gate":"A","attempt":2,"event":"fail","detail":"rc=25\n"}
+{"ts":"2026-04-28T11:17:19Z","gate":"A","attempt":2,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T11:17:31Z","gate":"A","attempt":3,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:17:32Z","gate":"A","attempt":3,"event":"fail","detail":"rc=25\n"}
+{"ts":"2026-04-28T11:17:32Z","gate":"A","attempt":3,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T11:17:56Z","gate":"A","attempt":4,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:17:57Z","gate":"A","attempt":4,"event":"fail","detail":"rc=25\n"}
+{"ts":"2026-04-28T11:17:57Z","gate":"A","attempt":4,"event":"heal_ok","detail":"heal completed\n"}

@@ -1,0 +1,26 @@
+{"ts":"2026-04-28T11:28:55Z","gate":"OUTER","attempt":1,"event":"begin","detail":"open ring\n"}
+{"ts":"2026-04-28T11:28:55Z","gate":"A","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:28:56Z","gate":"A","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T11:28:56Z","gate":"B","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:28:57Z","gate":"B","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T11:28:57Z","gate":"C","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:29:00Z","gate":"C","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T11:29:00Z","gate":"D","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:29:00Z","gate":"D","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T11:29:00Z","gate":"E","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:29:00Z","gate":"E","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T11:29:00Z","gate":"F","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:29:02Z","gate":"F","attempt":1,"event":"fail","detail":"rc=1\n"}
+{"ts":"2026-04-28T11:29:02Z","gate":"F","attempt":1,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T11:29:06Z","gate":"F","attempt":2,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:29:07Z","gate":"F","attempt":2,"event":"fail","detail":"rc=1\n"}
+{"ts":"2026-04-28T11:29:07Z","gate":"F","attempt":2,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T11:29:16Z","gate":"F","attempt":3,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:29:17Z","gate":"F","attempt":3,"event":"fail","detail":"rc=1\n"}
+{"ts":"2026-04-28T11:29:17Z","gate":"F","attempt":3,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T11:29:33Z","gate":"F","attempt":4,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:29:34Z","gate":"F","attempt":4,"event":"fail","detail":"rc=1\n"}
+{"ts":"2026-04-28T11:29:34Z","gate":"F","attempt":4,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T11:30:07Z","gate":"F","attempt":5,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T11:30:08Z","gate":"F","attempt":5,"event":"fail","detail":"rc=1\n"}
+{"ts":"2026-04-28T11:30:08Z","gate":"F","attempt":5,"event":"heal_ok","detail":"heal completed\n"}

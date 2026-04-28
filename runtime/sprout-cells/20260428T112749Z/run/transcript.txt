@@ -1,0 +1,41 @@
+[1mBaby cell (sprout) — temporal run · gates A→J[0m
+  tau=20260428T112749Z  tmp=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T112749Z  workspace=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T112749Z/workspace  FOT_VQBIT_SPROUT=1
+
+[1m═══ Outer ring 1/128 — new skin on tmp ═══[0m
+[0;36m[2026-04-28T11:27:49Z][0m Recycle tmp install workspace (temporal reset) → rm -rf /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T112749Z/workspace
+
+[1m━━ Gate · preflight · tools · keys · operator witness ━━[0m
+[0;36m[2026-04-28T11:27:49Z][0m tau=20260428T112749Z branch=franklin-canon-tier0-tier1-a9009a54 remote=origin ring_workspace=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T112749Z/workspace
+[0;36m[2026-04-28T11:27:50Z][0m owner prerequisite satisfied: pushed origin/main
+[0;32m[2026-04-28T11:27:50Z] PASS[0m preflight — tools, keys, operator witness
+[0;32m[2026-04-28T11:27:50Z] PASS[0m Gate A open after 1 attempt(s)
+
+[1m━━ Gate · remote · push branch ━━[0m
+[0;32m[2026-04-28T11:27:51Z] PASS[0m Gate B open after 1 attempt(s)
+
+[1m━━ Gate · clone into tmp workspace ━━[0m
+[0;32m[2026-04-28T11:27:53Z] PASS[0m clone workspace for this run: /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T112749Z/workspace/clone
+[0;32m[2026-04-28T11:27:53Z] PASS[0m Gate C open after 1 attempt(s)
+
+[1m━━ Gate · genesis · HASH_LOCKS inception (IQ axis) ━━[0m
+[0;32m[2026-04-28T11:27:54Z] PASS[0m genesis record sealed — inception
+[0;32m[2026-04-28T11:27:54Z] PASS[0m Gate D open after 1 attempt(s)
+
+[1m━━ Gate · sign_bundle · avatar substrate in tmp ━━[0m
+[0;32m[2026-04-28T11:27:54Z] PASS[0m bundle signed in tmp clone
+[0;32m[2026-04-28T11:27:54Z] PASS[0m Gate E open after 1 attempt(s)
+[0;36m[2026-04-28T11:27:54Z][0m [1mInner breath · IQ after genesis — Franklin surface → OQ → PQ → close (ordered in time)[0m
+
+[1m━━ Gate · IQ · gamp5_iq + plan 0–2 ━━[0m
+[FAIL] Gate F attempt 1 failed (rc=1)
+[0;35m[2026-04-28T11:27:55Z] HEAL[0m Gate F → heal_F
+[0;36m[2026-04-28T11:27:55Z][0m backoff 6s
+[FAIL] Gate F attempt 2 failed (rc=1)
+[0;35m[2026-04-28T11:28:02Z] HEAL[0m Gate F → heal_F
+[0;36m[2026-04-28T11:28:02Z][0m backoff 9s
+[FAIL] Gate F attempt 3 failed (rc=1)
+[0;35m[2026-04-28T11:28:12Z] HEAL[0m Gate F → heal_F
+[0;36m[2026-04-28T11:28:12Z][0m backoff 21s
+[FAIL] Gate F attempt 4 failed (rc=1)
+[0;35m[2026-04-28T11:28:33Z] HEAL[0m Gate F → heal_F
+[0;36m[2026-04-28T11:28:34Z][0m backoff 42s

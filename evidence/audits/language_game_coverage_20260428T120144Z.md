@@ -1,0 +1,120 @@
+# Language Game Coverage Audit
+
+- substrate+base references: 98
+- local mac references: 10
+- local mac missing from substrate/base: 10
+- substrate/base missing from local mac: 98
+
+## Local Mac Missing From Substrate/Base
+
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/GAIAOS/macos/Franklin/Sources/FranklinApp/OperatorSurfaceModel.swift:LG-FRANKLIN-IQ-HASHLOCKS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/GAIAOS/macos/Franklin/Sources/FranklinApp/OperatorSurfaceModel.swift:LG-FRANKLIN-IQ-IDENTITY-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/GAIAOS/macos/Franklin/Sources/FranklinApp/OperatorSurfaceModel.swift:LG-FRANKLIN-IQ-XCODE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/GAIAOS/macos/Franklin/Sources/FranklinApp/OperatorSurfaceModel.swift:LG-FRANKLIN-OQ-AVATAR-TESTS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/GAIAOS/macos/Franklin/Sources/FranklinApp/OperatorSurfaceModel.swift:LG-FRANKLIN-PQ-AVATAR-LIFELIKE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/GAIAOS/macos/Franklin/Sources/FranklinApp/OperatorSurfaceModel.swift:LG-FRANKLIN-PQ-EDU-AUDITOR-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/GAIAOS/macos/Franklin/Sources/FranklinApp/SproutEvidenceCoordinator.swift:LG-FRANKLIN-OQ-AVATAR-TESTS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/GAIAOS/macos/Franklin/Sources/FranklinApp/SproutEvidenceCoordinator.swift:LG-FRANKLIN-PQ-AVATAR-LIFELIKE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/franklin/avatar/scripts/sprout.zsh:LG-FRANKLIN-OQ-AVATAR-TESTS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/franklin/avatar/scripts/sprout.zsh:LG-FRANKLIN-PQ-AVATAR-LIFELIKE-001`
+
+## Substrate/Base Missing From Local Mac
+
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-CELL-GAME-AGREE-TAKEOVER-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-CELL-GAME-CLOSE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-CELL-GAME-INTERVIEW-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-CELL-GAME-INVOKE-HEAL-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-CELL-GAME-PRESCRIBE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-CELL-GAME-WITNESS-WHOLE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-CONVO-ROUTE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-DEFEND-PROMPT-INJECTION-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-EDU-INTRO-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-EMBODY-AVATAR-BREATHE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-EXTEND-DOMAIN-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-EXTEND-VERB-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-AUDIT-MAP-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-CATALOG-`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-CELL-GAME-CATALOG-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-EMITTER-PARITY-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-FRANKLIN-`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-HASHLOCKS-INIT-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-HASHLOCKS-RECOMPUTE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-HEALTH-UI-AUDIT-TOOL-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-IDENTITY-ARCHIVE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-IDENTITY-GENESIS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-IDENTITY-KEYGEN-`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-LIBS-MANIFEST-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-LIBS-RESOLVE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-LIBS-VENDOR-`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-PATHS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-PR-ASSERTIONS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-PYYAML-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-REFUSAL-REGISTRY-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-ROSETTE-REGISTRY-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-RUST-BUILD-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-RUST-CRATE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-RUST-INSTALL-HELPER-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-RUST-MAIN-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-VQBIT-FALLBACK-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-XCODE-INSTALL-HELPER-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-XCODE-PIN-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-HEAL-YAML-JSON-BRIDGE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-AUDIT-MAP-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-CELL-CATALOGS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-CELL-GAME-CATALOG-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-EMITTER-SCAFFOLD-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-FRANKLIN-CATALOG-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-FRANKLIN-VISIBLE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-HANDOFF-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-HASHLOCKS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-HEALTH-UI-SCAFFOLD-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-IDENTITY-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-LAUNCH-FRANKLIN-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-LIBRARIES-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-PATHS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-PR-LIST-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-PYTHON-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-REFUSAL-REGISTRY-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-ROSETTE-REGISTRY-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-RUST-ONLY-GATE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-RUST-TOOLCHAIN-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-RUST-VERIFIER-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-VQBIT-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-XCODE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-XCODE-LATEST-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-YAML-JSON-BRIDGE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-IQ-YAML-JSON-BRIDGE-002`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-OQ-BUILD-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-OQ-CATALOG-FULL-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-OQ-EMITTER-PARITY-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-OQ-FRANKLIN-TESTS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-OQ-FUSION-TESTS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-OQ-HEALTH-TESTS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-OQ-HEALTH-UI-AUDIT-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-OQ-LITHO-TESTS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-OQ-LIVE-CATALOG-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-OQ-MATSCI-TESTS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-OQ-NARRATIVE-MAP-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-OQ-PR-RUN-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-OQ-RECEIPT-VERIFY-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-OQ-RUST-ONLY-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-OQ-XCODE-TESTS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-PQ-EDU-AUDITOR-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-PQ-MATSCI-DOMAIN-CREATE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-PQ-MATSCI-OPERATOR-WALKTHROUGH-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-PQ-MATSCI-ROSETTE-BIND-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-PQ-MATSCI-TREASURY-PROOF-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-RECONCILE-COUNTS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-RECONCILE-DOCS-AUTHORITY-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-RECONCILE-NARRATIVE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-RUNNER-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-RUNNER-EPILOGUE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-SENSE-SCREEN-OCR-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-STACK-PERMISSIONS-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-VALIDATE-FACT-CHECK-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FRANKLIN-XCODE-NEW-CELL-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-FUSION-PLANT-CYCLE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-HEALTH-BATCH-RUN-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-LITHO-EXPOSE-001`
+- `/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/scripts/gamp5_full.zsh:LG-MATSCI-SYNTH-001`

@@ -1,0 +1,20 @@
+{"ts":"2026-04-28T12:48:54Z","gate":"OUTER","attempt":1,"event":"begin","detail":"open ring\n"}
+{"ts":"2026-04-28T12:48:54Z","gate":"A","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T12:48:55Z","gate":"A","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T12:48:55Z","gate":"B","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T12:48:56Z","gate":"B","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T12:48:56Z","gate":"C","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T12:48:58Z","gate":"C","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T12:48:58Z","gate":"D","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T12:48:58Z","gate":"D","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T12:48:58Z","gate":"E","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T12:48:59Z","gate":"E","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T12:48:59Z","gate":"F","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T12:49:00Z","gate":"F","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T12:49:00Z","gate":"G","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T12:49:23Z","gate":"G","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T12:49:23Z","gate":"H","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T12:49:28Z","gate":"H","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T12:49:28Z","gate":"I","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T12:49:33Z","gate":"I","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T12:49:33Z","gate":"J","attempt":1,"event":"try","detail":"begin\n"}

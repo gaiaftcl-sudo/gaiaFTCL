@@ -1,0 +1,31 @@
+[1mBaby cell (sprout) — temporal run · gates A→J[0m
+  tau=20260428T111711Z  tmp=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T111711Z  workspace=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T111711Z/workspace  FOT_VQBIT_SPROUT=1
+
+[1m═══ Outer ring 1/128 — new skin on tmp ═══[0m
+[0;36m[2026-04-28T11:17:11Z][0m Recycle tmp install workspace (temporal reset) → rm -rf /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T111711Z/workspace
+
+[1m━━ Gate · preflight · tools · keys · operator witness ━━[0m
+[0;36m[2026-04-28T11:17:11Z][0m tau=20260428T111711Z branch=franklin-canon-tier0-tier1-a9009a54 remote=origin ring_workspace=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T111711Z/workspace
+[FAIL] owner prerequisite failed: could not push origin/main
+[FAIL] Gate A attempt 1 failed (rc=25)
+[0;35m[2026-04-28T11:17:12Z] HEAL[0m Gate A → heal_A
+[1;33m[2026-04-28T11:17:12Z] WARN[0m owner prerequisite failed: push origin/main before sprout can continue.
+[0;36m[2026-04-28T11:17:12Z][0m backoff 6s
+[0;36m[2026-04-28T11:17:18Z][0m tau=20260428T111711Z branch=franklin-canon-tier0-tier1-a9009a54 remote=origin ring_workspace=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T111711Z/workspace
+[FAIL] owner prerequisite failed: could not push origin/main
+[FAIL] Gate A attempt 2 failed (rc=25)
+[0;35m[2026-04-28T11:17:19Z] HEAL[0m Gate A → heal_A
+[1;33m[2026-04-28T11:17:19Z] WARN[0m owner prerequisite failed: push origin/main before sprout can continue.
+[0;36m[2026-04-28T11:17:19Z][0m backoff 12s
+[0;36m[2026-04-28T11:17:31Z][0m tau=20260428T111711Z branch=franklin-canon-tier0-tier1-a9009a54 remote=origin ring_workspace=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T111711Z/workspace
+[FAIL] owner prerequisite failed: could not push origin/main
+[FAIL] Gate A attempt 3 failed (rc=25)
+[0;35m[2026-04-28T11:17:32Z] HEAL[0m Gate A → heal_A
+[1;33m[2026-04-28T11:17:32Z] WARN[0m owner prerequisite failed: push origin/main before sprout can continue.
+[0;36m[2026-04-28T11:17:32Z][0m backoff 24s
+[0;36m[2026-04-28T11:17:56Z][0m tau=20260428T111711Z branch=franklin-canon-tier0-tier1-a9009a54 remote=origin ring_workspace=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T111711Z/workspace
+[FAIL] owner prerequisite failed: could not push origin/main
+[FAIL] Gate A attempt 4 failed (rc=25)
+[0;35m[2026-04-28T11:17:57Z] HEAL[0m Gate A → heal_A
+[1;33m[2026-04-28T11:17:57Z] WARN[0m owner prerequisite failed: push origin/main before sprout can continue.
+[0;36m[2026-04-28T11:17:57Z][0m backoff 42s
