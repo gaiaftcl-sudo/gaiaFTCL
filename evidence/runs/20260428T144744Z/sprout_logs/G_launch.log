@@ -1,0 +1,35 @@
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.45
+   Compiling unicode-ident v1.0.24
+   Compiling serde_core v1.0.228
+   Compiling zmij v1.0.21
+   Compiling serde_json v1.0.149
+   Compiling serde v1.0.228
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.0
+   Compiling syn v2.0.117
+   Compiling serde_derive v1.0.228
+   Compiling avatar-core v0.1.0 (/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T144744Z/workspace/clone/cells/franklin/avatar/crates/avatar-core)
+   Compiling avatar-render v0.1.0 (/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T144744Z/workspace/clone/cells/franklin/avatar/crates/avatar-render)
+   Compiling avatar-tts v0.1.0 (/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T144744Z/workspace/clone/cells/franklin/avatar/crates/avatar-tts)
+   Compiling avatar-bridge v0.1.0 (/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T144744Z/workspace/clone/cells/franklin/avatar/crates/avatar-bridge)
+   Compiling avatar-runtime v0.1.0 (/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T144744Z/workspace/clone/cells/franklin/avatar/crates/avatar-runtime)
+    Finished `release` profile [optimized] target(s) in 4.45s
+Building for production...
+[0/8] Write sources
+[2/8] Copying franklin_refuse.aiff
+[2/8] Copying franklin_calm.aiff
+[3/8] Copying franklin_bloom.aiff
+[5/8] Write swift-version--58304C5D6DBC2206.txt
+[7/9] Compiling FranklinUIKit GlassMaterial.swift
+[8/10] Compiling FranklinApp CanvasView.swift
+/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T144744Z/workspace/clone/GAIAOS/macos/Franklin/Sources/FranklinApp/FranklinRustBridge.swift:44:19: warning: value 'handle' was defined but never used; consider replacing with boolean test [#no-usage]
+42 |         guard let dylib = resolveBridgeDylibPath() else { return }
+43 |         handle = dlopen(dylib.path, RTLD_NOW)
+44 |         guard let handle else { return }
+   |                   `- warning: value 'handle' was defined but never used; consider replacing with boolean test [#no-usage]
+45 |         versionFn = loadSymbol("franklin_avatar_bridge_version", as: FranklinBridgeVersionFn.self)
+46 |         validateFrameFn = loadSymbol("franklin_avatar_validate_frame", as: FranklinBridgeValidateFrameFn.self)
+[8/10] Write Objects.LinkFileList
+[9/10] Linking FranklinApp
+Build complete! (21.39s)

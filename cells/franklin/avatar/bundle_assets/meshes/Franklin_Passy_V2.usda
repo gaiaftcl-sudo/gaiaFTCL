@@ -1,0 +1,101 @@
+#usda 1.0
+(
+    defaultPrim = "FranklinBust"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "FranklinBust"
+{
+    def Sphere "Head"
+    {
+        double radius = 0.24
+        double3 xformOp:translate = (0, 0.42, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Sphere "HairBack"
+    {
+        double radius = 0.21
+        double3 xformOp:translate = (0, 0.43, -0.08)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Sphere "LeftCheek"
+    {
+        double radius = 0.08
+        double3 xformOp:translate = (-0.09, 0.37, 0.17)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Sphere "RightCheek"
+    {
+        double radius = 0.08
+        double3 xformOp:translate = (0.09, 0.37, 0.17)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Sphere "Nose"
+    {
+        double radius = 0.05
+        double3 xformOp:translate = (0, 0.39, 0.23)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Sphere "ChinWattle"
+    {
+        double radius = 0.07
+        double3 xformOp:translate = (0, 0.22, 0.12)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Cylinder "Neck"
+    {
+        double height = 0.14
+        double radius = 0.09
+        token axis = "Y"
+        double3 xformOp:translate = (0, 0.20, 0.02)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Cylinder "Torso"
+    {
+        double height = 0.46
+        double radius = 0.23
+        token axis = "Y"
+        double3 xformOp:translate = (0, -0.06, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Cylinder "ShoulderBar"
+    {
+        double height = 0.58
+        double radius = 0.08
+        token axis = "X"
+        double3 xformOp:translate = (0, 0.06, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Sphere "LeftEyeSocket"
+    {
+        double radius = 0.03
+        double3 xformOp:translate = (-0.06, 0.43, 0.20)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Sphere "RightEyeSocket"
+    {
+        double radius = 0.03
+        double3 xformOp:translate = (0.06, 0.43, 0.20)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Cylinder "MouthLine"
+    {
+        double height = 0.11
+        double radius = 0.012
+        token axis = "X"
+        double3 xformOp:translate = (0, 0.31, 0.21)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+}

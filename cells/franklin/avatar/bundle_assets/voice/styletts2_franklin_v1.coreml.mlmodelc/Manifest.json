@@ -1,0 +1,13 @@
+{
+  "fileFormatVersion": "1.0.0",
+  "itemInfoEntries": {
+    "com.apple.CoreML": {
+      "author": "GaiaFTCL",
+      "description": "Franklin voice model package placeholder manifest pending full ANE model import",
+      "name": "styletts2_franklin_v1",
+      "path": "model.mlmodel",
+      "version": "1"
+    }
+  },
+  "rootModelIdentifier": "com.apple.CoreML"
+}

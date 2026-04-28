@@ -31,10 +31,13 @@ final class FranklinSpeechLoopService {
 
     private let synthesizer = AVSpeechSynthesizer()
     private let voiceProfile: FranklinVoiceProfile
+    private let profileLoadedFromDisk: Bool
     private let recognizer: SFSpeechRecognizer?
 
     private init() {
-        voiceProfile = FranklinSpeechLoopService.loadVoiceProfile()
+        let loaded = FranklinSpeechLoopService.loadVoiceProfile()
+        voiceProfile = loaded.profile
+        profileLoadedFromDisk = loaded.fromDisk
         recognizer = SFSpeechRecognizer(locale: Locale(identifier: voiceProfile.locale))
     }
 
@@ -45,6 +48,9 @@ final class FranklinSpeechLoopService {
     func stopListening() {}
 
     func speak(_ text: String) {
+        // Hard-stop generic/non-Franklin voice output.
+        guard profileLoadedFromDisk else { return }
+        guard voiceProfile.personaID == "franklin.guide.v1" else { return }
         let utterance = AVSpeechUtterance(string: text)
         utterance.rate = voiceProfile.speakingRate
         utterance.pitchMultiplier = voiceProfile.pitchMultiplier
@@ -58,18 +64,18 @@ final class FranklinSpeechLoopService {
         synthesizer.speak(utterance)
     }
 
-    private static func loadVoiceProfile() -> FranklinVoiceProfile {
+    private static func loadVoiceProfile() -> (profile: FranklinVoiceProfile, fromDisk: Bool) {
         let fm = FileManager.default
         var cursor = URL(fileURLWithPath: fm.currentDirectoryPath, isDirectory: true)
         for _ in 0..<10 {
             let profile = cursor.appendingPathComponent("cells/franklin/avatar/bundle_assets/voice/franklin_voice_profile.json")
             if let data = try? Data(contentsOf: profile),
                let decoded = try? JSONDecoder().decode(FranklinVoiceProfile.self, from: data) {
-                return decoded
+                return (decoded, true)
             }
             cursor.deleteLastPathComponent()
         }
-        return .default
+        return (.default, false)
     }
 }
 
@@ -91,14 +97,31 @@ final class FranklinVisionAttentionService {
 final class FranklinFoundationDialogService {
     static let shared = FranklinFoundationDialogService()
     private init() {}
+    private let bannedSemanticTerms = [
+        "submarine", "warship", "destroyer", "carrier", "vessel", "torpedo", "hull", "periscope",
+    ]
 
     func composeReply(for prompt: String) async -> String {
+        let boundedPrompt = """
+        System constraints:
+        - You are Benjamin Franklin, 18th-century biological human polymath and diplomat.
+        - You are not a vehicle, vessel, submarine, or naval object.
+        - Output must remain human-anatomy and human-dialogue compatible.
+
+        Operator prompt:
+        \(prompt)
+        """
 #if canImport(FoundationModels)
         if #available(macOS 26.0, *) {
             do {
                 let session = LanguageModelSession()
-                let response = try await session.respond(to: prompt)
-                return response.content
+                let response = try await session.respond(to: boundedPrompt)
+                let content = response.content
+                let lowered = content.lowercased()
+                if bannedSemanticTerms.contains(where: { lowered.contains($0) }) {
+                    return "REFUSED: semantic collision detected; response violated Franklin human-persona invariants."
+                }
+                return content
             } catch {
                 return "I remain in character and await the next command."
             }

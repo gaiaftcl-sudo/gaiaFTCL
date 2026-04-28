@@ -5,6 +5,7 @@ import FranklinUIKit
 struct FranklinAppMain: App {
     @State private var showCanvas = false
     @StateObject private var model = OperatorSurfaceModel()
+    private let launchGate = FranklinLaunchGate.evaluate()
 
     init() {
         SproutEvidenceCoordinator.shared.startIfNeeded()
@@ -12,20 +13,61 @@ struct FranklinAppMain: App {
 
     var body: some Scene {
         WindowGroup("Franklin") {
-            CanvasView()
-                .environmentObject(model)
+            if launchGate.ready {
+                CanvasView()
+                    .environmentObject(model)
+            } else {
+                FranklinLaunchRefusalView(refusals: launchGate.refusals)
+            }
         }
         .windowStyle(.hiddenTitleBar)
         .defaultSize(width: 860, height: 620)
 
         WindowGroup("Franklin Avatar Presence") {
-            AvatarView(showCanvas: $showCanvas)
-                .environmentObject(model)
-                .frame(width: 120, height: 120)
-                .background(Color.clear)
+            if launchGate.ready {
+                AvatarView(showCanvas: $showCanvas)
+                    .environmentObject(model)
+                    .frame(width: 120, height: 120)
+                    .background(Color.clear)
+            } else {
+                FranklinLaunchRefusalDot()
+                    .frame(width: 120, height: 120)
+            }
         }
         .windowStyle(.hiddenTitleBar)
         .defaultSize(width: 120, height: 120)
+    }
+}
+
+private struct FranklinLaunchRefusalView: View {
+    let refusals: [String]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Franklin Avatar Refused")
+                .font(.title2.bold())
+                .foregroundStyle(.red)
+            Text("Launch gate blocked. Required Passy assets/voice are not present.")
+                .font(.system(size: 13, weight: .semibold))
+            ForEach(Array(refusals.prefix(6).enumerated()), id: \.offset) { _, refusal in
+                Text(refusal)
+                    .font(.system(size: 11, weight: .semibold, design: .monospaced))
+                    .foregroundStyle(.red)
+            }
+            Spacer()
+        }
+        .padding(20)
+    }
+}
+
+private struct FranklinLaunchRefusalDot: View {
+    var body: some View {
+        ZStack {
+            Circle().fill(Color.red.opacity(0.25))
+            Image(systemName: "xmark.seal.fill")
+                .font(.system(size: 30, weight: .bold))
+                .foregroundStyle(.red)
+        }
     }
 }
 

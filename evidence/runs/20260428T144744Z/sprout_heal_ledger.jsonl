@@ -1,0 +1,30 @@
+{"ts":"2026-04-28T14:47:44Z","gate":"OUTER","attempt":1,"event":"begin","detail":"open ring\n"}
+{"ts":"2026-04-28T14:47:44Z","gate":"A","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T14:47:45Z","gate":"A","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T14:47:45Z","gate":"B","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T14:47:46Z","gate":"B","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T14:47:46Z","gate":"C","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T14:47:50Z","gate":"C","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T14:47:50Z","gate":"D","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T14:47:50Z","gate":"D","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T14:47:50Z","gate":"E","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T14:47:50Z","gate":"E","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T14:47:50Z","gate":"F","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T14:48:27Z","gate":"F","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T14:48:27Z","gate":"G","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T14:48:56Z","gate":"G","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T14:48:56Z","gate":"H","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T14:49:01Z","gate":"H","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T14:49:01Z","gate":"I","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T14:49:06Z","gate":"I","attempt":1,"event":"pass","detail":"gate open\n"}
+{"ts":"2026-04-28T14:49:06Z","gate":"J","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T14:49:06Z","gate":"J","attempt":1,"event":"fail","detail":"rc=127\n"}
+{"ts":"2026-04-28T14:49:06Z","gate":"J","attempt":1,"event":"receipt_inventory","detail":"empty\n"}
+{"ts":"2026-04-28T14:49:06Z","gate":"J","attempt":1,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T14:49:11Z","gate":"J","attempt":2,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T14:49:11Z","gate":"J","attempt":2,"event":"fail","detail":"rc=127\n"}
+{"ts":"2026-04-28T14:49:11Z","gate":"J","attempt":2,"event":"receipt_inventory","detail":"empty\n"}
+{"ts":"2026-04-28T14:49:11Z","gate":"J","attempt":2,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T14:49:20Z","gate":"J","attempt":3,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T14:49:20Z","gate":"J","attempt":3,"event":"fail","detail":"rc=127\n"}
+{"ts":"2026-04-28T14:49:20Z","gate":"J","attempt":3,"event":"exhausted","detail":"exit 90\n"}

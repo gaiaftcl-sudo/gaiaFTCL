@@ -1,0 +1,672 @@
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-RUNNER-001] (class B)
+Opening the closure window. Tau 2026-04-28T15:00:23Z. Root /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone. Contract 1.2.0. The substrate is a living mesh: every wound invokes a healer verb chain, every healing step is itself witnessed, every receipt chains to the closure window's prologue. Terminal death is reserved for wounds requiring human authority the runner does not have.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-RUNNER-001  closure window opened
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-PATHS-001] (class B)
+Verifying the substrate's required directory tree. A missing leaf invokes the path-scaffold healer (Class A under tooling-steward authority — directories are not signed, so no key required).
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-PATHS-001  passed first attempt
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-IDENTITY-001] (class B)
+Verifying substrate/identity_table.yaml has all five canonical slots in the slots-list shape with underscored role names. A missing or non-canon identity table invokes the genesis healer, which generates Ed25519 keypairs into the operator's keychain, signs the canonical identity table with the founder_backstop key, and mints a one-time genesis receipt. Genesis is itself a witnessed verb chain — there is no silent identity creation, ever.
+    ⌬ HEAL_ATTEMPT 1/3 for LG-FRANKLIN-IQ-IDENTITY-001
+    ⚒ HEAL    CALORIE   LG-FRANKLIN-HEAL-IDENTITY-ARCHIVE-001  archived pre-canon identity_table to /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/substrate/pre_genesis_artifacts
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_HEAL_EXHAUSTED             LG-FRANKLIN-IQ-IDENTITY-001
+             healer returned terminal code 2 on attempt 1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+    ⌬ HEAL_ATTEMPT 2/3 for LG-FRANKLIN-IQ-IDENTITY-001
+    ⚒ HEAL    CALORIE   LG-FRANKLIN-HEAL-IDENTITY-ARCHIVE-001  archived pre-canon identity_table to /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/substrate/pre_genesis_artifacts
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_HEAL_EXHAUSTED             LG-FRANKLIN-IQ-IDENTITY-001
+             healer returned terminal code 2 on attempt 2 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+    ⌬ HEAL_ATTEMPT 3/3 for LG-FRANKLIN-IQ-IDENTITY-001
+    ⚒ HEAL    CALORIE   LG-FRANKLIN-HEAL-IDENTITY-ARCHIVE-001  archived pre-canon identity_table to /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/substrate/pre_genesis_artifacts
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_HEAL_EXHAUSTED             LG-FRANKLIN-IQ-IDENTITY-001
+             healer returned terminal code 2 on attempt 3 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_HEAL_EXHAUSTED             LG-FRANKLIN-IQ-IDENTITY-001
+             exhausted 3 healing attempts; wound persists (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-CELL-CATALOGS-001] (class B)
+Verifying every expected cell holds a CATALOG.yaml. Missing catalogs invoke the catalog-scaffold healer; a cell still missing after healing declares terminal because the cell daemon cannot mint witnesses without a catalog.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-CELL-CATALOGS-001  passed first attempt
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-FRANKLIN-CATALOG-001] (class B)
+Verifying the Franklin Cell catalog: LANGUAGE_GAMES, AVATAR_MANIFEST, STACK_CONTROL_ENVELOPE, ADVERSARY_GRAMMAR, EDUCATION_TRACKS. Missing files invoke the Franklin-catalog healer with canonical content.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-FRANKLIN-CATALOG-001  passed first attempt
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-HASHLOCKS-001] (class B)
+Recomputing sha256 for every entry in substrate/HASH_LOCKS.yaml. The healer recomputes only entries whose signing wallet is present in the operator keychain; entries whose signer is absent are left intact and become refusals on the next pass. A drift on a file no live wallet can re-sign is terminal.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-HASHLOCKS-001  passed first attempt
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-REFUSAL-REGISTRY-001] (class B)
+Verifying substrate/REFUSAL_CODE_REGISTRY.yaml contains the canonical 109 codes (substrate 1–69 + Franklin Cell 80–119). Missing or partial registry invokes the registry-scaffold healer, which authors the full canonical list and seeds total_codes.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-REFUSAL-REGISTRY-001  passed first attempt
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-PR-LIST-001] (class B)
+Verifying substrate/PR_ASSERTIONS.yaml contains PR-01..PR-58 with runner bindings. Missing or partial list invokes the PR-scaffold healer, which authors the canonical 58-assertion list with placeholder runner stubs that exit 0 (real runners are authored later by signed proposals).
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-PR-LIST-001  passed first attempt
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-XCODE-001] (class B)
+Verifying the Apple Silicon toolchain. Missing tools are terminal — the runner has no authority to install Xcode.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-XCODE-001  xcrun, xcodebuild, swift, git, openssl present
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-XCODE-LATEST-001] (class B)
+Verifying the installed Xcode meets the pinned floor (substrate/TOOLCHAIN_REQUIRED.yaml). The healer authors the pin file and an operator-driven install helper script. Below-floor is TERMINAL — the substrate has no authority to drive the App Store / Apple ID install flow. Operator runs scripts/install_xcode_latest.sh and re-runs.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-XCODE-LATEST-001  passed first attempt
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-LIBRARIES-001] (class B)
+Verifying every required Swift library declared in substrate/REQUIRED_LIBRARIES.yaml is reachable on disk OR via SwiftPM resolve. The healer scaffolds the manifest, runs swift package resolve when a Package.swift is present, and vendors any missing library by git clone into vendor/<name>/. Unreachable required library → TERMINAL — IQ fails if libraries cannot be procured (per operator directive).
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-LIBRARIES-001  passed first attempt
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-RUST-TOOLCHAIN-001] (class B)
+Verifying the Rust toolchain (rustup/cargo/rustc) is present. Post-IQ verification is Rust-only by policy; without cargo we cannot build the verifier binary. Missing rustup is TERMINAL — the operator runs scripts/install_rust_toolchain.sh.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-RUST-TOOLCHAIN-001  passed first attempt
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-YAML-JSON-BRIDGE-001] (class B)
+Mirroring canonical YAML files to JSON under substrate/.json/, cells/.json/, and evidence/audits/.json/. Post-IQ Rust verifier reads JSON (no YAML dependency in the crate). Bridge healer is invoked at IQ time so the bridge files exist before any post-IQ check fires.
+    ⌬ HEAL_ATTEMPT 1/3 for LG-FRANKLIN-IQ-YAML-JSON-BRIDGE-001
+Traceback (most recent call last):
+  File "<stdin>", line 19, in <module>
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/__init__.py", line 125, in safe_load
+    return load(stream, SafeLoader)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/__init__.py", line 81, in load
+    return loader.get_single_data()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/constructor.py", line 49, in get_single_data
+    node = self.get_single_node()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 36, in get_single_node
+    document = self.compose_document()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 55, in compose_document
+    node = self.compose_node(None, None)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 82, in compose_node
+    node = self.compose_sequence_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 111, in compose_sequence_node
+    node.value.append(self.compose_node(node, index))
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 82, in compose_node
+    node = self.compose_sequence_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 110, in compose_sequence_node
+    while not self.check_event(SequenceEndEvent):
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/parser.py", line 98, in check_event
+    self.current_event = self.state()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/parser.py", line 382, in parse_block_sequence_entry
+    if self.check_token(BlockEntryToken):
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/scanner.py", line 115, in check_token
+    while self.need_more_tokens():
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/scanner.py", line 152, in need_more_tokens
+    self.stale_possible_simple_keys()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/scanner.py", line 291, in stale_possible_simple_keys
+    raise ScannerError("while scanning a simple key", key.mark,
+yaml.scanner.ScannerError: while scanning a simple key
+  in "/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/substrate/identity_table.yaml", line 15, column 1
+could not find expected ':'
+  in "/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/substrate/identity_table.yaml", line 16, column 9
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_PROVENANCE_MALFORMED       LG-FRANKLIN-IQ-YAML-JSON-BRIDGE-001
+             healer returned terminal code 2 on attempt 1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+    ⌬ HEAL_ATTEMPT 2/3 for LG-FRANKLIN-IQ-YAML-JSON-BRIDGE-001
+Traceback (most recent call last):
+  File "<stdin>", line 19, in <module>
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/__init__.py", line 125, in safe_load
+    return load(stream, SafeLoader)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/__init__.py", line 81, in load
+    return loader.get_single_data()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/constructor.py", line 49, in get_single_data
+    node = self.get_single_node()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 36, in get_single_node
+    document = self.compose_document()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 55, in compose_document
+    node = self.compose_node(None, None)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 82, in compose_node
+    node = self.compose_sequence_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 111, in compose_sequence_node
+    node.value.append(self.compose_node(node, index))
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 82, in compose_node
+    node = self.compose_sequence_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 110, in compose_sequence_node
+    while not self.check_event(SequenceEndEvent):
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/parser.py", line 98, in check_event
+    self.current_event = self.state()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/parser.py", line 382, in parse_block_sequence_entry
+    if self.check_token(BlockEntryToken):
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/scanner.py", line 115, in check_token
+    while self.need_more_tokens():
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/scanner.py", line 152, in need_more_tokens
+    self.stale_possible_simple_keys()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/scanner.py", line 291, in stale_possible_simple_keys
+    raise ScannerError("while scanning a simple key", key.mark,
+yaml.scanner.ScannerError: while scanning a simple key
+  in "/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/substrate/identity_table.yaml", line 15, column 1
+could not find expected ':'
+  in "/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/substrate/identity_table.yaml", line 16, column 9
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_PROVENANCE_MALFORMED       LG-FRANKLIN-IQ-YAML-JSON-BRIDGE-001
+             healer returned terminal code 2 on attempt 2 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+    ⌬ HEAL_ATTEMPT 3/3 for LG-FRANKLIN-IQ-YAML-JSON-BRIDGE-001
+Traceback (most recent call last):
+  File "<stdin>", line 19, in <module>
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/__init__.py", line 125, in safe_load
+    return load(stream, SafeLoader)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/__init__.py", line 81, in load
+    return loader.get_single_data()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/constructor.py", line 49, in get_single_data
+    node = self.get_single_node()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 36, in get_single_node
+    document = self.compose_document()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 55, in compose_document
+    node = self.compose_node(None, None)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 82, in compose_node
+    node = self.compose_sequence_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 111, in compose_sequence_node
+    node.value.append(self.compose_node(node, index))
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 82, in compose_node
+    node = self.compose_sequence_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 110, in compose_sequence_node
+    while not self.check_event(SequenceEndEvent):
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/parser.py", line 98, in check_event
+    self.current_event = self.state()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/parser.py", line 382, in parse_block_sequence_entry
+    if self.check_token(BlockEntryToken):
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/scanner.py", line 115, in check_token
+    while self.need_more_tokens():
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/scanner.py", line 152, in need_more_tokens
+    self.stale_possible_simple_keys()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/scanner.py", line 291, in stale_possible_simple_keys
+    raise ScannerError("while scanning a simple key", key.mark,
+yaml.scanner.ScannerError: while scanning a simple key
+  in "/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/substrate/identity_table.yaml", line 15, column 1
+could not find expected ':'
+  in "/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/substrate/identity_table.yaml", line 16, column 9
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_PROVENANCE_MALFORMED       LG-FRANKLIN-IQ-YAML-JSON-BRIDGE-001
+             healer returned terminal code 2 on attempt 3 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_PROVENANCE_MALFORMED       LG-FRANKLIN-IQ-YAML-JSON-BRIDGE-001
+             exhausted 3 healing attempts; wound persists (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-RUST-VERIFIER-001] (class B)
+Authoring tools/franklin_verify (Cargo crate) and building it via cargo build --release. The compiled binary handles every post-IQ verification subcommand: narrative-map, receipt, receipt-strict, pr-runners, auditor-stamp, rosette, reconcile, sha256-string. Cargo build failure is TERMINAL — without the binary we cannot honor the Rust-only post-IQ policy.
+    ⌬ HEAL_ATTEMPT 1/3 for LG-FRANKLIN-IQ-RUST-VERIFIER-001
+    ⚒ HEAL    CALORIE   LG-FRANKLIN-HEAL-RUST-MAIN-001  scaffolded tools/franklin_verify/src/main.rs
+    ⚠ cargo build failed; see /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/evidence/runs/20260428T150023Z/cargo_build.log
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_TOOLCHAIN_MISSING          LG-FRANKLIN-IQ-RUST-VERIFIER-001
+             healer returned terminal code 2 on attempt 1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+    ⌬ HEAL_ATTEMPT 2/3 for LG-FRANKLIN-IQ-RUST-VERIFIER-001
+    ⚒ HEAL    CALORIE   LG-FRANKLIN-HEAL-RUST-MAIN-001  scaffolded tools/franklin_verify/src/main.rs
+    ⚠ cargo build failed; see /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/evidence/runs/20260428T150023Z/cargo_build.log
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_TOOLCHAIN_MISSING          LG-FRANKLIN-IQ-RUST-VERIFIER-001
+             healer returned terminal code 2 on attempt 2 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+    ⌬ HEAL_ATTEMPT 3/3 for LG-FRANKLIN-IQ-RUST-VERIFIER-001
+    ⚒ HEAL    CALORIE   LG-FRANKLIN-HEAL-RUST-MAIN-001  scaffolded tools/franklin_verify/src/main.rs
+    ⚠ cargo build failed; see /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/evidence/runs/20260428T150023Z/cargo_build.log
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_TOOLCHAIN_MISSING          LG-FRANKLIN-IQ-RUST-VERIFIER-001
+             healer returned terminal code 2 on attempt 3 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_TOOLCHAIN_MISSING          LG-FRANKLIN-IQ-RUST-VERIFIER-001
+             exhausted 3 healing attempts; wound persists (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-AUDIT-MAP-001] (class B)
+Scaffolding evidence/audits/ui_test_narrative_catalog_map.yaml at IQ time so the JSON bridge has a source. (The runtime verification of this map happens post-IQ via the Rust binary; scaffolding stays in IQ because it authors content via python3, which IQ permits.)
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-AUDIT-MAP-001  passed first attempt
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-EMITTER-SCAFFOLD-001] (class B)
+Scaffolding fail-closed Swift emitter stubs for any registry code lacking an implementation. Stub authoring is python3 + zsh, which is allowed in IQ. Post-IQ verification of emitter parity uses the Rust binary's emitter-parity subcommand.
+emitters_scaffolded=0
+    ⚒ HEAL    CALORIE   LG-FRANKLIN-HEAL-EMITTER-PARITY-001  scaffolded fail-closed emitter stubs for codes lacking implementations
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-EMITTER-SCAFFOLD-001  emitter stubs scaffolded
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-HEALTH-UI-SCAFFOLD-001] (class B)
+Scaffolding Health UI audit toolchain: wiki/HEALTH_UI_AUDIT_AUTHORITY.md (rule set), cells/<cell>/Surfaces.yaml (per-cell manifest), and tools/franklin_health_ui_audit/ (Rust binary). The audit runs first in OQ; an unhealthy UI surface refuses before any test or PQ checkpoint.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-HEALTH-UI-SCAFFOLD-001  passed first attempt
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-YAML-JSON-BRIDGE-002] (class B)
+Re-mirroring YAML→JSON now that all IQ scaffolders have run. The Rust verifier reads JSON exclusively; this second bridge pass guarantees the audit map and post-scaffold registry are reflected.
+Traceback (most recent call last):
+  File "<stdin>", line 19, in <module>
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/__init__.py", line 125, in safe_load
+    return load(stream, SafeLoader)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/__init__.py", line 81, in load
+    return loader.get_single_data()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/constructor.py", line 49, in get_single_data
+    node = self.get_single_node()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 36, in get_single_node
+    document = self.compose_document()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 55, in compose_document
+    node = self.compose_node(None, None)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 82, in compose_node
+    node = self.compose_sequence_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 111, in compose_sequence_node
+    node.value.append(self.compose_node(node, index))
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 82, in compose_node
+    node = self.compose_sequence_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 110, in compose_sequence_node
+    while not self.check_event(SequenceEndEvent):
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/parser.py", line 98, in check_event
+    self.current_event = self.state()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/parser.py", line 382, in parse_block_sequence_entry
+    if self.check_token(BlockEntryToken):
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/scanner.py", line 115, in check_token
+    while self.need_more_tokens():
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/scanner.py", line 152, in need_more_tokens
+    self.stale_possible_simple_keys()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/scanner.py", line 291, in stale_possible_simple_keys
+    raise ScannerError("while scanning a simple key", key.mark,
+yaml.scanner.ScannerError: while scanning a simple key
+  in "/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/substrate/identity_table.yaml", line 15, column 1
+could not find expected ':'
+  in "/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/substrate/identity_table.yaml", line 16, column 9
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_PROVENANCE_MALFORMED       LG-FRANKLIN-IQ-YAML-JSON-BRIDGE-002
+             YAML→JSON re-bridge failed after IQ scaffolders (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-VQBIT-001] (class B)
+Sampling the entropy source. Quantum source unavailable invokes the fallback healer which writes substrate/VQBIT_PROVENANCE.yaml declaring the fallback. The fallback is itself part of the audit trail.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-VQBIT-001  passed first attempt
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-ROSETTE-REGISTRY-001] (class B)
+Verifying cells/cell_manifest_registry.yaml drives the rosette with every expected cell present and unique rosette positions. Missing or incomplete registry invokes the rosette-scaffold healer.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-ROSETTE-REGISTRY-001  passed first attempt
+Traceback (most recent call last):
+  File "<stdin>", line 19, in <module>
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/__init__.py", line 125, in safe_load
+    return load(stream, SafeLoader)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/__init__.py", line 81, in load
+    return loader.get_single_data()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/constructor.py", line 49, in get_single_data
+    node = self.get_single_node()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 36, in get_single_node
+    document = self.compose_document()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 55, in compose_document
+    node = self.compose_node(None, None)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 82, in compose_node
+    node = self.compose_sequence_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 111, in compose_sequence_node
+    node.value.append(self.compose_node(node, index))
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 82, in compose_node
+    node = self.compose_sequence_node(anchor)
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/composer.py", line 110, in compose_sequence_node
+    while not self.check_event(SequenceEndEvent):
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/parser.py", line 98, in check_event
+    self.current_event = self.state()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/parser.py", line 382, in parse_block_sequence_entry
+    if self.check_token(BlockEntryToken):
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/scanner.py", line 115, in check_token
+    while self.need_more_tokens():
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/scanner.py", line 152, in need_more_tokens
+    self.stale_possible_simple_keys()
+  File "/Users/richardgillespie/Library/Python/3.9/lib/python/site-packages/yaml/scanner.py", line 291, in stale_possible_simple_keys
+    raise ScannerError("while scanning a simple key", key.mark,
+yaml.scanner.ScannerError: while scanning a simple key
+  in "/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/substrate/identity_table.yaml", line 15, column 1
+could not find expected ':'
+  in "/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/substrate/identity_table.yaml", line 16, column 9
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_PROVENANCE_MALFORMED       LG-FRANKLIN-IQ-RUST-ONLY-GATE-001
+             final YAML→JSON bridge failed at IQ closure (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-LAUNCH-FRANKLIN-001] (class B)
+Building and launching the visible Franklin avatar (GAIAOS/macos/Franklin) plus the menu-bar bridge (cells/franklin/xcode/MacFranklinAssistant). The avatar is the user-facing deliverable — a SwiftUI WindowGroup with a visible avatar the operator can see and tap. The bridge serves local HTTP on 127.0.0.1:8830 with a /health endpoint. Both must be alive. The avatar reads the handoff envelope and runs the OQ catalog inside its own process; the runner zsh waits for evidence/runs/<tau>/handoff_complete.json before closing Reconcile + Epilogue. Topology proof: pid(avatar)+window(avatar)+pid(bridge)+http(bridge). Failure on any proof surface is terminal.
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_NOT_LAUNCHED               LG-FRANKLIN-IQ-LAUNCH-FRANKLIN-001
+             MacFranklinAssistant bridge source tree missing at /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/cells/franklin/xcode; cannot stand up :8830. (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_NOT_LAUNCHED               LG-FRANKLIN-IQ-LAUNCH-FRANKLIN-001
+             MacFranklinAssistant bridge swift build failed; see /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/evidence/runs/20260428T150023Z/franklin_bridge_build.log (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_NOT_LAUNCHED               LG-FRANKLIN-IQ-LAUNCH-FRANKLIN-001
+             MacFranklinAssistant bridge binary missing at /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/cells/franklin/xcode/.build/release/MacFranklinAssistant (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_NOT_LAUNCHED               LG-FRANKLIN-IQ-LAUNCH-FRANKLIN-001
+             MacFranklinAssistant bridge did not start; see franklin_bridge_stderr.log (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_NOT_LAUNCHED               LG-FRANKLIN-IQ-LAUNCH-FRANKLIN-001
+             bridge health check failed at http://127.0.0.1:8830/health (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-HANDOFF-001] (class B)
+Writing the run envelope FranklinApp will consume: tau, evidence root, keychain path, contract version, expected catalog manifest, expected PQ guided flow (Material Science Domain creation against mesh treasury). Franklin is now responsible for OQ and PQ execution and emits receipts through the same RECEIPTS_DIR the runner uses.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-HANDOFF-001  handoff envelope written at /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/evidence/runs/20260428T150023Z/franklin_handoff.json
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-FRANKLIN-VISIBLE-001] (class B)
+Launching the visible Franklin avatar with the run envelope. The avatar's SwiftUI onAppear handler reads FRANKLIN_HANDOFF_ENVELOPE and starts the OQ catalog runner inside its own process. Proof of visibility is a deterministic AppleScript window-existence check against the FranklinApp process. Failure to launch or to register a window is terminal — the operator must see the avatar.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-FRANKLIN-VISIBLE-001  orb_pid=13175 window_verified=true envelope=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/evidence/runs/20260428T150023Z/franklin_handoff.json
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-CELL-GAME-CATALOG-001] (class B)
+Scaffolding Franklin's own verb catalog at cells/franklin/CATALOG.yaml. This is the catalog Franklin plays in the cell-game loop below — the manifold by which the substrate uses itself to make itself whole.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-IQ-CELL-GAME-CATALOG-001  passed first attempt
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-CELL-GAME-AGREE-TAKEOVER-001] (class A)
+Franklin agrees and takes over. Under its own keypair, Franklin asserts it now owns OQ/PQ orchestration; the runner becomes evidence-envelope. This receipt is the takeover signature; downstream cell-game steps cite it as their authority.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-CELL-GAME-AGREE-TAKEOVER-001  Franklin takeover signed at /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/evidence/runs/20260428T150023Z/franklin_takeover.json
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-CELL-GAME-INTERVIEW-001] (class A)
+Franklin interviewing cell 'health': reading required artefacts and listing any gaps.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-CELL-GAME-INTERVIEW-001  cell 'health' whole on first interview
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-CELL-GAME-WITNESS-WHOLE-001] (class A)
+Franklin emitting per-cell whole-state witness for 'health'.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-CELL-GAME-WITNESS-WHOLE-001  cell 'health' whole-state witnessed
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-CELL-GAME-INTERVIEW-001] (class A)
+Franklin interviewing cell 'fusion': reading required artefacts and listing any gaps.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-CELL-GAME-INTERVIEW-001  cell 'fusion' whole on first interview
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-CELL-GAME-WITNESS-WHOLE-001] (class A)
+Franklin emitting per-cell whole-state witness for 'fusion'.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-CELL-GAME-WITNESS-WHOLE-001  cell 'fusion' whole-state witnessed
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-CELL-GAME-INTERVIEW-001] (class A)
+Franklin interviewing cell 'lithography': reading required artefacts and listing any gaps.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-CELL-GAME-INTERVIEW-001  cell 'lithography' whole on first interview
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-CELL-GAME-WITNESS-WHOLE-001] (class A)
+Franklin emitting per-cell whole-state witness for 'lithography'.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-CELL-GAME-WITNESS-WHOLE-001  cell 'lithography' whole-state witnessed
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-CELL-GAME-INTERVIEW-001] (class A)
+Franklin interviewing cell 'xcode': reading required artefacts and listing any gaps.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-CELL-GAME-INTERVIEW-001  cell 'xcode' whole on first interview
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-CELL-GAME-WITNESS-WHOLE-001] (class A)
+Franklin emitting per-cell whole-state witness for 'xcode'.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-CELL-GAME-WITNESS-WHOLE-001  cell 'xcode' whole-state witnessed
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-CELL-GAME-INTERVIEW-001] (class A)
+Franklin interviewing cell 'material_sciences': reading required artefacts and listing any gaps.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-CELL-GAME-INTERVIEW-001  cell 'material_sciences' whole on first interview
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-CELL-GAME-WITNESS-WHOLE-001] (class A)
+Franklin emitting per-cell whole-state witness for 'material_sciences'.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-CELL-GAME-WITNESS-WHOLE-001  cell 'material_sciences' whole-state witnessed
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-CELL-GAME-INTERVIEW-001] (class A)
+Franklin interviewing cell 'franklin': reading required artefacts and listing any gaps.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-CELL-GAME-INTERVIEW-001  cell 'franklin' whole on first interview
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-CELL-GAME-WITNESS-WHOLE-001] (class A)
+Franklin emitting per-cell whole-state witness for 'franklin'.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-CELL-GAME-WITNESS-WHOLE-001  cell 'franklin' whole-state witnessed
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-CELL-GAME-CLOSE-001] (class A)
+Closing the cell-game. Aggregate: 6 whole, 0 not-whole across 6 expected cells.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-CELL-GAME-CLOSE-001  cell-game closed: all 6/6 cells whole
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-IQ-RUST-ONLY-GATE-001] (class B)
+Closing IQ. Post-IQ phases (OQ, PQ, Reconcile) are zsh + Rust only. Python3 was permitted up to this gate for canonical YAML scaffolding; beyond this gate it is forbidden. Verification work crosses the gate into the Rust binary.
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-OQ-RUST-ONLY-001] (class B)
+Asserting post-IQ language purity: this runner script's OQ, PQ, and Reconcile sections must not invoke python3. (Operator policy: only zsh and python3 are allowed in IQ; only zsh and the Rust binary post-IQ. The Rust verifier is built in IQ and invoked post-IQ via ${RUST_VERIFY}.)
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-OQ-RUST-ONLY-001  post-IQ purity gate: zero python3 invocations after OQ
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-OQ-HEALTH-UI-AUDIT-001] (class B)
+Running the Health-first UI audit BEFORE build, tests, or PQ. Every cell's Surfaces.yaml is checked against the rule set in wiki/HEALTH_UI_AUDIT_AUTHORITY.md: WCAG AA contrast, no internal jargon, no raw timestamps/IPs/hostnames, every control labeled, primary CTA present, red reserved for destructive, no value↔label type mismatches, no duplicate controls. Any violation refuses terminal — the operator never sees an unhealthy UI in OQ/PQ.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-OQ-HEALTH-UI-AUDIT-001  Health UI audit clean across all cell surfaces (report: /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/evidence/runs/20260428T150023Z/health_ui_audit_report.json)
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-OQ-BUILD-001] (class B)
+Clean-building every Swift surface (workspace → project → SwiftPM). Build failures refuse with a diagnostic — the substrate cannot heal a compile error; that requires human code change.
+  ✓ WITNESS  CURE      LG-FRANKLIN-OQ-BUILD-001  build log: /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/evidence/runs/20260428T150023Z/build.log
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-OQ-LIVE-CATALOG-001] (class B)
+Waiting for the live avatar to complete the OQ catalog. The avatar is running swift test for each cell in-process and writing per-cell receipts. This runner polls evidence/runs/<tau>/handoff_complete.json with a hard timeout (FRANKLIN_OQ_TIMEOUT_SECONDS, default 900s). Timeout = the avatar did not finish the catalog; receipts may be partial. Either way, the catalog-completeness gate downstream will refuse on any missing LG ID.
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_NOT_LAUNCHED               LG-FRANKLIN-OQ-LIVE-CATALOG-001
+             avatar pid 13175 died mid-catalog after 30s; see franklin_avatar_stderr.log (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-OQ-NARRATIVE-MAP-001] (class B)
+Running the narration ↔ catalog map verifier via the Rust binary. The IQ phase already scaffolded the audit YAML and mirrored it to JSON; here we just call ${RUST_VERIFY} narrative-map on the JSON mirror. A failure refuses terminally — the audit trail must be coherent.
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_VALIDATION_PROPOSAL_REPLAY  LG-FRANKLIN-OQ-NARRATIVE-MAP-001
+             Rust narrative-map verifier failed (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-OQ-EMITTER-PARITY-001] (class B)
+Verifying every refusal code in the registry has at least one emitter via ${RUST_VERIFY} emitter-parity. The IQ phase scaffolded fail-closed Swift stubs; this OQ check confirms parity holds at run time.
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_CHANGE_PROPOSAL_REGRESSION_DETECTED  LG-FRANKLIN-OQ-EMITTER-PARITY-001
+             Rust emitter-parity verifier failed (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-OQ-PR-RUN-001] (class B)
+Invoking every PR-* assertion's runner via ${RUST_VERIFY} pr-runners. Placeholder runners exit 0; real runners enforce real invariants. A non-zero return refuses with a diagnostic — the runner cannot heal a failed assertion.
+  ✗ REFUSE   GW_REFUSE_OQ_ASSERTION_FAILED                 LG-FRANKLIN-OQ-PR-RUN-001
+             PR runner failure (Rust binary)
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-OQ-PR-RUN-001  PR results at evidence/runs/20260428T150023Z/pr_assertion_results.json
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-OQ-RECEIPT-VERIFY-001] (class B)
+Verifying a sample receipt offline. Uses gaiaftcl receipt verify if available, else ${RUST_VERIFY} receipt. A failure here refuses terminally — without offline verifiability the substrate is not auditable.
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_PROVENANCE_MALFORMED       LG-FRANKLIN-OQ-RECEIPT-VERIFY-001
+             Rust receipt verifier failed on /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/evidence/runs/20260428T150023Z/receipts/20260428T150023Z_LG-FRANKLIN-CELL-GAME-AGREE-TAKEOVER-001_CALORIE.json (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-OQ-CATALOG-FULL-001] (class B)
+Asserting full-catalog OQ execution. Every required suite from OQ_CATALOG_MANIFEST and every required orchestration step must have emitted a CALORIE receipt for this run. Missing receipt = the catalog was not fully exercised. GAMP 5 OQ does not permit partial coverage.
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_OQ_CATALOG_INCOMPLETE               LG-FRANKLIN-OQ-CATALOG-FULL-001
+             OQ catalog incomplete; missing receipts for: LG-FRANKLIN-OQ-FUSION-TESTS-001, LG-FRANKLIN-OQ-HEALTH-TESTS-001, LG-FRANKLIN-OQ-FRANKLIN-TESTS-001, LG-FRANKLIN-OQ-LITHO-TESTS-001, LG-FRANKLIN-OQ-XCODE-TESTS-001, LG-FRANKLIN-OQ-MATSCI-TESTS-001 (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-PQ-EDU-AUDITOR-001] (class B)
+PQ is avatar-owned. Runner waits for evidence/runs/<tau>/pq_complete.json from the live avatar process and then proceeds to Reconcile/Epilogue.
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_NOT_LAUNCHED               LG-FRANKLIN-PQ-EDU-AUDITOR-001
+             avatar pid 13175 died mid-PQ after 2s; see franklin_avatar_stderr.log (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-RECONCILE-COUNTS-001] (class B)
+Reconciling headline arithmetic via ${RUST_VERIFY} reconcile: refusal_codes total, PR_assertions count, total_codes consistency.
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_CHANGE_PROPOSAL_REGRESSION_DETECTED  LG-FRANKLIN-RECONCILE-COUNTS-001
+             headline drift (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-RECONCILE-NARRATIVE-001] (class B)
+Confirming every step that ran narrated and recorded a result. A summary with steps but no result map is structurally incomplete.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-RECONCILE-NARRATIVE-001  narration entries: 41; results: 40
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-RECONCILE-DOCS-AUTHORITY-001] (class B)
+Verifying wiki/*.md is the test authority and the run answers it. Every required_lg_ids entry in every wiki authority doc must have a CALORIE receipt this run. Missing wiki authority root or missing receipts = docs↔receipts drift = TERMINAL refusal. The audit loop must close.
+  ✗ REFUSE   GW_REFUSE_WIKI_AUTHORITY_MISSING              LG-FRANKLIN-RECONCILE-DOCS-AUTHORITY-001
+             wiki authority docs missing: GAMP5_TEST_AUTHORITY.md, FRANKLIN_FIRST.md, PQ_MATERIAL_SCIENCES_GUIDE.md (TERMINAL: substrate has no authority to heal this wound)
+  ✗ REFUSE   GW_REFUSE_FRANKLIN_UNEXPECTED_FAILURE         LG-FRANKLIN-RUNNER-001
+             unexpected failure rc=1 (TERMINAL: substrate has no authority to heal this wound)
+
+────────────────────────────────────────────────────────────
+[LG-FRANKLIN-RUNNER-EPILOGUE-001] (class B)
+Closing the closure window through the Klein-bottle surface — the same manifold that opened with the prologue. The terminal aggregate is CALORIE iff every step terminated CALORIE or CURE and no terminal wounds were declared. Heal events are normal — they are how the substrate stays alive. Wounds are normal — they are recorded into the manifold so the audit captures the full state.
+  ✓ WITNESS  CALORIE   LG-FRANKLIN-RUNNER-EPILOGUE-001  closure window closed
+
+Franklin IQ/OQ/PQ closure window 20260428T150023Z: steps=53 witnessed=39 healed=7 refused=73 terminal=72
+
+Summary:    /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/evidence/runs/20260428T150023Z/summary.md
+Receipts:   /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/evidence/runs/20260428T150023Z/receipts
+Heals:      /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/evidence/runs/20260428T150023Z/heals
+Prologue:   /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/evidence/runs/20260428T150023Z/prologue.json
+Epilogue:   /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T150023Z/workspace/clone/evidence/runs/20260428T150023Z/epilogue.json
+Keychain:   /Users/richardgillespie/.franklin/keychain

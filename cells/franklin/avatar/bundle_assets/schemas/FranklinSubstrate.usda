@@ -1,0 +1,22 @@
+#usda 1.0
+(
+    customLayerData = {
+        string creator = "GaiaFTCL-Orchestrator"
+        string version = "2026.4.29fps"
+    }
+)
+
+class "FranklinAvatarAPI" (
+    inherits = </APISchemaBase>
+)
+{
+    uniform token franklin:s4:projectionMode = "foveated"
+    float3 franklin:s4:m8_coordinate = (0, 0, 0)
+
+    uniform bool franklin:c4:isSovereign = true
+    uniform string franklin:c4:originGeometry = "administrative"
+
+    float franklin:state:vQbitDelta = 0.0 (
+        doc = "Primary entropy measurement. State transitions occur only on vQbit tick."
+    )
+}

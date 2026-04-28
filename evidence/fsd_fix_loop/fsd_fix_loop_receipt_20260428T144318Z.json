@@ -1,0 +1,10 @@
+{
+  "timestamp": "20260428T144318Z",
+  "overall": "PASS",
+  "steps": [
+    {"name":"inventory","status":"PASS","rc":0},
+    {"name":"mac_stack_tsd","status":"PASS","rc":0},
+    {"name":"franklin_pins","status":"PASS","rc":0},
+    {"name":"health_gamp5","status":"PASS","rc":0}
+  ]
+}

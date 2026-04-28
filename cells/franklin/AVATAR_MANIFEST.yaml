@@ -1,0 +1,13 @@
+# Franklin cell runtime manifest (non-generative contract)
+identity: Franklin-Sovereign-Guide-26.4
+build: 17E192
+voice:
+  on_device_only: true
+  model: cells/franklin/avatar/bundle_assets/voice/styletts2_franklin_v1.coreml.mlmodelc
+render:
+  target_fps: 29
+  geometry_blob: cells/franklin/avatar/bundle_assets/meshes/Franklin_Passy_V2.fblob
+  materials_metallib: cells/franklin/avatar/bundle_assets/materials/Franklin_Z3_Materials.metallib
+fuit:
+  key_id: franklin.fuit.ed25519.main
+  receipt_mode: signed_required

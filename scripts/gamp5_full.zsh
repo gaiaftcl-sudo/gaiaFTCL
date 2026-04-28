@@ -628,29 +628,63 @@ PY
     # Author the canonical identity_table.yaml — slots: list, underscored
     # role names, contract version pinned.
     local genesis_rcpt="${EVIDENCE_ROOT}/genesis.json"
-    {
-        printf '# substrate/identity_table.yaml\n'
-        printf '# Authored by Franklin genesis at tau %s.\n' "${TAU_HUMAN}"
-        printf '# Canonical shape: slots list, underscored role names.\n'
-        printf 'contract_version: %s\n' "${EXPECTED_CONTRACT_VERSION}"
-        printf 'genesis_tau: %s\n' "${TAU_HUMAN}"
-        printf 'slots:\n'
-        for slot in "${EXPECTED_IDENTITY_SLOTS[@]}"; do
-            local pubsha
-            pubsha="$(SHA "${FRANKLIN_KEYCHAIN}/${slot}.ed25519.pub.pem")"
-            printf '  - role: %s\n' "${slot}"
-            printf '    authority: %s\n' "$(_authority_for "${slot}")"
-            printf '    pubkey_path: ${FRANKLIN_KEYCHAIN}/%s.ed25519.pub.pem\n' "${slot}"
-            printf '    pubkey_sha256: %s\n' "${pubsha}"
-            printf '    rotation_path: gaiaftcl roster rotate --role %s\n' "${slot}"
-            printf '    revocation_path: substrate/wallet_revocations.yaml\n'
-            printf '    countersigned_by:\n'
-            local cs
-            for cs in $(_countersigners_for "${slot}"); do
-                printf '      - %s\n' "${cs}"
-            done
-        done
-    } > "${id_table}"
+    python3 - "${id_table}" "${EXPECTED_CONTRACT_VERSION}" "${TAU_HUMAN}" "${FRANKLIN_KEYCHAIN}" "${EXPECTED_IDENTITY_SLOTS[@]}" <<'PY' || return 2
+import sys
+import yaml
+from pathlib import Path
+
+id_table = Path(sys.argv[1])
+contract_version = sys.argv[2]
+tau_human = sys.argv[3]
+keychain = Path(sys.argv[4])
+slots = sys.argv[5:]
+
+def authority_for(slot: str) -> str:
+    return {
+        "founder_backstop": "substrate_root",
+        "substrate_steward": "substrate",
+        "cell_owner": "catalog_cell",
+        "tooling_steward": "tooling",
+        "franklin_cell_owner": "catalog_franklin",
+    }.get(slot, "unknown")
+
+def countersigners_for(slot: str):
+    return {
+        "founder_backstop": ["substrate_steward"],
+        "substrate_steward": ["founder_backstop"],
+        "cell_owner": ["substrate_steward", "founder_backstop"],
+        "tooling_steward": ["substrate_steward"],
+        "franklin_cell_owner": ["substrate_steward", "founder_backstop"],
+    }.get(slot, ["substrate_steward"])
+
+doc = {
+    "contract_version": contract_version,
+    "genesis_tau": tau_human,
+    "slots": [],
+}
+
+for slot in slots:
+    pub = keychain / f"{slot}.ed25519.pub.pem"
+    import hashlib
+    pubsha = hashlib.sha256(pub.read_bytes()).hexdigest()
+    doc["slots"].append({
+        "role": slot,
+        "authority": authority_for(slot),
+        "pubkey_path": f"{keychain}/{slot}.ed25519.pub.pem",
+        "pubkey_sha256": pubsha,
+        "rotation_path": f"gaiaftcl roster rotate --role {slot}",
+        "revocation_path": "substrate/wallet_revocations.yaml",
+        "countersigned_by": countersigners_for(slot),
+    })
+
+id_table.write_text(
+    "# substrate/identity_table.yaml\n"
+    f"# Authored by Franklin genesis at tau {tau_human}.\n"
+    "# Canonical shape: slots list, underscored role names.\n" +
+    yaml.safe_dump(doc, sort_keys=False),
+    encoding="utf-8",
+)
+PY
     # Sign the identity table with the founder_backstop key.
     local fb_priv="${FRANKLIN_KEYCHAIN}/founder_backstop.ed25519.priv.pem"
     local id_sig="${id_table}.sig"

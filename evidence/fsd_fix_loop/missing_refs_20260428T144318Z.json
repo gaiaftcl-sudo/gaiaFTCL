@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-04-28T14:43:18Z",
+  "root": "/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL",
+  "references": [
+    {"path":"cells/lithography/qualification/traceability_matrix.md","status":"present"},
+    {"path":"cells/lithography/rtl/hmmu/README.md","status":"present"},
+    {"path":"cells/fusion/macos/MacFusionQualification/README.md","status":"present"},
+    {"path":"cells/fusion/macos/MacHealthQualification/README.md","status":"present"},
+    {"path":"cells/fusion/macos/QualificationRunner/README.md","status":"present"},
+    {"path":"cells/fusion/test_qualification_clean_clone.sh","status":"present"},
+    {"path":"cells/fusion/deploy/mac_cell_mount/bin/cell_onboard.sh","status":"present"},
+    {"path":"cells/fusion/deploy/mac_cell_mount/bin/gaia_mount","status":"present"},
+    {"path":"cells/fusion/deploy/mac_cell_mount/spring/seed_receipt_template.json","status":"present"},
+    {"path":"cells/fusion/deploy/mac_cell_mount/nats/nats_seed.conf","status":"present"},
+    {"path":"cells/fusion/deploy/mac_cell_mount/README_MEMBRANE.md","status":"present"},
+    {"path":"cells/fusion/deploy/fusion_mesh/config/benchmarks/osti_baseline.json","status":"present"},
+    {"path":"cells/fusion/services/gaiaftcl_sovereign_facade/src/entry_point.swift","status":"present"},
+    {"path":"cells/health/.admincell-expected/orchestrator.sha256","status":"present"}
+  ]
+}

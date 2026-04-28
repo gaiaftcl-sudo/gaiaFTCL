@@ -1,0 +1,10 @@
+{
+  "id": "gout_favor_left",
+  "description": "Weight distribution favoring left peroneal/Achilles protection",
+  "weights": {
+    "pelvis_shift_x": -0.08,
+    "left_knee_flexion": 0.11,
+    "right_knee_flexion": 0.03,
+    "torso_lean_y": 0.04
+  }
+}

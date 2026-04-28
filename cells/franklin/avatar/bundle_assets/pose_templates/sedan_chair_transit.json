@@ -1,0 +1,10 @@
+{
+  "id": "sedan_chair_transit",
+  "description": "Seated transit posture for low-mobility intervals",
+  "weights": {
+    "pelvis_drop_y": -0.14,
+    "hip_flexion": 0.21,
+    "spine_curve": 0.08,
+    "head_pitch": -0.03
+  }
+}

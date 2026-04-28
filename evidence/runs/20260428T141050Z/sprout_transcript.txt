@@ -1,0 +1,44 @@
+[1mBaby cell (sprout) — temporal run · gates A→J[0m
+  tau=20260428T141050Z  tmp=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T141050Z  workspace=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T141050Z/workspace  FOT_VQBIT_SPROUT=1
+
+[1m═══ Outer ring 1/1 — new skin on tmp ═══[0m
+[0;36m[2026-04-28T14:10:50Z][0m Recycle tmp install workspace (temporal reset) → rm -rf /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T141050Z/workspace
+
+[1m━━ Gate · preflight · tools · keys · operator witness ━━[0m
+[0;36m[2026-04-28T14:10:50Z][0m tau=20260428T141050Z branch=main remote=origin ring_workspace=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T141050Z/workspace
+[FAIL] working tree dirty (tracked/index)
+[FAIL] Gate A attempt 1 failed (rc=5)
+[0;35m[2026-04-28T14:10:50Z] HEAL[0m Gate A → heal_A
+[1;33m[2026-04-28T14:10:50Z] WARN[0m tracked/index dirty; sprout will not stash local code. commit/push or clean tree first.
+[0;36m[2026-04-28T14:10:50Z][0m backoff 4s
+[0;36m[2026-04-28T14:10:54Z][0m tau=20260428T141050Z branch=main remote=origin ring_workspace=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T141050Z/workspace
+[FAIL] working tree dirty (tracked/index)
+[FAIL] Gate A attempt 2 failed (rc=5)
+[0;35m[2026-04-28T14:10:54Z] HEAL[0m Gate A → heal_A
+[1;33m[2026-04-28T14:10:54Z] WARN[0m tracked/index dirty; sprout will not stash local code. commit/push or clean tree first.
+[0;36m[2026-04-28T14:10:54Z][0m backoff 12s
+[0;36m[2026-04-28T14:11:06Z][0m tau=20260428T141050Z branch=main remote=origin ring_workspace=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T141050Z/workspace
+[FAIL] working tree dirty (tracked/index)
+[FAIL] Gate A attempt 3 failed (rc=5)
+[FAIL] Gate A exhausted — exit 10
+
+[1m━━ Gate · K · ledger ━━[0m
+tau=20260428T141050Z sprout_rc=10 clone=/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T141050Z/workspace/clone
+heal ledger: /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/runtime/sprout-cells/20260428T141050Z/run/heal_ledger.jsonl
+[0;31mEXHAUSTED rc=10[0m
+[
+  {
+    "gate": "A",
+    "tries": 3,
+    "fails": 3,
+    "heals": 2,
+    "passes": 0
+  },
+  {
+    "gate": "OUTER",
+    "tries": 0,
+    "fails": 0,
+    "heals": 0,
+    "passes": 0
+  }
+]

@@ -1,5 +1,6 @@
 import SwiftUI
 import FranklinUIKit
+import AppKit
 
 private struct FranklinMeshFallbackView: View {
     let meshLoaded: Bool
@@ -41,6 +42,21 @@ private struct FranklinMeshFallbackView: View {
                     .frame(width: 30, height: 3)
                     .offset(y: 12)
             }
+        }
+    }
+}
+
+private struct FranklinPortraitFallbackView: View {
+    let imagePath: String
+
+    var body: some View {
+        if let image = NSImage(contentsOfFile: imagePath) {
+            Image(nsImage: image)
+                .resizable()
+                .scaledToFill()
+                .clipShape(RoundedRectangle(cornerRadius: 18))
+        } else {
+            FranklinMeshFallbackView(meshLoaded: false)
         }
     }
 }
@@ -281,6 +297,17 @@ struct FranklinAvatarStage: View {
         model.conversationColumn.last?.message ?? "I am present. Route a command and I will answer in-facet."
     }
 
+    private var portraitPath: String {
+        let fm = FileManager.default
+        var cursor = URL(fileURLWithPath: fm.currentDirectoryPath, isDirectory: true)
+        for _ in 0..<10 {
+            let candidate = cursor.appendingPathComponent("cells/franklin/avatar/build/reality/Franklin_preview.png")
+            if fm.fileExists(atPath: candidate.path) { return candidate.path }
+            cursor.deleteLastPathComponent()
+        }
+        return ""
+    }
+
     var body: some View {
         HStack(spacing: 18) {
             ZStack {
@@ -295,8 +322,7 @@ struct FranklinAvatarStage: View {
                 FranklinAvatarRuntimeView(controller: avatarRuntime)
                     .clipShape(RoundedRectangle(cornerRadius: 18))
                     .padding(12)
-                FranklinMeshFallbackView(meshLoaded: avatarRuntime.assetBinding.meshLoaded)
-                    .clipShape(RoundedRectangle(cornerRadius: 18))
+                FranklinPortraitFallbackView(imagePath: portraitPath)
                     .padding(12)
                     .allowsHitTesting(false)
                     .opacity(avatarRuntime.bridgeVersion == "unavailable" ? 1.0 : 0.35)
@@ -332,11 +358,22 @@ struct FranklinAvatarStage: View {
                 Text("Rig: v=\(avatarRuntime.assetBinding.visemeCount) e=\(avatarRuntime.assetBinding.expressionCount) p=\(avatarRuntime.assetBinding.postureCount)")
                     .font(.system(size: 10, weight: .semibold, design: .monospaced))
                     .foregroundStyle(.secondary)
+                if !avatarRuntime.assetBinding.passyAssetSetReady {
+                    Text("REFUSED: required Passy asset set missing")
+                        .font(.system(size: 10, weight: .bold, design: .monospaced))
+                        .foregroundStyle(.red)
+                }
                 if !avatarRuntime.assetBinding.meshLoaded {
                     Text("REFUSED: missing Passy mesh asset at \(avatarRuntime.assetBinding.meshAssetPath)")
                         .font(.system(size: 10, weight: .bold, design: .monospaced))
                         .foregroundStyle(.red)
                         .lineLimit(2)
+                }
+                if !avatarRuntime.assetBinding.missingAssets.isEmpty {
+                    Text(avatarRuntime.assetBinding.missingAssets.prefix(2).joined(separator: " | "))
+                        .font(.system(size: 9, weight: .semibold, design: .monospaced))
+                        .foregroundStyle(.red)
+                        .lineLimit(3)
                 }
                 Text(speakingLine)
                     .font(.system(size: 13))
@@ -359,7 +396,7 @@ struct FranklinAvatarStage: View {
                 pulse += 0.9
                 avatarRuntime.apply(posture: postureState())
                 avatarRuntime.updateSpeech(text: speakingLine)
-                try? await Task.sleep(for: .milliseconds(16))
+                try? await Task.sleep(for: .milliseconds(34))
             }
         }
     }

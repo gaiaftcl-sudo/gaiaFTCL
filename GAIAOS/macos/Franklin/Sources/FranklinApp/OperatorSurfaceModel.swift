@@ -126,6 +126,8 @@ final class OperatorSurfaceModel: ObservableObject {
     private var previousUtteranceHash: String?
     private lazy var utteranceSigner: Curve25519.Signing.PrivateKey? = loadOrCreateUtteranceSigner()
     private var evidenceDirectoryOverride: URL?
+    private let launchGate = FranklinLaunchGate.evaluate()
+    private let isRunningUnitTests = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
 
     func refreshStatus() async {
         guard let url = URL(string: "http://127.0.0.1:8830/health") else {
@@ -205,11 +207,26 @@ final class OperatorSurfaceModel: ObservableObject {
                 applyOutcome(.terminal(.refused, "(\(code))\(refusalCode.map { ":\($0)" } ?? ""): \(body)"), prompt: trimmed, refusalCode: refusalCode)
             }
         } catch {
-            applyOutcome(.terminal(.refused, ": \(error.localizedDescription)"), prompt: trimmed, refusalCode: nil)
+            let localReply = await FranklinFoundationDialogService.shared.composeReply(for: trimmed)
+            if !localReply.isEmpty, !localReply.hasPrefix("REFUSED") {
+                appendConversation(speaker: "Franklin", facet: activeFacet, message: localReply)
+                applyOutcome(.terminal(.calorie, ": local_franklin_fallback"), prompt: trimmed, refusalCode: nil)
+            } else {
+                applyOutcome(.terminal(.refused, ": \(error.localizedDescription)"), prompt: trimmed, refusalCode: nil)
+            }
         }
     }
 
     func avatarGreetAndGuide() {
+        guard launchGate.ready else {
+            appendConversation(
+                speaker: "Franklin",
+                facet: activeFacet,
+                message: "REFUSED: Franklin avatar launch gate blocked: \(launchGate.refusals.prefix(3).joined(separator: " | "))"
+            )
+            lastResult = "REFUSED: avatar launch gate blocked"
+            return
+        }
         appendConversation(
             speaker: "Franklin",
             facet: activeFacet,
@@ -523,6 +540,9 @@ final class OperatorSurfaceModel: ObservableObject {
         let line = ConversationLine(speaker: speaker, facet: facet, message: message)
         conversationColumn.append(line)
         appendUtteranceReceipt(for: line)
+        if speaker == "Franklin", !isRunningUnitTests {
+            FranklinSpeechLoopService.shared.speak(String(message.prefix(280)))
+        }
         if conversationColumn.count > 120 {
             conversationColumn.removeFirst(conversationColumn.count - 120)
         }

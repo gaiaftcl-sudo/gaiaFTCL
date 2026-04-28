@@ -1,0 +1,12 @@
+# Franklin avatar asset lock: all required resources must resolve in-repo.
+# No runtime/sprout fetches are allowed for these paths.
+resources:
+  - cells/franklin/avatar/bundle_assets/meshes/Franklin_Passy_V2.fblob
+  - cells/franklin/avatar/bundle_assets/materials/Franklin_Z3_Materials.metallib
+  - cells/franklin/avatar/bundle_assets/spectral_luts/beaver_cap_spectral_lut.exr
+  - cells/franklin/avatar/bundle_assets/spectral_luts/anisotropic_flow_map.exr
+  - cells/franklin/avatar/bundle_assets/spectral_luts/claret_silk_degradation.exr
+  - cells/franklin/avatar/bundle_assets/voice/styletts2_franklin_v1.coreml.mlmodelc/Manifest.json
+  - cells/franklin/avatar/bundle_assets/voice/ipa_viseme_map.json
+  - cells/franklin/AVATAR_MANIFEST.yaml
+  - cells/franklin/Franklin_Cell.entitlements

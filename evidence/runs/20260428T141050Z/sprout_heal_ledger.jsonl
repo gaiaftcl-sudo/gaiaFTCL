@@ -1,0 +1,10 @@
+{"ts":"2026-04-28T14:10:50Z","gate":"OUTER","attempt":1,"event":"begin","detail":"open ring\n"}
+{"ts":"2026-04-28T14:10:50Z","gate":"A","attempt":1,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T14:10:50Z","gate":"A","attempt":1,"event":"fail","detail":"rc=5\n"}
+{"ts":"2026-04-28T14:10:50Z","gate":"A","attempt":1,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T14:10:54Z","gate":"A","attempt":2,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T14:10:54Z","gate":"A","attempt":2,"event":"fail","detail":"rc=5\n"}
+{"ts":"2026-04-28T14:10:54Z","gate":"A","attempt":2,"event":"heal_ok","detail":"heal completed\n"}
+{"ts":"2026-04-28T14:11:06Z","gate":"A","attempt":3,"event":"try","detail":"begin\n"}
+{"ts":"2026-04-28T14:11:06Z","gate":"A","attempt":3,"event":"fail","detail":"rc=5\n"}
+{"ts":"2026-04-28T14:11:06Z","gate":"A","attempt":3,"event":"exhausted","detail":"exit 10\n"}

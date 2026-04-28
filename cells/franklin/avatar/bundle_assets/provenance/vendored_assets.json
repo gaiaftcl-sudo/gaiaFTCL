@@ -1,0 +1,8 @@
+{
+  "timestamp_utc": "2026-04-28T16:56:00Z",
+  "asset_identity": "Benjamin Franklin human bust (non-vehicle)",
+  "geometry_source": "in-repo procedural USD authored for Franklin human avatar",
+  "metallib_source": "in-repo staged binary library",
+  "invariant_note": "Semantic collision guard active: non-human/naval references are refused by policy gate.",
+  "runtime_note": "All runtime uses in-repo staged files only."
+}

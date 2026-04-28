@@ -1,0 +1,18 @@
+{
+  "document_id": "GFTCL-IQ-001",
+  "schema": "fot8d_iq_receipt_v2",
+  "cell": "MacFusion",
+  "timestamp": "20260428T134419Z",
+  "git_commit": "f65739d8494a78b85d7b9dfb592252d0ba9d1e38",
+  "os_version": "26.4.1",
+  "architecture": "arm64",
+  "cell_id": "",
+  "wallet_address": "gaia1",
+  "pii_stored": false,
+  "prereq_pass": 10,
+  "prereq_fail": 0,
+  "license_accepted": true,
+  "clean_install": false,
+  "status": "PASS",
+  "next_step": "zsh scripts/gamp5_oq.sh --cell macfusion"
+}

@@ -1,0 +1,23 @@
+{
+  "identity": "Franklin-Sovereign-Guide-26.4",
+  "build": "17E192",
+  "language_games": [
+    "LG-HEALTH-ROUTE-001",
+    "LG-FRANKLIN-IQ-IDENTITY-001"
+  ],
+  "runtime": {
+    "target_fps": 29,
+    "v_rig": 11,
+    "e_rig": 12,
+    "p_rig": 6,
+    "viseme_default": "open_vowel"
+  },
+  "assets": {
+    "master_blob": "Franklin_Passy_V2.fblob",
+    "materials_metallib": "Franklin_Z3_Materials.metallib",
+    "mesh": "franklin_passy_v1.vmesh",
+    "schema": "Franklin_M8.usda",
+    "voice_profile": "styletts2_franklin_v1.coreml.mlmodelc",
+    "ipa_viseme_map": "ipa_viseme_map.json"
+  }
+}

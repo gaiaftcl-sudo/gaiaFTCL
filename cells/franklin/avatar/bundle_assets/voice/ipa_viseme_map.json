@@ -1,0 +1,16 @@
+{
+  "schema": "franklin.ipa.viseme.v1",
+  "entries": [
+    { "ipa": "a", "viseme": "open_vowel" },
+    { "ipa": "e", "viseme": "mid_vowel" },
+    { "ipa": "i", "viseme": "wide_smile" },
+    { "ipa": "o", "viseme": "round_vowel" },
+    { "ipa": "u", "viseme": "tight_round" },
+    { "ipa": "p|b|m", "viseme": "closed_lips" },
+    { "ipa": "f|v", "viseme": "lower_lip_bite" },
+    { "ipa": "t|d|n|l", "viseme": "tongue_tip_front" },
+    { "ipa": "s|z|sh|zh", "viseme": "narrow_sibilant" },
+    { "ipa": "k|g|ng", "viseme": "back_tongue" },
+    { "ipa": "r", "viseme": "american_r" }
+  ]
+}

@@ -145,6 +145,8 @@ pass_gate_with_heal() {
     # Deterministic contract refusals are not healable in-loop.
     # Stop retry churn and force operator-visible hard stop.
     if [[ "${gate}" == "F" && "${why}" == "46" ]] || \
+       [[ "${gate}" == "F" && "${why}" == "47" ]] || \
+       [[ "${gate}" == "F" && "${why}" == "48" ]] || \
        [[ "${gate}" == "G" && "${why}" == "31" ]] || \
        [[ "${gate}" == "G" && "${why}" == "32" ]] || \
        [[ "${gate}" == "G" && "${why}" == "33" ]]; then
@@ -187,6 +189,11 @@ try_A() {
   [[ -z "${FRANKLIN_KEY:-}" || ! -f "${FRANKLIN_KEY:-}" ]] && { hot "FRANKLIN_KEY missing"; return 2; }
   [[ -z "${FRANKLIN_OPERATOR_KEY:-}" || ! -f "${FRANKLIN_OPERATOR_KEY:-}" ]] && { hot "FRANKLIN_OPERATOR_KEY missing"; return 3; }
   [[ "${FOT_AVATAR_PQ_VISIBLE_OPERATOR_PRESENT:-0}" != "1" ]] && { hot "operator presence flag must be 1"; return 4; }
+  [[ -f "${GAIAFTCL_DIR}/scripts/require_franklin_passy_assets.sh" ]] || { hot "missing scripts/require_franklin_passy_assets.sh"; return 26; }
+  ( cd "${GAIAFTCL_DIR}" && zsh "scripts/require_franklin_passy_assets.sh" "${GAIAFTCL_DIR}" ) >/dev/null 2>&1 || {
+    hot "Passy asset preflight failed; sprout cannot start without in-repo Franklin assets"
+    return 27
+  }
   # Tracked/index only — local vendor/ .worktrees/ etc. must not block qualification.
   if [[ "${FRANKLIN_SPROUT_STRICT_DIRTY:-0}" == "1" ]]; then
     [[ -n "$(git status --porcelain --ignore-submodules=dirty)" ]] && { hot "working tree dirty"; return 5; }
@@ -233,6 +240,8 @@ heal_A() {
     5) warn "tracked/index dirty; sprout will not stash local code. commit/push or clean tree first." ;;
     21|22|23) warn "local/remote sync invariant failed; sprout requires pushed HEAD." ;;
     24|25) warn "owner prerequisite failed: push origin/main before sprout can continue." ;;
+    26) warn "missing Franklin Passy gate script in repo" ;;
+    27) warn "Franklin Passy assets missing/undersized; sprout blocked at preflight" ;;
     6) warn "remove tracked *.key/*.pem manually" ;;
   esac
 }
@@ -332,11 +341,25 @@ try_F() {
     iq_src="${GAIAFTCL_DIR}/scripts/gamp5_iq.sh"
     [[ -f "${RUN_ROOT}/presprout_gamp5_iq.sh" ]] && iq_src="${RUN_ROOT}/presprout_gamp5_iq.sh"
     [[ -f "${iq_src}" ]] && cp "${iq_src}" "${CLONE_DIR}/scripts/gamp5_iq.sh"
+    if [[ -f "${GAIAFTCL_DIR}/scripts/require_franklin_passy_assets.sh" ]]; then
+      cp "${GAIAFTCL_DIR}/scripts/require_franklin_passy_assets.sh" "${CLONE_DIR}/scripts/require_franklin_passy_assets.sh"
+      chmod +x "${CLONE_DIR}/scripts/require_franklin_passy_assets.sh" 2>/dev/null || true
+    fi
+    if [[ -f "${GAIAFTCL_DIR}/scripts/compile_franklin_reality_assets.sh" ]]; then
+      cp "${GAIAFTCL_DIR}/scripts/compile_franklin_reality_assets.sh" "${CLONE_DIR}/scripts/compile_franklin_reality_assets.sh"
+      chmod +x "${CLONE_DIR}/scripts/compile_franklin_reality_assets.sh" 2>/dev/null || true
+    fi
   fi
   # TSD gate: all Mac stacks (Franklin + GaiaFusion + MacHealth) must pass.
   [[ -f "${CLONE_DIR}/scripts/validate_mac_cell_stacks_tsd.sh" ]] || { hot "Gate F: missing validate_mac_cell_stacks_tsd.sh"; return 46; }
   ( cd "${CLONE_DIR}" && zsh scripts/validate_mac_cell_stacks_tsd.sh "${CLONE_DIR}" ) 2>&1 | tee "${LOG_DIR}/F_tsd.log" >&2
   (( pipestatus[1] != 0 )) && return 46
+  [[ -f "${CLONE_DIR}/scripts/require_franklin_passy_assets.sh" ]] || { hot "Gate F: missing require_franklin_passy_assets.sh"; return 47; }
+  ( cd "${CLONE_DIR}" && zsh scripts/require_franklin_passy_assets.sh "${CLONE_DIR}" ) 2>&1 | tee "${LOG_DIR}/F_assets.log" >&2
+  (( pipestatus[1] != 0 )) && return 47
+  [[ -f "${CLONE_DIR}/scripts/compile_franklin_reality_assets.sh" ]] || { hot "Gate F: missing compile_franklin_reality_assets.sh"; return 48; }
+  ( cd "${CLONE_DIR}" && zsh scripts/compile_franklin_reality_assets.sh "${CLONE_DIR}" ) 2>&1 | tee "${LOG_DIR}/F_reality.log" >&2
+  (( pipestatus[1] != 0 )) && return 48
   # Deterministic anti-hallucination gate: run unit suites before IQ/build flow.
   [[ -f "${CLONE_AVATAR}/Cargo.toml" ]] || { hot "Gate F: missing avatar Cargo.toml for unit tests"; return 42; }
   [[ -f "${franklin_root}/Package.swift" ]] || { hot "Gate F: missing Franklin Package.swift for unit tests"; return 43; }
@@ -373,7 +396,7 @@ try_F() {
 heal_F() {
   case "$2" in
     100|101|102) rm -rf "${CLONE_AVATAR}/build/iq_phase_$(( $2 - 100 ))" 2>/dev/null || true ;;
-    46) true ;;
+    46|47|48) true ;;
     44) [[ -f "${CLONE_AVATAR}/Cargo.toml" ]] && ( cd "${CLONE_AVATAR}" && cargo clean ) 2>&1 | tee -a "${LOG_DIR}/F_heal.log" || true ;;
     45) rm -rf "${CLONE_DIR}/GAIAOS/macos/Franklin/.build" 2>/dev/null || true ;;
     *) [[ -f "${CLONE_DIR}/Cargo.toml" ]] && ( cd "${CLONE_DIR}" && cargo clean ) 2>&1 | tee -a "${LOG_DIR}/F_heal.log" || true ;;

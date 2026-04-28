@@ -1,0 +1,191 @@
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[1;36m1/4 Wiki lint (Qualification Catalog + top-level wiki .md)[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+lint_wiki: OK (/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/wiki)
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[1;36m2/4 GAMP5 — Qualification Catalog structure + blob link resolution[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+OK: required sections / GAMP5 markers present in wiki/Qualification-Catalog.md
+OK: 42 unique /blob/main/ paths resolve under repo root
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[1;36m3/4 OWL-NUTRITION IQ / OQ / PQ (nutrition schemas + wasm_constitutional)[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+
+[0;36m== IQ — OWL-NUTRITION (installation qualification) ==[0m
+  [0;32mPASS[0m IQ-N-1 OWL-NUTRITION tree present
+  [0;32mPASS[0m IQ-N-2 four JSON Schemas present
+  [0;32mPASS[0m IQ-N-3 WASM nutrition exports present
+
+[0;36m== IQ — Python venv + jsonschema (schema validation) ==[0m
+OK fixtures/vegetarian_declaration.json
+OK fixtures/kosher_allergy_ramadan.json
+OK fixtures/composite_vegetarian_halal_treenut.json
+OK fixtures/c4_composite_declaration.json
+OK fixtures/minimal_monitoring_config.json
+OK fixtures/minimal_s4_evidence.json
+validate_nutrition_schemas: all fixtures passed
+  [0;32mPASS[0m IQ JSON Schema fixtures (all four schemas)
+
+[0;36m== OQ + PQ — Operational + Performance (synthetic) — cargo clean + test ==[0m
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/wasm_constitutional/Cargo.toml
+workspace: /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/Cargo.toml
+     Removed 142 files, 7.1MiB total
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/wasm_constitutional/Cargo.toml
+workspace: /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/Cargo.toml
+   Compiling gaia-health-substrate v0.1.0 (/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/wasm_constitutional)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.34s
+     Running unittests src/lib.rs (target/debug/deps/gaia_health_substrate-791653816fb9e9d1)
+
+running 19 tests
+test nutrition::tests::adversarial_vegan_chicken_violation ... ok
+test nutrition::tests::audit_digest_known_empty_vector ... ok
+test nutrition::tests::kosher_pork_violation ... ok
+test nutrition::tests::audit_digest_changes_with_payload ... ok
+test nutrition::tests::audit_digest_sha256_deterministic ... ok
+test nutrition::tests::projection_json_includes_version ... ok
+test tests::tc_017_phi_alert_for_raw_text ... ok
+test tests::tc_016_phi_clean_for_valid_hash ... ok
+test nutrition::tests::pq_n_mesh_identical_evidence_identical_projection ... ok
+test tests::tc_014_steric_clash_alarm ... ok
+test tests::tc_013_valid_binding_passes ... ok
+test tests::tc_018_assumed_chain_fails ... ok
+test tests::tc_015_herg_cardiac_risk_blocked ... ok
+test tests::tc_019_consent_expired ... ok
+test tests::tc_020_consent_invalid_key_rejects_pii ... ok
+test tests::tc_021_herg_unsafe_selectivity ... ok
+test tests::tp_018_force_field_valid_params_pass ... ok
+test tests::tp_019_epistemic_tag_measured ... ok
+test tests::tp_020_epistemic_tag_assumed_default ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+  [0;32mPASS[0m OQ: adversarial C4 + projection; PQ: digest determinism + PQ-N-MESH-001
+  [0;32mPASS[0m Receipt written: /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/docs/invariants/OWL-NUTRITION/evidence/owl_nutrition_iqoqpq_receipt.json
+
+[0;36m== OWL-NUTRITION IQ / OQ / PQ validation COMPLETE ==[0m
+  Summary: IQ PASS, OQ PASS (unit tests), PQ PASS (synthetic determinism only)
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[1;36m4/4 Health workspace — cargo test (all member crates)[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/wasm_constitutional/Cargo.toml
+workspace: /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/Cargo.toml
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+     Running unittests src/lib.rs (target/debug/deps/biologit_md_engine-444031d2a9619601)
+
+running 26 tests
+test epistemic::tests::tc_005_assumed_alone_refused ... ok
+test epistemic::tests::tc_006_epistemic_upgrade_violation ... ok
+test epistemic::tests::tp_006_measured_permits_cure ... ok
+test epistemic::tests::tp_008_metal_alpha_ordering ... ok
+test force_field::tests::tc_007_temperature_too_high_rejected ... ok
+test force_field::tests::tc_008_timestep_too_large_rejected ... ok
+test epistemic::tests::tp_007_inferred_permits_cure ... ok
+test force_field::tests::tp_009_valid_physiological_params_pass ... ok
+test force_field::tests::tc_009_simulation_too_short_rejected ... ok
+test state_machine::tests::tc_004_any_state_to_audit_hold_allowed ... ok
+test state_machine::tests::tn_003_idle_to_running_rejected ... ok
+test state_machine::tests::tn_004_idle_to_analysis_rejected ... ok
+test state_machine::tests::tp_001_valid_full_cure_path ... ok
+test state_machine::tests::tp_002_valid_refused_path ... ok
+test state_machine::tests::tp_003_layout_mode_idle_is_research_focus ... ok
+test state_machine::tests::tp_004_layout_mode_running_is_molecular_focus ... ok
+test state_machine::tests::tp_005_layout_mode_constitutional_flag_is_cell_alarm ... ok
+test tests::iq_001_bio_state_initializes_idle ... ok
+test tests::rg_001_idle_transition_clears_owl_pubkey ... ok
+test tests::tc_001_moor_owl_rejects_pii ... ok
+test tests::tc_002_moor_owl_accepts_valid_pubkey ... ok
+test tests::tc_003_training_mode_set_clear ... ok
+test tests::ti_001_state_machine_valid_path ... ok
+test tests::tn_001_null_handle_no_panic ... ok
+test tests::tn_002_state_machine_rejects_invalid_skip ... ok
+test tests::tr_001_bio_state_repr_stable ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/biologit_usd_parser-e1b90b32177037ca)
+
+running 11 tests
+test parser::tests::tn_005_empty_file_errors ... ok
+test parser::tests::tc_011_phi_remark_rejected ... ok
+test parser::tests::tp_011_parse_minimal_pdb ... ok
+test tests::rg_002_bioligit_primitive_size_96 ... ok
+test parser::tests::tp_013_hetatm_is_ligand_type ... ok
+test tests::rg_003_transform_at_offset_0 ... ok
+test parser::tests::tp_012_atom_count_propagated ... ok
+test tests::rg_004_binding_dg_at_offset_64 ... ok
+test tests::rg_005_epistemic_tag_at_offset_72 ... ok
+test tests::tc_010_identity_is_assumed ... ok
+test tests::tp_010_strong_binding_high_red ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/gaia_health_renderer-ac032d629a2313e7)
+
+running 8 tests
+test shaders::tests::rg_006_vertex_stride_32_bytes ... ok
+test shaders::tests::tp_016_shader_source_contains_required_functions ... ok
+test shaders::tests::tp_017_shader_contains_epistemic_logic ... ok
+test tests::iq_002_renderer_initializes_to_assumed ... ok
+test tests::tc_012_epistemic_clamped_to_2 ... ok
+test tests::tn_006_null_handle_no_panic ... ok
+test tests::tp_014_set_get_epistemic_tag_roundtrip ... ok
+test tests::tp_015_frame_counter_increments ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/gaia_health_substrate-791653816fb9e9d1)
+
+running 19 tests
+test nutrition::tests::audit_digest_known_empty_vector ... ok
+test nutrition::tests::adversarial_vegan_chicken_violation ... ok
+test nutrition::tests::kosher_pork_violation ... ok
+test nutrition::tests::audit_digest_sha256_deterministic ... ok
+test nutrition::tests::pq_n_mesh_identical_evidence_identical_projection ... ok
+test nutrition::tests::projection_json_includes_version ... ok
+test nutrition::tests::audit_digest_changes_with_payload ... ok
+test tests::tc_013_valid_binding_passes ... ok
+test tests::tc_014_steric_clash_alarm ... ok
+test tests::tc_015_herg_cardiac_risk_blocked ... ok
+test tests::tc_016_phi_clean_for_valid_hash ... ok
+test tests::tc_017_phi_alert_for_raw_text ... ok
+test tests::tc_018_assumed_chain_fails ... ok
+test tests::tc_019_consent_expired ... ok
+test tests::tc_020_consent_invalid_key_rejects_pii ... ok
+test tests::tc_021_herg_unsafe_selectivity ... ok
+test tests::tp_018_force_field_valid_params_pass ... ok
+test tests::tp_019_epistemic_tag_measured ... ok
+test tests::tp_020_epistemic_tag_assumed_default ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests biologit_md_engine
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests biologit_usd_parser
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests gaia_health_renderer
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+[0;32mPASS[0m — health_cell_gamp5_validate.sh complete (wiki + GAMP5 catalog + OWL-NUTRITION + full health workspace tests).

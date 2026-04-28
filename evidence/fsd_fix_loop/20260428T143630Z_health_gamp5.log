@@ -1,0 +1,31 @@
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[1;36m1/4 Wiki lint (Qualification Catalog + top-level wiki .md)[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+lint_wiki: OK (/Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/wiki)
+
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[1;36m2/4 GAMP5 — Qualification Catalog structure + blob link resolution[0m
+[0;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+FAIL: blob links in catalog with no local file on disk:
+  - cells/health/docs/LOCAL_IQOQPQ_ORCHESTRATOR_V3.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/docs/LOCAL_IQOQPQ_ORCHESTRATOR_V3.md
+  - cells/health/docs/PEPTIDE_INTEGRATION_SPEC.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/docs/PEPTIDE_INTEGRATION_SPEC.md
+  - cells/health/docs/ccr/CCR-HEALTH-MITO-INVARIANT-V1.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/docs/ccr/CCR-HEALTH-MITO-INVARIANT-V1.md
+  - cells/health/docs/ccr/CCR-HEALTH-MITO-SCENARIOS-V1.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/docs/ccr/CCR-HEALTH-MITO-SCENARIOS-V1.md
+  - cells/health/docs/ccr/CCR-HEALTH-PEPTIDE-V1.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/docs/ccr/CCR-HEALTH-PEPTIDE-V1.md
+  - cells/health/docs/invariants/LIGAND-CLASS/PGX_POLICY.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/docs/invariants/LIGAND-CLASS/PGX_POLICY.md
+  - cells/health/docs/invariants/LIGAND-CLASS/README.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/docs/invariants/LIGAND-CLASS/README.md
+  - cells/health/docs/invariants/OWL-MITO/PHASE0_VERIFICATION.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/docs/invariants/OWL-MITO/PHASE0_VERIFICATION.md
+  - cells/health/docs/invariants/OWL-MITO/README.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/docs/invariants/OWL-MITO/README.md
+  - cells/health/docs/invariants/OWL-MITO/SCENARIO_CLASS_SPEC.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/docs/invariants/OWL-MITO/SCENARIO_CLASS_SPEC.md
+  - cells/health/docs/invariants/REGISTRY_TIERS.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/docs/invariants/REGISTRY_TIERS.md
+  - cells/health/docs/qualification/OQ_PEPTIDE_V1.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/docs/qualification/OQ_PEPTIDE_V1.md
+  - cells/health/docs/qualification/PQ_PEPTIDE_V1.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/cells/health/docs/qualification/PQ_PEPTIDE_V1.md
+  - docs/audit/README.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/docs/audit/README.md
+  - docs/audit/calibrated-language-gamp-audit-v2/PHASE-3-EVIDENCE-STORAGE.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/docs/audit/calibrated-language-gamp-audit-v2/PHASE-3-EVIDENCE-STORAGE.md
+  - docs/audit/calibrated-language-gamp-audit-v2/README.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/docs/audit/calibrated-language-gamp-audit-v2/README.md
+  - docs/audit/calibrated-language-gamp-audit-v2/test_gate_map.v1.yaml -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/docs/audit/calibrated-language-gamp-audit-v2/test_gate_map.v1.yaml
+  - docs/franklin-wiki-refresh/WIKI_README_SIDEBAR_DISAMBIGUATION.md -> /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL/docs/franklin-wiki-refresh/WIKI_README_SIDEBAR_DISAMBIGUATION.md
+OK: required sections / GAMP5 markers present in wiki/Qualification-Catalog.md

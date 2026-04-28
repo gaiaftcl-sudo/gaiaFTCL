@@ -1,0 +1,10 @@
+{
+  "id": "bifocal_reading_dip",
+  "description": "Near-field ocular and neck adjustment for bifocal lower segment",
+  "weights": {
+    "head_pitch": -0.12,
+    "neck_flexion": 0.09,
+    "eye_downward_gaze": 0.27,
+    "shoulder_roll": -0.02
+  }
+}
