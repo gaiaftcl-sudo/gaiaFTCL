@@ -1,0 +1,22 @@
+#usda 1.0
+(
+    defaultPrim = "FranklinPassy"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "FranklinPassy"
+{
+    def Mesh "HeadProxy"
+    {
+        int[] faceVertexCounts = [3, 3, 3, 3]
+        int[] faceVertexIndices = [0, 1, 2, 0, 2, 3, 0, 3, 1, 1, 3, 2]
+        point3f[] points = [
+            (-0.35,  0.05,  0.30),
+            ( 0.35,  0.05,  0.30),
+            ( 0.00,  0.55, -0.10),
+            ( 0.00, -0.35, -0.05)
+        ]
+        uniform token subdivisionScheme = "none"
+    }
+}

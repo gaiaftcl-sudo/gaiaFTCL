@@ -25,7 +25,7 @@ section() {
 cd "${REPO_ROOT}"
 
 section "1/4 Wiki lint (Qualification Catalog + top-level wiki .md)"
-./wiki/lint_wiki.sh
+bash "${REPO_ROOT}/wiki/lint_wiki.sh"
 
 section "2/4 GAMP5 — Qualification Catalog structure + blob link resolution"
 python3 "${HEALTH_ROOT}/scripts/gamp5_qualification_catalog_check.py"

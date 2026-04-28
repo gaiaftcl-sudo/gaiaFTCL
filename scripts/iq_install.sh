@@ -18,7 +18,9 @@ REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 IDENTITY_DIR="${HOME}/.gaiaftcl"
 IDENTITY_FILE="${IDENTITY_DIR}/cell_identity"
 WALLET_FILE="${IDENTITY_DIR}/wallet.key"
-RECEIPT="${REPO_ROOT}/evidence/iq_receipt.json"
+RECEIPT_DIR="${REPO_ROOT}/evidence/iq"
+RECEIPT="${RECEIPT_DIR}/iq_receipt.json"
+LEGACY_RECEIPT="${REPO_ROOT}/evidence/iq_receipt.json"
 TIMESTAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 
 # ── Colours (Apple system terminal palette) ──
@@ -277,7 +279,7 @@ print ""
 print "  3. This software is governed by the GaiaFTCL Source-Available License."
 print "     Patents USPTO 19/460,960 and 19/096,071 apply."
 print ""
-print "  4. This installation is recorded in evidence/iq_receipt.json."
+print "  4. This installation is recorded in evidence/iq/iq_receipt.json."
 print "     This record is GxP-controlled and immutable."
 print ""
 print -n "${BOLD}Accept? [yes/no]: ${NC}"
@@ -295,7 +297,7 @@ fi
 head "IQ Phase 5 — Write IQ Receipt"
 # ─────────────────────────────────────────────────────────────────────────────
 
-mkdir -p "${REPO_ROOT}/evidence"
+mkdir -p "${RECEIPT_DIR}"
 
 cat > "${RECEIPT}" <<EOF
 {
@@ -317,7 +319,8 @@ cat > "${RECEIPT}" <<EOF
 }
 EOF
 
-pass "IQ receipt written: evidence/iq_receipt.json"
+cp -f "${RECEIPT}" "${LEGACY_RECEIPT}"
+pass "IQ receipt written: evidence/iq/iq_receipt.json (legacy mirror: evidence/iq_receipt.json)"
 
 # ─────────────────────────────────────────────────────────────────────────────
 print ""
@@ -326,7 +329,7 @@ print "${GRN}${BOLD}  INSTALLATION QUALIFICATION COMPLETE${NC}"
 print "${GRN}${BOLD}  Cell ID  : ${CELL_ID:0:32}...${NC}"
 print "${GRN}${BOLD}  Wallet   : ${WALLET_ADDRESS}${NC}"
 print "${GRN}${BOLD}  IQ Score : ${IQ_PASS} passed, ${IQ_FAIL} failed${NC}"
-print "${GRN}${BOLD}  Receipt  : evidence/iq_receipt.json${NC}"
+print "${GRN}${BOLD}  Receipt  : evidence/iq/iq_receipt.json${NC}"
 print "${GRN}${BOLD}══════════════════════════════════════════════════════${NC}"
 print ""
 print "Next step: run Operational Qualification"

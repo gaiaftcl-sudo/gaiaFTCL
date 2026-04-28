@@ -24,6 +24,9 @@ final class FranklinAvatarSceneController: ObservableObject {
     init() {
         bridgeVersion = FranklinRustBridge.shared.version
         assetBinding = FranklinAvatarAssetBinding.load()
+        if !assetBinding.meshLoaded {
+            lastRefusal = "GW_REFUSE_AVATAR_MESH_ASSET_MISSING"
+        }
     }
 
     func apply(posture: FranklinAvatarPosture) {
@@ -31,10 +34,15 @@ final class FranklinAvatarSceneController: ObservableObject {
     }
 
     func updateSpeech(text: String) {
+        guard assetBinding.meshLoaded else { return }
         activeViseme = FranklinRustBridge.shared.firstViseme(for: text)
     }
 
     func registerFrame(frameMs: Float, targetHz: UInt16) {
+        if !assetBinding.meshLoaded {
+            lastRefusal = "GW_REFUSE_AVATAR_MESH_ASSET_MISSING"
+            return
+        }
         lastFrameMs = frameMs
         if !FranklinRustBridge.shared.validateFrame(frameMs: frameMs, targetHz: targetHz) {
             lastRefusal = "GW_REFUSE_AVATAR_FRAME_BUDGET_OVERRUN"
@@ -71,24 +79,45 @@ struct FranklinAvatarAssetBinding {
                 let visemes = (try? fm.contentsOfDirectory(atPath: visemePath.path).filter { $0.hasSuffix(".json") }.count) ?? 0
                 let expressions = (try? fm.contentsOfDirectory(atPath: expressionPath.path).filter { $0.hasSuffix(".json") }.count) ?? 0
                 let postures = (try? fm.contentsOfDirectory(atPath: posturePath.path).filter { $0.hasSuffix(".json") }.count) ?? 0
-                let mesh = bundlePath.appendingPathComponent("meshes/franklin_passy_v1.usdz")
+                let mesh = resolveMeshAsset(in: bundlePath)
                 return FranklinAvatarAssetBinding(
-                    meshAssetPath: mesh.path,
+                    meshAssetPath: mesh?.path ?? "",
                     visemeCount: visemes,
                     expressionCount: expressions,
                     postureCount: postures,
-                    meshLoaded: fm.fileExists(atPath: mesh.path)
+                    meshLoaded: mesh != nil
                 )
             }
             cursor.deleteLastPathComponent()
         }
         return .empty
     }
+
+    private static func resolveMeshAsset(in bundlePath: URL) -> URL? {
+        let fm = FileManager.default
+        let meshes = bundlePath.appendingPathComponent("meshes", isDirectory: true)
+        let candidates = [
+            "franklin_passy_v1.usdz",
+            "franklin_passy_v1.usda",
+            "franklin_passy_v1.usdc",
+            "franklin_passy_v1.obj",
+            "franklin_passy_v1.gltf",
+            "franklin_passy_v1.glb",
+        ]
+        for name in candidates {
+            let path = meshes.appendingPathComponent(name)
+            if fm.fileExists(atPath: path.path) {
+                return path
+            }
+        }
+        return nil
+    }
 }
 
 final class FranklinMetalRenderer: NSObject, MTKViewDelegate {
     private weak var controller: FranklinAvatarSceneController?
     private var queue: MTLCommandQueue?
+    private var pulse: Double = 0
 
     init(controller: FranklinAvatarSceneController, device: MTLDevice) {
         self.controller = controller
@@ -106,17 +135,23 @@ final class FranklinMetalRenderer: NSObject, MTKViewDelegate {
         else { return }
 
         let start = CFAbsoluteTimeGetCurrent()
+        pulse += 0.04
+        let glow = 0.06 * (sin(pulse) + 1.0)
         switch controller.currentPosture {
         case .idle:
-            view.clearColor = MTLClearColor(red: 0.18, green: 0.22, blue: 0.26, alpha: 1)
+            if controller.assetBinding.meshLoaded {
+                view.clearColor = MTLClearColor(red: 0.44 + glow, green: 0.40 + glow * 0.6, blue: 0.32 + glow * 0.2, alpha: 1)
+            } else {
+                view.clearColor = MTLClearColor(red: 0.46, green: 0.14, blue: 0.14, alpha: 1)
+            }
         case .listening:
-            view.clearColor = MTLClearColor(red: 0.14, green: 0.20, blue: 0.30, alpha: 1)
+            view.clearColor = MTLClearColor(red: 0.30, green: 0.40 + glow, blue: 0.52, alpha: 1)
         case .speaking:
-            view.clearColor = MTLClearColor(red: 0.13, green: 0.29, blue: 0.33, alpha: 1)
+            view.clearColor = MTLClearColor(red: 0.25, green: 0.44 + glow, blue: 0.44, alpha: 1)
         case .refusing:
-            view.clearColor = MTLClearColor(red: 0.34, green: 0.10, blue: 0.12, alpha: 1)
+            view.clearColor = MTLClearColor(red: 0.56 + glow * 0.3, green: 0.20, blue: 0.20, alpha: 1)
         case .recording:
-            view.clearColor = MTLClearColor(red: 0.32, green: 0.22, blue: 0.12, alpha: 1)
+            view.clearColor = MTLClearColor(red: 0.52 + glow * 0.3, green: 0.36 + glow * 0.4, blue: 0.20, alpha: 1)
         }
 
         encoder.endEncoding()
@@ -139,13 +174,15 @@ struct FranklinAvatarRuntimeView: NSViewRepresentable {
         let view = MTKView()
         view.device = MTLCreateSystemDefaultDevice()
         view.preferredFramesPerSecond = 60
-        view.clearColor = MTLClearColor(red: 0.16, green: 0.18, blue: 0.20, alpha: 1.0)
+        view.clearColor = MTLClearColor(red: 0.48, green: 0.42, blue: 0.33, alpha: 1.0)
         view.colorPixelFormat = .bgra8Unorm
+        view.enableSetNeedsDisplay = false
+        view.isPaused = false
         view.delegate = context.coordinator
         return view
     }
 
     func updateNSView(_ nsView: MTKView, context: Context) {
-        nsView.setNeedsDisplay(nsView.bounds)
+        // MTKView redraws continuously via preferredFramesPerSecond.
     }
 }

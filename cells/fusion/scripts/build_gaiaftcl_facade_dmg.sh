@@ -168,13 +168,23 @@ echo "✅ Fusion Turbo IDE + projection staged under scripts/ and deploy/fusion_
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "⚡ FusionControl — 2000-cycle DMG gate + €0.10/kW tax receipt"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-chmod +x "$GAIA_ROOT/scripts/fusion_control_dmg_gate.sh"
-bash "$GAIA_ROOT/scripts/fusion_control_dmg_gate.sh"
-mkdir -p "$DMG_TEMP/evidence/fusion_control"
-cp -R "$GAIA_ROOT/services/fusion_control_mac/dist/FusionControl.app" "$DMG_TEMP/"
-cp "$GAIA_ROOT/evidence/fusion_control/dmg_gate_2000_cycle_receipt.json" "$DMG_TEMP/evidence/fusion_control/"
-cp "$GAIA_ROOT/services/fusion_control_mac/docs/FUSION_ENTROPY_TAX_AND_VALIDATION.md" "$DMG_TEMP/evidence/fusion_control/"
-echo "✅ FusionControl.app + fusion evidence copied to DMG staging"
+if [[ -f "$GAIA_ROOT/scripts/fusion_control_dmg_gate.sh" ]]; then
+  chmod +x "$GAIA_ROOT/scripts/fusion_control_dmg_gate.sh"
+  bash "$GAIA_ROOT/scripts/fusion_control_dmg_gate.sh"
+  if [[ -d "$GAIA_ROOT/services/fusion_control_mac/dist/FusionControl.app" ]]; then
+    mkdir -p "$DMG_TEMP/evidence/fusion_control"
+    cp -R "$GAIA_ROOT/services/fusion_control_mac/dist/FusionControl.app" "$DMG_TEMP/"
+    [[ -f "$GAIA_ROOT/evidence/fusion_control/dmg_gate_2000_cycle_receipt.json" ]] && \
+      cp "$GAIA_ROOT/evidence/fusion_control/dmg_gate_2000_cycle_receipt.json" "$DMG_TEMP/evidence/fusion_control/"
+    [[ -f "$GAIA_ROOT/services/fusion_control_mac/docs/FUSION_ENTROPY_TAX_AND_VALIDATION.md" ]] && \
+      cp "$GAIA_ROOT/services/fusion_control_mac/docs/FUSION_ENTROPY_TAX_AND_VALIDATION.md" "$DMG_TEMP/evidence/fusion_control/"
+    echo "✅ FusionControl.app + fusion evidence copied to DMG staging"
+  else
+    echo "⚠️  FusionControl.app not present after gate run; continuing without FusionControl payload"
+  fi
+else
+  echo "⚠️  fusion_control_dmg_gate.sh missing — skipping FusionControl payload"
+fi
 
 # FusionSidecarHost — Xcode + Virtualization.framework (see deploy/mac_cell_mount/FUSION_SIDECAR_HOST_APP.md)
 if [[ "${FUSION_DMG_INCLUDE_SIDECAR_HOST:-1}" == "1" ]]; then

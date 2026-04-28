@@ -278,6 +278,12 @@ struct FranklinAvatarStage: View {
                 Text("Rig: v=\(avatarRuntime.assetBinding.visemeCount) e=\(avatarRuntime.assetBinding.expressionCount) p=\(avatarRuntime.assetBinding.postureCount)")
                     .font(.system(size: 10, weight: .semibold, design: .monospaced))
                     .foregroundStyle(.secondary)
+                if !avatarRuntime.assetBinding.meshLoaded {
+                    Text("REFUSED: missing Passy mesh asset at \(avatarRuntime.assetBinding.meshAssetPath)")
+                        .font(.system(size: 10, weight: .bold, design: .monospaced))
+                        .foregroundStyle(.red)
+                        .lineLimit(2)
+                }
                 Text(speakingLine)
                     .font(.system(size: 13))
                     .lineLimit(4)

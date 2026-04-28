@@ -6,33 +6,35 @@
 
 ## Architecture
 
-Two **independent** qualification paths, one for each app:
+Canonical qualification paths in this checkout:
 
 ```
 cells/fusion/macos/
 ├── GaiaFusion/                  ← MacFusion app (Swift)
 ├── MacHealth/                   ← MacHealth app (Swift)
-├── MacFusionQualification/      ← IQ/OQ/PQ for MacFusion (Swift)
-├── MacHealthQualification/      ← IQ/OQ/PQ for MacHealth (Swift)
-├── TestRobot/                   ← PQ only — Metal GPU tests (Swift)
-└── QualificationRunner/         ← Orchestrates all (Swift)
+├── SILOQRunner/                 ← Active Swift qualification runner
+├── TestRobot/                   ← Metal GPU validation
+├── CleanCloneTest/              ← Clean clone verifier
+├── MacFusionQualification/      ← Legacy path marker (compat)
+├── MacHealthQualification/      ← Legacy path marker (compat)
+└── QualificationRunner/         ← Legacy path marker (compat)
 ```
 
 ---
 
 ## Path 1: MacFusion IQ/OQ/PQ
 
-**Location:** `cells/fusion/macos/MacFusionQualification/`
+**Location:** `cells/fusion/macos/SILOQRunner/` (active)
 
 **Build:**
 ```zsh
-cd cells/fusion/macos/MacFusionQualification
+cd cells/fusion/macos/SILOQRunner
 swift build
 ```
 
 **Run:**
 ```zsh
-.build/debug/MacFusionQualification
+.build/debug/SILOQRunner
 ```
 
 **Generates:**
@@ -49,17 +51,17 @@ swift build
 
 ## Path 2: MacHealth IQ/OQ/PQ
 
-**Location:** `cells/fusion/macos/MacHealthQualification/`
+**Location:** `cells/fusion/macos/SILOQRunner/` (active)
 
 **Build:**
 ```zsh
-cd cells/fusion/macos/MacHealthQualification
+cd cells/fusion/macos/SILOQRunner
 swift build
 ```
 
 **Run:**
 ```zsh
-.build/debug/MacHealthQualification
+.build/debug/SILOQRunner
 ```
 
 **Generates:**
@@ -96,19 +98,19 @@ swift build
 
 ---
 
-## QualificationRunner (Orchestrator)
+## SILOQRunner (Orchestrator)
 
-**Location:** `cells/fusion/macos/QualificationRunner/`
+**Location:** `cells/fusion/macos/SILOQRunner/`
 
 **Build:**
 ```zsh
-cd cells/fusion/macos/QualificationRunner
+cd cells/fusion/macos/SILOQRunner
 swift build
 ```
 
 **Run:**
 ```zsh
-.build/debug/QualificationRunner
+.build/debug/SILOQRunner
 ```
 
 **Orchestration order:**
@@ -120,7 +122,7 @@ swift build
 
 ## Test Script (Clean Clone)
 
-**Location:** `test_qualification_clean_clone.sh` (repo root)
+**Location:** `cells/fusion/test_qualification_clean_clone.sh`
 
 **What it does:**
 1. Creates clean test directory (`~/FoT8D_qualification_test_<timestamp>`)
@@ -134,8 +136,8 @@ swift build
 
 **Run:**
 ```zsh
-cd ~/Documents/FoT8D
-bash test_qualification_clean_clone.sh
+cd /Users/richardgillespie/Documents/GaiaFTCL-MacCells/gaiaFTCL
+zsh cells/fusion/test_qualification_clean_clone.sh
 ```
 
 **Output:**

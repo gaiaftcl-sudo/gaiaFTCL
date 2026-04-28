@@ -279,7 +279,7 @@ The system shall support a complete GAMP 5 IQ/OQ/PQ validation lifecycle.
 
 **IQ Phase 2 — Sovereign Cell Identity:**
 - Generate `~/.gaiaftcl/wallet.key` (zero-PII, mode 0600)
-- Write `evidence/iq_receipt.json` (ALCOA+ compliant)
+- Write `evidence/iq/iq_receipt.json` (ALCOA+ compliant; legacy mirror at `evidence/iq_receipt.json`)
 
 **OQ — 32 Rust GxP Tests:**
 
@@ -301,8 +301,8 @@ The system shall support a complete GAMP 5 IQ/OQ/PQ validation lifecycle.
 
 **Acceptance criteria:**
 - AC-011-1: `cargo test --workspace` passes 32/32 tests
-- AC-011-2: `evidence/iq_receipt.json` written with all ALCOA+ fields
-- AC-011-3: `evidence/oq_receipt.json` written with `rust_tests_passed: 32`
+- AC-011-2: `evidence/iq/iq_receipt.json` written with all ALCOA+ fields
+- AC-011-3: `evidence/oq/oq_receipt.json` written with `rust_tests_passed: 32`
 - AC-011-4: Fresh clone from GitHub passes all 32 tests (PQ phase 4)
 - AC-011-5: `evidence/full_cycle_receipt.json` written with `status: FULL_CYCLE_GREEN`
 

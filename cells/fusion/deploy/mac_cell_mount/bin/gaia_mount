@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+set -euo pipefail
+echo "CALORIE:gaia_mount:ready"

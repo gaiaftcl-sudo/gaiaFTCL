@@ -258,7 +258,7 @@ Every FR in §2 traces to:
 - At least one OQ or PQ test in `FAB_PROCESS_FLOW.md`.
 - A GAMP 5 V-model artifact in `GAMP5_LIFECYCLE.md`.
 
-The traceability matrix is maintained in `cells/lithography/qualification/traceability_matrix.md` (to be added) and is regenerated automatically by a CI job that parses FR identifiers.
+The traceability matrix is maintained in `cells/lithography/qualification/traceability_matrix.md` and is updated under change control with each FR-impacting revision.
 
 ---
 

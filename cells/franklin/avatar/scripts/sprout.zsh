@@ -142,6 +142,17 @@ pass_gate_with_heal() {
     fi
     hot "Gate ${gate} attempt ${attempt} failed (rc=${why})"
     ledger "${gate}" "${attempt}" "fail" "rc=${why}"
+    # Deterministic contract refusals are not healable in-loop.
+    # Stop retry churn and force operator-visible hard stop.
+    if [[ "${gate}" == "F" && "${why}" == "46" ]] || \
+       [[ "${gate}" == "G" && "${why}" == "31" ]] || \
+       [[ "${gate}" == "G" && "${why}" == "32" ]] || \
+       [[ "${gate}" == "G" && "${why}" == "33" ]]; then
+      SPROUT_FATAL=1
+      hot "Gate ${gate} deterministic refusal (rc=${why}) — hard stop, no heal retries"
+      ledger "${gate}" "${attempt}" "fatal" "deterministic refusal rc=${why}"
+      return "${exit_code}"
+    fi
     if (( attempt >= GATE_MAX_ATTEMPTS )); then
       hot "Gate ${gate} exhausted — exit ${exit_code}"
       ledger "${gate}" "${attempt}" "exhausted" "exit ${exit_code}"
@@ -322,6 +333,10 @@ try_F() {
     [[ -f "${RUN_ROOT}/presprout_gamp5_iq.sh" ]] && iq_src="${RUN_ROOT}/presprout_gamp5_iq.sh"
     [[ -f "${iq_src}" ]] && cp "${iq_src}" "${CLONE_DIR}/scripts/gamp5_iq.sh"
   fi
+  # TSD gate: all Mac stacks (Franklin + GaiaFusion + MacHealth) must pass.
+  [[ -f "${CLONE_DIR}/scripts/validate_mac_cell_stacks_tsd.sh" ]] || { hot "Gate F: missing validate_mac_cell_stacks_tsd.sh"; return 46; }
+  ( cd "${CLONE_DIR}" && zsh scripts/validate_mac_cell_stacks_tsd.sh "${CLONE_DIR}" ) 2>&1 | tee "${LOG_DIR}/F_tsd.log" >&2
+  (( pipestatus[1] != 0 )) && return 46
   # Deterministic anti-hallucination gate: run unit suites before IQ/build flow.
   [[ -f "${CLONE_AVATAR}/Cargo.toml" ]] || { hot "Gate F: missing avatar Cargo.toml for unit tests"; return 42; }
   [[ -f "${franklin_root}/Package.swift" ]] || { hot "Gate F: missing Franklin Package.swift for unit tests"; return 43; }
@@ -358,6 +373,7 @@ try_F() {
 heal_F() {
   case "$2" in
     100|101|102) rm -rf "${CLONE_AVATAR}/build/iq_phase_$(( $2 - 100 ))" 2>/dev/null || true ;;
+    46) true ;;
     44) [[ -f "${CLONE_AVATAR}/Cargo.toml" ]] && ( cd "${CLONE_AVATAR}" && cargo clean ) 2>&1 | tee -a "${LOG_DIR}/F_heal.log" || true ;;
     45) rm -rf "${CLONE_DIR}/GAIAOS/macos/Franklin/.build" 2>/dev/null || true ;;
     *) [[ -f "${CLONE_DIR}/Cargo.toml" ]] && ( cd "${CLONE_DIR}" && cargo clean ) 2>&1 | tee -a "${LOG_DIR}/F_heal.log" || true ;;
@@ -536,6 +552,7 @@ print "  tau=${TAU}  tmp=${SPROUT_TMP}  workspace=${INSTALL_ROOT}  FOT_VQBIT_SPR
 
 OUTER_ITER=0
 SPROUT_RC=0
+SPROUT_FATAL=0
 
 while (( OUTER_ITER < OUTER_MAX_ITER )); do
   OUTER_ITER=$(( OUTER_ITER + 1 ))
@@ -547,19 +564,19 @@ while (( OUTER_ITER < OUTER_MAX_ITER )); do
 
   halt_requested && exit 2
 
-  pass_gate_with_heal A 10 "preflight · tools · keys · operator witness" || { SPROUT_RC=$?; continue; }
-  pass_gate_with_heal B 20 "remote · push branch" || { SPROUT_RC=$?; continue; }
-  pass_gate_with_heal C 30 "clone into tmp workspace" || { SPROUT_RC=$?; continue; }
-  pass_gate_with_heal D 40 "genesis · HASH_LOCKS inception (IQ axis)" || { SPROUT_RC=$?; continue; }
-  pass_gate_with_heal E 45 "sign_bundle · avatar substrate in tmp" || { SPROUT_RC=$?; continue; }
+  pass_gate_with_heal A 10 "preflight · tools · keys · operator witness" || { SPROUT_RC=$?; (( SPROUT_FATAL == 1 )) && break; continue; }
+  pass_gate_with_heal B 20 "remote · push branch" || { SPROUT_RC=$?; (( SPROUT_FATAL == 1 )) && break; continue; }
+  pass_gate_with_heal C 30 "clone into tmp workspace" || { SPROUT_RC=$?; (( SPROUT_FATAL == 1 )) && break; continue; }
+  pass_gate_with_heal D 40 "genesis · HASH_LOCKS inception (IQ axis)" || { SPROUT_RC=$?; (( SPROUT_FATAL == 1 )) && break; continue; }
+  pass_gate_with_heal E 45 "sign_bundle · avatar substrate in tmp" || { SPROUT_RC=$?; (( SPROUT_FATAL == 1 )) && break; continue; }
 
   say "${BLD}Inner breath · IQ after genesis — Franklin surface → OQ → PQ → close (ordered in time)${NC}"
-  pass_gate_with_heal F 50 "IQ · gamp5_iq + plan 0–2" || { SPROUT_RC=$?; continue; }
-  pass_gate_with_heal G 60 "FranklinApp · visible.json" || { SPROUT_RC=$?; continue; }
-  pass_gate_with_heal H 70 "OQ · Franklin-driven catalog" || { SPROUT_RC=$?; continue; }
-  pass_gate_with_heal I 80 "PQ · lifelike co-sign" || { SPROUT_RC=$?; continue; }
+  pass_gate_with_heal F 50 "IQ · gamp5_iq + plan 0–2" || { SPROUT_RC=$?; (( SPROUT_FATAL == 1 )) && break; continue; }
+  pass_gate_with_heal G 60 "FranklinApp · visible.json" || { SPROUT_RC=$?; (( SPROUT_FATAL == 1 )) && break; continue; }
+  pass_gate_with_heal H 70 "OQ · Franklin-driven catalog" || { SPROUT_RC=$?; (( SPROUT_FATAL == 1 )) && break; continue; }
+  pass_gate_with_heal I 80 "PQ · lifelike co-sign" || { SPROUT_RC=$?; (( SPROUT_FATAL == 1 )) && break; continue; }
 
-  pass_gate_with_heal J 90 "CLOSE · klein aggregate" || { SPROUT_RC=$?; continue; }
+  pass_gate_with_heal J 90 "CLOSE · klein aggregate" || { SPROUT_RC=$?; (( SPROUT_FATAL == 1 )) && break; continue; }
 
   SPROUT_RC=0
   ledger "OUTER" "${OUTER_ITER}" "converged" "PASS"

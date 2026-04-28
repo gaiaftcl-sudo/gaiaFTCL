@@ -412,6 +412,7 @@ final class FranklinPresenceTests: XCTestCase {
         XCTAssertTrue(source.contains("pose_templates/viseme"))
         XCTAssertTrue(source.contains("pose_templates/expression"))
         XCTAssertTrue(source.contains("pose_templates/posture"))
+        XCTAssertTrue(source.contains("GW_REFUSE_AVATAR_MESH_ASSET_MISSING"))
     }
 
     func testSproutVisibleReceiptCarriesLifelikeInvariantFields() throws {
@@ -483,5 +484,57 @@ final class FranklinPresenceTests: XCTestCase {
             XCTAssertFalse(content.contains("simulate"))
             XCTAssertFalse(content.contains("mock"))
         }
+    }
+
+    func testCanvasShowsExplicitMissingMeshRefusal() throws {
+        let sourcePath = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent("Sources/FranklinApp/CanvasView.swift")
+        let source = try String(contentsOf: sourcePath, encoding: .utf8)
+        XCTAssertTrue(source.contains("REFUSED: missing Passy mesh asset"))
+    }
+
+    func testVisibleContractBuilderResolvesBundleAndCountsMaterialRigAssets() throws {
+        let fm = FileManager.default
+        let root = fm.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
+        let avatarRoot = root.appendingPathComponent("cells/franklin/avatar", isDirectory: true)
+        let bundleDir = avatarRoot.appendingPathComponent("build/avatar_bundle", isDirectory: true)
+        let illuminants = avatarRoot.appendingPathComponent("bundle_assets/illuminants", isDirectory: true)
+        let visemes = avatarRoot.appendingPathComponent("bundle_assets/pose_templates/viseme", isDirectory: true)
+        let expressions = avatarRoot.appendingPathComponent("bundle_assets/pose_templates/expression", isDirectory: true)
+        let postures = avatarRoot.appendingPathComponent("bundle_assets/pose_templates/posture", isDirectory: true)
+        let evidence = avatarRoot.appendingPathComponent("evidence", isDirectory: true)
+        try fm.createDirectory(at: bundleDir, withIntermediateDirectories: true)
+        try fm.createDirectory(at: illuminants, withIntermediateDirectories: true)
+        try fm.createDirectory(at: visemes, withIntermediateDirectories: true)
+        try fm.createDirectory(at: expressions, withIntermediateDirectories: true)
+        try fm.createDirectory(at: postures, withIntermediateDirectories: true)
+        try fm.createDirectory(at: evidence, withIntermediateDirectories: true)
+        defer { try? fm.removeItem(at: root) }
+
+        for i in 0..<4 { fm.createFile(atPath: illuminants.appendingPathComponent("i\(i).json").path, contents: Data()) }
+        for i in 0..<11 { fm.createFile(atPath: visemes.appendingPathComponent("v\(i).json").path, contents: Data()) }
+        for i in 0..<12 { fm.createFile(atPath: expressions.appendingPathComponent("e\(i).json").path, contents: Data()) }
+        for i in 0..<6 { fm.createFile(atPath: postures.appendingPathComponent("p\(i).json").path, contents: Data()) }
+
+        let body = SproutVisibleContractBuilder.build(
+            evidenceRoot: evidence,
+            avatarBundlePath: bundleDir.path,
+            tau: "TEST-TAU",
+            now: Date(timeIntervalSince1970: 0)
+        )
+        let material = body["material_system"] as? [String: Any]
+        let rig = body["rig_channels"] as? [String: Int]
+        let litho = body["lithography_contract"] as? [String: Any]
+        let required = litho?["required_games"] as? [String]
+
+        XCTAssertEqual(material?["illuminants"] as? Int, 4)
+        XCTAssertEqual(material?["period_profile"] as? String, "passy_1778")
+        XCTAssertEqual(rig?["visemes"], 11)
+        XCTAssertEqual(rig?["expressions"], 12)
+        XCTAssertEqual(rig?["postures"], 6)
+        XCTAssertTrue(required?.contains("LG-LITHO-EXPOSE-001") == true)
     }
 }

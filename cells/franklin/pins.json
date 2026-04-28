@@ -2,8 +2,8 @@
   "admincell_single_hash": "health_full_local_iqoqpq_gamp.sh (also written to cells/health/.admincell-expected/orchestrator.sha256)",
   "description": "SHA-256 pins for Franklin GAMP5 scripts (F0). Refresh with: fo-franklin refresh-pins",
   "orchestrator_scripts": {
-    "cells/health/scripts/franklin_mac_admin_gamp5_zero_human.sh": "c7385138f6740ee769f14ce66c97a6b67f2616821b7bca5f69f7707317840e17",
-    "cells/health/scripts/health_full_local_iqoqpq_gamp.sh": "211cdf9c636e3effca01faf70089343d7048eb7692a7d4505885451ba1f8170d"
+    "cells/health/scripts/franklin_mac_admin_gamp5_zero_human.sh": "bdf163c0643beba3b3aeca4f212f5bcd687216ec7a0ddc8b2e5c3462fd273fab",
+    "cells/health/scripts/health_full_local_iqoqpq_gamp.sh": "e8ec3a0f0c9a6087729ffad5ce8f30f46681080c8c3ea5e5ccb51a1bd4debe5b"
   },
   "version": 1
 }

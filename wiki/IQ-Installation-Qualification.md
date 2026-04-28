@@ -68,7 +68,7 @@ IQ runs in two phases.
   Accept? [yes/no]: yes
 
   ✅ PASS  License accepted
-  ✅ PASS  IQ receipt written: evidence/iq_receipt.json
+  ✅ PASS  IQ receipt written: evidence/iq/iq_receipt.json
 ```
 
 ---
@@ -86,7 +86,7 @@ IQ runs in two phases.
 | IQ-007 | Metal GPU | `system_profiler SPDisplaysDataType` reports Metal supported |
 | IQ-008 | Git present | `git --version` exits 0 |
 | IQ-009 | OpenSSL present | `openssl version` exits 0 |
-| IQ-010 | Sovereign identity created | `evidence/iq_receipt.json` written with cell_id and wallet_address fields |
+| IQ-010 | Sovereign identity created | `evidence/iq/iq_receipt.json` written with cell_id and wallet_address fields |
 | IQ-011 | Wallet address format | Starts with `gaia1`, total length 43 characters |
 | IQ-012 | Cell ID uniqueness | SHA-256(uuid ‖ entropy ‖ timestamp) — unique per machine per install |
 
@@ -110,7 +110,7 @@ IQ verifies the foundational layer that all nine plant kinds depend on. There ar
 
 ## IQ Evidence
 
-The IQ script writes `evidence/iq_receipt.json`. This file must be present and unmodified before PQ evidence collection begins.
+The IQ script writes `evidence/iq/iq_receipt.json` (with a legacy mirror at `evidence/iq_receipt.json`). This file must be present and unmodified before PQ evidence collection begins.
 
 ```json
 {

@@ -4,7 +4,7 @@ Operational Qualification proves that the software does what it is designed to d
 
 **Document reference:** GFTCL-OQ-001
 **Framework:** GAMP 5 | EU Annex 11 | FDA 21 CFR Part 11
-**Prerequisite:** IQ complete and `evidence/iq_receipt.json` present.
+**Prerequisite:** IQ complete and `evidence/iq/iq_receipt.json` present.
 
 ---
 
@@ -15,14 +15,14 @@ cd ~/Documents/FoT8D/GAIAFTCL
 zsh scripts/oq_validate.sh
 ```
 
-OQ runs `cargo test --workspace` and collects the results into `evidence/oq_receipt.json`. All 32 tests must pass. A single failure produces `OQ_FAIL` and blocks PQ.
+OQ runs `cargo test --workspace` and collects the results into `evidence/oq/oq_receipt.json` (with legacy mirror at `evidence/oq_receipt.json`). All 32 tests must pass. A single failure produces `OQ_FAIL` and blocks PQ.
 
 **Expected result:**
 ```
 OPERATIONAL QUALIFICATION COMPLETE
 32/32 tests passed
 Result: OQ_PASS
-Receipt: evidence/oq_receipt.json
+Receipt: evidence/oq/oq_receipt.json
 ```
 
 ---
@@ -143,7 +143,7 @@ These tests lock the ABI byte layout. If any of these fail, it means a change wa
 | Test count | Exactly 32 tests executed |
 | Pass rate | 100% — zero failures permitted |
 | Known warnings (non-blocking) | `TAU_NOT_IMPLEMENTED` and `NATS_UNREACHABLE` are acceptable during development |
-| Receipt | `evidence/oq_receipt.json` written with `result: OQ_PASS` |
+| Receipt | `evidence/oq/oq_receipt.json` written with `result: OQ_PASS` |
 
 ---
 
@@ -167,7 +167,7 @@ Note: OQ covers the parser and the renderer ABI for all nine plants. Continuous 
 
 ## OQ Evidence
 
-`evidence/oq_receipt.json` — written by `oq_validate.sh` on every successful OQ run. Must be present before PQ begins.
+`evidence/oq/oq_receipt.json` — written by `oq_validate.sh` on every successful OQ run. Must be present before PQ begins.
 
 ```json
 {

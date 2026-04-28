@@ -20,8 +20,10 @@ REPO_ROOT="${0:A:h:h}"
 IDENTITY_DIR="${HOME}/.gaiaftcl"
 IDENTITY_FILE="${IDENTITY_DIR}/cell_identity"
 WALLET_FILE="${IDENTITY_DIR}/wallet.key"
-IQ_RECEIPT="${REPO_ROOT}/evidence/iq_receipt.json"
-OQ_RECEIPT="${REPO_ROOT}/evidence/oq_receipt.json"
+IQ_RECEIPT="${REPO_ROOT}/evidence/iq/iq_receipt.json"
+IQ_LEGACY_RECEIPT="${REPO_ROOT}/evidence/iq_receipt.json"
+OQ_RECEIPT="${REPO_ROOT}/evidence/oq/oq_receipt.json"
+OQ_LEGACY_RECEIPT="${REPO_ROOT}/evidence/oq_receipt.json"
 TIMESTAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 
 RED='\033[0;31m'
@@ -73,6 +75,10 @@ else
   oq_fail "Wallet file missing: ${WALLET_FILE} — re-run IQ"
 fi
 
+if [[ ! -f "${IQ_RECEIPT}" && -f "${IQ_LEGACY_RECEIPT}" ]]; then
+  mkdir -p "${REPO_ROOT}/evidence/iq"
+  cp -f "${IQ_LEGACY_RECEIPT}" "${IQ_RECEIPT}"
+fi
 if [[ -f "${IQ_RECEIPT}" ]]; then
   IQ_STATUS=$(grep '"status"' "${IQ_RECEIPT}" | awk -F'"' '{print $4}')
   oq_pass "IQ receipt present, status: ${IQ_STATUS}"
@@ -270,7 +276,7 @@ fi
 head "OQ Phase 8 — Write OQ Receipt"
 # ─────────────────────────────────────────────────────────────────────────────
 
-mkdir -p "${REPO_ROOT}/evidence"
+mkdir -p "${REPO_ROOT}/evidence/oq"
 
 BINARY_SHA_SAFE="${BINARY_SHA:-unknown}"
 
@@ -298,7 +304,8 @@ cat > "${OQ_RECEIPT}" <<EOF
 }
 EOF
 
-oq_pass "OQ receipt written: evidence/oq_receipt.json"
+cp -f "${OQ_RECEIPT}" "${OQ_LEGACY_RECEIPT}"
+oq_pass "OQ receipt written: evidence/oq/oq_receipt.json (legacy mirror: evidence/oq_receipt.json)"
 
 # ─────────────────────────────────────────────────────────────────────────────
 print ""
@@ -310,7 +317,7 @@ if [[ "$OQ_FAIL" -eq 0 ]]; then
   print "${GRN}${BOLD}  Binary   : ${BINARY_SIZE_MB:-0} MB (< 5 MB ✓)${NC}"
   print "${GRN}${BOLD}  τ Status : ${TAU_STATUS}${NC}"
   print "${GRN}${BOLD}  OQ Score : ${OQ_PASS} checks passed, ${OQ_WARN} warnings${NC}"
-  print "${GRN}${BOLD}  Receipt  : evidence/oq_receipt.json${NC}"
+  print "${GRN}${BOLD}  Receipt  : evidence/oq/oq_receipt.json${NC}"
   print "${GRN}${BOLD}══════════════════════════════════════════════════════${NC}"
   print ""
   print "Next step: run full production cycle"
