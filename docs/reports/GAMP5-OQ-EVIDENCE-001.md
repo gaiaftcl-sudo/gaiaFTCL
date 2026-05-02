@@ -1,7 +1,7 @@
 # GAMP 5 — OQ evidence package (live execution)
 
 **Status:** sealed — Step 8 operational qualification (GaiaFTCL).  
-**Placeholder (section 12 — replace in sign-off commit):** `COMMIT_SHA_TBD`
+**Placeholder (section 12 — replace in sign-off commit):** `2b77d4813fed387a61544fa1198bc72133daa23a`
 
 ---
 
@@ -151,7 +151,7 @@ Test Suite 'Selected tests' passed at 2026-05-02 14:54:38.527.
 
 ## 12. Git commit SHA (parent evidence commit)
 
-**`COMMIT_SHA_TBD`** — replace with the SHA of the **first** OQ evidence commit per [`GAMP5-OQ-PROTOCOL-001.md`](GAMP5-OQ-PROTOCOL-001.md) sign-off procedure (**commit 2** in the two-commit workflow).
+**`2b77d4813fed387a61544fa1198bc72133daa23a`** — replace with the SHA of the **first** OQ evidence commit per [`GAMP5-OQ-PROTOCOL-001.md`](GAMP5-OQ-PROTOCOL-001.md) sign-off procedure (**commit 2** in the two-commit workflow).
 
 ---
 
