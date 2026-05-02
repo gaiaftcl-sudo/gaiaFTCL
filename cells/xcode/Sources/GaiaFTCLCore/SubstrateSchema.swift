@@ -190,4 +190,22 @@ public func createSubstrateMigrations(_ migrator: inout DatabaseMigrator) {
             t.column("outcome", .text)
         }
     }
+
+    /// Read-only surface for operators and tooling — **one row per USD prim path** from **`contract_doc`**. Franklin / GaiaFTCL keep using typed Swift + JSON; this does not duplicate writes or affect C⁴.
+    migrator.registerMigration("v6_language_game_contract_prim_paths_view") { db in
+        try db.execute(sql: "DROP VIEW IF EXISTS language_game_contract_prim_paths")
+        try db.execute(sql: """
+            CREATE VIEW language_game_contract_prim_paths AS
+            SELECT
+              c.id AS contract_row_id,
+              c.game_id AS game_id,
+              c.domain AS domain,
+              c.status AS status,
+              j.value AS prim_path,
+              c.timestamp_iso AS timestamp_iso
+            FROM language_game_contracts AS c,
+            json_each(json_extract(c.contract_doc, '$.prim_paths')) AS j
+            WHERE json_extract(c.contract_doc, '$.prim_paths') IS NOT NULL
+            """)
+    }
 }
