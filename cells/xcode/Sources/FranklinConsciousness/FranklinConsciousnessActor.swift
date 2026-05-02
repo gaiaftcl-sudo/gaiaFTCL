@@ -42,6 +42,18 @@ public actor FranklinConsciousnessActor {
         public let unmoored: [UUID]
         public let genesisReceiptPresent: Bool
         public let healingEventsThisWake: Int
+
+        public init(
+            allPrimssovereign: Bool,
+            unmoored: [UUID],
+            genesisReceiptPresent: Bool,
+            healingEventsThisWake: Int
+        ) {
+            self.allPrimssovereign = allPrimssovereign
+            self.unmoored = unmoored
+            self.genesisReceiptPresent = genesisReceiptPresent
+            self.healingEventsThisWake = healingEventsThisWake
+        }
     }
 
     private struct StageAlteredPayload: Codable, Sendable {
@@ -165,7 +177,12 @@ public actor FranklinConsciousnessActor {
         await voice.speak(opening)
         hasSpokenAwakening = true
 
-        if runOnce { return }
+        if runOnce {
+            await FranklinSelfReviewCycle.shared.runOncePass(sessionID: sessionID)
+            return
+        }
+
+        Task { await FranklinSelfReviewCycle.shared.startContinuous(sessionID: sessionID) }
 
         await withTaskGroup(of: Void.self) { group in
             group.addTask { await self.innerMonologue.run(sessionID: self.sessionID) }
@@ -411,4 +428,5 @@ public actor FranklinConsciousnessActor {
     private func fmt(_ value: Double) -> String {
         String(format: "%.2f", value)
     }
+
 }

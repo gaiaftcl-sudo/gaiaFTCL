@@ -29,6 +29,9 @@ public actor FranklinInnerMonologue {
     }
 
     public func append(_ line: String) async {
+        if ProcessInfo.processInfo.environment["GAIAFTCL_MQ_SELF_REVIEW_SKIP_WIRE"] == "1" {
+            return
+        }
         await nats.publishText(subject: "gaiaftcl.franklin.monologue", text: line)
     }
 

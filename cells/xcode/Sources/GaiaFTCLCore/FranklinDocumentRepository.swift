@@ -218,4 +218,114 @@ public final class FranklinDocumentRepository: Sendable {
             ) ?? 0
         }
     }
+
+    // MARK: — Self-review (GAMP5-OQ-PROTOCOL-002)
+
+    public struct LanguageGameContractStandardsRow: Sendable {
+        public let id: String
+        public let gameID: String
+        public let domain: String
+        public let constitutionalThresholdCalorie: Double
+        public let constitutionalThresholdCure: Double
+        public let improvementTarget: Double
+        public let reviewIntervalSeconds: Int
+        public let aestheticRulesJSON: String
+    }
+
+    public func fetchActiveContractStandards(domain: String) throws -> LanguageGameContractStandardsRow? {
+        let key = domain.lowercased()
+        return try db.read { db -> LanguageGameContractStandardsRow? in
+            guard let row = try Row.fetchOne(
+                db,
+                sql: """
+                SELECT id, game_id, domain, constitutional_threshold_calorie, constitutional_threshold_cure,
+                       improvement_target, review_interval_seconds, aesthetic_rules_json
+                FROM language_game_contracts
+                WHERE lower(domain) = ? AND lower(status) = 'active'
+                LIMIT 1
+                """,
+                arguments: [key]
+            ) else { return nil }
+            let json: String = row["aesthetic_rules_json"] ?? ""
+            return LanguageGameContractStandardsRow(
+                id: row["id"],
+                gameID: row["game_id"],
+                domain: row["domain"],
+                constitutionalThresholdCalorie: row["constitutional_threshold_calorie"] ?? 0.8,
+                constitutionalThresholdCure: row["constitutional_threshold_cure"] ?? 0.6,
+                improvementTarget: row["improvement_target"] ?? 0.05,
+                reviewIntervalSeconds: row["review_interval_seconds"] ?? 300,
+                aestheticRulesJSON: json
+            )
+        }
+    }
+
+    public func updateContractAestheticRules(contractID: String, aestheticRulesJSON: String, contractSha256: String) throws {
+        try db.write { db in
+            try db.execute(
+                sql: """
+                UPDATE language_game_contracts
+                SET aesthetic_rules_json = ?, contract_sha256 = ?
+                WHERE id = ?
+                """,
+                arguments: [aestheticRulesJSON, contractSha256, contractID]
+            )
+        }
+    }
+
+    public func insertFranklinReviewCycle(
+        id: String,
+        domain: String,
+        cycleStartedAtISO: String,
+        cycleEndedAtISO: String?,
+        priorHealthScore: Double?,
+        postHealthScore: Double?,
+        healthScore: Double?,
+        threshold: Double?,
+        actionTaken: String?,
+        outcome: String?,
+        receiptID: String?
+    ) throws {
+        try db.write { db in
+            try db.execute(
+                sql: """
+                INSERT INTO franklin_review_cycles
+                  (id, domain, cycle_started_at, cycle_ended_at, prior_health_score, post_health_score,
+                   health_score, threshold, action_taken, outcome, receipt_id)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                arguments: [
+                    id, domain, cycleStartedAtISO, cycleEndedAtISO,
+                    priorHealthScore, postHealthScore, healthScore, threshold,
+                    actionTaken, outcome, receiptID,
+                ]
+            )
+        }
+    }
+
+    public func insertLearningReceiptWithPayload(
+        id: String,
+        sessionID: String,
+        terminal: String,
+        receiptPath: String,
+        receiptSha256: String,
+        timestampISO: String,
+        kind: String,
+        payloadJSON: String,
+        canonicalSha256: String
+    ) throws {
+        try db.write { db in
+            try db.execute(
+                sql: """
+                INSERT INTO franklin_learning_receipts
+                  (id, session_id, terminal, receipt_path, receipt_sha256, timestamp_iso, kind, payload_json, canonical_sha256)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                arguments: [
+                    id, sessionID, terminal, receiptPath, receiptSha256, timestampISO,
+                    kind, payloadJSON, canonicalSha256,
+                ]
+            )
+        }
+    }
 }

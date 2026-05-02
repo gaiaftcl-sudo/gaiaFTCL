@@ -251,3 +251,55 @@ public final class ManifoldTensorStore: @unchecked Sendable {
         try fh.synchronize()
     }
 }
+
+// MARK: — Read-only tensor probe (Franklin domain improvement / audit)
+
+/// Headless read path for **S⁴** floats **without** opening a writable **`ManifoldTensorStore`**.
+public enum ManifoldTensorProbe {
+    public static func readRowCount(tensorPath: URL) throws -> UInt32 {
+        let fh = try FileHandle(forReadingFrom: tensorPath)
+        defer { try? fh.close() }
+        guard let head = try fh.read(upToCount: ManifoldTensorLayout.headerBytes),
+              head.count == ManifoldTensorLayout.headerBytes
+        else {
+            throw SubstrateCodecError.invalidLength(expected: ManifoldTensorLayout.headerBytes, actual: 0)
+        }
+        return u32FromLE(head, offset: 12)
+    }
+
+    /// Returns **(s1,s2,s3,s4)** tensor slice for **`primID`**, or **`nil`** if missing / unreadable.
+    public static func readMeanS4(primID: UUID, tensorPath: URL) throws -> (Float, Float, Float, Float)? {
+        guard FileManager.default.fileExists(atPath: tensorPath.path) else { return nil }
+        let fh = try FileHandle(forReadingFrom: tensorPath)
+        defer { try? fh.close() }
+        guard let head = try fh.read(upToCount: ManifoldTensorLayout.headerBytes),
+              head.count == ManifoldTensorLayout.headerBytes
+        else { return nil }
+        let map = try VMAPRMapCodec.decode(head)
+        guard let row = map.entries.first(where: { $0.0 == primID })?.1 else { return nil }
+        let rowCount = u32FromLE(head, offset: 12)
+        guard row < rowCount else { return nil }
+        let base = UInt64(ManifoldTensorLayout.payloadBaseOffset)
+            + UInt64(row) * UInt64(ManifoldTensorLayout.bytesPerRow)
+        var vals: [Float] = []
+        for dim in 0 ..< 4 {
+            try fh.seek(toOffset: base + UInt64(dim) * 4)
+            guard let chunk = try fh.read(upToCount: 4), chunk.count == 4 else { return nil }
+            vals.append(floatFromLE(chunk, offset: 0))
+        }
+        return (vals[0], vals[1], vals[2], vals[3])
+    }
+
+    /// Weakest **S⁴** dimension index **0…3** (lowest tensor component). Defaults to **0** if unreadable.
+    public static func weakestS4Dimension(primID: UUID, tensorPath: URL) -> Int {
+        guard let tuple = try? readMeanS4(primID: primID, tensorPath: tensorPath) else { return 0 }
+        let vals = [tuple.0, tuple.1, tuple.2, tuple.3]
+        var best = 0
+        var bestV = vals[0]
+        for i in 1 ..< 4 where vals[i] < bestV {
+            bestV = vals[i]
+            best = i
+        }
+        return best
+    }
+}

@@ -5,7 +5,15 @@
 **Author:** Rick Gillespie, FortressAI Research Institute  
 **Prerequisite:** GAMP5-OQ-EVIDENCE-001.md sealed at ffd978f
 
-## PQ Tests (deferred — pending OQ closure)
+## PQ Tests — Self-Review (PQ-SR)
+
+| Test ID | Description | Status |
+|---------|-------------|--------|
+| PQ-SR-001 | 10 consecutive self-review cycles across both domains with no manual intervention; health scores non-decreasing | PENDING |
+| PQ-SR-002 | Franklin improves at least one domain standard within 5 cycles of deliberately injected S⁴ degradation — **injection:** publish to **`gaiaftcl.substrate.s4.delta`** using **`S4DeltaCodec.encode`** (e.g. degrade prim stress via **s1→0.0**, **s3→0.1**); operator signing with **`GAIAFTCL_OPERATOR_SIGNATURE`** test value where the harness requires it | PENDING |
+| PQ-SR-003 | Review cycle timing within ±10% of **`review_interval_seconds`** under normal operating load | PENDING |
+
+## PQ Tests (legacy scope — PQ-001…005)
 
 | Test ID | Description | Status |
 |---------|-------------|--------|

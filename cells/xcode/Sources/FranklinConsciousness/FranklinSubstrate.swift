@@ -183,4 +183,72 @@ public actor FranklinSubstrate {
         let repo = FranklinDocumentRepository(db: w)
         return try repo.healingEventsSince(healedAtISO8601GreaterOrEqual: iso)
     }
+
+    public func fetchActiveContractStandards(domain: String) async throws -> FranklinDocumentRepository.LanguageGameContractStandardsRow? {
+        guard let w = writer else { return nil }
+        let repo = FranklinDocumentRepository(db: w)
+        return try repo.fetchActiveContractStandards(domain: domain)
+    }
+
+    public func updateContractAestheticRules(contractID: String, aestheticRulesJSON: String, contractSha256: String) async throws {
+        guard let w = writer else { return }
+        let repo = FranklinDocumentRepository(db: w)
+        try repo.updateContractAestheticRules(contractID: contractID, aestheticRulesJSON: aestheticRulesJSON, contractSha256: contractSha256)
+    }
+
+    public func insertFranklinReviewCycle(
+        id: String,
+        domain: String,
+        cycleStartedAtISO: String,
+        cycleEndedAtISO: String?,
+        priorHealthScore: Double?,
+        postHealthScore: Double?,
+        healthScore: Double?,
+        threshold: Double?,
+        actionTaken: String?,
+        outcome: String?,
+        receiptID: String?
+    ) async throws {
+        guard let w = writer else { return }
+        let repo = FranklinDocumentRepository(db: w)
+        try repo.insertFranklinReviewCycle(
+            id: id,
+            domain: domain,
+            cycleStartedAtISO: cycleStartedAtISO,
+            cycleEndedAtISO: cycleEndedAtISO,
+            priorHealthScore: priorHealthScore,
+            postHealthScore: postHealthScore,
+            healthScore: healthScore,
+            threshold: threshold,
+            actionTaken: actionTaken,
+            outcome: outcome,
+            receiptID: receiptID
+        )
+    }
+
+    public func insertLearningReceiptWithPayload(
+        id: String,
+        sessionID: String,
+        terminal: String,
+        receiptPath: String,
+        receiptSha256: String,
+        timestampISO: String,
+        kind: String,
+        payloadJSON: String,
+        canonicalSha256: String
+    ) async throws {
+        guard let w = writer else { return }
+        let repo = FranklinDocumentRepository(db: w)
+        try repo.insertLearningReceiptWithPayload(
+            id: id,
+            sessionID: sessionID,
+            terminal: terminal,
+            receiptPath: receiptPath,
+            receiptSha256: receiptSha256,
+            timestampISO: timestampISO,
+            kind: kind,
+            payloadJSON: payloadJSON,
+            canonicalSha256: canonicalSha256
+        )
+    }
 }

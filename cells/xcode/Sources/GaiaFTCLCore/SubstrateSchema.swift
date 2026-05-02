@@ -208,4 +208,66 @@ public func createSubstrateMigrations(_ migrator: inout DatabaseMigrator) {
             WHERE json_extract(c.contract_doc, '$.prim_paths') IS NOT NULL
             """)
     }
+
+    migrator.registerMigration("v7_domain_standards") { db in
+        try db.alter(table: "language_game_contracts") { t in
+            t.add(column: "constitutional_threshold_calorie", .double).defaults(to: 0.8)
+            t.add(column: "constitutional_threshold_cure", .double).defaults(to: 0.6)
+            t.add(column: "improvement_target", .double).defaults(to: 0.05)
+            t.add(column: "review_interval_seconds", .integer).defaults(to: 300)
+            t.add(column: "aesthetic_rules_json", .text)
+        }
+        let baseline = try AestheticRulesCodec.canonicalJSONString(.bootstrapDefaults())
+        try db.execute(
+            sql: """
+            UPDATE language_game_contracts SET
+              constitutional_threshold_calorie = 0.8,
+              constitutional_threshold_cure = 0.6,
+              improvement_target = 0.05,
+              review_interval_seconds = 300,
+              aesthetic_rules_json = ?
+            WHERE aesthetic_rules_json IS NULL
+            """,
+            arguments: [baseline]
+        )
+    }
+
+    migrator.registerMigration("v8_review_cycles") { db in
+        try db.create(table: "franklin_review_cycles", ifNotExists: true) { t in
+            t.column("id", .text).primaryKey()
+            t.column("domain", .text).notNull()
+            t.column("cycle_started_at", .text).notNull()
+            t.column("cycle_ended_at", .text)
+            t.column("prior_health_score", .double)
+            t.column("post_health_score", .double)
+            t.column("health_score", .double)
+            t.column("threshold", .double)
+            t.column("action_taken", .text)
+            t.column("outcome", .text)
+            t.column("receipt_id", .text)
+        }
+        try db.create(
+            index: "idx_review_cycles_domain",
+            on: "franklin_review_cycles",
+            columns: ["domain"]
+        )
+        try db.create(
+            index: "idx_review_cycles_started",
+            on: "franklin_review_cycles",
+            columns: ["cycle_started_at"]
+        )
+    }
+
+    /// Rows inserted after **`v7`** via **`INSERT OR IGNORE`** may omit **`aesthetic_rules_json`** — backfill for **`improveDomainStandard`** decoding.
+    migrator.registerMigration("v9_contract_aesthetic_backfill") { db in
+        let baseline = try AestheticRulesCodec.canonicalJSONString(.bootstrapDefaults())
+        try db.execute(
+            sql: """
+            UPDATE language_game_contracts
+            SET aesthetic_rules_json = ?
+            WHERE aesthetic_rules_json IS NULL OR trim(aesthetic_rules_json) = ''
+            """,
+            arguments: [baseline]
+        )
+    }
 }
