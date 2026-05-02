@@ -11,7 +11,6 @@ public actor NATSBridge {
     private var requestedSubjects: Set<String> = []
     private var lastState: NATSClient.ConnectionState = .disconnected
     private var stateWatcherStarted = false
-
     public init(urlString: String? = ProcessInfo.processInfo.environment["GAIAFTCL_NATS_URL"]) {
         let (host, port) = NATSBridge.parse(urlString: urlString)
         self.client = NATSClient(host: host, port: port)
@@ -23,7 +22,24 @@ public actor NATSBridge {
         for subject in subjects { requestedSubjects.insert(subject) }
         startStateWatcherIfNeeded()
         client.connect()
+        /// Drain **`client.messages`** immediately — otherwise **`SUB`** frames from `handleState` can arrive before any caller invokes **`subscribe`**, dropping early **`MSG`** payloads (OQ `--run-once` catch-up).
         startRouterIfNeeded()
+    }
+
+    /// Waits until **`lastState == .connected`** (TCP up + NATS `CONNECT` ack). **`publishWire`** drops payloads before this.
+    public func waitUntilConnected(timeoutSeconds: UInt64 = 10) async -> Bool {
+        let deadline = Date().addingTimeInterval(TimeInterval(timeoutSeconds))
+        while Date() < deadline {
+            switch lastState {
+            case .connected:
+                return true
+            case .failed:
+                return false
+            default:
+                try? await Task.sleep(for: .milliseconds(50))
+            }
+        }
+        return false
     }
 
     public func publishJSON<T: Encodable>(subject: String, payload: T) async {
@@ -47,13 +63,13 @@ public actor NATSBridge {
             client.subscribe(to: subject)
         }
         let id = UUID()
-        return AsyncStream { cont in
-            if self.continuations[subject] == nil { self.continuations[subject] = [:] }
-            self.continuations[subject]?[id] = cont
-            cont.onTermination = { [weak self] _ in
-                Task { await self?.removeContinuation(subject: subject, id: id) }
-            }
+        let (stream, continuation) = AsyncStream<NATSMessage>.makeStream()
+        if continuations[subject] == nil { continuations[subject] = [:] }
+        continuations[subject]?[id] = continuation
+        continuation.onTermination = { [weak self] _ in
+            Task { await self?.removeContinuation(subject: subject, id: id) }
         }
+        return stream
     }
 
     private func removeContinuation(subject: String, id: UUID) {

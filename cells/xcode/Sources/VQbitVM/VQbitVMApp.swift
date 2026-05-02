@@ -54,7 +54,7 @@ struct VQbitVMApp {
             exit(4)
         }
 
-        client.subscribe(to: SubstrateWireSubjects.s4Delta)
+        client.subscribeSync(to: SubstrateWireSubjects.s4Delta)
 
         let pipeline = VQbitVMDeltaPipeline()
         let cellID = GaiaCellIdentity.uuid

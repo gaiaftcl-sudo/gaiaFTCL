@@ -11,6 +11,7 @@ let package = Package(
         .executable(name: "GaiaUSDGate", targets: ["GaiaUSDGate"]),
         .executable(name: "FranklinStartupPreflight", targets: ["FranklinStartupPreflight"]),
         .executable(name: "VQbitVM", targets: ["VQbitVM"]),
+        .executable(name: "S4DegradeInject", targets: ["S4DegradeInject"]),
         .library(name: "GaiaFTCLCore", targets: ["GaiaFTCLCore"]),
         .library(name: "GaiaGateKit", targets: ["GaiaGateKit"]),
         .library(name: "VQbitSubstrate", targets: ["VQbitSubstrate"]),
@@ -53,6 +54,16 @@ let package = Package(
                 .target(name: "VQbitSubstrate"),
             ],
             path: "Sources/VQbitVM",
+            swiftSettings: [.swiftLanguageMode(.v6)]
+        ),
+        .executableTarget(
+            name: "S4DegradeInject",
+            dependencies: [
+                .target(name: "FusionCore"),
+                .target(name: "GaiaFTCLCore"),
+                .target(name: "VQbitSubstrate"),
+            ],
+            path: "Sources/S4DegradeInject",
             swiftSettings: [.swiftLanguageMode(.v6)]
         ),
         .executableTarget(

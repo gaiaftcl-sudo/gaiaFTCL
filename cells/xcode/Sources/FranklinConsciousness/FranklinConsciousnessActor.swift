@@ -36,7 +36,6 @@ public actor FranklinConsciousnessActor {
 
     private var healingSequence: Int64 = Int64(Date().timeIntervalSince1970 * 1_000)
     private var wakeStartedAt: String = ISO8601DateFormatter().string(from: Date.distantPast)
-
     public struct PostWakeValidation: Sendable {
         public let allPrimssovereign: Bool
         public let unmoored: [UUID]
@@ -93,6 +92,10 @@ public actor FranklinConsciousnessActor {
             SubstrateWireSubjects.c4Projection,
         ])
         Task { await self.consumeC4Projections() }
+        if runOnce {
+            _ = await nats.waitUntilConnected(timeoutSeconds: 12)
+            await pulseS4ForProjectionCatchUp()
+        }
         await memoryStore.setSessionID(sessionID)
         let restored = await memoryStore.restore()
         await innerMonologue.seed(from: restored)
@@ -115,6 +118,7 @@ public actor FranklinConsciousnessActor {
                     source: .selfAwareness
                 )
             )
+            if runOnce { return }
             await withTaskGroup(of: Void.self) { group in
                 group.addTask { await self.listenForSilenceCommand() }
                 group.addTask { await self.conversation.run(sessionID: self.sessionID) }
@@ -132,6 +136,10 @@ public actor FranklinConsciousnessActor {
         }
 
         try? await Task.sleep(for: .milliseconds(400))
+        /// **`--run-once`**: allow vQbit VM to publish C⁴ after the catch-up S⁴ pulse (above).
+        if runOnce {
+            try? await Task.sleep(for: .seconds(3))
+        }
         let validation = await runPostWakeValidationWithGrace()
         guard validation.allPrimssovereign else {
             await publishConsciousnessState(
@@ -146,6 +154,7 @@ public actor FranklinConsciousnessActor {
                     source: .selfAwareness
                 )
             )
+            if runOnce { return }
             await withTaskGroup(of: Void.self) { group in
                 group.addTask { await self.listenForSilenceCommand() }
                 group.addTask { await self.conversation.run(sessionID: self.sessionID) }
@@ -295,6 +304,35 @@ public actor FranklinConsciousnessActor {
         )
     }
 
+    /// Publish small S⁴ deltas **after** NATS SUB is active so the local VM emits C⁴ we actually receive (messages published before SUB are dropped).
+    private func pulseS4ForProjectionCatchUp() async {
+        try? await FranklinSubstrate.shared.bootstrapProduction()
+        guard let surfaces = try? await FranklinSubstrate.shared.allLanguageGameContracts() else { return }
+        let tensorURL = GaiaInstallPaths.manifoldTensorURL
+        var seq = Int64(Date().timeIntervalSince1970 * 1_000)
+        for c in surfaces {
+            guard let domain = c.domain?.lowercased() else { continue }
+            let pid = GaiaFTCLPrimIdentity.primID(contractGameID: c.gameID, contractDomain: domain)
+            let tuple = (try? ManifoldTensorProbe.readMeanS4(primID: pid, tensorPath: tensorURL)) ?? (0.5, 0.5, 0.5, 0.5)
+            let vals = [tuple.0, tuple.1, tuple.2, tuple.3]
+            for dim in 0 ..< 4 {
+                seq += 1
+                let oldV = vals[dim]
+                var newV = max(min(oldV - 0.000_2, 1.0), 0.0)
+                if newV == oldV { newV = min(oldV + 0.000_2, 1.0) }
+                let wire = S4DeltaWire(
+                    primID: pid,
+                    dimension: UInt8(dim),
+                    oldValue: oldV,
+                    newValue: newV,
+                    sequence: seq
+                )
+                guard let payload = try? S4DeltaCodec.encode(wire) else { continue }
+                await nats.publishWire(subject: SubstrateWireSubjects.s4Delta, payload: payload)
+            }
+        }
+    }
+
     private func consumeC4Projections() async {
         let stream = await nats.subscribe(subject: SubstrateWireSubjects.c4Projection)
         for await msg in stream {
@@ -347,7 +385,8 @@ public actor FranklinConsciousnessActor {
     }
 
     public func runPostWakeValidationWithGrace() async -> PostWakeValidation {
-        for _ in 0 ..< 40 {
+        /// Allow vQbit VM + `ManifoldProjectionStore` time to moor after NATS C4 traffic (OQ `--run-once` must not false-fail).
+        for _ in 0 ..< 200 {
             let v = await runPostWakeValidation()
             if v.allPrimssovereign { return v }
             try? await Task.sleep(for: .milliseconds(75))
