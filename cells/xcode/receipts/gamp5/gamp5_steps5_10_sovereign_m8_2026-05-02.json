@@ -1,0 +1,21 @@
+{
+  "receipt_id": "gamp5-steps5-10-sovereign-m8-2026-05-02",
+  "session": "Sovereign M8 GAMP5 Steps 5-10",
+  "steps_closed": ["step5", "step6", "step7", "step8", "step9", "step10"],
+  "oq_signoff_commit": "ffd978f",
+  "pq_scope_commit": "e299d66",
+  "gates": {
+    "VQbitSubstrateTests_3x": "PASS",
+    "FranklinConsciousnessMQTests_3x": "PASS",
+    "GaiaRTMGate": "CALORIE",
+    "release_grep": "CLEAN",
+    "OQ_FW_001_genesis": "PASS",
+    "OQ_FW_002_fusionCatalog": "PASS",
+    "OQ_FW_003_healthProtocol": "PASS",
+    "OQ_FW_004_self_model": "PASS",
+    "OQ_FW_005_nats_monologue": "PASS",
+    "OQ_CONST_002": "DEFERRED_single_chip",
+    "deviation_records": "NONE"
+  },
+  "timestamp_utc": "2026-05-02T19:22:11Z"
+}
