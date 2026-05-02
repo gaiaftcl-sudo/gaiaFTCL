@@ -1,0 +1,11 @@
+{
+  "receipt_id": "gamp5-s4-sovereignty-2026-05-02",
+  "gates": {
+    "all_prims_sovereign": true,
+    "self_healing_test": "PASS",
+    "knearest_live_log": "PASS",
+    "franklin_wake_validation": "PASS",
+    "swift_tests_3x": "250/0",
+    "GaiaRTMGate": "CALORIE"
+  }
+}

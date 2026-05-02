@@ -2,6 +2,8 @@ import Testing
 import Foundation
 import QualificationKit
 import GaiaFTCLCore
+import GaiaGateKit
+import VQbitSubstrate
 @testable import FranklinConsciousness
 
 @Suite("GAMP 5 MQ — Franklin Consciousness Gates", .serialized)
@@ -309,5 +311,99 @@ struct FranklinConsciousnessMQTests {
         await FranklinLearningEngine.shared.resetLearningEngineForTests()
         await FranklinMetaEvaluator.shared.resetForTests()
         await FranklinDecisionSampler.shared.resetSeedForTests(42)
+    }
+
+    @Test("Franklin self-healing: REFUSED prim recovers to CURE or CALORIE")
+    func testSelfHealing() async throws {
+        await ManifoldProjectionStore.shared.resetForTests()
+        let queue = try SubstrateDatabase.testQueue()
+        await FranklinSubstrate.shared.bootstrapForTests(queue)
+        let prim = UUID()
+        let healthy = C4ProjectionWire(
+            primID: prim,
+            c1Trust: 0.9,
+            c2Identity: 0.9,
+            c3Closure: 0.8,
+            c4Consequence: 0.1,
+            terminal: TerminalWireBridge.visualCode(for: .calorie),
+            refusalSource: 0,
+            violationCode: 0,
+            sequence: 1
+        )
+        await ManifoldProjectionStore.shared.seedForTests(primID: prim, wire: healthy)
+        let bad = C4ProjectionWire(
+            primID: prim,
+            c1Trust: 0.1,
+            c2Identity: 0.2,
+            c3Closure: 0.9,
+            c4Consequence: 9,
+            terminal: TerminalWireBridge.visualCode(for: .refused),
+            refusalSource: 4,
+            violationCode: 4,
+            sequence: 2
+        )
+        await FranklinConsciousnessActor.shared.handleC4Projection(bad)
+        let n = try await FranklinSubstrate.shared.healingEventsCount()
+        #expect(n >= 1)
+    }
+
+    @Test("VQbitSubstrate: kNearest returns sovereign prim location")
+    func testKNearestLiveLog() async throws {
+        let tmpDir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("gaiaftcl-knn-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: tmpDir, withIntermediateDirectories: true)
+        let logURL = tmpDir.appendingPathComponent("vqbit_points.log")
+        let edgeURL = tmpDir.appendingPathComponent("vqbit_edges.log")
+        defer { try? FileManager.default.removeItem(at: tmpDir) }
+
+        let cell = GaiaCellIdentity.uuid
+        let prim = UUID(uuidString: "AABBCCDD-EEFF-0011-2233-445566778899")!
+        let header = VQbitBinaryLogCodec.encodeHeader(
+            magic: VQbitBinaryLogMagic.points,
+            version: 1,
+            recordSize: VQbitBinaryLogCodec.pointsRecordSize,
+            cellID: cell
+        )
+        try header.write(to: logURL)
+        let stored = VQbitPointsRecordWire(
+            primID: prim,
+            s1: 0.8,
+            s2: 0.8,
+            s3: 0.8,
+            s4: 0.8,
+            c1: 0.8,
+            c2: 0.5,
+            c3: 0.8,
+            c4: 0.5,
+            terminal: TerminalWireBridge.visualCode(for: .calorie),
+            timestampMicros: Int64(Date().timeIntervalSince1970 * 1_000_000),
+            envelopeID: UUID(),
+            cellID: cell
+        )
+        let blob = VQbitPointsRecordCodec.encode(stored)
+        let fh = try FileHandle(forWritingTo: logURL)
+        try fh.seekToEnd()
+        try fh.write(contentsOf: blob)
+        try fh.close()
+
+        let substrate = VQbitSubstrate(pointLogURL: logURL, edgeLogURL: edgeURL, cellID: cell)
+        let query = VQbitPointsRecordWire(
+            primID: UUID(),
+            s1: 0.8,
+            s2: 0.8,
+            s3: 0.8,
+            s4: 0.8,
+            c1: 0.8,
+            c2: 0.5,
+            c3: 0.8,
+            c4: 0.5,
+            terminal: TerminalWireBridge.visualCode(for: .calorie),
+            timestampMicros: Int64(Date().timeIntervalSince1970 * 1_000_000),
+            envelopeID: UUID(),
+            cellID: cell
+        )
+        let neighbors = try await substrate.kNearest(to: query, k: 3)
+        #expect(neighbors.count >= 1)
+        #expect(neighbors[0].score > 0.5)
     }
 }
