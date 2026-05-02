@@ -122,8 +122,10 @@ public actor FranklinSelfReviewCycle {
         }
 
         let halfInterval = max(row.reviewIntervalSeconds / 2, 0)
-        if halfInterval > 0 {
-            try? await Task.sleep(for: .seconds(UInt64(halfInterval)))
+        /// Cap so **`--run-once`** and operator shells remain bounded (full interval still configurable on contract row).
+        let cappedHalf = min(halfInterval, 45)
+        if cappedHalf > 0 {
+            try? await Task.sleep(for: .seconds(UInt64(cappedHalf)))
         } else {
             try? await Task.sleep(for: .milliseconds(25))
         }
