@@ -3,7 +3,7 @@
 **Protocol ID:** GAMP5-OQ-PROTOCOL-002  
 **Version:** 1.0  
 **Author:** Rick Gillespie, FortressAI Research Institute  
-**Status:** APPROVED — binding git commit SHA: *(populate on Step A `git commit`)*  
+**Status:** APPROVED — binding git commit SHA: `1259487613195af1d3ac605007bba6b567fe08f7`  
 **Prerequisite:** [GAMP5-OQ-PROTOCOL-001](./GAMP5-OQ-PROTOCOL-001.md) conventions where applicable  
 **PQ scope:** [GAMP5-PQ-SCOPE-001](./GAMP5-PQ-SCOPE-001.md) (PQ-SR-001…003 and PQ-001…005)
 
