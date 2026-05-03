@@ -1,8 +1,10 @@
 import Foundation
 
 extension FusionConstitutionalSnapshot {
-    /// Maps substrate IQ output to **C4ProjectionWire.terminal** visual bytes (**1…4**, see `TerminalWireBridge`).
+    /// Maps substrate IQ output to **C4ProjectionWire.terminal** visual bytes (**1…4**, see **`TerminalWireBridge`**).
     public var c4WireTerminal: UInt8 {
+        if violationCode == 0xFF { return TerminalWireBridge.visualCode(for: .blocked) }
+        if violationCode >= 4 { return TerminalWireBridge.visualCode(for: .blocked) }
         if violationCode != 0 { return TerminalWireBridge.visualCode(for: .refused) }
         switch terminalState {
         case 0: return TerminalWireBridge.visualCode(for: .calorie)

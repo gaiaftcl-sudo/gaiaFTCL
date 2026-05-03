@@ -1,7 +1,6 @@
 import Foundation
 import FusionCore
 import GaiaFTCLCore
-import GaiaGateKit
 import VQbitSubstrate
 
 /// Accumulates **S⁴** deltas per prim until all four dimensions are present, then runs **constitutional → C⁴ → log**.
@@ -36,17 +35,25 @@ final class VQbitVMDeltaPipeline: @unchecked Sendable {
         let s3 = try store.readFloat(row: row, dimension: 2)
         let s4 = try store.readFloat(row: row, dimension: 3)
 
-        let iP = Double(s1 + s2 + s3 + s4) / 4.0
-        let snap = engine.checkConstitutional(i_p: iP, b_t: 5.0, n_e: 1e20, plantKind: 0)
-        let refusal: UInt8 = snap.violationCode != 0 ? 0x04 : 0x00
-        let term = snap.c4WireTerminal
+        let inputs = ConstitutionalInputs(
+            s1_structural: Double(s1),
+            s2_temporal: Double(s2),
+            s3_spatial: Double(s3),
+            s4_observable: Double(s4),
+            plasmaPressure: Double(s1),
+            fieldStrength: Double(s3),
+            minPlasmaPressure: 0.3,
+            minFieldStrength: 0.3,
+            plantKind: 0
+        )
+        let out = engine.checkConstitutional(inputs)
+        let refusal: UInt8 = out.violationCode != 0 ? 0x04 : 0x00
+        let term = TerminalWireBridge.visualCode(for: out.terminalState)
 
-        /// **`SubstrateEngine.closureResidual`** can be ≫ 1 (PQ fusion triple-product ratio); **`c1`–`c4` floats on the C⁴ wire are manifold channels in **[0, 1]**.
-        let crClamped = min(max(snap.closureResidual, 0.0), 1.0)
-        let c1 = Float(max(0, 1.0 - crClamped))
-        let c2: Float = 1.0
-        let c3 = Float(crClamped)
-        let c4 = Float(snap.violationCode)
+        let c1 = Float(out.c1_trust)
+        let c2 = Float(out.c2_identity)
+        let c3 = Float(out.c3_closure)
+        let c4 = Float(out.c4_consequence)
 
         try store.writeFloat(row: row, dimension: 4, value: c1)
         try store.writeFloat(row: row, dimension: 5, value: c2)
@@ -84,7 +91,7 @@ final class VQbitVMDeltaPipeline: @unchecked Sendable {
             c4Consequence: c4,
             terminal: term,
             refusalSource: refusal,
-            violationCode: snap.violationCode,
+            violationCode: out.violationCode,
             sequence: delta.sequence
         )
         let wire = try C4ProjectionCodec.encode(projection)
