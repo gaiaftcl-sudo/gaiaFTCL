@@ -41,9 +41,11 @@ final class VQbitVMDeltaPipeline: @unchecked Sendable {
         let refusal: UInt8 = snap.violationCode != 0 ? 0x04 : 0x00
         let term = snap.c4WireTerminal
 
-        let c1 = Float(max(0, 1.0 - min(snap.closureResidual, 1.0)))
+        /// **`SubstrateEngine.closureResidual`** can be ≫ 1 (PQ fusion triple-product ratio); **`c1`–`c4` floats on the C⁴ wire are manifold channels in **[0, 1]**.
+        let crClamped = min(max(snap.closureResidual, 0.0), 1.0)
+        let c1 = Float(max(0, 1.0 - crClamped))
         let c2: Float = 1.0
-        let c3 = Float(snap.closureResidual)
+        let c3 = Float(crClamped)
         let c4 = Float(snap.violationCode)
 
         try store.writeFloat(row: row, dimension: 4, value: c1)

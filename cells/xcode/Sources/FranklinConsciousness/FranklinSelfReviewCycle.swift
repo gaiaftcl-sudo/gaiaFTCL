@@ -165,26 +165,15 @@ public actor FranklinSelfReviewCycle {
         if let healthSampler {
             return await healthSampler(domain, primIDs)
         }
-        let tensorURL = GaiaInstallPaths.manifoldTensorURL
         var scores: [Double] = []
         for pid in primIDs {
-            if let proj = await ManifoldProjectionStore.shared.state(for: pid) {
-                let c1 = Double(proj.c1Trust)
-                let c3 = Double(proj.c3Closure)
-                let combined = (c1 + c3) / 2.0
-                if c1.isFinite, c3.isFinite, combined.isFinite, combined >= 0, combined <= 1.0 {
-                    scores.append(combined)
-                    continue
-                }
-            }
-            if let tuple = try? ManifoldTensorProbe.readMeanS4(primID: pid, tensorPath: tensorURL) {
-                let ip = Double(tuple.0 + tuple.1 + tuple.2 + tuple.3) / 4.0
-                scores.append(min(max(ip, 0), 1))
-            }
+            guard let proj = await ManifoldProjectionStore.shared.state(for: pid) else { continue }
+            let c1 = Double(proj.c1Trust)
+            let c3 = Double(proj.c3Closure)
+            scores.append((c1 + c3) / 2.0)
         }
         guard !scores.isEmpty else { return 0 }
-        let avg = scores.reduce(0, +) / Double(scores.count)
-        return min(max(avg, 0), 1)
+        return scores.reduce(0, +) / Double(scores.count)
     }
 
     private nonisolated static func primIDs(
