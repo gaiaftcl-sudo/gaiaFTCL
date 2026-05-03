@@ -24,6 +24,8 @@
 9. [Constitutional Constraints](#9-constitutional-constraints)
 10. [Glossary](#10-glossary)
 
+> **Related:** [Franklin Consciousness & vQbit Substrate — Implementation Reference](Franklin-Consciousness-MQ.md) — Swift Mac Cell architecture, C4/S4 wire formats, GAMP5 MQ gate suite (35 tests), launchd daemons, GRDB substrate database.
+
 ---
 
 ## 1. What This Is
@@ -327,7 +329,7 @@ The sprint has a binary outcome at the mesh level. The verdict is determined by 
 - The physics bounds for all nine plant kinds have at least one M-tagged value per channel from at least one operating facility.
 - The SAF Track produces zero false acceptances across all eleven teams.
 - The closure residual on the reference Tokamak configuration drops below 9.54 × 10⁻⁷ under quorum.
-- All 32 OQ tests pass on all eleven installations.
+- All OQ tests pass on all eleven installations. (Swift Mac Cell: 35 MQ tests; see [Franklin-Consciousness-MQ](Franklin-Consciousness-MQ.md).)
 
 **Sprint REFUSED (failure):**
 - Any single evidence package contains a NaN, Inf, or negative value in any channel.
