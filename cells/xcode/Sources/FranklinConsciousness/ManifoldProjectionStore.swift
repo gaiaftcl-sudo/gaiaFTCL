@@ -15,11 +15,6 @@ public actor ManifoldProjectionStore {
         latest[wire.primID] = wire
     }
 
-    /// **`true`** when every listed prim has at least one decoded **`gaiaftcl.substrate.c4.projection`** frame (headless Franklin waits on this before self-review).
-    public func hasProjections(forAll primIDs: [UUID]) -> Bool {
-        !primIDs.isEmpty && primIDs.allSatisfy { latest[$0] != nil }
-    }
-
     /// Qualification / wake-validation seed only — never used as fake NATS authority.
     public func seedForTests(primID: UUID, wire: C4ProjectionWire) {
         latest[primID] = wire

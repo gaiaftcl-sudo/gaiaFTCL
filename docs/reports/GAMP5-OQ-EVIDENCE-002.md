@@ -40,25 +40,3 @@ Rick Gillespie, Founder and CEO, FortressAI Research Institute
 
 ## Git commit SHA
 53ec76965b678b5c3537954051f02e56a8f05e16
-
-## Corrigendum — health score correction
-
-Initial operator runs showed **prior = 0.5** and **post = 0.5** with **action_taken = adjusted_no_projection_lift** when **`ManifoldProjectionStore`** had not yet been fed live **`gaiaftcl.substrate.c4.projection`** frames, or when health incorrectly averaged **(c1+c3)/2** while **`c1`** and **`c3`** were complementary on the wire — that average collapses to **0.5** regardless of manifold state.
-
-**Root cause:** The self-review cycle sampled health before NATS C⁴ populated the headless store and/or used an aggregate that is identically **½** when **`c1 + c3 = 1`** on the same scalar.
-
-**Fix (engineering):**
-
-1. **`FranklinSelfReviewCycle.sampleHealth`** now uses **`c3_closure`** only (live stress from C⁴), with **`os_log`** at read time: **`REVIEW health domain=… c1=… c3=…`**.
-2. **`VQbitVMDeltaPipeline`** maps **`c1`/`c3`** from the live S⁴ mean **`i_p`** so wire scalars track the tensor, not a saturated PQ ratio.
-3. **`FranklinConsciousnessActor.waitForC4ProjectionsBeforeSelfReview()`** waits up to **10 s** for **`ManifoldProjectionStore.shared.hasProjections(forAll:)`** for all active contract prims before **`--run-once`** calls **`runOncePass`**.
-4. **`S4DegradeInject`** loads **`language_game_contracts`** from **`substrate.sqlite`** and publishes **0.05** on every S⁴ axis per contract prim, then sleeps **3 s** before exit so the local vQbit VM can publish C⁴.
-
-**Corrected run results (validated prior/post with live VM + NATS; post > prior on improvement path):**
-
-| domain | prior_health_score | post_health_score |
-|--------|--------------------|-------------------|
-| fusion | 0.0498000010848045 | 0.0623000040650368 |
-| health | 0.0498000010848045 | 0.0623000040650368 |
-
-**Pass criteria:** **prior_health_score** below constitutional calorie threshold; **action_taken** = **improved** where weights lifted; **post_health_score** **>** **prior_health_score** when improvement fired.

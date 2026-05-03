@@ -3,7 +3,7 @@ import FusionCore
 import GaiaFTCLCore
 import VQbitSubstrate
 
-/// Publishes low S⁴ deltas (**0.05** on all axes) for every **active** `language_game_contracts` row so the local vQbit VM emits degraded C⁴ on **`gaiaftcl.substrate.c4.projection`**.
+/// Publishes low S⁴ deltas for fusion + health prims so the vQbit VM can surface degraded C4 health.
 @main
 enum S4DegradeInject {
     static func main() async throws {
@@ -26,18 +26,10 @@ enum S4DegradeInject {
             throw NSError(domain: "S4DegradeInject", code: 2, userInfo: [NSLocalizedDescriptionKey: "not connected"])
         }
 
-        let pool = try await SubstrateDatabase.shared.pool()
-        let repo = FranklinDocumentRepository(db: pool)
-        let surfaces = try repo.fetchLanguageGameContractSurfaces()
-        guard !surfaces.isEmpty else {
-            fputs("S4DegradeInject: no active language_game_contracts\n", stderr)
-            throw NSError(domain: "S4DegradeInject", code: 3, userInfo: [NSLocalizedDescriptionKey: "no contracts"])
-        }
-
+        let fusion = GaiaFTCLPrimIdentity.primID(contractGameID: "FUSION-001", contractDomain: "fusion")
+        let health = GaiaFTCLPrimIdentity.primID(contractGameID: "HEALTH-001", contractDomain: "health")
         var seq = Int64(Date().timeIntervalSince1970 * 1000)
-        for c in surfaces {
-            guard let domain = c.domain?.lowercased() else { continue }
-            let prim = GaiaFTCLPrimIdentity.primID(contractGameID: c.gameID, contractDomain: domain)
+        for prim in [fusion, health] {
             for dim in UInt8(0) ..< 4 {
                 seq += 1
                 let wire = S4DeltaWire(
@@ -51,9 +43,8 @@ enum S4DegradeInject {
                 client.publish(subject: SubstrateWireSubjects.s4Delta, payload: data)
             }
         }
-        /// Allow vQbit VM to fold four dims and publish C⁴ before Franklin **`--run-once`** reads **`ManifoldProjectionStore`**.
-        try await Task.sleep(for: .seconds(3))
+        try await Task.sleep(for: .milliseconds(800))
         client.disconnect()
-        print("S4DegradeInject ok — degraded \(surfaces.count) contract surface(s)")
+        print("S4DegradeInject ok")
     }
 }
