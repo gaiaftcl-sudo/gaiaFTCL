@@ -13,9 +13,11 @@ public enum TauSyncHTTPParsing: Sendable {
 }
 
 /// τ (Bitcoin block height) — self-sovereign timing primitive.
+/// Patent: USPTO 19/460,960 | USPTO 19/096,071
 ///
 /// The vQbit VM fetches block height directly via URLSession.
-/// Mesh τ from `gaiaftcl.mesh.tau` is accepted when present (**additive**), never required.
+/// No external process required. Mesh τ from `gaiaftcl.mesh.tau` is accepted when present (**additive**), never required.
+/// vQbit VM self-fetches τ from blockstream.info (fallback: mempool.space). Mesh τ is accepted when received from any publisher.
 public actor TauSyncMonitor {
     public struct TauState: Sendable {
         public let blockHeight: UInt64

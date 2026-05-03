@@ -119,7 +119,7 @@ struct VQbitVMApp {
         Task {
             while !Task.isCancelled {
                 try await Task.sleep(for: .seconds(30))
-                publishHeartbeat(client: client, store: store)
+                await publishHeartbeat(client: client, store: store, tauMonitor: tauMonitor)
             }
         }
 
@@ -153,13 +153,16 @@ struct VQbitVMApp {
         }
     }
 
-    private static func publishHeartbeat(client: NATSClient, store: ManifoldTensorStore) {
+    private static func publishHeartbeat(client: NATSClient, store: ManifoldTensorStore, tauMonitor: TauSyncMonitor) async {
         let gate = VQbitMeasurementGate.shared
         let reason = gate.blockReason()
+        let tauStale = await tauMonitor.isStale
+        let tauBH = await tauMonitor.current?.blockHeight ?? 0
+        let tauSrc = await tauMonitor.sourceLabel
         let payload: [String: Any] = [
-            "tau_block_height": gate.tauBlockHeightForHeartbeat(),
-            "tau_source": gate.tauSourceLabelForHeartbeat(),
-            "tau_stale": reason == .tauStaleOrAbsent,
+            "tau_block_height": tauBH,
+            "tau_source": tauSrc,
+            "tau_stale": tauStale,
             "moored": gate.mooringAcquired(),
             "tau_sync": gate.tauSynchronized(),
             "blocked_reason": String(describing: reason),
