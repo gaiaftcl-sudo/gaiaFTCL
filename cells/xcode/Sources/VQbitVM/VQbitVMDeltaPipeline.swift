@@ -50,9 +50,15 @@ final class VQbitVMDeltaPipeline: @unchecked Sendable {
         let refusal: UInt8 = out.violationCode != 0 ? 0x04 : 0x00
         let term = TerminalWireBridge.visualCode(for: out.terminalState)
 
+        let meanStress = try ManifoldConstitutionalClosurePhysics.meanConstitutionalStress(
+            store: store,
+            calorieThresholdForPrim: { VQbitContractThresholds.shared.calorie(for: $0) }
+        )
+        let c3Closure = ManifoldConstitutionalClosurePhysics.c3Closure(fromMeanStress: meanStress)
+
         let c1 = Float(out.c1_trust)
         let c2 = Float(out.c2_identity)
-        let c3 = Float(out.c3_closure)
+        let c3 = Float(c3Closure)
         let c4 = Float(out.c4_consequence)
 
         try store.writeFloat(row: row, dimension: 4, value: c1)

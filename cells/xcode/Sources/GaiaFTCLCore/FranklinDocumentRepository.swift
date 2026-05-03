@@ -260,6 +260,31 @@ public final class FranklinDocumentRepository: Sendable {
         }
     }
 
+    /// **`constitutional_threshold_calorie`** keyed by deterministic **`GaiaFTCLPrimIdentity.primID`** for each active contract row (vQbit constitutional aggregation).
+    public func fetchPrimIDToCalorieThreshold() throws -> [UUID: Double] {
+        try db.read { db in
+            let rows = try Row.fetchAll(
+                db,
+                sql: """
+                SELECT game_id, domain, constitutional_threshold_calorie
+                FROM language_game_contracts
+                WHERE lower(status) = 'active'
+                """
+            )
+            var out: [UUID: Double] = [:]
+            out.reserveCapacity(rows.count)
+            for row in rows {
+                let gameID: String = row["game_id"]
+                let domainRaw: String = row["domain"]
+                let domain = domainRaw.lowercased()
+                let threshold: Double = row["constitutional_threshold_calorie"]
+                let pid = GaiaFTCLPrimIdentity.primID(contractGameID: gameID, contractDomain: domain)
+                out[pid] = threshold
+            }
+            return out
+        }
+    }
+
     public func updateContractAestheticRules(contractID: String, aestheticRulesJSON: String, contractSha256: String) throws {
         try db.write { db in
             try db.execute(
