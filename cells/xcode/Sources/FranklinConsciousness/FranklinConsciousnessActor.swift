@@ -91,6 +91,7 @@ public actor FranklinConsciousnessActor {
             "gaiaftcl.franklin.silence.command",
             SubstrateWireSubjects.c4Projection,
         ])
+        await FranklinQuantumUSDAuthorship.publishWakeCatalog(to: nats)
         Task { await self.consumeC4Projections() }
         if runOnce {
             _ = await nats.waitUntilConnected(timeoutSeconds: 12)

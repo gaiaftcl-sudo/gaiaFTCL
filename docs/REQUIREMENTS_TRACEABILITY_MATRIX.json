@@ -512,7 +512,7 @@
     {
       "req_id": "REQ-SR-004",
       "domain": "Franklin",
-      "description": "S4 dimension weight never exceeds 1.0 — aesthetic_rules_json enforcement.",
+      "description": "S4 dimension weight never exceeds 1.0 \u2014 aesthetic_rules_json enforcement.",
       "implementation_paths": [
         "cells/xcode/Sources/FranklinConsciousness/FranklinSelfReviewCycle.swift"
       ],
@@ -526,7 +526,7 @@
     {
       "req_id": "REQ-SR-005",
       "domain": "Franklin",
-      "description": "aesthetic_rules weights never regress — improveDomainStandard guard.",
+      "description": "aesthetic_rules weights never regress \u2014 improveDomainStandard guard.",
       "implementation_paths": [
         "cells/xcode/Sources/FranklinConsciousness/FranklinSelfReviewCycle.swift"
       ],
@@ -540,7 +540,7 @@
     {
       "req_id": "REQ-SR-006",
       "domain": "Franklin",
-      "description": "FranklinSelfReviewCycle MQ test coverage (MQ-SR-001…005).",
+      "description": "FranklinSelfReviewCycle MQ test coverage (MQ-SR-001\u2026005).",
       "implementation_paths": [
         "cells/xcode/Sources/FranklinConsciousness/FranklinSelfReviewCycle.swift"
       ],
@@ -549,6 +549,346 @@
       ],
       "receipt_path": "cells/xcode/receipts/gamp5/gamp5_step4_sovereign_m8_2026-05-02.json",
       "receipt_hash": "1311ae5d579150fab1811de80065d8d435eaf4f9ef6bda73029d7fa6e14cb0cc",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-001",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 IQ-QM-001 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-002",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 IQ-QM-002 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-003",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 IQ-QM-003 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-004",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 IQ-QM-004 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-005",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 IQ-QM-005 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-006",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 IQ-QM-006 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-007",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 OQ-QM-001 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-008",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 OQ-QM-002 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-009",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 OQ-QM-003 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-010",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 OQ-QM-004 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-011",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 OQ-QM-005 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-012",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 OQ-QM-006 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-013",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 OQ-QM-007 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-014",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 PQ-QM-001 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-015",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 PQ-QM-002 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-016",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 PQ-QM-003 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-017",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 PQ-QM-004 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-018",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 PQ-QM-005 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-019",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 PQ-QM-006 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
+      "status": "CALORIE"
+    },
+    {
+      "req_id": "REQ-QM-020",
+      "domain": "GAMP5Quantum",
+      "description": "GAMP5 quantum qualification trace \u2014 PQ-QM-007 per docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md.",
+      "implementation_paths": [
+        "docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateEngine.swift",
+        "cells/xcode/Sources/VQbitVM/VQbitVMDeltaPipeline.swift",
+        "cells/xcode/Sources/GaiaFTCLCore/SubstrateSchema.swift"
+      ],
+      "test_paths": [
+        "cells/xcode/Tests/VQbitSubstrateTests/VQbitQuantumProofTests.swift"
+      ],
+      "receipt_path": "cells/xcode/receipts/gamp5/gamp5_oq_receipt_2026-05-01T12-46-09Z.json",
+      "receipt_hash": "a0eb579bb722f70f2736ce5d85eddb8710cb8211019ab648e15c69937ed09f62",
       "status": "CALORIE"
     }
   ]

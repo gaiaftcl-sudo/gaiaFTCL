@@ -270,4 +270,62 @@ public func createSubstrateMigrations(_ migrator: inout DatabaseMigrator) {
             arguments: [baseline]
         )
     }
+
+    /// Six quantum family **`language_game_contracts`** rows (**IQ‑QM‑005**) — thresholds / **`aesthetic_rules_json`** match **[`docs/reports/GAMP5-VQBIT-QUANTUM-IQ-OQ-PQ-001.md`]**.
+    migrator.registerMigration("v10_quantum_domains") { db in
+        try db.execute(sql: """
+            INSERT OR IGNORE INTO language_game_contracts
+              (id, game_id, cell_id, contract_doc, status, timestamp_iso, domain, contract_sha256,
+               constitutional_threshold_calorie, constitutional_threshold_cure, improvement_target, review_interval_seconds, aesthetic_rules_json)
+            VALUES (
+              'lgc-QC-CIRCUIT-001', 'QC-CIRCUIT-001', 'gaiaftcl-mac-cell', '{"created_at":"2026-05-03T00:00:00Z","domain":"quantum_circuit","game_id":"QC-CIRCUIT-001","invariant_refs":["INV-QC-CIRCUIT-001"],"prim_paths":["/World/Quantum/CircuitFamily"],"s1_semantic":"bond_dimension_coherence","s2_semantic":"entanglement_entropy_stability","s3_semantic":"interaction_field_connectivity","s4_semantic":"bell_chsh_enforcement","sha256":"ec6dcdb0a333e51b5282f406b3e0940ba27a144b33ac4ea3200e4361bea04002"}', 'active', '2026-05-03T00:00:00Z', 'quantum_circuit', 'f89dfeb52ecb0be85a2594175b23184f2319706ff6508a71c1285fdc3cee3901',
+              0.85, 0.6, 0.05, 300, '{"chsh_bound":2.01,"frontiers":{"AmpAmp_n_max":10,"Grover_n_max":12,"QFT_n_max":16,"QPE_n_max":10,"Shor_N_max":15},"max_bond_dim":1024,"schema_version":1,"weights":{"s1_weight":0.3,"s2_weight":0.25,"s3_weight":0.25,"s4_weight":0.2}}'
+            )
+            """)
+        try db.execute(sql: """
+            INSERT OR IGNORE INTO language_game_contracts
+              (id, game_id, cell_id, contract_doc, status, timestamp_iso, domain, contract_sha256,
+               constitutional_threshold_calorie, constitutional_threshold_cure, improvement_target, review_interval_seconds, aesthetic_rules_json)
+            VALUES (
+              'lgc-QC-VARIATIONAL-001', 'QC-VARIATIONAL-001', 'gaiaftcl-mac-cell', '{"created_at":"2026-05-03T00:00:00Z","domain":"quantum_variational","game_id":"QC-VARIATIONAL-001","invariant_refs":["INV-QC-VAR-001"],"prim_paths":["/World/Quantum/VariationalFamily"],"s1_semantic":"ansatz_coherence","s2_semantic":"parameter_convergence","s3_semantic":"coupling_field_connectivity","s4_semantic":"cost_landscape_visibility","sha256":"e8ad2790d952b4d75e15725a3b4127b2cf2473203e36e1e8c4e0c699d171e798"}', 'active', '2026-05-03T00:00:00Z', 'quantum_variational', 'f85852e298fcb282d52b2a51f6497937adada51f1becc99a27ecc9fc46e00078',
+              0.8, 0.55, 0.05, 300, '{"frontiers":{"Classifier_qubits":4,"QAOA_qubits":8,"QUBO_vars":8,"VQE_qubits":6},"schema_version":1,"weights":{"s1_weight":0.25,"s2_weight":0.3,"s3_weight":0.25,"s4_weight":0.2}}'
+            )
+            """)
+        try db.execute(sql: """
+            INSERT OR IGNORE INTO language_game_contracts
+              (id, game_id, cell_id, contract_doc, status, timestamp_iso, domain, contract_sha256,
+               constitutional_threshold_calorie, constitutional_threshold_cure, improvement_target, review_interval_seconds, aesthetic_rules_json)
+            VALUES (
+              'lgc-QC-LINALG-001', 'QC-LINALG-001', 'gaiaftcl-mac-cell', '{"created_at":"2026-05-03T00:00:00Z","domain":"quantum_linear_algebra","game_id":"QC-LINALG-001","invariant_refs":["INV-QC-LA-001"],"prim_paths":["/World/Quantum/LinearAlgebraFamily"],"s1_semantic":"matrix_rank_coherence","s2_semantic":"singular_value_stability","s3_semantic":"block_encoding_connectivity","s4_semantic":"eigenvalue_visibility","sha256":"378f6067c3ab44258fa2afe10ef2f8ab5b4bc69ddd704423fdc176b8f4b3394a"}', 'active', '2026-05-03T00:00:00Z', 'quantum_linear_algebra', 'a8f8084866f4bdd15321aa7d7fef34181077d9121b84f896685761fd0afd3cb6',
+              0.7, 0.4, 0.05, 300, '{"frontiers":{"HHL_dim":16,"QSVT_rank":8,"qPCA_rank":4},"note":"All 3 BOUNDED - threshold reflects frontier proximity","schema_version":1,"weights":{"s1_weight":0.35,"s2_weight":0.25,"s3_weight":0.2,"s4_weight":0.2}}'
+            )
+            """)
+        try db.execute(sql: """
+            INSERT OR IGNORE INTO language_game_contracts
+              (id, game_id, cell_id, contract_doc, status, timestamp_iso, domain, contract_sha256,
+               constitutional_threshold_calorie, constitutional_threshold_cure, improvement_target, review_interval_seconds, aesthetic_rules_json)
+            VALUES (
+              'lgc-QC-SIMULATION-001', 'QC-SIMULATION-001', 'gaiaftcl-mac-cell', '{"created_at":"2026-05-03T00:00:00Z","domain":"quantum_simulation","game_id":"QC-SIMULATION-001","invariant_refs":["INV-QC-SIM-001"],"prim_paths":["/World/Quantum/SimulationFamily"],"s1_semantic":"adjacency_field_integrity","s2_semantic":"trotter_entropy_stability","s3_semantic":"hamiltonian_term_connectivity","s4_semantic":"evolution_observable_visibility","sha256":"102019b72256036d3a56b4b0b0665c0abd1ba1774901de9766f06c6d4b26df5d"}', 'active', '2026-05-03T00:00:00Z', 'quantum_simulation', 'd434f1b20b2ec1cf231b8791211803372e7c5ad8f0de99f8d802566acd7d54f3',
+              0.82, 0.58, 0.05, 300, '{"frontiers":{"CTQW_nodes":16,"HamSim_qubits":4,"HamSim_trotter_steps":10},"schema_version":1,"weights":{"s1_weight":0.25,"s2_weight":0.3,"s3_weight":0.3,"s4_weight":0.15}}'
+            )
+            """)
+        try db.execute(sql: """
+            INSERT OR IGNORE INTO language_game_contracts
+              (id, game_id, cell_id, contract_doc, status, timestamp_iso, domain, contract_sha256,
+               constitutional_threshold_calorie, constitutional_threshold_cure, improvement_target, review_interval_seconds, aesthetic_rules_json)
+            VALUES (
+              'lgc-QC-BOSONIC-001', 'QC-BOSONIC-001', 'gaiaftcl-mac-cell', '{"created_at":"2026-05-03T00:00:00Z","domain":"quantum_bosonic","game_id":"QC-BOSONIC-001","invariant_refs":["INV-QC-BOS-001"],"prim_paths":["/World/Quantum/BosonicFamily"],"s1_semantic":"fock_space_decomposition","s2_semantic":"photon_mode_entropy_stability","s3_semantic":"interferometer_connectivity","s4_semantic":"permanent_hafnian_visibility","sha256":"dc71b078c546d8193d490f70cc864aa24396c39fdc9c5c92688c1160a548585c"}', 'active', '2026-05-03T00:00:00Z', 'quantum_bosonic', 'aefd45edc89eb87d9ceb27f31d038e755273d2d5942e878168398b9aace35471',
+              0.88, 0.65, 0.05, 300, '{"complexity":"#P-hard beyond frontier - additive BPP within","frontiers":{"BosonSampling_photons":3,"GBS_modes":4},"schema_version":1,"weights":{"s1_weight":0.3,"s2_weight":0.2,"s3_weight":0.25,"s4_weight":0.25}}'
+            )
+            """)
+        try db.execute(sql: """
+            INSERT OR IGNORE INTO language_game_contracts
+              (id, game_id, cell_id, contract_doc, status, timestamp_iso, domain, contract_sha256,
+               constitutional_threshold_calorie, constitutional_threshold_cure, improvement_target, review_interval_seconds, aesthetic_rules_json)
+            VALUES (
+              'lgc-QC-ERRORCORR-001', 'QC-ERRORCORR-001', 'gaiaftcl-mac-cell', '{"created_at":"2026-05-03T00:00:00Z","domain":"quantum_error_correction","game_id":"QC-ERRORCORR-001","invariant_refs":["INV-QC-QEC-001"],"prim_paths":["/World/Quantum/ErrorCorrectionFamily"],"s1_semantic":"stabilizer_field_integrity","s2_semantic":"syndrome_entropy_stability","s3_semantic":"pauli_group_connectivity","s4_semantic":"correction_observable_visibility","sha256":"8ede442c4db218f3ce2b9df127bffc6d3baaa86f06d00cfb95bb650869a16c9e"}', 'active', '2026-05-03T00:00:00Z', 'quantum_error_correction', '775e3cb8479f5c9cce6b3a05877a0fa6a911db92c014ecc43191b4da1a2f2a84',
+              0.75, 0.45, 0.05, 300, '{"frontiers":{"Steane_qubits":7,"Surface_lattice":"3x3","Topological_anyons":3,"braid_depth":8},"note":"Steane EXECUTED via Gottesman-Knill. Surface+Topological BOUNDED.","schema_version":1,"weights":{"s1_weight":0.3,"s2_weight":0.25,"s3_weight":0.25,"s4_weight":0.2}}'
+            )
+            """)
+    }
 }
