@@ -187,6 +187,7 @@ public actor FranklinConsciousnessActor {
         hasSpokenAwakening = true
 
         if runOnce {
+            await waitForC4ProjectionsBeforeSelfReview()
             await FranklinSelfReviewCycle.shared.runOncePass(sessionID: sessionID)
             return
         }
@@ -305,6 +306,26 @@ public actor FranklinConsciousnessActor {
     }
 
     /// Publish small S⁴ deltas **after** NATS SUB is active so the local VM emits C⁴ we actually receive (messages published before SUB are dropped).
+    /// **`--run-once`**: ensure **`ManifoldProjectionStore`** has live **`gaiaftcl.substrate.c4.projection`** frames for every contract prim before **`FranklinSelfReviewCycle`** samples health (avoids defaulting on empty read).
+    private func waitForC4ProjectionsBeforeSelfReview() async {
+        try? await FranklinSubstrate.shared.bootstrapProduction()
+        guard let surfaces = try? await FranklinSubstrate.shared.allLanguageGameContracts() else { return }
+        var seen = Set<UUID>()
+        var primIDs: [UUID] = []
+        for c in surfaces {
+            guard let domain = c.domain?.lowercased() else { continue }
+            let pid = GaiaFTCLPrimIdentity.primID(contractGameID: c.gameID, contractDomain: domain)
+            if seen.insert(pid).inserted { primIDs.append(pid) }
+        }
+        guard !primIDs.isEmpty else { return }
+        var waited = 0
+        while waited < 10 {
+            if await ManifoldProjectionStore.shared.hasProjections(forAll: primIDs) { break }
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
+            waited += 1
+        }
+    }
+
     private func pulseS4ForProjectionCatchUp() async {
         try? await FranklinSubstrate.shared.bootstrapProduction()
         guard let surfaces = try? await FranklinSubstrate.shared.allLanguageGameContracts() else { return }

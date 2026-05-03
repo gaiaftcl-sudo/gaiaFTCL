@@ -41,11 +41,11 @@ final class VQbitVMDeltaPipeline: @unchecked Sendable {
         let refusal: UInt8 = snap.violationCode != 0 ? 0x04 : 0x00
         let term = snap.c4WireTerminal
 
-        /// **`SubstrateEngine.closureResidual`** can be ≫ 1 (PQ fusion triple-product ratio); **`c1`–`c4` floats on the C⁴ wire are manifold channels in **[0, 1]**.
-        let crClamped = min(max(snap.closureResidual, 0.0), 1.0)
-        let c1 = Float(max(0, 1.0 - crClamped))
+        /// Wire **`c1`/`c3`** follow **live S⁴ mean** **`i_p`** ∈ **[0, 1]** so Franklin health is a measured scalar, not a saturated PQ ratio.
+        let crWire = min(max(iP, 0.0), 1.0)
+        let c1 = Float(max(0, 1.0 - crWire))
         let c2: Float = 1.0
-        let c3 = Float(crClamped)
+        let c3 = Float(crWire)
         let c4 = Float(snap.violationCode)
 
         try store.writeFloat(row: row, dimension: 4, value: c1)

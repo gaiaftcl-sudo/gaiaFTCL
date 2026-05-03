@@ -1,6 +1,7 @@
 import Foundation
 import GaiaFTCLCore
 import GaiaGateKit
+import OSLog
 import VQbitSubstrate
 
 public protocol SovereigntyProvider: Sendable {
@@ -24,6 +25,8 @@ private struct StageAlteredPayload: Codable, Sendable {
 /// Per-domain constitutional self-review loop (**NATS-only** side-effects — GRDB + wire — no USD calls).
 public actor FranklinSelfReviewCycle {
     public static let shared = FranklinSelfReviewCycle()
+
+    private static let reviewHealthLog = OSLog(subsystem: "com.gaiaftcl.franklin", category: "SelfReview")
 
     private let sovereigntyProvider: SovereigntyProvider
     /// Optional MQ harness override — defaults to live **`ManifoldProjectionStore`** sampling.
@@ -170,7 +173,16 @@ public actor FranklinSelfReviewCycle {
             guard let proj = await ManifoldProjectionStore.shared.state(for: pid) else { continue }
             let c1 = Double(proj.c1Trust)
             let c3 = Double(proj.c3Closure)
-            scores.append((c1 + c3) / 2.0)
+            os_log(
+                "REVIEW health domain=%{public}s c1=%f c3=%f",
+                log: Self.reviewHealthLog,
+                type: .info,
+                domain as NSString,
+                c1,
+                c3
+            )
+            /// **`c3_closure`** is the live manifold stress scalar from NATS C⁴ (see **`VQbitVMDeltaPipeline`**). Do not use **`(c1+c3)/2`** when **`c1`/`c3`** are complementary — it collapses to **0.5** always.
+            scores.append(c3)
         }
         guard !scores.isEmpty else { return 0 }
         return scores.reduce(0, +) / Double(scores.count)
