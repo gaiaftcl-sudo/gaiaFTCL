@@ -10,6 +10,8 @@ import VQbitSubstrate
 
 private struct Config {
     var pingOnly = false
+    var tauStatusOnly = false
+    var mooringStatusOnly = false
     var testID: String?
     var primArg: String = ""
     var sMean: Float?
@@ -52,6 +54,78 @@ private let roleToContract: [String: (gameID: String, domain: String)] = [
     "ErrorCorrectionFamily": ("QC-ERRORCORR-001", "quantum_error_correction"),
     "Tokamak": ("FUSION-TOKAMAK-001", "fusion"),
 ]
+
+// MARK: — τ + mooring (disk IQ mirrors VQbitVM / Franklin)
+
+private struct TauFileSnapshot: Sendable {
+    let live: Bool
+    let blockHeight: UInt64?
+    let ageSeconds: Double?
+    /// From **`tau_sync_state.json`** (`tau_source`), else **`none`**.
+    let source: String
+}
+
+private func tauSyncFileStatus() -> TauFileSnapshot {
+    let url = GaiaInstallPaths.tauSyncStateURL
+    guard FileManager.default.fileExists(atPath: url.path),
+          let data = try? Data(contentsOf: url),
+          let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+          let iso = obj["received_at_iso"] as? String
+    else {
+        return TauFileSnapshot(live: false, blockHeight: nil, ageSeconds: nil, source: "none")
+    }
+    let fmt = ISO8601DateFormatter()
+    guard let received = fmt.date(from: iso) else {
+        return TauFileSnapshot(live: false, blockHeight: nil, ageSeconds: nil, source: "none")
+    }
+    let age = Date().timeIntervalSince(received)
+    let live = age <= NATSConfiguration.tauStalenessSeconds
+    let bh = (obj["block_height"] as? UInt64)
+        ?? (obj["block_height"] as? Int).map(UInt64.init)
+    let src = (obj["tau_source"] as? String).flatMap { $0.isEmpty ? nil : $0 } ?? "none"
+    return TauFileSnapshot(live: live, blockHeight: bh, ageSeconds: age, source: src)
+}
+
+private func mooringFileStatus() -> (moored: Bool, latitude: Double?, longitude: Double?, s3Spatial: Double?) {
+    let url = GaiaInstallPaths.cellIdentityURL
+    guard FileManager.default.fileExists(atPath: url.path),
+          let data = try? Data(contentsOf: url),
+          let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+    else {
+        return (false, nil, nil, nil)
+    }
+    let lat = obj["latitude"] as? Double
+    let lon = obj["longitude"] as? Double
+    let s3 = obj["s3_spatial"] as? Double
+    let moored: Bool
+    if let lat, let lon, let s3, s3 > 0, !(abs(lat) < 1e-9 && abs(lon) < 1e-9) {
+        moored = true
+    } else {
+        moored = false
+    }
+    return (moored, lat, lon, s3)
+}
+
+private func assertTauAndMooringForOQ() {
+    let moor = mooringFileStatus()
+    if !moor.moored {
+        fputs("OQ BLOCKED: Cell not moored. Grant CoreLocation access.\n", stderr)
+        exit(3)
+    }
+    let tauURL = GaiaInstallPaths.tauSyncStateURL
+    if !FileManager.default.fileExists(atPath: tauURL.path) {
+        fputs("WARN: tau_sync_state.json not present — VQbitVM self-fetches τ (HTTPS); OQ proceeds.\n", stderr)
+        return
+    }
+    let snap = tauSyncFileStatus()
+    if snap.blockHeight == nil {
+        fputs("WARN: τ block height unreadable in tau_sync_state.json — OQ proceeds.\n", stderr)
+        return
+    }
+    if !snap.live {
+        fputs("WARN: τ snapshot stale on disk — VQbitVM refreshes via HTTPS; OQ proceeds.\n", stderr)
+    }
+}
 
 private func defaultSubstratePath() -> String {
     if let e = ProcessInfo.processInfo.environment["GAIAFTCL_DB_PATH"], !e.isEmpty { return e }
@@ -233,6 +307,10 @@ private func parseArgs() throws -> Config {
         switch a {
         case "--ping":
             c.pingOnly = true
+        case "--tau-status":
+            c.tauStatusOnly = true
+        case "--mooring-status":
+            c.mooringStatusOnly = true
         case "--test":
             c.testID = i.next()
         case "--prim":
@@ -272,9 +350,11 @@ private func parseArgs() throws -> Config {
             c.logPath = i.next()
         case "--help", "-h":
             throw InjectorError.usage(
-                "QuantumOQInjector --ping | (--test OQ-QM-00x ...)\n" +
+                "QuantumOQInjector --ping | --tau-status | --mooring-status |\n" +
+                    "  (--test OQ-QM-00x ... --prim …)\n" +
                     "  --prim [role|game_id] --s-mean f | --s-mean-sequence a,b,...\n" +
-                    "  [--runs N] [--timeout sec] [--db path] [--log path] [--wait-franklin-cycle]"
+                    "  [--runs N] [--timeout sec] [--db path] [--log path] [--wait-franklin-cycle]\n" +
+                    "OQ tests require τ live (tau_sync_state.json) and mooring (cell_identity.json)."
             )
         default:
             throw InjectorError.usage("Unknown flag \(a)")
@@ -406,6 +486,24 @@ enum QuantumOQInjector {
 
     private static func run() async throws {
         let cfg = try parseArgs()
+        if cfg.tauStatusOnly {
+            let t = tauSyncFileStatus()
+            print("TAU_BLOCK_HEIGHT: \(t.blockHeight.map { String($0) } ?? "unknown")")
+            print("TAU_SOURCE: \(t.source)")
+            print("TAU_STALE: \(!t.live)")
+            if let a = t.ageSeconds {
+                print("age_seconds: \(Int(a))")
+            }
+            return
+        }
+        if cfg.mooringStatusOnly {
+            let m = mooringFileStatus()
+            print("MOORED: \(m.moored)")
+            if let lat = m.latitude { print("latitude: \(lat)") }
+            if let lon = m.longitude { print("longitude: \(lon)") }
+            if let s3 = m.s3Spatial { print("s3_spatial: \(s3)") }
+            return
+        }
         if cfg.pingOnly {
             do {
                 let c = try await connectNATS(url: NATSConfiguration.vqbitNATSURL)
@@ -415,6 +513,11 @@ enum QuantumOQInjector {
                 fputs("FAILED: \(error)\n", stderr)
                 exit(1)
             }
+            let t = tauSyncFileStatus()
+            let m = mooringFileStatus()
+            let heightStr = t.blockHeight.map { String($0) } ?? "unknown"
+            print("τ block height: \(heightStr) (source: \(t.source))")
+            print("Moored: \(m.moored)")
             return
         }
 
@@ -425,6 +528,7 @@ enum QuantumOQInjector {
         let logPath = cfg.logPath ?? GaiaInstallPaths.vqbitPointsLogURL.path
 
         if cfg.testID == "OQ-QM-007" {
+            assertTauAndMooringForOQ()
             try runOQQM007(dbPath: dbPath, logPath: logPath)
             return
         }
@@ -432,6 +536,8 @@ enum QuantumOQInjector {
         guard let test = cfg.testID, !cfg.primArg.isEmpty else {
             throw InjectorError.usage("Require --test and --prim (or --ping)")
         }
+
+        assertTauAndMooringForOQ()
 
         let prim = try resolvePrimID(primArg: cfg.primArg, dbQueue: dbQueue)
         let client = try await connectNATS(url: NATSConfiguration.vqbitNATSURL)
