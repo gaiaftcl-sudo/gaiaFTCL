@@ -126,8 +126,8 @@ let package = Package(
                 .swiftLanguageMode(.v6),
             ]
         ),
-        // Mac tactical cell — SwiftUI + RealityKit + FoundationModels + FranklinUIKit.
-        // Connects to the 9-cell sovereign mesh via NATS (FusionCore/NATSClient).
+        // Mac GaiaFTCL app — SwiftUI + RealityKit + FoundationModels + FranklinUIKit.
+        // MeshBridge connects this target to external mesh nodes via NATS (FusionCore/NATSClient).
         .executableTarget(
             name: "GaiaFTCL",
             dependencies: [

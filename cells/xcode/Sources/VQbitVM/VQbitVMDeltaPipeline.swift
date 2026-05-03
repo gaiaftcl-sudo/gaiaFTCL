@@ -18,19 +18,29 @@ final class VQbitVMDeltaPipeline: @unchecked Sendable {
         cellID: UUID,
         pointsLogURL: URL
     ) throws {
-        guard delta.dimension < 4 else { return }
         let row = try store.row(for: delta.primID)
-        try store.writeFloat(row: row, dimension: delta.dimension, value: delta.newValue)
-
-        lock.lock()
         let prim = delta.primID
-        var m = mask[prim] ?? 0
-        m |= 1 << delta.dimension
-        mask[prim] = m
-        let complete = m == 0x0F
-        lock.unlock()
 
-        guard complete else { return }
+        if delta.dimension == S4DeltaWire.allStructuralDimensions {
+            for d in 0 ..< 4 {
+                try store.writeFloat(row: row, dimension: UInt8(d), value: delta.newValue)
+            }
+            lock.lock()
+            mask[prim] = 0x0F
+            lock.unlock()
+        } else {
+            guard delta.dimension < 4 else { return }
+            try store.writeFloat(row: row, dimension: delta.dimension, value: delta.newValue)
+
+            lock.lock()
+            var m = mask[prim] ?? 0
+            m |= 1 << delta.dimension
+            mask[prim] = m
+            let complete = m == 0x0F
+            lock.unlock()
+
+            guard complete else { return }
+        }
 
         let s1 = try store.readFloat(row: row, dimension: 0)
         let s2 = try store.readFloat(row: row, dimension: 1)

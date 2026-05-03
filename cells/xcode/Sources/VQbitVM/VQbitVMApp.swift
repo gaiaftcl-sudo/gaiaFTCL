@@ -14,7 +14,7 @@ struct VQbitVMApp {
     }
 
     private static func entry() async {
-        let natsURL = ProcessInfo.processInfo.environment["GAIAFTCL_NATS_URL"] ?? "nats://127.0.0.1:4222"
+        let natsURL = NATSConfiguration.vqbitNATSURL
         guard let rowCountStr = ProcessInfo.processInfo.environment["GAIAFTCL_TENSOR_N"],
               let rowCount = UInt32(rowCountStr)
         else {
