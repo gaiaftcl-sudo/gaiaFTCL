@@ -116,6 +116,7 @@ public func createSubstrateMigrations(_ migrator: inout DatabaseMigrator) {
             t.column("contract_doc", .text).notNull()
             t.column("status", .text).notNull()
             t.column("timestamp_iso", .text).notNull()
+            t.column("algorithm_count", .integer).notNull().defaults(to: 0)
         }
 
         try db.create(table: "cell_identity", ifNotExists: true) { t in
@@ -327,5 +328,24 @@ public func createSubstrateMigrations(_ migrator: inout DatabaseMigrator) {
               0.75, 0.45, 0.05, 300, '{"frontiers":{"Steane_qubits":7,"Surface_lattice":"3x3","Topological_anyons":3,"braid_depth":8},"note":"Steane EXECUTED via Gottesman-Knill. Surface+Topological BOUNDED.","schema_version":1,"weights":{"s1_weight":0.3,"s2_weight":0.25,"s3_weight":0.25,"s4_weight":0.2}}'
             )
             """)
+    }
+
+    /// **`algorithm_count`** per FoF family (**OQ‑QM‑007**: Σ quantum rows = **19**).
+    migrator.registerMigration("v11_language_game_algorithm_count") { db in
+        let rows = try Row.fetchAll(db, sql: "PRAGMA table_info(language_game_contracts)")
+        let hasColumn = rows.contains { row in
+            (row["name"] as String?) == "algorithm_count"
+        }
+        if !hasColumn {
+            try db.alter(table: "language_game_contracts") { t in
+                t.add(column: "algorithm_count", .integer).notNull().defaults(to: 0)
+            }
+        }
+        try db.execute(sql: "UPDATE language_game_contracts SET algorithm_count = 5 WHERE game_id = 'QC-CIRCUIT-001'")
+        try db.execute(sql: "UPDATE language_game_contracts SET algorithm_count = 4 WHERE game_id = 'QC-VARIATIONAL-001'")
+        try db.execute(sql: "UPDATE language_game_contracts SET algorithm_count = 3 WHERE game_id = 'QC-LINALG-001'")
+        try db.execute(sql: "UPDATE language_game_contracts SET algorithm_count = 2 WHERE game_id = 'QC-SIMULATION-001'")
+        try db.execute(sql: "UPDATE language_game_contracts SET algorithm_count = 2 WHERE game_id = 'QC-BOSONIC-001'")
+        try db.execute(sql: "UPDATE language_game_contracts SET algorithm_count = 3 WHERE game_id = 'QC-ERRORCORR-001'")
     }
 }
