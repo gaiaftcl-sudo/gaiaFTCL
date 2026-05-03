@@ -128,8 +128,7 @@ struct FranklinAvatarAssetBinding {
 
     static func load() -> FranklinAvatarAssetBinding {
         let fm = FileManager.default
-        var cursor = URL(fileURLWithPath: fm.currentDirectoryPath, isDirectory: true)
-        for _ in 0..<10 {
+        for cursor in workspaceRootCandidates(fileManager: fm) {
             let bundlePath = cursor.appendingPathComponent("cells/franklin/avatar/bundle_assets")
             let visemePath = bundlePath.appendingPathComponent("pose_templates/viseme")
             let expressionPath = bundlePath.appendingPathComponent("pose_templates/expression")
@@ -163,9 +162,46 @@ struct FranklinAvatarAssetBinding {
                     missingAssets: missing
                 )
             }
-            cursor.deleteLastPathComponent()
         }
         return .empty
+    }
+
+    private static func workspaceRootCandidates(fileManager fm: FileManager) -> [URL] {
+        var candidates: [URL] = []
+        var seen = Set<String>()
+
+        func appendUnique(_ url: URL) {
+            let normalized = url.standardizedFileURL
+            let key = normalized.path
+            guard !key.isEmpty, !seen.contains(key) else { return }
+            seen.insert(key)
+            candidates.append(normalized)
+        }
+
+        func appendAscension(from start: URL, depth: Int = 16) {
+            var cursor = start.standardizedFileURL
+            for _ in 0..<depth {
+                appendUnique(cursor)
+                let parent = cursor.deletingLastPathComponent()
+                if parent.path == cursor.path { break }
+                cursor = parent
+            }
+        }
+
+        if let explicit = ProcessInfo.processInfo.environment["FRANKLIN_WORKSPACE_ROOT"], !explicit.isEmpty {
+            appendAscension(from: URL(fileURLWithPath: explicit, isDirectory: true))
+        }
+        if let explicit = ProcessInfo.processInfo.environment["GAIAFTCL_ROOT"], !explicit.isEmpty {
+            appendAscension(from: URL(fileURLWithPath: explicit, isDirectory: true))
+        }
+
+        appendAscension(from: URL(fileURLWithPath: fm.currentDirectoryPath, isDirectory: true))
+        let executableURL = URL(fileURLWithPath: CommandLine.arguments.first ?? fm.currentDirectoryPath)
+            .standardizedFileURL
+        appendAscension(from: executableURL.deletingLastPathComponent())
+        appendAscension(from: Bundle.main.bundleURL.standardizedFileURL.deletingLastPathComponent())
+
+        return candidates
     }
 
     private static func requiredAssets() -> [RequiredAsset] {
@@ -224,13 +260,17 @@ struct FranklinAvatarAssetBinding {
             "franklin_passy_v1.obj",
             "franklin_passy_v1.gltf",
         ]
+        var fallback: URL?
         for name in candidates {
             let path = meshes.appendingPathComponent(name)
             if fm.fileExists(atPath: path.path) {
-                return path
+                if isLikelyFranklinHumanBust(at: path) {
+                    return path
+                }
+                fallback = fallback ?? path
             }
         }
-        return nil
+        return fallback
     }
 
     private static func isMeshDetailSufficient(at url: URL) -> Bool {
@@ -243,6 +283,23 @@ struct FranklinAvatarAssetBinding {
             }
         }
         return geometryNodeCount >= 6
+    }
+
+    private static func isLikelyFranklinHumanBust(at url: URL) -> Bool {
+        guard let scene = try? SCNScene(url: url, options: nil) else { return false }
+        var nodeNames: [String] = []
+        scene.rootNode.enumerateChildNodes { node, _ in
+            if let name = node.name?.lowercased(), !name.isEmpty {
+                nodeNames.append(name)
+            }
+        }
+        if nodeNames.isEmpty {
+            // If there are no semantic names, don't reject outright.
+            return true
+        }
+        let joined = nodeNames.joined(separator: " ")
+        let expected = ["head", "hair", "nose", "chin", "neck", "torso", "eye", "mouth", "franklin", "passy"]
+        return expected.contains { joined.contains($0) }
     }
 }
 
@@ -364,10 +421,25 @@ struct FranklinAvatarRuntimeView: NSViewRepresentable {
                 root.addChildNode(child)
             }
             applyPassyMaterials(to: root)
-            root.scale = SCNVector3(1.2, 1.2, 1.2)
+            normalizeAvatarNode(root)
             return root
         }
         return nil
+    }
+
+    private func normalizeAvatarNode(_ root: SCNNode) {
+        let (minB, maxB) = root.boundingBox
+        let size = SCNVector3(maxB.x - minB.x, maxB.y - minB.y, maxB.z - minB.z)
+        let center = SCNVector3((minB.x + maxB.x) * 0.5, (minB.y + maxB.y) * 0.5, (minB.z + maxB.z) * 0.5)
+        let maxAxis = Float(max(size.x, max(size.y, size.z)))
+        guard maxAxis > 0 else { return }
+        let targetSpan: Float = 2.2
+        let scale = targetSpan / maxAxis
+        let posX = -Float(center.x) * scale
+        let posY = -Float(center.y) * scale
+        let posZ = -Float(center.z) * scale
+        root.scale = SCNVector3(scale, scale, scale)
+        root.position = SCNVector3(posX, posY, posZ)
     }
 
     private func applyPassyMaterials(to root: SCNNode) {

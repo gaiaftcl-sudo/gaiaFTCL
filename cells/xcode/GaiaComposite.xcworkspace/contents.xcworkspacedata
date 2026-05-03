@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:../fusion/macos/GaiaFTCLConsole/GaiaFTCLConsole.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../fusion/macos/FusionSidecarHost/FusionSidecarHost.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../../GAIAOS/macos/Franklin/Package.swift">
+   </FileRef>
+   <FileRef
+      location = "group:../fusion/macos/GaiaFusion/Package.swift">
+   </FileRef>
+   <FileRef
+      location = "group:../fusion/macos/MacHealth/Package.swift">
+   </FileRef>
+</Workspace>

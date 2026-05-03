@@ -70,31 +70,11 @@ enum FranklinLaunchGate {
 
     static func evaluate() -> FranklinLaunchGateResult {
         let fm = FileManager.default
-        var cursor = URL(fileURLWithPath: fm.currentDirectoryPath, isDirectory: true)
-        for _ in 0..<10 {
+        for cursor in workspaceRootCandidates(fileManager: fm) {
             let manifestURL = cursor.appendingPathComponent(manifestRelativePath)
-            // #region agent log
-            FranklinDebugLogger.log(
-                runId: "pre-fix",
-                hypothesisId: "H1",
-                location: "FranklinLaunchGate.swift:evaluate",
-                message: "Probe workspace for launch manifest",
-                data: [
-                    "cursor": cursor.path,
-                    "manifestExists": String(fm.fileExists(atPath: manifestURL.path)),
-                ]
-            )
-            // #endregion
             if fm.fileExists(atPath: manifestURL.path) {
                 return evaluate(workspaceRoot: cursor, manifestURL: manifestURL)
             }
-            // Also accept the gaiaFTCL marker so we walk up out of GAIAOS/macos/Franklin.
-            let marker = cursor.appendingPathComponent("gaiaFTCL", isDirectory: true)
-            if fm.fileExists(atPath: marker.path) {
-                cursor = marker
-                continue
-            }
-            cursor.deleteLastPathComponent()
         }
         return FranklinLaunchGateResult(
             ready: false,
@@ -223,6 +203,47 @@ enum FranklinLaunchGate {
             let size = attrs[.size] as? UInt64
         else { return nil }
         return size
+    }
+
+    private static func workspaceRootCandidates(fileManager fm: FileManager) -> [URL] {
+        var candidates: [URL] = []
+        var seen = Set<String>()
+
+        func appendUnique(_ url: URL) {
+            let normalized = url.standardizedFileURL
+            let key = normalized.path
+            guard !key.isEmpty, !seen.contains(key) else { return }
+            seen.insert(key)
+            candidates.append(normalized)
+        }
+
+        func appendAscension(from start: URL, depth: Int = 16) {
+            var cursor = start.standardizedFileURL
+            for _ in 0..<depth {
+                appendUnique(cursor)
+                let parent = cursor.deletingLastPathComponent()
+                if parent.path == cursor.path { break }
+                cursor = parent
+            }
+        }
+
+        if let explicit = ProcessInfo.processInfo.environment["FRANKLIN_WORKSPACE_ROOT"], !explicit.isEmpty {
+            appendAscension(from: URL(fileURLWithPath: explicit, isDirectory: true))
+        }
+        if let explicit = ProcessInfo.processInfo.environment["GAIAFTCL_ROOT"], !explicit.isEmpty {
+            appendAscension(from: URL(fileURLWithPath: explicit, isDirectory: true))
+        }
+
+        appendAscension(from: URL(fileURLWithPath: fm.currentDirectoryPath, isDirectory: true))
+
+        let executableURL = URL(fileURLWithPath: CommandLine.arguments.first ?? fm.currentDirectoryPath)
+            .standardizedFileURL
+        appendAscension(from: executableURL.deletingLastPathComponent())
+
+        let bundleURL = Bundle.main.bundleURL.standardizedFileURL
+        appendAscension(from: bundleURL.deletingLastPathComponent())
+
+        return candidates
     }
 
     /// Returns the first forbidden substring found in the file's first 64 KB

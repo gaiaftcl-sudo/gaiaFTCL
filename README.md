@@ -255,6 +255,8 @@ FUSION_UI_PORT=8911 swift run GaiaFusion
 
 Or open the Swift package in Xcode → scheme **GaiaFusion** → Run.
 
+For the consolidated multi-app Xcode path (Franklin + GaiaFusion + GaiaFTCLConsole), use `cells/xcode/GaiaComposite.xcworkspace` and follow `docs/XCODE_COMPOSITE_WORKFLOW.md`.
+
 ---
 
 ## 275M EUR International Validation Sprint

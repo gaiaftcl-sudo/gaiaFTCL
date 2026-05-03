@@ -1,0 +1,38 @@
+$schema: substrate/LANGUAGE_GAMES.schema.json
+catalog_version: 1.0.0
+cell: xcode
+contract_version_min: 1.0.0
+entries:
+  - id: LG-XCODE-FILE-WRITE-GATE-001
+    description: Enforce ACL-gated file write request and emit conformance receipt.
+    specification:
+      inputs:
+        - target_path
+        - operation
+      preconditions:
+        - franklin_xcode_alive
+      postconditions:
+        - xcode_receipt_present
+      failure_modes:
+        - acl_denied -> REFUSED
+      expected_closure: CALORIE
+    build:
+      files:
+        - cells/franklin/config/macfranklin_mcp_acl.json
+      entry_points:
+        - FranklinClient.applyWritePolicy
+    receipt_shape:
+      required_fields: [cell, language_game_id, franklin_wallet, terminal_state]
+      provenance: franklin_xcode_wallet
+    test:
+      fixture: cells/xcode/fixtures/file_write_request.json
+      protocol: cells/xcode/LANGUAGE_GAMES.md
+      pass_criteria:
+        - receipt.terminal_state in [CALORIE, REFUSED]
+    human_join_required: false
+    invariants_enforced:
+      - INV_RULE_XCODE_GUARDRAILS
+      - INV_RULE_TERMINAL_STATE
+    required_for_closure: true
+    available_surfaces:
+      - cli

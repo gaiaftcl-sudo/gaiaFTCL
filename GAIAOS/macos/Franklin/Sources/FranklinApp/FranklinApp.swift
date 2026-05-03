@@ -5,7 +5,9 @@ import FranklinUIKit
 struct FranklinAppMain: App {
     @State private var showCanvas = false
     @StateObject private var model = OperatorSurfaceModel()
-    private let launchGate = FranklinLaunchGate.evaluate()
+    @State private var phaseModel = AppPhaseModel()
+    private let configuration = FranklinAppConfiguration.load()
+    private let startupGateProbe = FranklinLaunchGate.evaluate()
 
     init() {
         SproutEvidenceCoordinator.shared.startIfNeeded()
@@ -13,61 +15,89 @@ struct FranklinAppMain: App {
 
     var body: some Scene {
         WindowGroup("Franklin") {
-            if launchGate.ready {
+            switch phaseModel.phase {
+            case .preparing:
+                FranklinPreparingView()
+                    .task { await phaseModel.bootstrap() }
+            case .avatarWake:
+                FranklinAvatarWakeView()
+                    .environmentObject(model)
+            case .operatorSurface:
                 CanvasView()
                     .environmentObject(model)
-            } else {
-                FranklinLaunchRefusalView(refusals: launchGate.refusals)
+            case .failed(let refusals):
+                FranklinLaunchRefusalView(refusals: refusals, showTechnicalDiagnostics: configuration.showTechnicalDiagnostics)
             }
         }
         .windowStyle(.hiddenTitleBar)
         .defaultSize(width: 860, height: 620)
 
         WindowGroup("Franklin Avatar Presence") {
-            if launchGate.ready {
-                AvatarView(showCanvas: $showCanvas)
-                    .environmentObject(model)
-                    .frame(width: 120, height: 120)
-                    .background(Color.clear)
-            } else {
-                FranklinLaunchRefusalDot()
-                    .frame(width: 120, height: 120)
-            }
+            AvatarView(showCanvas: $showCanvas)
+                .environmentObject(model)
+                .frame(width: 120, height: 120)
+                .background(Color.clear)
         }
         .windowStyle(.hiddenTitleBar)
         .defaultSize(width: 120, height: 120)
     }
 }
 
-private struct FranklinLaunchRefusalView: View {
-    let refusals: [String]
+private struct FranklinPreparingView: View {
+    var body: some View {
+        VStack(spacing: 14) {
+            ProgressView()
+            Text("Preparing Franklin avatar substrate...")
+                .font(.system(size: 13, weight: .semibold))
+            Text("Verifying Passy mesh, voice manifest, and render contract.")
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(28)
+    }
+}
+
+private struct FranklinAvatarWakeView: View {
+    @EnvironmentObject var model: OperatorSurfaceModel
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Franklin Avatar Refused")
-                .font(.title2.bold())
-                .foregroundStyle(.red)
-            Text("Launch gate blocked. Required Passy assets/voice are not present.")
-                .font(.system(size: 13, weight: .semibold))
-            ForEach(Array(refusals.prefix(6).enumerated()), id: \.offset) { _, refusal in
-                Text(refusal)
-                    .font(.system(size: 11, weight: .semibold, design: .monospaced))
-                    .foregroundStyle(.red)
-            }
-            Spacer()
+        VStack(spacing: 12) {
+            FranklinAvatarStage()
+                .environmentObject(model)
+            Text("Franklin avatar waking...")
+                .font(.system(size: 12, weight: .semibold, design: .monospaced))
+                .foregroundStyle(.secondary)
         }
         .padding(20)
     }
 }
 
-private struct FranklinLaunchRefusalDot: View {
+private struct FranklinLaunchRefusalView: View {
+    let refusals: [String]
+    let showTechnicalDiagnostics: Bool
+
     var body: some View {
-        ZStack {
-            Circle().fill(Color.red.opacity(0.25))
-            Image(systemName: "xmark.seal.fill")
-                .font(.system(size: 30, weight: .bold))
-                .foregroundStyle(.red)
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Franklin Startup Needs Attention")
+                .font(.title2.bold())
+                .foregroundStyle(.orange)
+            Text("Franklin remains in guided startup mode while runtime dependencies are verified.")
+                .font(.system(size: 13, weight: .semibold))
+            if showTechnicalDiagnostics {
+                ForEach(Array(refusals.prefix(6).enumerated()), id: \.offset) { _, refusal in
+                    Text(refusal)
+                        .font(.system(size: 11, weight: .semibold, design: .monospaced))
+                        .foregroundStyle(.orange)
+                }
+            } else {
+                Text("Technical diagnostics are hidden from operator UI. Use logs/pipeline reports for details.")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(.secondary)
+            }
+            Spacer()
         }
+        .padding(20)
     }
 }
 
