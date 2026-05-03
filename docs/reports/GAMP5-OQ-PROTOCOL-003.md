@@ -40,3 +40,10 @@ Commit 2 message must contain: "OQ-SIGNOFF: GAMP5-OQ-PROTOCOL-003 v1.0"
 Timestamp: git commit timestamp UTC
 Hash: git commit SHA embedded in evidence document
 No amend. No feature branch. Two commits exactly.
+
+---
+## Signatory Pre-Execution Attestation
+Protocol criteria reviewed and confirmed complete prior to evidence execution.
+Signatory: Rick Gillespie, Founder and CEO, FortressAI Research Institute
+Date: 2026-05-03T16:48:49Z
+---
