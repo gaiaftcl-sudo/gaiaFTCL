@@ -12,6 +12,7 @@ let package = Package(
         .executable(name: "FranklinStartupPreflight", targets: ["FranklinStartupPreflight"]),
         .executable(name: "VQbitVM", targets: ["VQbitVM"]),
         .executable(name: "S4DegradeInject", targets: ["S4DegradeInject"]),
+        .executable(name: "QuantumOQInjector", targets: ["QuantumOQInjector"]),
         .library(name: "GaiaFTCLCore", targets: ["GaiaFTCLCore"]),
         .library(name: "GaiaGateKit", targets: ["GaiaGateKit"]),
         .library(name: "VQbitSubstrate", targets: ["VQbitSubstrate"]),
@@ -64,6 +65,18 @@ let package = Package(
                 .target(name: "VQbitSubstrate"),
             ],
             path: "Sources/S4DegradeInject",
+            swiftSettings: [.swiftLanguageMode(.v6)]
+        ),
+        .executableTarget(
+            name: "QuantumOQInjector",
+            dependencies: [
+                .target(name: "GaiaFTCLCore"),
+                .target(name: "VQbitSubstrate"),
+                .target(name: "FusionCore"),
+                .target(name: "GaiaGateKit"),
+                .product(name: "GRDB", package: "GRDB.swift"),
+            ],
+            path: "Sources/QuantumOQInjector",
             swiftSettings: [.swiftLanguageMode(.v6)]
         ),
         .executableTarget(
