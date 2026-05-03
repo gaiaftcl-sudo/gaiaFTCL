@@ -60,4 +60,16 @@ public enum GaiaInstallPaths {
         FileManager.default.homeDirectoryForCurrentUser
             .appendingPathComponent("Library/Application Support/GaiaFTCL/vqbit_edges.log", isDirectory: false)
     }
+
+    /// τ sync state written by TauSyncMonitor after each self-fetch (IQ-ARCH-005).
+    public static var tauSyncStateURL: URL {
+        FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent("Library/Application Support/GaiaFTCL/tau_sync_state.json", isDirectory: false)
+    }
+
+    /// Cell identity written by LocationMooringService after GPS fix acquired (IQ-ARCH-006).
+    public static var cellIdentityURL: URL {
+        FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent("Library/Application Support/GaiaFTCL/cell_identity.json", isDirectory: false)
+    }
 }

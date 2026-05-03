@@ -15,7 +15,7 @@ public enum VQbitPointsLogWriter {
                 recordSize: VQbitBinaryLogCodec.pointsRecordSize,
                 cellID: cellID
             )
-            try header.write(to: logURL, options: .atomic)
+            try header.write(to: logURL, options: .atomicWrite)
         }
         let fh = try FileHandle(forWritingTo: logURL)
         defer { try? fh.close() }

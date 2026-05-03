@@ -228,6 +228,15 @@ public final class ManifoldTensorStore: @unchecked Sendable {
         return floatFromLE(chunk, offset: 0)
     }
 
+    /// Writes all 8 M⁸ dims (s1-s4, c1-c4) in one call — tensor is source of truth before NATS/disk.
+    public func writeManifoldM8Row(row: UInt32, s1: Float, s2: Float, s3: Float, s4: Float,
+                                   c1: Float, c2: Float, c3: Float, c4: Float) throws {
+        let dims: [Float] = [s1, s2, s3, s4, c1, c2, c3, c4]
+        for (i, v) in dims.enumerated() {
+            try writeFloat(row: row, dimension: UInt8(i), value: v)
+        }
+    }
+
     private func persistHeader() throws {
         let entries = primToRow.keys.sorted { $0.uuidString < $1.uuidString }.compactMap { k in
             primToRow[k].map { (k, $0) }

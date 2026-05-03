@@ -369,12 +369,12 @@ public actor FranklinConsciousnessActor {
         await ManifoldProjectionStore.shared.apply(projection)
         let refused = TerminalWireBridge.visualCode(for: .refused)
         let blocked = TerminalWireBridge.visualCode(for: .blocked)
-        let degraded = projection.terminal == refused || projection.terminal == blocked
+        let degraded = projection.terminal.rawValue == refused || projection.terminal.rawValue == blocked
         let calorie = TerminalWireBridge.visualCode(for: .calorie)
         let cure = TerminalWireBridge.visualCode(for: .cure)
-        let wasHealthy = prior.map { $0.terminal == calorie || $0.terminal == cure } ?? false
+        let wasHealthy = prior.map { $0.terminal.rawValue == calorie || $0.terminal.rawValue == cure } ?? false
         guard degraded, wasHealthy else { return }
-        await healPrim(projection.primID, reason: projection.refusalSource, violationCode: projection.violationCode)
+        await healPrim(projection.primID, reason: projection.refusalSource.rawValue, violationCode: projection.violationCode.rawValue)
     }
 
     private func healPrim(_ primID: UUID, reason: UInt8, violationCode: UInt8) async {

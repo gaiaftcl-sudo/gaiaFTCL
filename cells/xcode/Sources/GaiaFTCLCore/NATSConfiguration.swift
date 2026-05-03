@@ -21,4 +21,21 @@ public enum NATSConfiguration {
         }
         return "nats://127.0.0.1:4223"
     }
+
+    // MARK: - NATS subjects (canonical sovereign M8 wire)
+
+    public static let tauSubject                   = "gaiaftcl.mesh.tau"
+    public static let vmReadySubject               = "gaiaftcl.vm.ready"
+    public static let vmHeartbeatSubject           = "gaiaftcl.vm.heartbeat"
+    public static let franklinStageMooredSubject   = "gaiaftcl.franklin.stage.moored"
+    public static let franklinStageUnmooredSubject = "gaiaftcl.franklin.stage.unmoored"
+    public static let franklinMooredSubject        = "gaiaftcl.franklin.moored"
+    public static let s4DeltaSubject               = "gaiaftcl.substrate.s4.delta"
+    public static let c4ProjectionSubject          = "gaiaftcl.substrate.c4.projection"
+    public static let meshTauSubject               = "gaiaftcl.mesh.tau"
+
+    /// s3_spatial from CoreLocation accuracy: 1 − (accuracy_m / 10_000), clamped [0, 1].
+    public static func s3Spatial(accuracyMeters: Double) -> Double {
+        min(max(1.0 - (accuracyMeters / 10_000.0), 0.0), 1.0)
+    }
 }

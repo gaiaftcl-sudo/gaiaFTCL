@@ -268,7 +268,7 @@ private func printRow(
     let scp = 1.0 - cm
     let s8 = Float(s4p + scp)
     print(
-        "\(test)\t\(prim)\t\(sMean)\t\(run)\t0x\(String(format: "%02x", proj.terminal))\t\(proj.violationCode)\t\(proj.c3Closure)\t\(s8)\tPASS"
+        "\(test)\t\(prim)\t\(sMean)\t\(run)\t0x\(String(format: "%02x", proj.terminal.rawValue))\t\(proj.violationCode.rawValue)\t\(proj.c3Closure)\t\(s8)\tPASS"
     )
 }
 
@@ -570,9 +570,9 @@ enum QuantumOQInjector {
                         timeoutSeconds: cfg.timeoutSeconds
                     )
                     printRow(test: test, prim: cfg.primArg, sMean: sMean, run: r, proj: proj)
-                    if proj.terminal != expected {
+                    if proj.terminal.rawValue != expected {
                         fputs(
-                            "EXPECTED terminal 0x\(String(format: "%02x", expected)) OBSERVED 0x\(String(format: "%02x", proj.terminal))\n",
+                            "EXPECTED terminal 0x\(String(format: "%02x", expected)) OBSERVED 0x\(String(format: "%02x", proj.terminal.rawValue))\n",
                             stderr
                         )
                         exit(2)
@@ -595,7 +595,7 @@ enum QuantumOQInjector {
                 )
                 client.publish(subject: SubstrateWireSubjects.s4Delta, payload: try S4DeltaCodec.encode(wire))
                 let proj = try await waitForC4(client: client, prim: prim, minSequence: seq, timeoutSeconds: cfg.timeoutSeconds)
-                terminalsSeen.insert(proj.terminal)
+                terminalsSeen.insert(proj.terminal.rawValue)
                 printRow(test: test, prim: cfg.primArg, sMean: sMean, run: 1, proj: proj)
                 if proj.c3Closure > prevC3 + 1e-6 {
                     fputs("NON-MONOTONIC c3_closure step \(sMean)\n", stderr)
@@ -654,7 +654,7 @@ enum QuantumOQInjector {
             )
             client.publish(subject: SubstrateWireSubjects.s4Delta, payload: try S4DeltaCodec.encode(wire))
             let proj = try await waitForC4(client: client, prim: prim, minSequence: seq, timeoutSeconds: cfg.timeoutSeconds)
-            print("OQ-QM-004\t\(cfg.primArg)\tterminal\t0x\(String(format: "%02x", proj.terminal))")
+            print("OQ-QM-004\t\(cfg.primArg)\tterminal\t0x\(String(format: "%02x", proj.terminal.rawValue))")
 
         case "OQ-QM-005":
             guard let sm = cfg.sMean else { throw InjectorError.usage("OQ-QM-005 needs --s-mean") }

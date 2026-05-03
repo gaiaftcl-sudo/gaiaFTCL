@@ -108,10 +108,11 @@ final class VQbitVMDeltaPipeline: @unchecked Sendable {
             c2Identity: c2,
             c3Closure: c3,
             c4Consequence: c4,
-            terminal: term,
-            refusalSource: refusal,
-            violationCode: out.violationCode,
-            sequence: delta.sequence
+            terminal: C4ProjectionWire.Terminal(rawValue: term) ?? .blocked,
+            refusalSource: C4ProjectionWire.RefusalSource(rawValue: refusal) ?? .none,
+            violationCode: C4ProjectionWire.ViolationCode(rawValue: out.violationCode) ?? .none,
+            sequence: delta.sequence,
+            timestampMs: Int64(Date().timeIntervalSince1970 * 1000)
         )
         let wire = try C4ProjectionCodec.encode(projection)
         nats.publish(subject: SubstrateWireSubjects.c4Projection, payload: wire)
