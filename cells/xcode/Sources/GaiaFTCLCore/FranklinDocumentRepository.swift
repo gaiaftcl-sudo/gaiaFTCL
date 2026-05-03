@@ -262,6 +262,12 @@ public final class FranklinDocumentRepository: Sendable {
 
     /// **`constitutional_threshold_calorie`** keyed by deterministic **`GaiaFTCLPrimIdentity.primID`** for each active contract row (vQbit constitutional aggregation).
     public func fetchPrimIDToCalorieThreshold() throws -> [UUID: Double] {
+        let (t, _) = try fetchPrimCalorieAndClosurePeers()
+        return t
+    }
+
+    /// Per-prim **τ** plus **domain closure peer lists** (all prims sharing the same `domain` label).
+    public func fetchPrimCalorieAndClosurePeers() throws -> ([UUID: Double], [UUID: [UUID]]) {
         try db.read { db in
             let rows = try Row.fetchAll(
                 db,
@@ -271,17 +277,24 @@ public final class FranklinDocumentRepository: Sendable {
                 WHERE lower(status) = 'active'
                 """
             )
-            var out: [UUID: Double] = [:]
-            out.reserveCapacity(rows.count)
+            var thresholds: [UUID: Double] = [:]
+            var byDomain: [String: [UUID]] = [:]
             for row in rows {
                 let gameID: String = row["game_id"]
                 let domainRaw: String = row["domain"]
                 let domain = domainRaw.lowercased()
                 let threshold: Double = row["constitutional_threshold_calorie"]
                 let pid = GaiaFTCLPrimIdentity.primID(contractGameID: gameID, contractDomain: domain)
-                out[pid] = threshold
+                thresholds[pid] = threshold
+                byDomain[domain, default: []].append(pid)
             }
-            return out
+            var peersByPrim: [UUID: [UUID]] = [:]
+            for ids in byDomain.values {
+                for id in ids {
+                    peersByPrim[id] = ids
+                }
+            }
+            return (thresholds, peersByPrim)
         }
     }
 

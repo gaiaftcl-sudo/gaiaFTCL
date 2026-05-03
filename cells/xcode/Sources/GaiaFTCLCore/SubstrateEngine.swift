@@ -12,6 +12,19 @@ public struct SubstrateEngine: Sendable {
         guard inputs.isStructurallyValid else {
             return ConstitutionalOutputs.blocked(reason: "structurally invalid inputs")
         }
+        // FoF / IQ-QM-006: CHSH classical bound — s4_observable encodes 1−(S/2.01); at S≥2.01 this is ≤0.
+        // Frozen violation_code **0x06 = CHSH_INVARIANT_VIOLATED** (atomic value, not OR‑combined with bitmask bands).
+        if inputs.s4_observable <= 0.0 {
+            return ConstitutionalOutputs(
+                violationCode: 0x06, // CHSH_INVARIANT_VIOLATED
+                terminalState: .refused,
+                c1_trust: Self.clamp(inputs.s1_structural),
+                c2_identity: Self.clamp(inputs.s2_temporal),
+                c3_closure: Self.clamp(inputs.s3_spatial),
+                c4_consequence: Self.clamp(inputs.s4_observable),
+                computedAt: Date()
+            )
+        }
         var code: UInt8 = 0
         if inputs.plasmaPressure < inputs.minPlasmaPressure { code |= 0x01 }
         if inputs.fieldStrength < inputs.minFieldStrength { code |= 0x02 }

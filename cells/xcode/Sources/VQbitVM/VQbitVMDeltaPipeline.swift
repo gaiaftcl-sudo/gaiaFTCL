@@ -3,7 +3,9 @@ import FusionCore
 import GaiaFTCLCore
 import VQbitSubstrate
 
-/// Accumulates **S⁴** deltas per prim until all four dimensions are present, then runs **constitutional → C⁴ → log**.
+/// Accumulates **S⁴** deltas per prim until all four dimensions are present, then runs **constitutional → C⁴ → wire**.
+///
+/// **Unified memory contract:** the mmap row holds **8 active dims** `[s1,s2,s3,s4,c1,c2,c3,c4]` before any NATS or binary-log emission so Metal’s **GNN** always reads a full **M⁸ = S⁴ × C⁴** slice, not zeros in `[4..7]`.
 final class VQbitVMDeltaPipeline: @unchecked Sendable {
     private let lock = NSLock()
     private var mask: [UUID: UInt8] = [:]
@@ -47,28 +49,62 @@ final class VQbitVMDeltaPipeline: @unchecked Sendable {
             plantKind: 0
         )
         let out = engine.checkConstitutional(inputs)
-        let refusal: UInt8 = out.violationCode != 0 ? 0x04 : 0x00
+        let refusal: UInt8 = out.violationCode
         let term = TerminalWireBridge.visualCode(for: out.terminalState)
 
-        let meanStress = try ManifoldConstitutionalClosurePhysics.meanConstitutionalStress(
-            store: store,
-            calorieThresholdForPrim: { VQbitContractThresholds.shared.calorie(for: $0) }
-        )
-        let c3Closure = ManifoldConstitutionalClosurePhysics.c3Closure(fromMeanStress: meanStress)
+        if VQbitContractThresholds.shared.knowsPrim(prim),
+           let tau = VQbitContractThresholds.shared.calorie(for: prim)
+        {
+            let peerList = VQbitContractThresholds.shared.closurePeers(for: prim)
+            if !peerList.isEmpty {
+                _ = try ManifoldConstitutionalClosurePhysics.computeClosureResidual(
+                    store: store,
+                    threshold: tau,
+                    domainPrimIDs: peerList
+                )
+            }
+        } else {
+            let msg =
+                "VQbitVMDeltaPipeline: no active language_game_contract for prim \(prim); skipping domain closureResidual\n"
+            FileHandle.standardError.write(Data(msg.utf8))
+        }
 
+        /// **M⁸ tensor `[16..31]`** — **C⁴** comes **only** from **`checkConstitutional`** outputs (no S⁴ echo, no global mean substituted for **c3**).
         let c1 = Float(out.c1_trust)
         let c2 = Float(out.c2_identity)
-        let c3 = Float(c3Closure)
+        let c3 = Float(out.c3_closure)
         let c4 = Float(out.c4_consequence)
 
-        try store.writeFloat(row: row, dimension: 4, value: c1)
-        try store.writeFloat(row: row, dimension: 5, value: c2)
-        try store.writeFloat(row: row, dimension: 6, value: c3)
-        try store.writeFloat(row: row, dimension: 7, value: c4)
+        /// **Tensor is source of truth** — persist **S⁴ × C⁴** into bytes **`[0..31]`** (`Float32` × 8) before NATS or disk.
+        try store.writeManifoldM8Row(
+            row: row,
+            s1: Float(inputs.s1_structural),
+            s2: Float(inputs.s2_temporal),
+            s3: Float(inputs.s3_spatial),
+            s4: Float(inputs.s4_observable),
+            c1: c1,
+            c2: c2,
+            c3: c3,
+            c4: c4
+        )
 
         lock.lock()
         mask[prim] = 0
         lock.unlock()
+
+        let projection = C4ProjectionWire(
+            primID: prim,
+            c1Trust: c1,
+            c2Identity: c2,
+            c3Closure: c3,
+            c4Consequence: c4,
+            terminal: term,
+            refusalSource: refusal,
+            violationCode: out.violationCode,
+            sequence: delta.sequence
+        )
+        let wire = try C4ProjectionCodec.encode(projection)
+        nats.publish(subject: SubstrateWireSubjects.c4Projection, payload: wire)
 
         let ts = Int64(Date().timeIntervalSince1970 * 1_000_000)
         let record = VQbitPointsRecordWire(
@@ -88,19 +124,5 @@ final class VQbitVMDeltaPipeline: @unchecked Sendable {
         )
         let blob = VQbitPointsRecordCodec.encode(record)
         try VQbitPointsLogWriter.append(record: blob, logURL: pointsLogURL, cellID: cellID)
-
-        let projection = C4ProjectionWire(
-            primID: prim,
-            c1Trust: c1,
-            c2Identity: c2,
-            c3Closure: c3,
-            c4Consequence: c4,
-            terminal: term,
-            refusalSource: refusal,
-            violationCode: out.violationCode,
-            sequence: delta.sequence
-        )
-        let wire = try C4ProjectionCodec.encode(projection)
-        nats.publish(subject: SubstrateWireSubjects.c4Projection, payload: wire)
     }
 }

@@ -237,7 +237,10 @@ let package = Package(
         ),
         .testTarget(
             name: "VQbitSubstrateTests",
-            dependencies: [.target(name: "VQbitSubstrate")],
+            dependencies: [
+                .target(name: "VQbitSubstrate"),
+                .target(name: "GaiaFTCLCore"),
+            ],
             path: "Tests/VQbitSubstrateTests"
         ),
         .plugin(

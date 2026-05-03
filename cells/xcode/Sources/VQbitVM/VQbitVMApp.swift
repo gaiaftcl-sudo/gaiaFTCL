@@ -41,8 +41,8 @@ struct VQbitVMApp {
         do {
             let pool = try await SubstrateDatabase.shared.pool()
             let repo = FranklinDocumentRepository(db: pool)
-            let th = try repo.fetchPrimIDToCalorieThreshold()
-            VQbitContractThresholds.shared.replace(with: th)
+            let (th, peers) = try repo.fetchPrimCalorieAndClosurePeers()
+            VQbitContractThresholds.shared.replace(thresholds: th, peersByPrim: peers)
         } catch {
             FileHandle.standardError.write(
                 Data("TERMINAL STATE: BLOCKED — constitutional threshold warm from substrate: \(error)\n".utf8)
