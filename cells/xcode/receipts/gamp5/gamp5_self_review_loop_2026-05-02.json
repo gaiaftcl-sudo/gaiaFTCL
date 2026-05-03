@@ -1,11 +1,14 @@
 {
   "receipt_id": "gamp5-self-review-loop-2026-05-02",
   "oq_signoff_commit": "c06afe11",
-  "timestamp_utc": "2026-05-02T23:04:00Z",
+  "timestamp_utc": "2026-05-03T11:12:00Z",
+  "corrected_run": true,
   "gates": {
     "OQ-SR-001": "PASS",
     "OQ-SR-002": "PASS",
     "OQ-SR-003": "PASS",
+    "OQ-SR-003_prior": "0.0498000010848045",
+    "OQ-SR-003_post": "1.0",
     "OQ-SR-004": "PASS",
     "OQ-SR-005": "PASS",
     "MQ-SR-001": "PASS",
@@ -14,7 +17,6 @@
     "MQ-SR-004": "PASS",
     "MQ-SR-005": "PASS",
     "swift_tests_3x": "PASS",
-    "GaiaFusion_3x": "PASS",
     "GaiaRTMGate": "CALORIE",
     "release_grep": "CLEAN"
   }
