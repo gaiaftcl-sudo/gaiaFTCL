@@ -182,5 +182,16 @@ let package = Package(
             ],
             path: "Tests/GAMP5/MQ"
         ),
+        .testTarget(
+            name: "GaiaFTCLPQTests",
+            dependencies: [
+                .target(name: "GaiaFTCLCore"),
+                .target(name: "FranklinConsciousness"),
+                .target(name: "VQbitSubstrate"),
+                .target(name: "GaiaGateKit"),
+                .product(name: "GRDB", package: "GRDB.swift"),
+            ],
+            path: "Tests/GAMP5/PQ"
+        ),
     ]
 )
