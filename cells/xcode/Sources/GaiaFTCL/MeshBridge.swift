@@ -15,6 +15,7 @@
 import Foundation
 import FusionCore
 import GaiaFTCLCore
+import GaiaFTCLScene
 import Observation
 
 @Observable
