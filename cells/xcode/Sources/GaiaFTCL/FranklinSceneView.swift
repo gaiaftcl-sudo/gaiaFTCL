@@ -25,7 +25,7 @@ extension S4ProjectionError: LocalizedError {
     }
 }
 
-struct FranklinSceneView: View {
+public struct FranklinSceneView: View {
     @Environment(FranklinSceneDirector.self) private var sceneDirector
     @Environment(VQbitStore.self) private var store
     @Environment(ManifoldOverlayStore.self) private var manifoldOverlay
@@ -41,6 +41,8 @@ struct FranklinSceneView: View {
     @State private var fusionPortalEntity: ModelEntity?
     @State private var healthPortalEntity: ModelEntity?
     @State private var didAuditPrimSovereignty = false
+
+    public init() {}
 
     private static let panelBG     = Color(red: 0.03, green: 0.04, blue: 0.12)
     private static let refusedTint = Color(red: 0.537, green: 0.812, blue: 0.941) // #89CFF0
@@ -58,7 +60,7 @@ struct FranklinSceneView: View {
             ?? sceneDirector.active.franklinCue
     }
 
-    var body: some View {
+    public var body: some View {
         ZStack(alignment: .bottom) {
             RealityView { content in
                 content.add(rootEntity)
@@ -320,11 +322,22 @@ struct FranklinSceneView: View {
         }
         let fileName = String(entry.file.dropLast(5)) // strip ".usda"
         let rootScene: Entity
+        #if canImport(RealityKitContent)
         do {
             rootScene = try await Entity(named: fileName, in: realityKitContentBundle)
         } catch {
             throw S4ProjectionError.sceneLoadFailed(fileName, error.localizedDescription)
         }
+        #else
+        guard let url = Bundle.module.url(forResource: fileName, withExtension: "usda") else {
+            throw S4ProjectionError.sceneLoadFailed(fileName, "not found in module bundle")
+        }
+        do {
+            rootScene = try await Entity(contentsOf: url)
+        } catch {
+            throw S4ProjectionError.sceneLoadFailed(fileName, error.localizedDescription)
+        }
+        #endif
         guard let sub = rootScene.findEntity(named: entry.scope) else {
             throw S4ProjectionError.topologyAnchorNotFound(entry.scope)
         }

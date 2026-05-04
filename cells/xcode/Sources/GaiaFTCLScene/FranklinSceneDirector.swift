@@ -29,37 +29,37 @@ public final class FranklinSceneDirector {
     public nonisolated static let catalog: [String: SceneEntry] = [
         "fusion-tokamak": SceneEntry(
             sceneID: "fusion-tokamak",
-            file: "FusionTokamak",
+            file: "FusionTokamak.usda",
             scope: "FUSION",
             franklinCue: "Tokamak plasma containment — sovereign vQbit M⁸ domain"
         ),
         "fusion-stellarator": SceneEntry(
             sceneID: "fusion-stellarator",
-            file: "FusionStellarator",
+            file: "FusionStellarator.usda",
             scope: "FUSION",
             franklinCue: "Stellarator HD — helical confinement, full C4 projection"
         ),
         "fusion-frc": SceneEntry(
             sceneID: "fusion-frc",
-            file: "FusionFRC",
+            file: "FusionFRC.usda",
             scope: "FUSION",
             franklinCue: "Field-reversed configuration — compact fusion vQbit"
         ),
         "health": SceneEntry(
             sceneID: "health",
-            file: "HealthDomain",
+            file: "HealthDomain.usda",
             scope: "HEALTH",
             franklinCue: "Health protocol — constitutional threshold C4"
         ),
         "lithography": SceneEntry(
             sceneID: "lithography",
-            file: "LithographyDomain",
+            file: "LithographyDomain.usda",
             scope: "LITHOGRAPHY",
             franklinCue: "Silicon lithography — nanometre precision vQbit"
         ),
         "welcome": SceneEntry(
             sceneID: "welcome",
-            file: "WelcomeScene",
+            file: "WelcomeScene.usda",
             scope: "ALL",
             franklinCue: "GaiaFTCL sovereign M⁸ — vQbit-gated scene"
         ),

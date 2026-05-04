@@ -1,0 +1,16 @@
+#usda 1.0
+(
+    defaultPrim = "FusionFRC"
+)
+
+def Xform "FusionFRC"
+{
+    def Xform "FUSION"
+    {
+        def Xform "CatalogAnchor"
+        {
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+    }
+}

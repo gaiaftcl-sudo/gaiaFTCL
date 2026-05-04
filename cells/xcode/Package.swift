@@ -17,6 +17,7 @@ let package = Package(
         .library(name: "QualificationKit", targets: ["QualificationKit"]),
         .library(name: "GaiaFTCLScene", targets: ["GaiaFTCLScene"]),
         .library(name: "GaiaFTCL", targets: ["GaiaFTCL"]),
+        .executable(name: "GaiaFTCLApp", targets: ["GaiaFTCLApp"]),
     ],
     dependencies: [
         .package(url: "https://github.com/groue/GRDB.swift", from: "6.29.0"),
@@ -137,12 +138,31 @@ let package = Package(
                 .target(name: "FranklinConsciousness"),
             ],
             path: "Sources/GaiaFTCL",
+            resources: [.process("Resources")],
             swiftSettings: [.swiftLanguageMode(.v6)],
             linkerSettings: [
                 .linkedFramework("SwiftUI"),
                 .linkedFramework("RealityKit"),
                 .linkedFramework("SwiftData"),
                 .linkedFramework("AppKit"),
+            ]
+        ),
+        .executableTarget(
+            name: "GaiaFTCLApp",
+            dependencies: [
+                .target(name: "GaiaFTCL"),
+                .target(name: "GaiaFTCLScene"),
+                .target(name: "GaiaFTCLCore"),
+                .target(name: "VQbitSubstrate"),
+                .target(name: "FusionCore"),
+            ],
+            path: "Sources/GaiaFTCLApp",
+            swiftSettings: [.swiftLanguageMode(.v6)],
+            linkerSettings: [
+                .linkedFramework("SwiftUI"),
+                .linkedFramework("AppKit"),
+                .linkedFramework("SwiftData"),
+                .linkedFramework("RealityKit"),
             ]
         ),
         .testTarget(

@@ -1,0 +1,16 @@
+#usda 1.0
+(
+    defaultPrim = "HealthDomain"
+)
+
+def Xform "HealthDomain"
+{
+    def Xform "HEALTH"
+    {
+        def Xform "CatalogAnchor"
+        {
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+        }
+    }
+}
